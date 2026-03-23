@@ -435,8 +435,24 @@
 
     <p>這只是我們目前想到的。AI 進入餐飲的速度比任何人預期的都快，每一天都有新的故事發生。<strong>The Pass 永遠不會沒東西寫。</strong></p>
 
-    <h3>5. 運營成本極低</h3>
-    <p>全自動化 pipeline。The Pass 編輯室只需要：每天 5 分鐘看一眼產出品質、每週 30 分鐘調整選題規則、每月檢視信源表現。</p>
+    <h3>5. 運營成本極低（但不是零）</h3>
+    <p>「極低」是相對於傳統做法——請一個全職編輯每月至少 $2,000 美元——而言的。The Pass 用 AI 自動化完成選題、翻譯、撰寫，但 AI 不是免費的。以下是實際的成本結構：</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>項目</th><th>服務</th><th>月費估算</th></tr></thead>
+        <tbody>
+          <tr><td><strong>AI 撰寫</strong></td><td>Claude API（翻譯 + 摘要 + 選題 + 撰寫）</td><td>$15 – $40</td></tr>
+          <tr><td><strong>部署</strong></td><td>Vercel（Hobby → Pro）</td><td>$0 – $20</td></tr>
+          <tr><td><strong>資料庫</strong></td><td>Supabase（Free → Pro）</td><td>$0 – $25</td></tr>
+          <tr><td><strong>Email 發送</strong></td><td>Resend / Loops（依訂閱人數）</td><td>$0 – $20</td></tr>
+          <tr><td><strong>AI 生圖</strong></td><td>DALL-E / Midjourney API（選用）</td><td>$0 – $15</td></tr>
+          <tr><td><strong>網域</strong></td><td>年費攤月</td><td>~$1</td></tr>
+          <tr><td colspan="2" style="font-weight: 700;">月總計</td><td style="font-weight: 700; color: var(--accent);">$20 – $120</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>初期（訂閱人數少、不用生圖）實際月花費可能只有 <strong>$20-30 美元</strong>。對比傳統做法，這大約是一個全職編輯一天的薪水。</p>
+    <p>人力方面，The Pass 編輯室需要的時間也不多：每天 5 分鐘看一眼產出品質、每週 30 分鐘調整選題規則、每月檢視信源表現。不需要專人，可以由現有團隊兼顧。</p>
   </section>
 
   <hr class="sep">
