@@ -33,6 +33,14 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+    .nav-inner { max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { font-size: 0.8125rem; color: var(--color-ink-light); text-decoration: none; }
+    .nav-links a:hover { color: var(--color-accent); }
+    .nav-links a.active { color: var(--color-ink); font-weight: 500; }
+
     .container {
       max-width: var(--max-width);
       margin: 0 auto;
@@ -508,6 +516,7 @@
     }
 
     @media (max-width: 840px) {
+      .nav-links { display: none; }
       .container { padding: 1.5rem 1rem; }
       .issue-header { padding: 2.5rem 1rem; }
       .issue-header .brand { font-size: 2rem; }
@@ -537,6 +546,21 @@
   </style>
 </head>
 <body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="demo-index.html" class="nav-brand">The Pass</a>
+    <ul class="nav-links">
+      <li><a href="project-brief.html">提案簡報</a></li>
+      <li><a href="methodology.html">方法論</a></li>
+      <li><a href="editorial-guidelines.html">編輯指南</a></li>
+      <li><a href="sources.html">信源清單</a></li>
+      <li><a href="illustration-guide.html">插畫指南</a></li>
+      <li><a href="implementation-plan.html">實作計畫</a></li>
+      <li><a href="demo-index.html" class="active">Demo</a></li>
+    </ul>
+  </div>
+</nav>
 
   <div class="demo-banner">DEMO ISSUE — 內容來自真實信源，連結皆可點擊</div>
 
