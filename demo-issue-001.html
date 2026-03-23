@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Pass — Demo Issue #001</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --color-ink: #2C3345;
+      --color-ink-light: #5A6178;
+      --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8;
+      --color-bg-warm: #F5F3EF;
+      --color-accent: #B8860B;
+      --color-accent-light: #D4A843;
+      --color-border: #E8E6E1;
+      --color-white: #FFFFFF;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Playfair Display', var(--font-serif);
+      --max-width: 640px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      background: var(--color-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Header */
+    .issue-header {
+      text-align: center;
+      padding: 3rem 0 2.5rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 2.5rem;
+    }
+
+    .issue-header .brand {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      letter-spacing: 0.02em;
+    }
+
+    .issue-header .brand-sub {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .issue-header .issue-meta {
+      margin-top: 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+    }
+
+    .issue-header .filter-count {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent-light);
+      border-radius: 100px;
+      padding: 0.25rem 0.875rem;
+      cursor: pointer;
+    }
+
+    /* Main Story */
+    .main-story {
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .main-story h1 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .main-story .flag-inline {
+      font-size: 1.125rem;
+      margin-right: 0.25rem;
+    }
+
+    .main-story .story-body p {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--color-ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .main-story .story-body .highlight {
+      background: var(--color-bg-warm);
+      padding: 1.25rem 1.5rem;
+      border-radius: 6px;
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--color-accent);
+    }
+
+    .main-story .story-body .highlight p {
+      font-style: italic;
+      margin-bottom: 0;
+      color: var(--color-ink);
+    }
+
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      text-decoration: none;
+      margin-top: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .source-link:hover { color: var(--color-accent); }
+
+    .source-link .arrow { font-size: 0.75rem; }
+
+    /* Divider */
+    .section-divider {
+      width: 40px;
+      height: 1.5px;
+      background: var(--color-accent);
+      border: none;
+      margin: 2.5rem 0;
+    }
+
+    /* Quick News */
+    .quick-news {
+      margin-bottom: 3rem;
+    }
+
+    .news-item {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .news-item:first-of-type {
+      padding-top: 0;
+    }
+
+    .news-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .news-item .news-flag {
+      font-size: 1rem;
+      margin-right: 0.375rem;
+    }
+
+    .news-item h3 {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--color-ink);
+      margin-bottom: 0.375rem;
+    }
+
+    .news-item .news-context {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      color: var(--color-ink-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .news-item .news-source {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+    }
+
+    /* AI × 餐飲 tag */
+    .tag-ai {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--color-white);
+      background: var(--color-ink);
+      border-radius: 3px;
+      padding: 0.125rem 0.5rem;
+      margin-left: 0.375rem;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    /* Extended Reading */
+    .extended-reading {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .extended-reading .er-label {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .extended-reading p {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--color-ink-light);
+    }
+
+    .extended-reading a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    .extended-reading a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .issue-footer {
+      text-align: center;
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .issue-footer p {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+      line-height: 1.8;
+    }
+
+    .issue-footer .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.375rem;
+    }
+
+    .issue-footer .subscribe-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.625rem 1.75rem;
+      background: var(--color-ink);
+      color: var(--color-white);
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      border-radius: 100px;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+
+    .issue-footer .subscribe-btn:hover {
+      background: var(--color-accent);
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      background: var(--color-ink);
+      color: var(--color-white);
+      text-align: center;
+      padding: 0.625rem;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 1.5rem 1.25rem; }
+      .main-story h1 { font-size: 1.3125rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">DEMO ISSUE — 內容來自 2026.03.23 真實信源</div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header class="issue-header">
+      <div class="brand">The Pass</div>
+      <div class="brand-sub">by 名廚 MINGCHU</div>
+      <div class="issue-meta">
+        2026 年 3 月 23 日・週一
+      </div>
+      <span class="filter-count">從 47 條資訊中篩選</span>
+    </header>
+
+    <!-- Main Story -->
+    <section class="main-story">
+      <div class="section-label">今日觀察</div>
+      <h1>
+        <span class="flag-inline">🇰🇷</span>
+        韓國最大團膳企業在廚房裝了 AI 攝影機，<br>
+        廚師一走進去就被「看」了
+      </h1>
+      <div class="story-body">
+        <p>아워홈（Ourhome），韓國最大的團體膳食企業之一，最近在旗下的中央廚房裡導入了一套來自한화비전（Hanwha Vision）的 AI 攝影機系統。</p>
+        <p>這套系統做的事很直覺：廚師走進廚房的那一刻，AI 就開始看。它即時辨識你有沒有戴帽子、圍裙綁了沒有、有沒有按規定洗手。如果偵測到違規，系統立刻發出提醒。</p>
+        <p>從食品安全的角度，這毫無疑問是進步。團膳廚房一天要出幾千份餐，靠人巡檢永遠有死角。AI 不會累、不會漏看、不會因為跟你熟就放水。아워홈說，導入後衛生違規事件明顯下降。</p>
+
+        <div class="highlight">
+          <p>但如果你是那個每天走進廚房、被鏡頭從頭到腳掃一遍的廚師，你的感覺是什麼？</p>
+        </div>
+
+        <p>這是 AI 進入廚房最真實的張力。它不是機器人來搶你的工作，而是一雙永遠不眨眼的眼睛，看著你工作。</p>
+        <p>韓國餐飲業正在大規模擁抱這類技術。아워홈不是第一個，也不會是最後一個。但很少有人在問一個更根本的問題：廚房是一個需要信任的地方——師傅信任徒弟、管理者信任團隊。<strong>當信任被演算法取代，廚房的文化會怎樣改變？</strong></p>
+        <p>也許會更安全。也許會更高效。但會不會也更冰冷？</p>
+        <p>這個問題沒有標準答案。但它值得被問出來。</p>
+      </div>
+      <a href="demo-issue-001-detail.html" class="source-link" style="display: inline-flex; align-items: center; gap: 0.375rem; font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-accent); font-weight: 500; text-decoration: none; margin-top: 1rem; padding: 0.5rem 1rem; border: 1px solid var(--color-accent-light); border-radius: 100px;">
+        繼續閱讀 →
+      </a>
+      <br>
+      <a href="#" class="source-link" style="margin-top: 0.75rem;">
+        <span class="arrow">→</span> 식품외식경제（韓文原文）
+      </a>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Quick News -->
+    <section class="quick-news">
+      <div class="section-label">本期快訊</div>
+
+      <div class="news-item">
+        <h3><span class="news-flag">🧠</span> 你的大腦其實不喜歡植物肉，即使你嘴上說喜歡 <span class="tag-ai">AI</span></h3>
+        <p class="news-context">義大利新創 THIMUS 用 EEG 腦波頭帶測量消費者吃東西時的真實反應。結果發現：人們在社會壓力下會說「當然喜歡植物漢堡，我要救地球」，但腦波數據顯示大腦其實並不買單。創辦人 Mario Ubiali 說：「大腦傾向追求熟悉和舒適的食物體驗。」這項技術每秒取樣 251 次腦波，正在改變食品公司測試新品的方式。</p>
+        <p class="news-source">The Spoon・2026.03.13</p>
+      </div>
+
+      <div class="news-item">
+        <h3><span class="news-flag">🇰🇷</span> 韓國炸雞品牌用生成式 AI 拍了一整支廣告 <span class="tag-ai">AI</span></h3>
+        <p class="news-context">노랑통닭（Norang Tongdak）為新品「우도 땅콩 치킨」（牛島花生炸雞）製作了一支廣告，從角色設計、影片導演到音樂製作，全程使用生成式 AI。以濟州島特產為靈感的卡通角色和品牌吉祥物在片中「合作」推薦產品——整支廣告沒有一個真人參與製作。</p>
+        <p class="news-source">식품외식경제・2026.03.17</p>
+      </div>
+
+      <div class="news-item">
+        <h3><span class="news-flag">🌾</span> Cargill 用 Boston Dynamics 的機器狗巡檢食品工廠 <span class="tag-ai">AI</span></h3>
+        <p class="news-context">全球最大農產品貿易商 Cargill 在阿姆斯特丹的加工廠部署了 AI 驅動的 Spot 機器狗，每週執行約一萬次安全與設備巡檢。他們的 R&D 副總裁說了一句值得記住的話：「AI 在增強專家判斷時才能發揮最大價值，而不是取代它。」</p>
+        <p class="news-source">AgFunder News・2026.03</p>
+      </div>
+
+      <div class="news-item">
+        <h3><span class="news-flag">🤖</span> 人形機器人不會來幫你做飯——至少現在不會</h3>
+        <p class="news-context">CES 上展出的人形機器人很酷，但真正有可能走進家庭廚房的是檯面型料理機器人。新創 Posha 的 CEO 把自家產品比喻為「Thermomix plus plus」：你不用再站在旁邊盯了，就像自駕車一樣，你可以放手。Nosh 在 Kickstarter 上募了超過 80 萬美元。</p>
+        <p class="news-source">The Spoon・2026.03.17</p>
+      </div>
+
+    </section>
+
+    <!-- Extended Reading -->
+    <div class="extended-reading">
+      <div class="er-label">延伸閱讀 — 名廚 MINGCHU</div>
+      <p>關於廚房裡的信任與傳承，名廚曾深入採訪多位亞洲主廚。<br>
+      → <a href="#">主廚以外的餐廳夥伴：那些廚房裡看不見的默契</a></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="issue-footer">
+      <div class="footer-brand">The Pass</div>
+      <p>AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
+      如實呈現，不誇大，不接商單。</p>
+      <a href="#" class="subscribe-btn">訂閱 The Pass</a>
+      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">所有日報</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">RSS</a></p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

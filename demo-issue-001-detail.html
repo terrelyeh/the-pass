@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>韓國最大團膳企業在廚房裝了 AI 攝影機 — The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --color-ink: #2C3345;
+      --color-ink-light: #5A6178;
+      --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8;
+      --color-bg-warm: #F5F3EF;
+      --color-accent: #B8860B;
+      --color-accent-light: #D4A843;
+      --color-border: #E8E6E1;
+      --color-white: #FFFFFF;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Playfair Display', var(--font-serif);
+      --max-width: 680px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      background: var(--color-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    nav .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      text-decoration: none;
+    }
+
+    nav .back-link {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    nav .back-link:hover { color: var(--color-accent); }
+
+    /* Article Header */
+    .article-header {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 3rem 2rem 2rem;
+    }
+
+    .article-header .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .article-header .date {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+    }
+
+    .article-header .tag {
+      font-family: var(--font-sans);
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--color-white);
+      background: var(--color-ink);
+      border-radius: 3px;
+      padding: 0.15rem 0.5rem;
+    }
+
+    .article-header .country-tag {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent-light);
+      border-radius: 100px;
+      padding: 0.15rem 0.625rem;
+    }
+
+    .article-header h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--color-ink);
+      margin-bottom: 1rem;
+    }
+
+    .article-header .lead {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      line-height: 1.9;
+      color: var(--color-ink-light);
+    }
+
+    /* Article Body */
+    .article-body {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+    }
+
+    .article-body p {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .article-body h2 {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .article-body h3 {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .article-body .pullquote {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      background: var(--color-bg-warm);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .article-body .pullquote p {
+      font-style: italic;
+      color: var(--color-ink);
+      margin-bottom: 0;
+      line-height: 1.9;
+    }
+
+    .article-body .pullquote .quote-attr {
+      font-style: normal;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* Detail Cards */
+    .detail-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .detail-card h4 {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .detail-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .detail-card ul li {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      color: var(--color-ink);
+      padding: 0.375rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .detail-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    /* Question Block */
+    .question-block {
+      margin: 2.5rem 0;
+      padding: 2rem;
+      background: var(--color-ink);
+      color: var(--color-white);
+      border-radius: 8px;
+    }
+
+    .question-block p {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 1rem;
+    }
+
+    .question-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .question-block strong {
+      color: var(--color-accent-light);
+    }
+
+    /* Sources */
+    .sources {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .sources h2 {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .source-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+    }
+
+    .source-item .source-lang {
+      flex-shrink: 0;
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: var(--color-ink-muted);
+      background: var(--color-bg-warm);
+      border-radius: 3px;
+      padding: 0.1rem 0.375rem;
+    }
+
+    .source-item a {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--color-ink-light);
+      text-decoration: none;
+    }
+
+    .source-item a:hover { color: var(--color-accent); }
+
+    /* Related */
+    .related {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+    }
+
+    .related-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s;
+    }
+
+    .related-card:hover { border-color: var(--color-accent-light); }
+
+    .related-label {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .related-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-ink);
+      line-height: 1.6;
+    }
+
+    .related-card .related-source {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+      margin-top: 0.375rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    footer p {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+    }
+
+    @media (max-width: 640px) {
+      .article-header { padding: 2rem 1.25rem 1.5rem; }
+      .article-body { padding: 0 1.25rem 2rem; }
+      .related { padding: 0 1.25rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="demo-issue-001.html" class="brand">The Pass</a>
+      <a href="demo-issue-001.html" class="back-link">← 返回本期日報</a>
+    </div>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <div class="meta-row">
+      <span class="date">2026.03.23</span>
+      <span class="tag">AI</span>
+      <span class="country-tag">🇰🇷 韓國</span>
+    </div>
+    <h1>韓國最大團膳企業在廚房裝了 AI 攝影機，廚師一走進去就被「看」了</h1>
+    <p class="lead">아워홈（Ourhome）導入한화비전（Hanwha Vision）的 AI 攝影機系統，即時監控廚師的衛生行為。這可能是韓國餐飲業走向 AI 監管的起點——但廚房裡的「信任」，會跟著改變嗎？</p>
+  </header>
+
+  <!-- Article Body -->
+  <div class="article-body">
+
+    <p>아워홈（Ourhome）是韓國最大的團體膳食企業之一。最近，他們在旗下的中央廚房裡做了一件事：裝了一套來自한화비전（Hanwha Vision）的 AI 攝影機系統。</p>
+
+    <p>這套系統做的事很直覺——廚師走進廚房的那一刻，AI 就開始看。它即時辨識你有沒有戴帽子、圍裙綁了沒有、有沒有按規定洗手。如果偵測到違規，系統立刻發出提醒。</p>
+
+    <p>從食品安全的角度，這毫無疑問是進步。團膳廚房一天要出幾千份餐，靠人巡檢永遠有死角。AI 不會累、不會漏看、不會因為跟你熟就放水。</p>
+
+    <div class="pullquote">
+      <p>「透過 AI 技術即時監控作業人員狀態和廚房狀況，衛生及安全管理將變得更加容易。我們也期待，隨著料理專注度的提升，食物品質也會跟著進步。」</p>
+      <span class="quote-attr">— 아워홈 官方聲明</span>
+    </div>
+
+    <h2>不只是攝影機</h2>
+
+    <p>但 AI 攝影機只是冰山一角。아워홈這次導入的，其實是一整套「智慧廚房」系統：</p>
+
+    <div class="detail-card">
+      <h4>📹 AI 即時衛生監控</h4>
+      <ul>
+        <li>廚師進入廚房時，即時辨識服裝是否合規（帽子、圍裙、衛生手套）</li>
+        <li>偵測異常聲音——可能意味著設備故障或緊急事故</li>
+        <li>溫度異常偵測——預防火災等安全風險</li>
+      </ul>
+    </div>
+
+    <div class="detail-card">
+      <h4>📦 AI 自動進貨管理</h4>
+      <ul>
+        <li>BCR（條碼攝影機辨識）系統：食材送到時自動掃碼，即時登錄庫存</li>
+        <li>AI 根據庫存水位和消耗模式，<strong>自動生成採購訂單</strong>——不再需要人手動下單</li>
+      </ul>
+    </div>
+
+    <div class="detail-card">
+      <h4>📊 AI 菜單優化</h4>
+      <ul>
+        <li>分析用餐者的飲食偏好數據</li>
+        <li>根據數據調整和優化菜單——讓菜單不再只靠廚師的直覺，而是加上數據的判斷</li>
+      </ul>
+    </div>
+
+    <h2>更大的圖景</h2>
+
+    <p>這個計畫不只是아워홈的單獨行動。它是韓華集團（Hanwha Group）「Tech × Life」戰略的第一個落地案例——把集團旗下的科技部門（한화비전、韓華機器人）和生活服務部門（아워홈、Galleria 百貨）連結起來。</p>
+
+    <p>下一步，他們計劃在飯店和百貨公司部署 <strong>VINOBOT</strong>（비노봇）——一款 AI 侍酒機器人，以及料理機器人。從廚房的監控攝影機、到庫存的自動管理、到餐桌上的機器人侍酒師，韓華正在試圖用 AI 貫穿整個餐飲服務的鏈條。</p>
+
+    <p>而且아워홈不是唯一一個。報導指出，三星旗下的團膳事業也在同步推進類似的 FoodTech 技術。韓國的團膳市場，正在成為 AI 進入餐飲業的第一個大規模試驗場。</p>
+
+    <div class="question-block">
+      <p>但這裡有一個沒人在問的問題。</p>
+      <p>廚房是一個需要信任的地方。師傅信任徒弟會按照標準做事。管理者信任團隊會維持品質。這種信任是廚房文化的基礎。</p>
+      <p><strong>當信任被演算法取代，廚房的文化會怎樣改變？</strong></p>
+      <p>也許會更安全、更高效。但當你每天走進廚房，第一個「看」你的不是師傅而是攝影機——那個空間的氣氛，還會一樣嗎？</p>
+      <p>아워홈的官方聲明說，「料理專注度會提升」。但另一種解讀是：<strong>因為你知道有人在看。</strong></p>
+      <p>這個問題沒有標準答案。但它值得被問出來。</p>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources">
+      <h2>原始來源</h2>
+      <div class="source-item">
+        <span class="source-lang">KR</span>
+        <a href="https://www.fnnews.com/news/202603161404580352">파이낸셜뉴스 —「주방에도 AI 카메라가」.. 아워홈, 한화비전 손잡고 '스마트 키친' 시범 도입</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">KR</span>
+        <a href="https://www.hellot.net/news/article.html?no=111415">헬로티 — 한화비전, 테크·라이프 부문 시너지 본격화</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">KR</span>
+        <a href="https://www.foodtoday.or.kr/news/article.html?no=203168">푸드투데이 — 일상에 스며든 AI·로봇…한화 '테크×라이프' 시너지 사업 본격화</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">KR</span>
+        <a href="https://www.insightkorea.co.kr/news/articleView.html?idxno=242918">인사이트코리아 — '삼성 VS 한화' 단체급식 시장서 푸드테크 기술 경쟁 본격화</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Related -->
+  <div class="related">
+    <a href="#" class="related-card">
+      <div class="related-label">延伸閱讀 — 名廚 MINGCHU</div>
+      <h3>主廚以外的餐廳夥伴：那些廚房裡看不見的默契</h3>
+      <div class="related-source">名廚 MINGCHU</div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>The Pass — AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
+    <a href="demo-issue-001.html" style="color: var(--color-accent); text-decoration: none;">← 返回本期日報</a></p>
+  </footer>
+
+</body>
+</html>

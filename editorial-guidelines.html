@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial Guidelines — The Pass by 名廚</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --color-ink: #2C3345;
+      --color-ink-light: #5A6178;
+      --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8;
+      --color-bg-warm: #F5F3EF;
+      --color-accent: #B8860B;
+      --color-accent-light: #D4A843;
+      --color-border: #E8E6E1;
+      --color-white: #FFFFFF;
+      --color-red: #C0392B;
+      --color-green: #27AE60;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Playfair Display', var(--font-serif);
+      --font-mono: 'JetBrains Mono', monospace;
+      --max-width: 720px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      background: var(--color-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,248,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    nav .nav-inner {
+      max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    nav .brand {
+      font-family: var(--font-display); font-size: 1.125rem; font-weight: 700;
+      color: var(--color-ink); text-decoration: none;
+    }
+    nav .brand span {
+      font-weight: 400; color: var(--color-ink-muted);
+      font-family: var(--font-sans); font-size: 0.8125rem; margin-left: 0.75rem;
+    }
+    nav .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    nav .nav-links a {
+      font-size: 0.8125rem; color: var(--color-ink-light);
+      text-decoration: none; letter-spacing: 0.03em;
+    }
+    nav .nav-links a.active { color: var(--color-ink); font-weight: 500; }
+
+    /* Hero */
+    .hero {
+      padding: 8rem 2rem 4rem; text-align: center;
+      background: var(--color-white); border-bottom: 1px solid var(--color-border);
+    }
+    .hero .label {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--color-accent); font-weight: 500; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 400; color: var(--color-ink); margin-bottom: 1.5rem;
+      letter-spacing: -0.01em; line-height: 1.25;
+    }
+    .hero .subtitle {
+      font-family: var(--font-serif); font-size: 1.0625rem;
+      color: var(--color-ink-light); max-width: 520px; margin: 0 auto; line-height: 1.9;
+    }
+
+    /* Article */
+    article { max-width: var(--max-width); margin: 0 auto; padding: 3rem 2rem 6rem; }
+    article section { margin-bottom: 4rem; }
+    article h2 {
+      font-family: var(--font-display); font-size: 1.625rem; font-weight: 400;
+      color: var(--color-ink); margin-bottom: 1.5rem; padding-top: 2rem;
+      letter-spacing: -0.01em; line-height: 1.35;
+    }
+    article h2 .section-num {
+      display: block; font-family: var(--font-sans); font-size: 0.6875rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--color-accent); font-weight: 500; margin-bottom: 0.5rem;
+    }
+    article h3 {
+      font-family: var(--font-serif); font-size: 1.125rem; font-weight: 600;
+      color: var(--color-ink); margin-top: 2.5rem; margin-bottom: 1rem;
+    }
+    article p {
+      font-family: var(--font-serif); font-size: 1rem; line-height: 1.9;
+      color: var(--color-ink); margin-bottom: 1.25rem;
+    }
+    .section-sep {
+      width: 40px; height: 1.5px; background: var(--color-accent);
+      margin: 4rem auto; border: none;
+    }
+
+    /* Persona Cards */
+    .persona-card {
+      background: var(--color-white); border: 1px solid var(--color-border);
+      border-radius: 12px; padding: 2rem 2.25rem; margin: 2rem 0;
+      position: relative; overflow: hidden;
+    }
+    .persona-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .persona-card.mise::before { background: var(--color-accent); }
+    .persona-card.passe::before { background: var(--color-ink); }
+    .persona-card.fumet::before { background: #7B8A6E; }
+
+    .persona-header {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;
+    }
+    .persona-avatar {
+      width: 3rem; height: 3rem; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; font-weight: 700; color: var(--color-white);
+    }
+    .persona-card.mise .persona-avatar { background: var(--color-accent); }
+    .persona-card.passe .persona-avatar { background: var(--color-ink); }
+    .persona-card.fumet .persona-avatar { background: #7B8A6E; }
+
+    .persona-name {
+      font-family: var(--font-display); font-size: 1.375rem; font-weight: 700;
+      color: var(--color-ink);
+    }
+    .persona-role {
+      font-family: var(--font-sans); font-size: 0.75rem; color: var(--color-ink-muted);
+      letter-spacing: 0.03em;
+    }
+    .persona-origin {
+      font-family: var(--font-sans); font-size: 0.8125rem;
+      color: var(--color-ink-light); font-style: italic; margin-bottom: 1rem;
+    }
+    .persona-desc p {
+      font-size: 0.9375rem; line-height: 1.85; margin-bottom: 0.75rem;
+    }
+    .persona-traits {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+    }
+    .persona-trait {
+      font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 500;
+      padding: 0.25rem 0.75rem; border-radius: 100px;
+      border: 1px solid var(--color-border); color: var(--color-ink-light);
+    }
+
+    /* Compare Blocks */
+    .compare {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;
+    }
+    .compare-bad, .compare-good {
+      padding: 1.25rem 1.5rem; border-radius: 8px;
+      font-family: var(--font-serif); font-size: 0.9375rem; line-height: 1.8;
+    }
+    .compare-bad {
+      background: #FDF2F2; border: 1px solid #F5D5D5;
+    }
+    .compare-good {
+      background: #F0F9F4; border: 1px solid #D4EDDA;
+    }
+    .compare-label {
+      font-family: var(--font-sans); font-size: 0.625rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.625rem;
+      display: flex; align-items: center; gap: 0.375rem;
+    }
+    .compare-bad .compare-label { color: var(--color-red); }
+    .compare-good .compare-label { color: var(--color-green); }
+    .compare-bad p, .compare-good p { margin-bottom: 0; font-size: 0.9375rem; }
+
+    /* Ban List */
+    .ban-list { margin: 1.5rem 0; }
+    .ban-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--color-border);
+    }
+    .ban-item:first-child { border-top: 1px solid var(--color-border); }
+    .ban-icon {
+      flex-shrink: 0; width: 1.25rem; height: 1.25rem; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.625rem; margin-top: 0.25rem;
+      background: #FDF2F2; color: var(--color-red); font-weight: 700;
+    }
+    .ban-text {
+      font-family: var(--font-mono); font-size: 0.8125rem;
+      color: var(--color-ink-light); line-height: 1.6;
+    }
+
+    /* Checklist */
+    .checklist-grid {
+      display: grid; gap: 0.5rem; margin: 1.5rem 0;
+    }
+    .checklist-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.875rem 1.25rem; background: var(--color-white);
+      border: 1px solid var(--color-border); border-radius: 8px;
+    }
+    .checklist-box {
+      flex-shrink: 0; width: 1.25rem; height: 1.25rem; border-radius: 4px;
+      border: 2px solid var(--color-border); margin-top: 0.15rem;
+    }
+    .checklist-item p {
+      font-size: 0.9375rem; line-height: 1.7; margin-bottom: 0;
+    }
+
+    /* Signature Format */
+    .sig-demo {
+      background: var(--color-ink); color: rgba(255,255,255,0.85);
+      padding: 1.5rem 2rem; border-radius: 8px; margin: 1.5rem 0;
+      font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.8;
+      text-align: center;
+    }
+    .sig-demo .sig-line {
+      color: var(--color-accent-light); font-weight: 500;
+    }
+
+    /* Blockquote */
+    article blockquote {
+      margin: 2rem 0; padding: 1.5rem 2rem;
+      background: var(--color-bg-warm); border-left: 3px solid var(--color-accent);
+      border-radius: 0 6px 6px 0;
+    }
+    article blockquote p {
+      font-style: italic; margin-bottom: 0; line-height: 1.85;
+    }
+
+    /* Table */
+    .style-table {
+      width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+      font-family: var(--font-sans); font-size: 0.875rem;
+    }
+    .style-table th {
+      text-align: left; padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--color-border);
+      font-weight: 700; font-size: 0.75rem;
+      letter-spacing: 0.05em; color: var(--color-ink-muted);
+    }
+    .style-table td {
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border);
+      color: var(--color-ink); line-height: 1.6;
+    }
+
+    footer {
+      border-top: 1px solid var(--color-border); padding: 3rem 2rem;
+      text-align: center; background: var(--color-white);
+    }
+    footer p {
+      font-family: var(--font-sans); font-size: 0.8125rem;
+      color: var(--color-ink-muted); line-height: 1.8;
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 6.5rem 1.5rem 3rem; }
+      article { padding: 2rem 1.5rem 4rem; }
+      .compare { grid-template-columns: 1fr; }
+      nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="brand">The Pass <span>by 名廚 MINGCHU</span></a>
+      <ul class="nav-links">
+        <li><a href="#">首頁</a></li>
+        <li><a href="methodology.html">方法論</a></li>
+        <li><a href="#" class="active">Editorial Guidelines</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="label">Editorial Guidelines</div>
+    <h1>我們怎麼寫東西</h1>
+    <p class="subtitle">The Pass 的品牌聲音、AI 編輯人設、寫作規則、以及我們如何確保每個字都有人味。</p>
+  </header>
+
+  <article>
+
+    <!-- Section 1: Brand Voice -->
+    <section>
+      <h2>
+        <span class="section-num">01</span>
+        品牌聲音
+      </h2>
+      <p>如果名廚是一位穿著圍裙、在廚房裡慢慢跟你講故事的資深主廚，The Pass 是那個剛從外面衝進來、眼睛發亮、忍不住跟你說「欸你聽過這個嗎」的年輕廚師。</p>
+      <p>他不是在做報告。他是真心覺得這件事太有意思了，非得跟你說不可。</p>
+
+      <table class="style-table">
+        <thead>
+          <tr><th>是</th><th>不是</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>像朋友在跟你聊天</td><td>像記者在做報導</td></tr>
+          <tr><td>口語、自然、有節奏感</td><td>書面、僵硬、公文體</td></tr>
+          <tr><td>有好奇心、有溫度</td><td>冷冰冰的資訊傳遞</td></tr>
+          <tr><td>偶爾有點幽默</td><td>刻意搞笑或用迷因</td></tr>
+          <tr><td>敢問尖銳的問題</td><td>給標準答案或下定論</td></tr>
+          <tr><td>承認不確定的事</td><td>假裝什麼都知道</td></tr>
+        </tbody>
+      </table>
+
+      <blockquote>
+        <p>名廚和 The Pass 共享同一組基因：人味、好奇心、尊重、獨立、不接商單。差別只在節奏和語氣。名廚是慢燉高湯，The Pass 是快炒鑊氣。</p>
+      </blockquote>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 2: AI Editors -->
+    <section>
+      <h2>
+        <span class="section-num">02</span>
+        AI 編輯團隊
+      </h2>
+      <p>The Pass 有三位 AI 編輯。讀者知道他們是 AI——這不是欺騙，是一種有自覺的、透明的玩法。每位編輯有自己的名字、性格、和寫作風格。</p>
+
+      <!-- Mise -->
+      <div class="persona-card mise">
+        <div class="persona-header">
+          <div class="persona-avatar">M</div>
+          <div>
+            <div class="persona-name">Mise</div>
+            <div class="persona-role">選題編輯 · 今日觀察</div>
+          </div>
+        </div>
+        <div class="persona-origin">源自 Mise en place — 廚房備料，一切就緒才能開始。</div>
+        <div class="persona-desc">
+          <p>Mise 是 The Pass 裡最有好奇心的編輯。他看到一則新聞，不會停在「發生了什麼」，而是一直追問「為什麼」和「這意味著什麼」。他是那種會在深夜傳訊息給你說「欸我剛看到一個東西你一定要看」的朋友。</p>
+        </div>
+        <div class="persona-traits">
+          <span class="persona-trait">開頭直接把你拉進場景</span>
+          <span class="persona-trait">喜歡用「你」</span>
+          <span class="persona-trait">事實後面丟問題</span>
+          <span class="persona-trait">有點興奮但不轟炸</span>
+        </div>
+
+        <div class="compare" style="margin-top: 1.5rem;">
+          <div class="compare-bad">
+            <div class="compare-label">✕ Mise 不會這樣寫</div>
+            <p>「아워홈（Ourhome），韓國最大的團體膳食企業之一，近日宣布與한화비전合作，在旗下中央廚房導入 AI 攝影機系統。」</p>
+          </div>
+          <div class="compare-good">
+            <div class="compare-label">✓ Mise 會這樣寫</div>
+            <p>「你每天早上走進廚房，還沒拿起刀，天花板上的攝影機已經把你從頭到腳掃了一遍。這不是科幻片。這是韓國아워홈的中央廚房，現在，每天。」</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Passe -->
+      <div class="persona-card passe">
+        <div class="persona-header">
+          <div class="persona-avatar">P</div>
+          <div>
+            <div class="persona-name">Passe</div>
+            <div class="persona-role">快訊編輯 · 另外幾件事</div>
+          </div>
+        </div>
+        <div class="persona-origin">源自 The Pass — 出菜口，快速、精準、不廢話。</div>
+        <div class="persona-desc">
+          <p>Passe 是出菜口站的人。他的工作是在最短的時間內，把最重要的資訊送到你面前。他不囉唆、不解釋太多，但每一句都有資訊密度。三位編輯裡最精簡的那個。</p>
+        </div>
+        <div class="persona-traits">
+          <span class="persona-trait">一則不超過 3 句</span>
+          <span class="persona-trait">第一句事實</span>
+          <span class="persona-trait">第二句為什麼重要</span>
+          <span class="persona-trait">偶爾一句俏皮觀察</span>
+        </div>
+
+        <div class="compare" style="margin-top: 1.5rem;">
+          <div class="compare-bad">
+            <div class="compare-label">✕ Passe 不會這樣寫</div>
+            <p>「全球最大的農產品貿易商 Cargill 近日在其位於荷蘭阿姆斯特丹的食品加工設施中，部署了由 Boston Dynamics 開發的 AI 驅動 Spot 機器人。」</p>
+          </div>
+          <div class="compare-good">
+            <div class="compare-label">✓ Passe 會這樣寫</div>
+            <p>「Cargill 在阿姆斯特丹的食品工廠放了 Boston Dynamics 的機器狗做巡檢。一週一萬次，不請假，不喊累。」</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fumet -->
+      <div class="persona-card fumet">
+        <div class="persona-header">
+          <div class="persona-avatar">F</div>
+          <div>
+            <div class="persona-name">Fumet</div>
+            <div class="persona-role">文化觀察 · 不定期出現</div>
+          </div>
+        </div>
+        <div class="persona-origin">源自 Fumet — 高湯的香氣，看不見但你聞得到。</div>
+        <div class="persona-desc">
+          <p>Fumet 是三位編輯裡最安靜的。他不追新聞，他追問題。當 Mise 在報導 AI 走進廚房時，Fumet 在想的是：「那廚師的手藝還算數嗎？」他寫的東西通常比較短，但會讓你想很久。</p>
+        </div>
+        <div class="persona-traits">
+          <span class="persona-trait">每個字都有份量</span>
+          <span class="persona-trait">喜歡對比和反差</span>
+          <span class="persona-trait">引用不同文化的概念</span>
+          <span class="persona-trait">結尾永遠是無法回答的問題</span>
+        </div>
+
+        <div class="compare" style="margin-top: 1.5rem;">
+          <div class="compare-good" style="grid-column: 1 / -1;">
+            <div class="compare-label">✓ Fumet 的語氣</div>
+            <p>「日本人有個詞叫『手仕事』（てしごと），指的是用手工完成的、帶著製作者痕跡的工作。一碗手打蕎麥麵的粗細不均，是缺陷，也是證明——證明有一個人，在某個下午，站在那裡，用他的手，做了這碗麵。如果有一天，機器能做出完全一樣的不均勻呢？那它還是『手仕事』嗎？」</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signature -->
+      <h3>署名格式</h3>
+      <div class="sig-demo">
+        <span class="sig-line">選題 · Mise ／ 彙整 · Passe</span><br>
+        The Pass AI 編輯室
+      </div>
+      <p>今日觀察偏文化面時，選題標注為 Fumet。偏技術或產業面時，標注為 Mise。快訊永遠由 Passe 彙整。不需要每期都出現三位。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 3: Anti-Slop -->
+    <section>
+      <h2>
+        <span class="section-num">03</span>
+        反 AI 味指南
+      </h2>
+      <p><strong>這是整份文件最重要的部分。</strong></p>
+      <p>AI 寫作有一種特殊的「塑膠味」——文法正確、邏輯完整、但讀起來像是沒有人在說話。The Pass 的每個字都必須像是一個真的人寫的。以下是具體的規則。</p>
+
+      <h3>禁止使用的開頭</h3>
+      <div class="ban-list">
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">「在當今快速變化的餐飲產業中⋯」</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">「隨著 AI 技術的飛速發展⋯」</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">「近年來，越來越多的餐飲業者開始⋯」</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">「想像一個世界，在那裡⋯」</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">「讓我們一起來看看⋯」</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">「在這篇文章中，我們將探討⋯」</div></div>
+      </div>
+
+      <h3>禁止使用的詞彙</h3>
+      <div class="ban-list">
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">令人震驚的 / 史詩級的 / 革命性的 / 劃時代的</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">令人興奮的 / 引人注目的 / 值得注意的是</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">毫無疑問 / 不言而喻 / 眾所周知</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">未來充滿了無限可能 / 讓我們拭目以待</div></div>
+        <div class="ban-item"><div class="ban-icon">✕</div><div class="ban-text">此外 / 再者 / 不僅如此 / 更重要的是 / 值得一提的是</div></div>
+      </div>
+
+      <h3>禁止的結構模式</h3>
+
+      <p><strong>萬用三段式</strong></p>
+      <div class="compare">
+        <div class="compare-bad">
+          <div class="compare-label">✕ 別這樣</div>
+          <p>第一段：介紹背景<br>第二段：列出三個重點（永遠三個）<br>第三段：展望未來</p>
+        </div>
+        <div class="compare-good">
+          <div class="compare-label">✓ 這樣更好</div>
+          <p>結構因內容而異。不是每篇都需要三個重點。有時候一個畫面就夠了。</p>
+        </div>
+      </div>
+
+      <p><strong>假平衡</strong></p>
+      <div class="compare">
+        <div class="compare-bad">
+          <div class="compare-label">✕ 別這樣</div>
+          <p>「一方面⋯另一方面⋯總的來說⋯」<br>「雖然有挑戰，但也充滿機遇」</p>
+        </div>
+        <div class="compare-good">
+          <div class="compare-label">✓ 這樣更好</div>
+          <p>「AI 讓廚房更安全了。但廚師們似乎不太開心。這兩件事同時是真的。」</p>
+        </div>
+      </div>
+
+      <p><strong>機器人式條列</strong></p>
+      <div class="compare">
+        <div class="compare-bad">
+          <div class="compare-label">✕ 別這樣</div>
+          <p>「AI 在餐飲業的應用包括：<br>1. 自動化點餐<br>2. 食品安全監測<br>3. 供應鏈管理<br>4. 個性化推薦」</p>
+        </div>
+        <div class="compare-good">
+          <div class="compare-label">✓ 這樣更好</div>
+          <p>「先是點餐——你對著螢幕講話，不是對著人。然後是廚房——AI 盯著廚師的每個動作。接著是倉庫——機器自己決定明天要進多少貨。整條線，AI 都碰過了。」</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 4: Human Touch -->
+    <section>
+      <h2>
+        <span class="section-num">04</span>
+        怎麼寫出人味
+      </h2>
+
+      <p><strong>用具體取代抽象</strong></p>
+      <div class="compare">
+        <div class="compare-bad">
+          <div class="compare-label">✕ 抽象</div>
+          <p>「AI 顯著提升了效率」</p>
+        </div>
+        <div class="compare-good">
+          <div class="compare-label">✓ 具體</div>
+          <p>「食材浪費從每天 30 公斤降到 8 公斤」</p>
+        </div>
+      </div>
+
+      <p><strong>用畫面取代說明</strong></p>
+      <div class="compare">
+        <div class="compare-bad">
+          <div class="compare-label">✕ 說明</div>
+          <p>「AI 攝影機系統能夠自動辨識員工是否符合衛生規範」</p>
+        </div>
+        <div class="compare-good">
+          <div class="compare-label">✓ 畫面</div>
+          <p>「你走進廚房，帽子還沒戴好，手機就震了——AI 已經看到了」</p>
+        </div>
+      </div>
+
+      <p><strong>用對話感取代陳述感</strong></p>
+      <div class="compare">
+        <div class="compare-bad">
+          <div class="compare-label">✕ 陳述</div>
+          <p>「這項技術的導入引發了關於職場監控的討論」</p>
+        </div>
+        <div class="compare-good">
+          <div class="compare-label">✓ 對話</div>
+          <p>「但說真的，如果你是那個每天被攝影機掃一遍的廚師，你 OK 嗎？」</p>
+        </div>
+      </div>
+
+      <p><strong>用承認取代全知</strong></p>
+      <div class="compare">
+        <div class="compare-bad">
+          <div class="compare-label">✕ 全知</div>
+          <p>「這項創新將重塑餐飲業的未來」</p>
+        </div>
+        <div class="compare-good">
+          <div class="compare-label">✓ 承認</div>
+          <p>「這會怎麼發展，老實說沒人知道。但現在的狀況是這樣的——」</p>
+        </div>
+      </div>
+
+      <h3>人味檢測清單</h3>
+      <p>每篇內容完成後，用這些問題自我檢查：</p>
+      <div class="checklist-grid">
+        <div class="checklist-item"><div class="checklist-box"></div><p>讀出來像是一個人在說話嗎？還是像一份報告？</p></div>
+        <div class="checklist-item"><div class="checklist-box"></div><p>有沒有至少一個地方，讀者會微微一笑或揚起眉毛？</p></div>
+        <div class="checklist-item"><div class="checklist-box"></div><p>開頭的第一句，你自己會想繼續看嗎？</p></div>
+        <div class="checklist-item"><div class="checklist-box"></div><p>有沒有用到禁止清單裡的任何詞彙或句式？</p></div>
+        <div class="checklist-item"><div class="checklist-box"></div><p>拿掉所有形容詞，這段話還有意思嗎？</p></div>
+        <div class="checklist-item"><div class="checklist-box"></div><p>如果這是朋友傳給你的訊息，你會覺得正常嗎？</p></div>
+        <div class="checklist-item"><div class="checklist-box"></div><p>結尾有沒有留一個真正的問題——不是修辭問句？</p></div>
+      </div>
+    </section>
+
+  </article>
+
+  <footer>
+    <p>The Pass Editorial Guidelines<br>由名廚編輯室制定 · 最後更新 2026.03.23</p>
+  </footer>
+
+</body>
+</html>
