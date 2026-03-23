@@ -172,6 +172,20 @@
     .demo-news-title { font-family: var(--serif); font-size: 0.8125rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem; }
     .demo-news-desc { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-light); }
 
+    /* ── Doc Link ── */
+    .doc-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.8125rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--accent-light); border-radius: 100px; margin-top: 0.75rem; transition: all 0.2s; }
+    .doc-link:hover { background: var(--accent); color: var(--white); }
+    .doc-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+
+    /* ── Footer Resources ── */
+    .footer-resources { max-width: 1120px; margin: 0 auto; padding: 3rem 2rem; border-top: 1px solid var(--border); background: var(--white); }
+    .fr-title { font-family: var(--sans); font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1.5rem; text-align: center; }
+    .fr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; max-width: 850px; margin: 0 auto; }
+    .fr-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; text-decoration: none; transition: border-color 0.2s; display: block; }
+    .fr-card:hover { border-color: var(--accent-light); }
+    .fr-card-title { font-family: var(--sans); font-size: 0.875rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .fr-card-desc { font-family: var(--sans); font-size: 0.6875rem; color: var(--ink-muted); line-height: 1.5; }
+
     /* ── Footer ── */
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; background: var(--white); }
     footer p { font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.8; }
@@ -514,6 +528,10 @@
       <li>食安相關必須嚴謹處理</li>
       <li><strong>不接受任何形式的商業合作影響選題</strong></li>
     </ul>
+    <div class="doc-links">
+      <a href="methodology.html" class="doc-link">📄 完整方法論 →</a>
+      <a href="sources.html" class="doc-link">📋 信源清單（29 個）→</a>
+    </div>
   </section>
 
   <hr class="sep">
@@ -573,6 +591,9 @@
       <li><strong>Meta 趣味</strong> — AI 編輯報導 AI × 餐飲，本身就是有趣的設計</li>
       <li><strong>品質區隔</strong> — 不同編輯有不同寫作標準，確保內容有層次</li>
     </ul>
+    <div class="doc-links">
+      <a href="ai-editors.html" class="doc-link">🤖 AI 編輯人設 & System Prompts →</a>
+    </div>
   </section>
 
   <hr class="sep">
@@ -601,6 +622,9 @@
     <div class="cmp">
       <div class="cmp-bad"><div class="cmp-label">✕ 全知</div><p>「這將重塑餐飲業的未來」</p></div>
       <div class="cmp-good"><div class="cmp-label">✓ 承認</div><p>「老實說沒人知道。但現在的狀況是這樣——」</p></div>
+    </div>
+    <div class="doc-links">
+      <a href="editorial-guidelines.html" class="doc-link">📝 完整編輯指南 →</a>
     </div>
   </section>
 
@@ -758,6 +782,32 @@
 </article>
   </div><!-- .main-content -->
 </div><!-- .page-layout -->
+
+<div class="footer-resources">
+  <div class="fr-title">參考文件</div>
+  <div class="fr-grid">
+    <a href="demo-issue-001.html" class="fr-card">
+      <div class="fr-card-title">📰 Demo Issue #001</div>
+      <div class="fr-card-desc">第一期示範內容，7 則真實報導</div>
+    </a>
+    <a href="methodology.html" class="fr-card">
+      <div class="fr-card-title">📄 方法論</div>
+      <div class="fr-card-desc">信源策略、篩選機制、評分邏輯</div>
+    </a>
+    <a href="editorial-guidelines.html" class="fr-card">
+      <div class="fr-card-title">📝 編輯指南</div>
+      <div class="fr-card-desc">品牌聲音、反 AI 味規則、人味檢測</div>
+    </a>
+    <a href="ai-editors.html" class="fr-card">
+      <div class="fr-card-title">🤖 AI 編輯室</div>
+      <div class="fr-card-desc">Mise / Passe / Fumet 人設與 System Prompts</div>
+    </a>
+    <a href="sources.html" class="fr-card">
+      <div class="fr-card-title">📋 信源清單</div>
+      <div class="fr-card-desc">29 個信源、5 種語言、三層分級</div>
+    </a>
+  </div>
+</div>
 
 <footer>
   <div class="ft-brand">The Pass</div>
