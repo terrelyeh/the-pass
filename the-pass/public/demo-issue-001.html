@@ -267,26 +267,31 @@
     .news-item .news-flag { font-size: 1.0625rem; margin-right: 0.375rem; }
     .news-tags { margin-bottom: 0.5rem; }
 
-    .news-item .news-context {
-      font-family: var(--font-sans);
-      font-size: 0.9375rem;
-      line-height: 1.75;
-      color: var(--color-ink-light);
-      margin-bottom: 0.375rem;
+    .news-item .news-context,
+    .news-item .news-body {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
     }
 
     .news-item .news-source {
       font-family: var(--font-sans);
       font-size: 0.8125rem;
-      color: var(--color-ink-muted);
+      color: var(--color-accent);
+      margin-top: 0.5rem;
+      padding: 0.5rem 0;
+      border-top: 1px solid var(--color-border);
     }
 
     .news-item .news-source a {
-      color: var(--color-ink-muted);
+      color: var(--color-accent);
       text-decoration: none;
+      font-weight: 500;
     }
 
-    .news-item .news-source a:hover { color: var(--color-accent); }
+    .news-item .news-source a:hover { text-decoration: underline; }
 
     /* Closing Question */
     .closing-section {
@@ -565,60 +570,70 @@
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🇯🇵</span> <a href="demo-issue-001-yamaokaya.html">日本拉麵連鎖山岡家用 AI 排煮麵順序，新人培訓從 500 天砍到 350 天</a></h3>
+        <h3><span class="news-flag">🇯🇵</span> 一碗拉麵少等 30 秒，但那 30 秒原本是師傅的判斷</h3>
         <div class="news-tags">
           <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
           <span class="tag tag-culture">🍜 飲食文化</span>
         </div>
-        <p class="news-context">拉麵山岡家把券賣機的訂單數據即時上傳 Amazon Bedrock，由生成式 AI 分析所有待處理訂單，自動排列最佳煮麵順序，包含每碗麵的茹で時間。結果：出餐速度加快 30 秒、麵的口感更一致。最酷的是他們設計了三層備援——雲端掛了就切本地系統，本地也掛了就靠老師傅。被問到會不會出問題？山岡家的回答是：<strong>「そんなヤワじゃありません」（我們沒那麼脆弱）。</strong></p>
-        <p class="news-source"><a href="https://www.itmedia.co.jp/aiplus/articles/2506/27/news088.html" target="_blank">ITmedia AI+</a> / <a href="https://aws.amazon.com/jp/blogs/news/aws-serverless-yamaokaya-kitchen/" target="_blank">AWS Japan Blog</a></p>
+        <p class="news-body">日本連鎖拉麵山岡家最近導入了 Amazon Bedrock 的 AI 系統，專門計算廚房裡同時煮多碗麵時的最佳下鍋順序。每碗麵的粗細、湯底、配料都不同，AI 會即時排出最有效率的組合。</p>
+        <p class="news-body">結果：平均每碗麵的出餐時間少了約 30 秒，麵的口感也更一致。但有趣的是，這個判斷以前是煮麵師傅靠經驗做的——老師傅一眼掃過去就知道先煮哪碗、後煮哪碗。現在 AI 做這件事，更快也更準，但師傅的那個「一眼」，就此消失了。</p>
+        <p class="news-body">山岡家倒是留了一手：系統設計了三層備援，雲端掛了就切本地，本地也掛了就靠老師傅。被問到會不會出問題？回答是：<strong>「そんなヤワじゃありません」（我們沒那麼脆弱）。</strong></p>
+        <p class="news-source">完整原文內容 → < href="https://www.itmedia.co.jp/aiplus/articles/2506/27/news088.html" target="_blank">ITmedia AI+</a> / <a href="https://aws.amazon.com/jp/blogs/news/aws-serverless-yamaokaya-kitchen/" target="_blank">AWS Japan Blog</a>（日文）</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🇹🇭</span> <a href="demo-issue-001-easyrice.html">一粒米也不放過：泰國 AI 新創 3 分鐘搞定傳統 20 分鐘的稻米品檢</a></h3>
+        <h3><span class="news-flag">🇹🇭</span> 泰國稻農過去靠眼睛分好壞米，現在 AI 兩秒就看完一批</h3>
         <div class="news-tags">
           <span class="tag tag-tech">🔬 食品科技</span>
           <span class="tag tag-supply">🌾 供應鏈</span>
         </div>
-        <p class="news-context">泰國新創 EasyRice 用電腦視覺做稻米品質檢測——3-5 分鐘分析 25 公克米粒的品質與污染程度，傳統人工需要 15-20 分鐘。準確率 95%，速度是人工的 10 倍。一年內拿下泰國米出口 30% 的檢測市場。更厲害的是，它能辨識 84 種泰國稻米品種。創辦人 Phuvin 說：「AI 不會取代檢測員，因為最終仍需由人來認證。」</p>
-        <p class="news-source"><a href="https://www.bangkokpost.com/business/general/2632183/easyrice-uses-artificial-intelligence-for-food-revolution" target="_blank">Bangkok Post</a> / <a href="https://thethaiger.com/hot-news/technology/easyrice-transforms-thai-rice-industry-with-ai-powered-inspection-solutions" target="_blank">The Thaiger</a></p>
+        <p class="news-body">泰國新創 EasyRice 做了一件事：用電腦視覺取代人眼做稻米品質檢測。傳統的方式是檢測員拿著放大鏡一粒一粒看，25 公克的米要花 15 到 20 分鐘。EasyRice 的機器 3 到 5 分鐘就搞定，準確率 95%。</p>
+        <p class="news-body">更厲害的是，它能辨識 84 種泰國稻米品種。一年內就拿下了泰國米出口 30% 的檢測市場。對一個農業大國來說，這不是小事。</p>
+        <p class="news-body">創辦人 Phuvin 說了一句話：「AI 不會取代檢測員，因為最終仍需由人來認證。」這句話聽起來像是在安慰人，但他可能是認真的——在食品安全這件事上，最後簽名的那個人，暫時還不能是機器。</p>
+        <p class="news-source">完整原文內容 → < href="https://www.bangkokpost.com/business/general/2632183/easyrice-uses-artificial-intelligence-for-food-revolution" target="_blank">Bangkok Post</a> / <a href="https://thethaiger.com/hot-news/technology/easyrice-transforms-thai-rice-industry-with-ai-powered-inspection-solutions" target="_blank">The Thaiger</a>（英文）</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🧠</span> <a href="demo-issue-001-thimus.html">你的大腦其實不喜歡植物肉，即使你嘴上說喜歡</a></h3>
+        <h3><span class="news-flag">🇮🇹</span> 你的大腦覺得植物肉很好吃，但你的腦波說不是</h3>
         <div class="news-tags">
           <span class="tag tag-tech">🔬 食品科技</span>
         </div>
-        <p class="news-context">義大利新創 THIMUS 用 EEG 腦波頭帶測量消費者吃東西時的真實反應。結果發現：人們在社會壓力下會說「當然喜歡植物漢堡，我要救地球」，但腦波數據顯示大腦其實並不買單。創辦人 Mario Ubiali 說：「大腦傾向追求熟悉和舒適的食物體驗。」這項技術每秒取樣 251 次腦波，正在改變食品公司測試新品的方式。</p>
-        <p class="news-source"><a href="https://thespoon.tech/the-future-of-food-testing-may-be-in-your-brainwaves/" target="_blank">The Spoon・2026.03.13</a></p>
+        <p class="news-body">義大利新創 THIMUS 做了一個實驗：讓人們戴著 EEG 腦波頭帶吃東西，看看大腦的真實反應。結果很有意思——人們在社會壓力下會說「當然喜歡植物漢堡，我要救地球」，但腦波數據說的是另一回事。</p>
+        <p class="news-body">創辦人 Mario Ubiali 的解釋是：大腦傾向追求熟悉和舒適的食物體驗。你的嘴巴可以配合社會期待，但你的神經迴路不會。這項技術每秒取樣 251 次腦波，正在改變食品公司測試新品的方式——以前問你「好不好吃」，現在直接看你的大腦覺得好不好吃。</p>
+        <p class="news-body">如果有一天，餐廳的菜單不是根據你說了什麼來設計，而是根據你的大腦真正想要什麼呢？</p>
+        <p class="news-source">完整原文內容 → < href="https://thespoon.tech/the-future-of-food-testing-may-be-in-your-brainwaves/" target="_blank">The Spoon・2026.03.13</a>（英文）</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🇰🇷</span> <a href="demo-issue-001-norang.html">韓國炸雞品牌用生成式 AI 拍了一整支廣告，零真人參與</a></h3>
+        <h3><span class="news-flag">🇰🇷</span> 這支炸雞廣告從頭到尾沒有一個真人參與製作</h3>
         <div class="news-tags">
           <span class="tag tag-ops">🏪 餐廳經營</span>
         </div>
-        <p class="news-context">노랑통닭（Norang Tongdak）為新品「우도 땅콩 치킨」（牛島花生炸雞）製作了一支廣告，從角色設計、影片導演到音樂製作，全程使用生成式 AI。以濟州島特產為靈感的卡通角色和品牌吉祥物在片中「合作」推薦產品——整支廣告沒有一個真人參與製作。</p>
-        <p class="news-source"><a href="https://www.youthdaily.co.kr/news/article.html?no=215542" target="_blank">청년일보・2026.03.17</a></p>
+        <p class="news-body">韓國連鎖炸雞品牌노랑통닭（Norang Tongdak）為新品「牛島花生炸雞」做了一支廣告。從角色設計、分鏡、影片導演到配樂，全部由生成式 AI 完成。以濟州島特產為靈感的卡通角色在片中跟品牌吉祥物一起推薦產品。</p>
+        <p class="news-body">整支廣告的品質不差，至少在社群上引起了話題。但這件事真正值得注意的不是「AI 也能拍廣告了」——而是對一間連鎖炸雞店來說，行銷預算有限，以前請不起拍片團隊的品牌，現在可以自己做了。門檻降低，對小品牌來說是機會，對廣告公司來說是警訊。</p>
+        <p class="news-source">完整原文內容 → < href="https://www.youthdaily.co.kr/news/article.html?no=215542" target="_blank">청년일보・2026.03.17</a>（韓文）</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🌾</span> <a href="demo-issue-001-cargill.html">Cargill 用 Boston Dynamics 的機器狗巡檢食品工廠</a></h3>
+        <h3><span class="news-flag">🇳🇱</span> 阿姆斯特丹的食品工廠裡，巡檢員有四條腿</h3>
         <div class="news-tags">
           <span class="tag tag-supply">🌾 供應鏈</span>
         </div>
-        <p class="news-context">全球最大農產品貿易商 Cargill 在阿姆斯特丹的加工廠部署了 AI 驅動的 Spot 機器狗，每週執行約一萬次安全與設備巡檢。他們的 R&D 副總裁說了一句值得記住的話：「AI 在增強專家判斷時才能發揮最大價值，而不是取代它。」</p>
-        <p class="news-source"><a href="https://agfundernews.com/cargills-new-robot-dog-is-one-part-of-a-much-larger-shift-towards-responsible-ai" target="_blank">AgFunder News</a></p>
+        <p class="news-body">全球最大農產品貿易商 Cargill 在阿姆斯特丹的加工廠裡，部署了 Boston Dynamics 的 Spot 機器狗做安全巡檢。這隻機器狗每週執行大約一萬次檢查——偵測設備異常、溫度變化、洩漏風險。它不會累、不會漏看、也不會因為週五下午就想早點下班。</p>
+        <p class="news-body">不過 Cargill 的 R&D 副總裁說了一句值得記住的話：「AI 在增強專家判斷時才能發揮最大價值，而不是取代它。」機器狗巡檢完，最後做決策的還是人。至少目前是這樣。</p>
+        <p class="news-source">完整原文內容 → < href="https://agfundernews.com/cargills-new-robot-dog-is-one-part-of-a-much-larger-shift-towards-responsible-ai" target="_blank">AgFunder News</a>（英文）</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🤖</span> <a href="demo-issue-001-posha.html">人形機器人不會來幫你做飯——至少現在不會</a></h3>
+        <h3><span class="news-flag">🇺🇸</span> 人形機器人不會來幫你做飯——但一台桌上型的可能會</h3>
         <div class="news-tags">
           <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
           <span class="tag tag-tech">🔬 食品科技</span>
         </div>
-        <p class="news-context">CES 上展出的人形機器人很酷，但真正有可能走進家庭廚房的是檯面型料理機器人。新創 Posha 的 CEO 把自家產品比喻為「Thermomix plus plus」：你不用再站在旁邊盯了，就像自駕車一樣，你可以放手。Nosh 在 Kickstarter 上募了超過 80 萬美元。</p>
-        <p class="news-source"><a href="https://thespoon.tech/humanoid-robots-are-coming-just-not-to-cook-your-dinner-at-least-not-yet/" target="_blank">The Spoon・2026.03.17</a></p>
+        <p class="news-body">CES 上那些人形機器人看起來很酷，但離走進你家廚房還很遠。真正有可能先到的，是放在檯面上的料理機器人。新創 Posha 的 CEO 把自家產品形容為「Thermomix plus plus」——你把食材丟進去，它自己煮，你不用站在旁邊盯。就像自駕車一樣，你可以放手。</p>
+        <p class="news-body">另一家新創 Nosh 在 Kickstarter 上募了超過 80 萬美元，也是走這個路線。看起來消費者對「不用顧爐子」這件事，是真的願意掏錢的。</p>
+        <p class="news-body">不過也有人問：如果煮飯這件事完全交給機器，那「下廚」這個動詞，還剩下什麼意思？</p>
+        <p class="news-source">完整原文內容 → < href="https://thespoon.tech/humanoid-robots-are-coming-just-not-to-cook-your-dinner-at-least-not-yet/" target="_blank">The Spoon・2026.03.17</a>（英文）</p>
       </div>
 
     </section>
