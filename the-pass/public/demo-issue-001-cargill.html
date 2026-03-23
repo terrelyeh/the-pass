@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargill 用機器狗巡檢食品工廠 — The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+    :root { --color-ink: #2C3345; --color-ink-light: #5A6178; --color-ink-muted: #8B90A0; --color-bg: #FAFAF8; --color-bg-warm: #F5F3EF; --color-accent: #B8860B; --color-accent-light: #D4A843; --color-border: #E8E6E1; --color-white: #FFFFFF; --font-serif: 'Noto Serif TC', 'Georgia', serif; --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif; --font-display: 'Playfair Display', var(--font-serif); --max-width: 850px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; } html { font-size: 17px; }
+    body { font-family: var(--font-sans); color: var(--color-ink); background: var(--color-bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+    nav .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    nav .brand { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+    nav .back-link { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    nav .back-link:hover { color: var(--color-accent); }
+    .tag { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; border-radius: 100px; padding: 0.15rem 0.7rem; margin-right: 0.25rem; }
+    .tag-supply { color: #D97706; background: rgba(217,119,6,0.08); }
+    .editor-byline { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); margin-bottom: 0.75rem; }
+    .editor-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 700; color: var(--color-white); }
+    .avatar-passe { background: #B8860B; } .avatar-fumet { background: #7C3AED; }
+    .editor-name { font-weight: 600; color: var(--color-ink-light); } .editor-role { color: var(--color-ink-muted); }
+    .article-header { max-width: var(--max-width); margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .article-header .meta-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .article-header .date { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); }
+    .article-header .country-tag { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); border: 1px solid var(--color-accent-light); border-radius: 100px; padding: 0.15rem 0.625rem; }
+    .article-header h1 { font-family: var(--font-serif); font-size: clamp(1.625rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.45; color: var(--color-ink); margin-bottom: 1rem; }
+    .article-header .lead { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.9; color: var(--color-ink-light); }
+    .article-body { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; }
+    .article-body p { font-family: var(--font-serif); font-size: 1.125rem; line-height: 2; color: var(--color-ink); margin-bottom: 1.5rem; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); font-weight: 500; margin-top: 3rem; margin-bottom: 1.25rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .article-body .pullquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--color-bg-warm); border-left: 3px solid var(--color-accent); border-radius: 0 6px 6px 0; }
+    .article-body .pullquote p { font-style: italic; color: var(--color-ink); margin-bottom: 0; line-height: 1.9; }
+    .article-body .pullquote .quote-attr { font-style: normal; font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); margin-top: 0.5rem; display: block; }
+    .detail-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem 1.75rem; margin: 1.5rem 0; }
+    .detail-card h4 { font-family: var(--font-sans); font-size: 0.9375rem; font-weight: 700; color: var(--color-ink); margin-bottom: 0.75rem; }
+    .detail-card ul { list-style: none; padding: 0; }
+    .detail-card ul li { font-family: var(--font-serif); font-size: 1rem; line-height: 1.8; color: var(--color-ink); padding: 0.375rem 0 0.375rem 1.25rem; position: relative; }
+    .detail-card ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); }
+    .question-block { margin: 2.5rem 0; padding: 2rem; background: var(--color-ink); color: var(--color-white); border-radius: 8px; }
+    .question-block .qb-byline { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-family: var(--font-sans); font-size: 0.8125rem; }
+    .question-block .qb-byline .editor-name { color: rgba(255,255,255,0.6); } .question-block .qb-byline .editor-role { color: rgba(255,255,255,0.4); }
+    .question-block p { color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-family: var(--font-serif); font-size: 1.125rem; line-height: 1.9; }
+    .question-block p:last-child { margin-bottom: 0; } .question-block strong { color: var(--color-accent-light); }
+    .sources { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .sources h2 { border-top: none; padding-top: 0; margin-top: 0; }
+    .source-item { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.5rem 0; }
+    .source-item .source-lang { flex-shrink: 0; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; color: var(--color-ink-muted); background: var(--color-bg-warm); border-radius: 3px; padding: 0.1rem 0.375rem; }
+    .source-item a { font-family: var(--font-sans); font-size: 0.9375rem; color: var(--color-ink-light); text-decoration: none; }
+    .source-item a:hover { color: var(--color-accent); }
+    footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--color-border); }
+    footer p { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); } footer a { color: var(--color-accent); text-decoration: none; }
+    @media (max-width: 840px) { .article-header { padding: 2rem 1.25rem 1.5rem; } .article-body { padding: 0 1.25rem 2rem; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="demo-issue-001.html" class="brand">The Pass</a><a href="demo-issue-001.html" class="back-link">← 返回本期日報</a></div></nav>
+
+  <header class="article-header">
+    <div class="meta-row">
+      <span class="date">2026.03.23</span>
+      <span class="tag tag-supply">🌾 供應鏈</span>
+      <span class="country-tag">🇳🇱 荷蘭</span>
+    </div>
+    <div class="editor-byline"><span class="editor-avatar avatar-passe">P</span><span class="editor-name">Passe</span><span class="editor-role">— 快訊編輯</span></div>
+    <h1>Cargill 用 Boston Dynamics 的機器狗巡檢食品工廠</h1>
+    <p class="lead">全球最大農產品貿易商在阿姆斯特丹的加工廠裡放了一隻四足機器人。它不做飯、不搬貨——它巡邏。每週一萬次。</p>
+  </header>
+
+  <div class="article-body">
+    <p>Cargill 是全球最大的私人控股公司之一，年營收超過 1,600 億美元。他們處理的食品原料——穀物、油脂、肉品——最終流向全世界的餐桌。</p>
+
+    <p>在阿姆斯特丹的可可與巧克力加工廠裡，他們部署了 Boston Dynamics 的 Spot 機器狗。這隻四足機器人搭載了 AI 驅動的感測器，每天自動巡檢工廠環境。</p>
+
+    <div class="detail-card">
+      <h4>🐕 Spot 在 Cargill 做什麼</h4>
+      <ul>
+        <li>每週執行約 <strong>10,000 次</strong>安全與設備巡檢</li>
+        <li>AI 視覺辨識異常——漏液、溫度異常、設備損耗</li>
+        <li>能進入人類不方便到達的區域（高溫、狹窄、高處）</li>
+        <li>24/7 自動運行，不需要人類陪同</li>
+        <li>巡檢數據即時上傳，AI 分析趨勢並預測潛在問題</li>
+      </ul>
+    </div>
+
+    <h2>「增強，而非取代」</h2>
+
+    <div class="pullquote">
+      <p>「AI 在增強專家判斷時才能發揮最大價值，而不是取代它。」</p>
+      <span class="quote-attr">— Cargill R&D 副總裁</span>
+    </div>
+
+    <p>這句話值得每一個正在導入 AI 的餐飲企業記住。Cargill 沒有說「我們用 AI 取代了巡檢員」，而是說「AI 讓巡檢員能把時間花在更重要的判斷上」。</p>
+
+    <p>機器狗看到一個異常溫度讀數，它會標記。但要不要停機檢修、什麼時候修、會影響哪些產線——這些決定還是人做的。</p>
+
+    <h2>食品供應鏈的 AI 浪潮</h2>
+
+    <p>Cargill 不是唯一一個。全球食品供應鏈的上游——加工、倉儲、物流——正在快速擁抱 AI 自動化。因為在這些環節，效率和安全的提升可以直接換算成數字：更少的停機時間、更低的事故率、更少的食安風險。</p>
+
+    <p>當我們討論「AI 進入餐飲業」時，很容易只想到餐廳裡的機器人。但真正大規模改變食物的 AI，可能是在你看不到的地方——工廠、冷鏈、倉庫。在食物抵達你的餐桌之前很久，AI 就已經「碰」過它了。</p>
+
+    <div class="question-block">
+      <div class="qb-byline"><span class="editor-avatar avatar-fumet">F</span><span class="editor-name">Fumet</span><span class="editor-role">— 提問者</span></div>
+      <p>我們對食物的信任，建立在「有人在把關」的信念上。當把關的「人」變成機器狗——</p>
+      <p><strong>你會更安心，還是更不安？</strong></p>
+    </div>
+
+    <div class="sources">
+      <h2>原始來源</h2>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://agfundernews.com/cargills-new-robot-dog-is-one-part-of-a-much-larger-shift-towards-responsible-ai" target="_blank">AgFunder News — Cargill's new robot dog is 'one part of a much larger shift' towards 'responsible' AI</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://bostondynamics.com/case-studies/spot-at-cargill/" target="_blank">Boston Dynamics — Spot at Cargill（案例研究）</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>The Pass — AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
+    <a href="demo-issue-001.html">← 返回本期日報</a> ・ <a href="methodology.html">方法論</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>泰國 AI 新創 EasyRice 稻米品檢 — The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+    :root {
+      --color-ink: #2C3345; --color-ink-light: #5A6178; --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8; --color-bg-warm: #F5F3EF; --color-accent: #B8860B;
+      --color-accent-light: #D4A843; --color-border: #E8E6E1; --color-white: #FFFFFF;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Playfair Display', var(--font-serif);
+      --max-width: 850px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    body { font-family: var(--font-sans); color: var(--color-ink); background: var(--color-bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+    nav .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    nav .brand { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+    nav .back-link { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    nav .back-link:hover { color: var(--color-accent); }
+    .tag { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; border-radius: 100px; padding: 0.15rem 0.7rem; margin-right: 0.25rem; }
+    .tag-tech { color: #6366F1; background: rgba(99,102,241,0.08); }
+    .tag-supply { color: #D97706; background: rgba(217,119,6,0.08); }
+    .editor-byline { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); margin-bottom: 0.75rem; }
+    .editor-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 700; color: var(--color-white); }
+    .avatar-passe { background: #B8860B; }
+    .avatar-fumet { background: #7C3AED; }
+    .editor-name { font-weight: 600; color: var(--color-ink-light); }
+    .editor-role { color: var(--color-ink-muted); }
+    .article-header { max-width: var(--max-width); margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .article-header .meta-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .article-header .date { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); }
+    .article-header .country-tag { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); border: 1px solid var(--color-accent-light); border-radius: 100px; padding: 0.15rem 0.625rem; }
+    .article-header h1 { font-family: var(--font-serif); font-size: clamp(1.625rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.45; color: var(--color-ink); margin-bottom: 1rem; }
+    .article-header .lead { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.9; color: var(--color-ink-light); }
+    .article-body { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; }
+    .article-body p { font-family: var(--font-serif); font-size: 1.125rem; line-height: 2; color: var(--color-ink); margin-bottom: 1.5rem; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); font-weight: 500; margin-top: 3rem; margin-bottom: 1.25rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .article-body .pullquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--color-bg-warm); border-left: 3px solid var(--color-accent); border-radius: 0 6px 6px 0; }
+    .article-body .pullquote p { font-style: italic; color: var(--color-ink); margin-bottom: 0; line-height: 1.9; }
+    .article-body .pullquote .quote-attr { font-style: normal; font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); margin-top: 0.5rem; display: block; }
+    .detail-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem 1.75rem; margin: 1.5rem 0; }
+    .detail-card h4 { font-family: var(--font-sans); font-size: 0.9375rem; font-weight: 700; color: var(--color-ink); margin-bottom: 0.75rem; }
+    .detail-card ul { list-style: none; padding: 0; }
+    .detail-card ul li { font-family: var(--font-serif); font-size: 1rem; line-height: 1.8; color: var(--color-ink); padding: 0.375rem 0 0.375rem 1.25rem; position: relative; }
+    .detail-card ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); }
+    .question-block { margin: 2.5rem 0; padding: 2rem; background: var(--color-ink); color: var(--color-white); border-radius: 8px; }
+    .question-block .qb-byline { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-family: var(--font-sans); font-size: 0.8125rem; }
+    .question-block .qb-byline .editor-name { color: rgba(255,255,255,0.6); }
+    .question-block .qb-byline .editor-role { color: rgba(255,255,255,0.4); }
+    .question-block p { color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-family: var(--font-serif); font-size: 1.125rem; line-height: 1.9; }
+    .question-block p:last-child { margin-bottom: 0; }
+    .question-block strong { color: var(--color-accent-light); }
+    .sources { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .sources h2 { border-top: none; padding-top: 0; margin-top: 0; }
+    .source-item { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.5rem 0; }
+    .source-item .source-lang { flex-shrink: 0; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; color: var(--color-ink-muted); background: var(--color-bg-warm); border-radius: 3px; padding: 0.1rem 0.375rem; }
+    .source-item a { font-family: var(--font-sans); font-size: 0.9375rem; color: var(--color-ink-light); text-decoration: none; }
+    .source-item a:hover { color: var(--color-accent); }
+    footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--color-border); }
+    footer p { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); }
+    footer a { color: var(--color-accent); text-decoration: none; }
+    @media (max-width: 840px) { .article-header { padding: 2rem 1.25rem 1.5rem; } .article-body { padding: 0 1.25rem 2rem; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="demo-issue-001.html" class="brand">The Pass</a><a href="demo-issue-001.html" class="back-link">← 返回本期日報</a></div></nav>
+
+  <header class="article-header">
+    <div class="meta-row">
+      <span class="date">2026.03.23</span>
+      <span class="tag tag-tech">🔬 食品科技</span>
+      <span class="tag tag-supply">🌾 供應鏈</span>
+      <span class="country-tag">🇹🇭 泰國</span>
+    </div>
+    <div class="editor-byline">
+      <span class="editor-avatar avatar-passe">P</span>
+      <span class="editor-name">Passe</span>
+      <span class="editor-role">— 快訊編輯</span>
+    </div>
+    <h1>一粒米也不放過：泰國 AI 新創 3 分鐘搞定傳統 20 分鐘的稻米品檢</h1>
+    <p class="lead">EasyRice 用電腦視覺守護泰國最重要的出口商品。當全世界討論 AI 要取代誰的工作時，這家曼谷新創選了一條不同的路：讓 AI 成為檢測員的眼睛，而不是替代品。</p>
+  </header>
+
+  <div class="article-body">
+    <p>泰國是全球最大的稻米出口國之一。每一批出口的米，都必須經過嚴格的品質檢測——品種純度、濕度、損壞程度、有無污染。這個工作長期以來由人工完成：一位經驗豐富的檢測員拿起一小把米，逐粒檢查，花 15 到 20 分鐘。</p>
+
+    <p>問題是，願意做這份重複性極高的工作的年輕人越來越少。而泰國的米，一刻都停不下來。</p>
+
+    <p>2019 年，31 歲的 Phuvin Kongsawat 和一群科技研究者創立了 EasyRice。他們開發了一套 AI 視覺檢測系統，做的事跟檢測員完全一樣——只是快了 10 倍。</p>
+
+    <div class="detail-card">
+      <h4>📊 EasyRice 的能力</h4>
+      <ul>
+        <li><strong>3-5 分鐘</strong>完成 25 公克米粒的品質、濕度與污染檢測（傳統人工需 15-20 分鐘）</li>
+        <li>準確率 <strong>95%</strong></li>
+        <li>能辨識 <strong>84 種泰國稻米品種</strong>的純度</li>
+        <li>一年內拿下泰國米出口 <strong>30%</strong> 的檢測市場份額</li>
+        <li>檢測超過 <strong>600 萬噸</strong>稻穀</li>
+        <li>每年為產業節省約 <strong>456 萬美元</strong>的退貨成本</li>
+      </ul>
+    </div>
+
+    <h2>AI 不會取代檢測員</h2>
+
+    <div class="pullquote">
+      <p>「AI 不會取代米質檢測員，因為最終仍需由他們認證。AI 是幫助他們工作更快，克服檢測人員短缺的問題。」</p>
+      <span class="quote-attr">— Phuvin Kongsawat，EasyRice 創辦人暨 CEO</span>
+    </div>
+
+    <p>這句話值得記住。在很多 AI 新創急著說「我們要顛覆整個產業」的時候，EasyRice 很清楚自己的定位：我們是工具，不是替代品。最終蓋章的還是人。</p>
+
+    <h2>為什麼這件事對泰國特別重要</h2>
+
+    <p>稻米不只是泰國的出口商品，它是國家認同的一部分。泰國香米（Mali 105）是全球最知名的米種之一。每一批出口的品質，直接影響「泰國米」這三個字在全世界消費者心中的信任。</p>
+
+    <p>一粒被誤判的米、一批不合格的貨，代價是整個國家品牌的信譽。EasyRice 做的事，不只是讓檢測更快，而是讓「泰國米」這個承諾更可靠。</p>
+
+    <p>2026 年，EasyRice 正在開發 AI 稻米育種技術——從品檢走向育種，從守護品質走向創造品質。</p>
+
+    <div class="question-block">
+      <div class="qb-byline">
+        <span class="editor-avatar avatar-fumet">F</span>
+        <span class="editor-name">Fumet</span>
+        <span class="editor-role">— 提問者</span>
+      </div>
+      <p>臺灣也是稻米之島。如果有一天 AI 能在幾分鐘內辨識池上米和其他產區的米，精準到人類檢測員做不到的程度——</p>
+      <p><strong>「產地」這個概念，會因為 AI 的精確而更有價值，還是反而變得不再重要？</strong></p>
+    </div>
+
+    <div class="sources">
+      <h2>原始來源</h2>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://www.bangkokpost.com/business/general/2632183/easyrice-uses-artificial-intelligence-for-food-revolution" target="_blank">Bangkok Post — Easyrice uses artificial intelligence for food revolution</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://thethaiger.com/hot-news/technology/easyrice-transforms-thai-rice-industry-with-ai-powered-inspection-solutions" target="_blank">The Thaiger — Easyrice transforms Thai rice industry with AI-powered inspection solutions</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://www.acceleratingasia.com/latest-news/acceleratingasia-founder-story-easyrice-c7" target="_blank">Accelerating Asia — Founder Story: EasyRice</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>The Pass — AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
+    <a href="demo-issue-001.html">← 返回本期日報</a> ・ <a href="methodology.html">方法論</a></p>
+  </footer>
+</body>
+</html>

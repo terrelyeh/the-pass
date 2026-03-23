@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>人形機器人不會來幫你做飯 — The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+    :root { --color-ink: #2C3345; --color-ink-light: #5A6178; --color-ink-muted: #8B90A0; --color-bg: #FAFAF8; --color-bg-warm: #F5F3EF; --color-accent: #B8860B; --color-accent-light: #D4A843; --color-border: #E8E6E1; --color-white: #FFFFFF; --font-serif: 'Noto Serif TC', 'Georgia', serif; --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif; --font-display: 'Playfair Display', var(--font-serif); --max-width: 850px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; } html { font-size: 17px; }
+    body { font-family: var(--font-sans); color: var(--color-ink); background: var(--color-bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+    nav .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    nav .brand { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+    nav .back-link { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    nav .back-link:hover { color: var(--color-accent); }
+    .tag { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; border-radius: 100px; padding: 0.15rem 0.7rem; margin-right: 0.25rem; }
+    .tag-tech { color: #6366F1; background: rgba(99,102,241,0.08); }
+    .tag-kitchen { color: #DC2626; background: rgba(220,38,38,0.08); }
+    .editor-byline { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); margin-bottom: 0.75rem; }
+    .editor-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 700; color: var(--color-white); }
+    .avatar-passe { background: #B8860B; } .avatar-fumet { background: #7C3AED; }
+    .editor-name { font-weight: 600; color: var(--color-ink-light); } .editor-role { color: var(--color-ink-muted); }
+    .article-header { max-width: var(--max-width); margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .article-header .meta-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .article-header .date { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); }
+    .article-header .country-tag { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); border: 1px solid var(--color-accent-light); border-radius: 100px; padding: 0.15rem 0.625rem; }
+    .article-header h1 { font-family: var(--font-serif); font-size: clamp(1.625rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.45; color: var(--color-ink); margin-bottom: 1rem; }
+    .article-header .lead { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.9; color: var(--color-ink-light); }
+    .article-body { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; }
+    .article-body p { font-family: var(--font-serif); font-size: 1.125rem; line-height: 2; color: var(--color-ink); margin-bottom: 1.5rem; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); font-weight: 500; margin-top: 3rem; margin-bottom: 1.25rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .detail-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem 1.75rem; margin: 1.5rem 0; }
+    .detail-card h4 { font-family: var(--font-sans); font-size: 0.9375rem; font-weight: 700; color: var(--color-ink); margin-bottom: 0.75rem; }
+    .detail-card ul { list-style: none; padding: 0; }
+    .detail-card ul li { font-family: var(--font-serif); font-size: 1rem; line-height: 1.8; color: var(--color-ink); padding: 0.375rem 0 0.375rem 1.25rem; position: relative; }
+    .detail-card ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); }
+    .question-block { margin: 2.5rem 0; padding: 2rem; background: var(--color-ink); color: var(--color-white); border-radius: 8px; }
+    .question-block .qb-byline { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-family: var(--font-sans); font-size: 0.8125rem; }
+    .question-block .qb-byline .editor-name { color: rgba(255,255,255,0.6); } .question-block .qb-byline .editor-role { color: rgba(255,255,255,0.4); }
+    .question-block p { color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-family: var(--font-serif); font-size: 1.125rem; line-height: 1.9; }
+    .question-block p:last-child { margin-bottom: 0; } .question-block strong { color: var(--color-accent-light); }
+    .sources { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .sources h2 { border-top: none; padding-top: 0; margin-top: 0; }
+    .source-item { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.5rem 0; }
+    .source-item .source-lang { flex-shrink: 0; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; color: var(--color-ink-muted); background: var(--color-bg-warm); border-radius: 3px; padding: 0.1rem 0.375rem; }
+    .source-item a { font-family: var(--font-sans); font-size: 0.9375rem; color: var(--color-ink-light); text-decoration: none; }
+    .source-item a:hover { color: var(--color-accent); }
+    footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--color-border); }
+    footer p { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); } footer a { color: var(--color-accent); text-decoration: none; }
+    @media (max-width: 840px) { .article-header { padding: 2rem 1.25rem 1.5rem; } .article-body { padding: 0 1.25rem 2rem; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="demo-issue-001.html" class="brand">The Pass</a><a href="demo-issue-001.html" class="back-link">← 返回本期日報</a></div></nav>
+
+  <header class="article-header">
+    <div class="meta-row">
+      <span class="date">2026.03.23</span>
+      <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
+      <span class="tag tag-tech">🔬 食品科技</span>
+      <span class="country-tag">🇺🇸 美國</span>
+    </div>
+    <div class="editor-byline"><span class="editor-avatar avatar-passe">P</span><span class="editor-name">Passe</span><span class="editor-role">— 快訊編輯</span></div>
+    <h1>人形機器人不會來幫你做飯——至少現在不會</h1>
+    <p class="lead">CES 上的人形機器人看起來很酷，但離走進廚房還很遠。真正正在改變家庭烹飪的，是一種你可能沒聽過的東西：檯面型料理機器人。</p>
+  </header>
+
+  <div class="article-body">
+    <p>每年 CES 上都有幾台人形機器人引爆話題。它們能走路、能揮手、能做出翻炒的動作。媒體標題寫著：「機器人來煮你的晚餐了！」</p>
+
+    <p>現實是：不會的。至少不是現在。</p>
+
+    <p>人形機器人要處理廚房的環境——滑膩的地板、各種形狀的鍋碗、需要精準力道控制的刀工——技術上還差太遠。更不用說一台人形機器人的成本，可以開一間餐廳。</p>
+
+    <h2>真正在發生的事</h2>
+
+    <p>相比之下，檯面型料理機器人（countertop cooking robots）已經開始走進真實的廚房了。它們不像人，更像是一個「會自己攪拌、控溫、計時的鍋子」。</p>
+
+    <div class="detail-card">
+      <h4>🤖 兩家值得關注的新創</h4>
+      <ul>
+        <li><strong>Posha：</strong>CEO 把它比喻為「Thermomix plus plus」——你把食材放進去，設定好，然後去做別的事。「就像自駕車一樣，你可以放手。」</li>
+        <li><strong>Nosh：</strong>在 Kickstarter 上募資超過 <strong>80 萬美元</strong>。它能自動攪拌、加熱、控溫，號稱「你的私人廚師」</li>
+      </ul>
+    </div>
+
+    <h2>為什麼這比人形機器人重要</h2>
+
+    <p>人形機器人是科幻片裡的夢想。檯面型料理機器人解決的是真實的問題：忙碌的家庭、不會做飯的人、獨居長者。</p>
+
+    <p>它不需要長得像人。它需要做的只有一件事——在你不在的時候，把飯做好。</p>
+
+    <p>從 Thermomix 到 Posha 到 Nosh，家庭烹飪自動化的演進路線越來越清楚：不是把廚師帶進你的廚房，而是讓你的鍋子變聰明。</p>
+
+    <div class="question-block">
+      <div class="qb-byline"><span class="editor-avatar avatar-fumet">F</span><span class="editor-name">Fumet</span><span class="editor-role">— 提問者</span></div>
+      <p>當機器能做出一頓「夠好」的飯——溫度精準、調味一致、不會失敗——</p>
+      <p><strong>「自己煮飯」這件事，會從日常變成奢侈嗎？就像手工麵包和機器麵包的關係一樣。</strong></p>
+    </div>
+
+    <div class="sources">
+      <h2>原始來源</h2>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://thespoon.tech/humanoid-robots-are-coming-just-not-to-cook-your-dinner-at-least-not-yet/" target="_blank">The Spoon — Humanoid Robots Are Coming, Just Not to Cook Your Dinner (At Least Not Yet)</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://thespoon.tech/is-posha-the-robotic-heir-to-the-thermomix-the-founder-sure-hope-so/" target="_blank">The Spoon — Is Posha the Robotic Heir to the Thermomix?</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>The Pass — AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
+    <a href="demo-issue-001.html">← 返回本期日報</a> ・ <a href="methodology.html">方法論</a></p>
+  </footer>
+</body>
+</html>

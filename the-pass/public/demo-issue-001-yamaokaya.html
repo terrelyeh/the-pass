@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>山岡家用 AI 排煮麵順序 — The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+    :root {
+      --color-ink: #2C3345; --color-ink-light: #5A6178; --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8; --color-bg-warm: #F5F3EF; --color-accent: #B8860B;
+      --color-accent-light: #D4A843; --color-border: #E8E6E1; --color-white: #FFFFFF;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Playfair Display', var(--font-serif);
+      --max-width: 850px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    body { font-family: var(--font-sans); color: var(--color-ink); background: var(--color-bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+    nav .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    nav .brand { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+    nav .back-link { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    nav .back-link:hover { color: var(--color-accent); }
+    .tag { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; border-radius: 100px; padding: 0.15rem: 0.7rem; margin-right: 0.25rem; }
+    .tag-tech { color: #6366F1; background: rgba(99,102,241,0.08); padding: 0.15rem 0.7rem; }
+    .tag-ops { color: #059669; background: rgba(5,150,105,0.08); padding: 0.15rem 0.7rem; }
+    .tag-supply { color: #D97706; background: rgba(217,119,6,0.08); padding: 0.15rem 0.7rem; }
+    .tag-kitchen { color: #DC2626; background: rgba(220,38,38,0.08); padding: 0.15rem 0.7rem; }
+    .tag-biz { color: #7C3AED; background: rgba(124,58,237,0.08); padding: 0.15rem 0.7rem; }
+    .tag-culture { color: #B8860B; background: rgba(184,134,11,0.08); padding: 0.15rem 0.7rem; }
+    .editor-byline { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); margin-bottom: 0.75rem; }
+    .editor-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 700; color: var(--color-white); }
+    .avatar-passe { background: #B8860B; }
+    .avatar-fumet { background: #7C3AED; }
+    .editor-name { font-weight: 600; color: var(--color-ink-light); }
+    .editor-role { color: var(--color-ink-muted); }
+    .article-header { max-width: var(--max-width); margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .article-header .meta-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .article-header .date { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); }
+    .article-header .country-tag { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); border: 1px solid var(--color-accent-light); border-radius: 100px; padding: 0.15rem 0.625rem; }
+    .article-header h1 { font-family: var(--font-serif); font-size: clamp(1.625rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.45; color: var(--color-ink); margin-bottom: 1rem; }
+    .article-header .lead { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.9; color: var(--color-ink-light); }
+    .article-body { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; }
+    .article-body p { font-family: var(--font-serif); font-size: 1.125rem; line-height: 2; color: var(--color-ink); margin-bottom: 1.5rem; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); font-weight: 500; margin-top: 3rem; margin-bottom: 1.25rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .article-body .pullquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--color-bg-warm); border-left: 3px solid var(--color-accent); border-radius: 0 6px 6px 0; }
+    .article-body .pullquote p { font-style: italic; color: var(--color-ink); margin-bottom: 0; line-height: 1.9; }
+    .article-body .pullquote .quote-attr { font-style: normal; font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); margin-top: 0.5rem; display: block; }
+    .detail-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem 1.75rem; margin: 1.5rem 0; }
+    .detail-card h4 { font-family: var(--font-sans); font-size: 0.9375rem; font-weight: 700; color: var(--color-ink); margin-bottom: 0.75rem; }
+    .detail-card ul { list-style: none; padding: 0; }
+    .detail-card ul li { font-family: var(--font-serif); font-size: 1rem; line-height: 1.8; color: var(--color-ink); padding: 0.375rem 0 0.375rem 1.25rem; position: relative; }
+    .detail-card ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); }
+    .question-block { margin: 2.5rem 0; padding: 2rem; background: var(--color-ink); color: var(--color-white); border-radius: 8px; }
+    .question-block .qb-byline { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-family: var(--font-sans); font-size: 0.8125rem; }
+    .question-block .qb-byline .editor-name { color: rgba(255,255,255,0.6); }
+    .question-block .qb-byline .editor-role { color: rgba(255,255,255,0.4); }
+    .question-block p { color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-family: var(--font-serif); font-size: 1.125rem; line-height: 1.9; }
+    .question-block p:last-child { margin-bottom: 0; }
+    .question-block strong { color: var(--color-accent-light); }
+    .sources { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .sources h2 { border-top: none; padding-top: 0; margin-top: 0; }
+    .source-item { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.5rem 0; }
+    .source-item .source-lang { flex-shrink: 0; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; color: var(--color-ink-muted); background: var(--color-bg-warm); border-radius: 3px; padding: 0.1rem 0.375rem; }
+    .source-item a { font-family: var(--font-sans); font-size: 0.9375rem; color: var(--color-ink-light); text-decoration: none; }
+    .source-item a:hover { color: var(--color-accent); }
+    footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--color-border); }
+    footer p { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); }
+    footer a { color: var(--color-accent); text-decoration: none; }
+    @media (max-width: 840px) { .article-header { padding: 2rem 1.25rem 1.5rem; } .article-body { padding: 0 1.25rem 2rem; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="demo-issue-001.html" class="brand">The Pass</a><a href="demo-issue-001.html" class="back-link">← 返回本期日報</a></div></nav>
+
+  <header class="article-header">
+    <div class="meta-row">
+      <span class="date">2026.03.23</span>
+      <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
+      <span class="tag tag-culture">🍜 飲食文化</span>
+      <span class="country-tag">🇯🇵 日本</span>
+    </div>
+    <div class="editor-byline">
+      <span class="editor-avatar avatar-passe">P</span>
+      <span class="editor-name">Passe</span>
+      <span class="editor-role">— 快訊編輯</span>
+    </div>
+    <h1>日本拉麵連鎖山岡家用 AI 排煮麵順序，新人培訓從 500 天砍到 350 天</h1>
+    <p class="lead">拉麵——日本人的靈魂食物。山岡家把生成式 AI 帶進了煮麵的最核心環節，但他們沒有讓 AI 取代職人，而是讓 AI 處理「排程」，好讓員工專注在真正重要的事上。</p>
+  </header>
+
+  <div class="article-body">
+    <p>拉麵山岡家（ラーメン山岡家）在日本全國擁有超過 170 間店鋪。他們面對的問題跟所有連鎖拉麵店一樣：同時有十幾碗麵在煮，每碗麵的口味、粗細、茹で時間都不同。要在最短時間內讓每碗麵都在最佳時刻端上桌，靠的是多年經驗的老手。</p>
+
+    <p>但老手越來越少。新人需要 500 天才能獨立作業。</p>
+
+    <p>山岡家的解法：把券賣機的訂單數據即時上傳到 AWS 雲端，由 Amazon Bedrock（生成式 AI）分析所有待處理訂單，自動排列最佳煮麵順序。員工的平板上會顯示優化後的調理序列——先煮這碗味噌、再下那碗醬油、這碗要茹で 90 秒、那碗要 120 秒。</p>
+
+    <div class="detail-card">
+      <h4>📊 具體成效</h4>
+      <ul>
+        <li>新人培訓期從 <strong>500 天縮短至 350 天</strong></li>
+        <li>平均出餐速度加快 <strong>30 秒</strong></li>
+        <li>麵的口感與品質更加均一化</li>
+      </ul>
+    </div>
+
+    <h2>三層備援：「我們沒那麼脆弱」</h2>
+
+    <p>最讓人印象深刻的不是 AI 本身，而是山岡家的備援設計。他們建了三層冗餘系統：</p>
+
+    <div class="detail-card">
+      <h4>🛡️ 三層備援架構</h4>
+      <ul>
+        <li><strong>第一層：</strong>AWS 雲端 AI — 正常狀態下使用，即時分析最佳煮麵順序</li>
+        <li><strong>第二層：</strong>本地「茹で麵計時器」系統 — 2022 年自行開發，雲端異常時自動切換</li>
+        <li><strong>第三層：</strong>熟練員工手動調理 — 如果連本地系統也掛了，靠人的經驗上場</li>
+      </ul>
+    </div>
+
+    <p>記者問：「如果 AWS 出問題怎麼辦？」山岡家的回答成了日本社群上的熱議：</p>
+
+    <div class="pullquote">
+      <p>「そんなヤワじゃありません。」<br>（我們沒那麼脆弱。）</p>
+      <span class="quote-attr">— 山岡家官方回應</span>
+    </div>
+
+    <h2>AI 處理排程，人處理「味道」</h2>
+
+    <p>山岡家的做法跟아워홈的 AI 攝影機形成了一個有趣的對比。아워홈是用 AI「看」廚師——帶有監控的意味。山岡家是用 AI「幫」廚師——處理那些靠腦力計算的排程邏輯，讓員工的注意力回到湯頭和麵條上。</p>
+
+    <p>用山岡家自己的說法：AI 煮不出一碗好拉麵，但它能確保每碗麵在對的時間被端上桌。</p>
+
+    <div class="question-block">
+      <div class="qb-byline">
+        <span class="editor-avatar avatar-fumet">F</span>
+        <span class="editor-name">Fumet</span>
+        <span class="editor-role">— 提問者</span>
+      </div>
+      <p>山岡家把 AI 定位成「輔助工具」而不是「取代者」，但新人培訓從 500 天砍到 350 天——少掉的那 150 天裡，會不會有什麼是只能靠時間慢慢學的？</p>
+      <p><strong>被 AI 縮短的學徒期，帶走的只是冗餘，還是也帶走了某種「修練」？</strong></p>
+    </div>
+
+    <div class="sources">
+      <h2>原始來源</h2>
+      <div class="source-item">
+        <span class="source-lang">JP</span>
+        <a href="https://www.itmedia.co.jp/aiplus/articles/2506/27/news088.html" target="_blank">ITmedia AI+ — 山岡家「AWSに障害が起きても、麺は茹でられる」生成AI「Bedrock」を麺茹でに活用中</a>
+      </div>
+      <div class="source-item">
+        <span class="source-lang">JP</span>
+        <a href="https://aws.amazon.com/jp/blogs/news/aws-serverless-yamaokaya-kitchen/" target="_blank">AWS Japan Blog — AWS サーバレスサービスで実現するラーメン山岡家のキッチンオペレーション効率化</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>The Pass — AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
+    <a href="demo-issue-001.html">← 返回本期日報</a> ・ <a href="methodology.html">方法論</a></p>
+  </footer>
+</body>
+</html>

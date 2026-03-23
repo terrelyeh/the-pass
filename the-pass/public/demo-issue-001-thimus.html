@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>你的大腦其實不喜歡植物肉 — The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+    :root { --color-ink: #2C3345; --color-ink-light: #5A6178; --color-ink-muted: #8B90A0; --color-bg: #FAFAF8; --color-bg-warm: #F5F3EF; --color-accent: #B8860B; --color-accent-light: #D4A843; --color-border: #E8E6E1; --color-white: #FFFFFF; --font-serif: 'Noto Serif TC', 'Georgia', serif; --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif; --font-display: 'Playfair Display', var(--font-serif); --max-width: 850px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; } html { font-size: 17px; }
+    body { font-family: var(--font-sans); color: var(--color-ink); background: var(--color-bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+    nav .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    nav .brand { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+    nav .back-link { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    nav .back-link:hover { color: var(--color-accent); }
+    .tag { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; border-radius: 100px; padding: 0.15rem 0.7rem; margin-right: 0.25rem; }
+    .tag-tech { color: #6366F1; background: rgba(99,102,241,0.08); }
+    .editor-byline { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); margin-bottom: 0.75rem; }
+    .editor-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 700; color: var(--color-white); }
+    .avatar-passe { background: #B8860B; } .avatar-fumet { background: #7C3AED; }
+    .editor-name { font-weight: 600; color: var(--color-ink-light); } .editor-role { color: var(--color-ink-muted); }
+    .article-header { max-width: var(--max-width); margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .article-header .meta-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .article-header .date { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); }
+    .article-header .country-tag { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); border: 1px solid var(--color-accent-light); border-radius: 100px; padding: 0.15rem 0.625rem; }
+    .article-header h1 { font-family: var(--font-serif); font-size: clamp(1.625rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.45; color: var(--color-ink); margin-bottom: 1rem; }
+    .article-header .lead { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.9; color: var(--color-ink-light); }
+    .article-body { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem 3rem; }
+    .article-body p { font-family: var(--font-serif); font-size: 1.125rem; line-height: 2; color: var(--color-ink); margin-bottom: 1.5rem; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); font-weight: 500; margin-top: 3rem; margin-bottom: 1.25rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .article-body .pullquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--color-bg-warm); border-left: 3px solid var(--color-accent); border-radius: 0 6px 6px 0; }
+    .article-body .pullquote p { font-style: italic; color: var(--color-ink); margin-bottom: 0; line-height: 1.9; }
+    .article-body .pullquote .quote-attr { font-style: normal; font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); margin-top: 0.5rem; display: block; }
+    .detail-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem 1.75rem; margin: 1.5rem 0; }
+    .detail-card h4 { font-family: var(--font-sans); font-size: 0.9375rem; font-weight: 700; color: var(--color-ink); margin-bottom: 0.75rem; }
+    .detail-card ul { list-style: none; padding: 0; }
+    .detail-card ul li { font-family: var(--font-serif); font-size: 1rem; line-height: 1.8; color: var(--color-ink); padding: 0.375rem 0 0.375rem 1.25rem; position: relative; }
+    .detail-card ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); }
+    .question-block { margin: 2.5rem 0; padding: 2rem; background: var(--color-ink); color: var(--color-white); border-radius: 8px; }
+    .question-block .qb-byline { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-family: var(--font-sans); font-size: 0.8125rem; }
+    .question-block .qb-byline .editor-name { color: rgba(255,255,255,0.6); } .question-block .qb-byline .editor-role { color: rgba(255,255,255,0.4); }
+    .question-block p { color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-family: var(--font-serif); font-size: 1.125rem; line-height: 1.9; }
+    .question-block p:last-child { margin-bottom: 0; } .question-block strong { color: var(--color-accent-light); }
+    .sources { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    .sources h2 { border-top: none; padding-top: 0; margin-top: 0; }
+    .source-item { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.5rem 0; }
+    .source-item .source-lang { flex-shrink: 0; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; color: var(--color-ink-muted); background: var(--color-bg-warm); border-radius: 3px; padding: 0.1rem 0.375rem; }
+    .source-item a { font-family: var(--font-sans); font-size: 0.9375rem; color: var(--color-ink-light); text-decoration: none; }
+    .source-item a:hover { color: var(--color-accent); }
+    footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--color-border); }
+    footer p { font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-ink-muted); }
+    footer a { color: var(--color-accent); text-decoration: none; }
+    @media (max-width: 840px) { .article-header { padding: 2rem 1.25rem 1.5rem; } .article-body { padding: 0 1.25rem 2rem; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="demo-issue-001.html" class="brand">The Pass</a><a href="demo-issue-001.html" class="back-link">← 返回本期日報</a></div></nav>
+
+  <header class="article-header">
+    <div class="meta-row">
+      <span class="date">2026.03.23</span>
+      <span class="tag tag-tech">🔬 食品科技</span>
+      <span class="country-tag">🇮🇹 義大利</span>
+    </div>
+    <div class="editor-byline"><span class="editor-avatar avatar-passe">P</span><span class="editor-name">Passe</span><span class="editor-role">— 快訊編輯</span></div>
+    <h1>你的大腦其實不喜歡植物肉，即使你嘴上說喜歡</h1>
+    <p class="lead">義大利新創 THIMUS 把 EEG 腦波感測技術帶進食品測試。結果發現：消費者的嘴巴和大腦說的不是同一件事。這可能會徹底改變食品公司開發新產品的方式。</p>
+  </header>
+
+  <div class="article-body">
+    <p>食品公司推出新品前，通常會找一群消費者來試吃，然後問他們喜不喜歡。問題是，人會說謊——不一定是故意的，而是社會壓力。</p>
+
+    <p>「你覺得這個植物漢堡好吃嗎？」在 2026 年，很少有人會當面說「不好吃」。你知道植物肉是為了環保，你知道全桌的人都在點頭，你也跟著說了。</p>
+
+    <p>但你的大腦沒有說謊。</p>
+
+    <h2>THIMUS 的 T-Box</h2>
+
+    <p>義大利新創 THIMUS 開發了一款名為 T-Box 的 EEG 腦波頭帶。受測者戴上後吃東西，頭帶即時記錄大腦的電生理反應——每秒取樣 251 次。</p>
+
+    <div class="detail-card">
+      <h4>🧠 THIMUS 技術細節</h4>
+      <ul>
+        <li>EEG 腦波感測，每秒 <strong>251 次取樣</strong></li>
+        <li>測量大腦對食物的真實情緒反應（愉悅、厭惡、驚訝、無感）</li>
+        <li>結果與口頭問卷的差異最高達 <strong>30-40%</strong></li>
+        <li>已被 Beyond Meat、Barilla 等大型食品公司用於產品開發</li>
+      </ul>
+    </div>
+
+    <div class="pullquote">
+      <p>「大腦傾向追求熟悉和舒適的食物體驗。當我們用腦波數據替代問卷，才看到消費者真正的反應。」</p>
+      <span class="quote-attr">— Mario Ubiali，THIMUS 創辦人</span>
+    </div>
+
+    <h2>對食品產業的意義</h2>
+
+    <p>如果 THIMUS 的技術變成行業標準，食品公司將不再需要「猜」消費者喜歡什麼。AI 分析腦波數據，直接告訴你：這個口感讓大腦興奮，那個風味讓大腦皺眉。</p>
+
+    <p>更深一層的問題是：當我們開始用 AI 讀取大腦對食物的「真實感受」，我們是在做更好的產品，還是在製造更容易讓大腦上癮的食物？</p>
+
+    <div class="question-block">
+      <div class="qb-byline"><span class="editor-avatar avatar-fumet">F</span><span class="editor-name">Fumet</span><span class="editor-role">— 提問者</span></div>
+      <p>如果 AI 能讀出你的大腦真正喜歡什麼食物，而你嘴上說的跟大腦想的不一樣——</p>
+      <p><strong>食品公司應該聽你說的，還是聽你大腦說的？</strong></p>
+    </div>
+
+    <div class="sources">
+      <h2>原始來源</h2>
+      <div class="source-item">
+        <span class="source-lang">EN</span>
+        <a href="https://thespoon.tech/the-future-of-food-testing-may-be-in-your-brainwaves/" target="_blank">The Spoon — The Future of Food Testing May Be in Your Brainwaves</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>The Pass — AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
+    <a href="demo-issue-001.html">← 返回本期日報</a> ・ <a href="methodology.html">方法論</a></p>
+  </footer>
+</body>
+</html>

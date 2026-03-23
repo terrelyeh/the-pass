@@ -20,11 +20,11 @@
       --font-serif: 'Noto Serif TC', 'Georgia', serif;
       --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
       --font-display: 'Playfair Display', var(--font-serif);
-      --max-width: 640px;
+      --max-width: 800px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { font-size: 16px; }
+    html { font-size: 17px; }
     body {
       font-family: var(--font-sans);
       color: var(--color-ink);
@@ -36,20 +36,20 @@
     .container {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 2rem;
     }
 
     /* Header */
     .issue-header {
       text-align: center;
-      padding: 3rem 0 2.5rem;
+      padding: 3.5rem 0 2.5rem;
       border-bottom: 1px solid var(--color-border);
       margin-bottom: 2.5rem;
     }
 
     .issue-header .brand {
       font-family: var(--font-display);
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--color-ink);
       letter-spacing: 0.02em;
@@ -57,23 +57,32 @@
 
     .issue-header .brand-sub {
       font-family: var(--font-sans);
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       color: var(--color-ink-muted);
       margin-top: 0.25rem;
       letter-spacing: 0.05em;
     }
 
+    .issue-header .tagline {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-style: italic;
+      color: var(--color-ink-light);
+      margin-top: 0.375rem;
+      letter-spacing: 0.03em;
+    }
+
     .issue-header .issue-meta {
       margin-top: 1.25rem;
       font-family: var(--font-sans);
-      font-size: 0.8125rem;
+      font-size: 0.875rem;
       color: var(--color-ink-muted);
     }
 
     .issue-header .filter-count {
       display: inline-block;
       margin-top: 0.5rem;
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       color: var(--color-accent);
       border: 1px solid var(--color-accent-light);
       border-radius: 100px;
@@ -85,10 +94,10 @@
     .tag {
       display: inline-block;
       font-family: var(--font-sans);
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       font-weight: 500;
       border-radius: 100px;
-      padding: 0.125rem 0.625rem;
+      padding: 0.15rem 0.7rem;
       margin-right: 0.25rem;
       white-space: nowrap;
     }
@@ -106,19 +115,19 @@
       align-items: center;
       gap: 0.5rem;
       font-family: var(--font-sans);
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       color: var(--color-ink-muted);
       margin-bottom: 1rem;
     }
 
     .editor-avatar {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.625rem;
+      font-size: 0.6875rem;
       font-weight: 700;
       color: var(--color-white);
     }
@@ -127,23 +136,15 @@
     .avatar-passe { background: #B8860B; }
     .avatar-fumet { background: #7C3AED; }
 
-    .editor-name {
-      font-weight: 600;
-      color: var(--color-ink-light);
-    }
-
-    .editor-role {
-      color: var(--color-ink-muted);
-    }
+    .editor-name { font-weight: 600; color: var(--color-ink-light); }
+    .editor-role { color: var(--color-ink-muted); }
 
     /* Main Story */
-    .main-story {
-      margin-bottom: 3rem;
-    }
+    .main-story { margin-bottom: 3rem; }
 
     .section-label {
       font-family: var(--font-sans);
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--color-accent);
@@ -151,27 +152,22 @@
       margin-bottom: 0.75rem;
     }
 
-    .story-tags {
-      margin-bottom: 1rem;
-    }
+    .story-tags { margin-bottom: 1rem; }
 
     .main-story h1 {
       font-family: var(--font-serif);
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 700;
       line-height: 1.5;
       color: var(--color-ink);
       margin-bottom: 1rem;
     }
 
-    .main-story .flag-inline {
-      font-size: 1.125rem;
-      margin-right: 0.25rem;
-    }
+    .main-story .flag-inline { font-size: 1.25rem; margin-right: 0.25rem; }
 
     .main-story .story-body p {
       font-family: var(--font-serif);
-      font-size: 1rem;
+      font-size: 1.125rem;
       line-height: 2;
       color: var(--color-ink);
       margin-bottom: 1.25rem;
@@ -191,12 +187,30 @@
       color: var(--color-ink);
     }
 
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      color: var(--color-accent);
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 1rem;
+      padding: 0.5rem 1.125rem;
+      border: 1px solid var(--color-accent-light);
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .read-more-btn:hover { background: var(--color-accent); color: var(--color-white); }
+
     .source-link {
       display: inline-flex;
       align-items: center;
       gap: 0.375rem;
       font-family: var(--font-sans);
-      font-size: 0.8125rem;
+      font-size: 0.875rem;
       color: var(--color-ink-muted);
       text-decoration: none;
       margin-top: 0.5rem;
@@ -204,28 +218,6 @@
     }
 
     .source-link:hover { color: var(--color-accent); }
-    .source-link .arrow { font-size: 0.75rem; }
-
-    .read-more-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.375rem;
-      font-family: var(--font-sans);
-      font-size: 0.875rem;
-      color: var(--color-accent);
-      font-weight: 500;
-      text-decoration: none;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--color-accent-light);
-      border-radius: 100px;
-      transition: all 0.2s;
-    }
-
-    .read-more-btn:hover {
-      background: var(--color-accent);
-      color: var(--color-white);
-    }
 
     /* Divider */
     .section-divider {
@@ -237,70 +229,70 @@
     }
 
     /* Quick News */
-    .quick-news {
-      margin-bottom: 3rem;
-    }
+    .quick-news { margin-bottom: 3rem; }
 
     .news-item {
-      padding: 1.25rem 0;
+      padding: 1.5rem 0;
       border-bottom: 1px solid var(--color-border);
     }
 
-    .news-item:first-of-type {
-      padding-top: 0;
-    }
-
-    .news-item:last-of-type {
-      border-bottom: none;
-    }
-
-    .news-item .news-flag {
-      font-size: 1rem;
-      margin-right: 0.375rem;
-    }
+    .news-item:first-of-type { padding-top: 0; }
+    .news-item:last-of-type { border-bottom: none; }
 
     .news-item h3 {
       font-family: var(--font-serif);
-      font-size: 0.9375rem;
+      font-size: 1.0625rem;
       font-weight: 600;
       line-height: 1.6;
       color: var(--color-ink);
       margin-bottom: 0.5rem;
     }
 
-    .news-tags {
-      margin-bottom: 0.375rem;
+    .news-item h3 a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
     }
+
+    .news-item h3 a:hover { color: var(--color-accent); }
+
+    .news-item .news-flag { font-size: 1.0625rem; margin-right: 0.375rem; }
+    .news-tags { margin-bottom: 0.5rem; }
 
     .news-item .news-context {
       font-family: var(--font-sans);
-      font-size: 0.8125rem;
-      line-height: 1.7;
+      font-size: 0.9375rem;
+      line-height: 1.75;
       color: var(--color-ink-light);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.375rem;
     }
 
     .news-item .news-source {
       font-family: var(--font-sans);
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       color: var(--color-ink-muted);
     }
+
+    .news-item .news-source a {
+      color: var(--color-ink-muted);
+      text-decoration: none;
+    }
+
+    .news-item .news-source a:hover { color: var(--color-accent); }
 
     /* Closing Question */
     .closing-section {
       background: var(--color-bg-warm);
       border-radius: 8px;
-      padding: 1.75rem 2rem;
+      padding: 2rem 2.25rem;
       margin-bottom: 3rem;
     }
 
-    .closing-section .section-label {
-      margin-bottom: 0.5rem;
-    }
+    .closing-section .section-label { margin-bottom: 0.5rem; }
 
     .closing-section .closing-question {
       font-family: var(--font-serif);
-      font-size: 1.0625rem;
+      font-size: 1.1875rem;
       font-weight: 600;
       line-height: 1.7;
       color: var(--color-ink);
@@ -309,91 +301,15 @@
 
     .closing-section .closing-context {
       font-family: var(--font-serif);
-      font-size: 0.9375rem;
+      font-size: 1.0625rem;
       line-height: 1.8;
       color: var(--color-ink-light);
-    }
-
-    /* Extended Reading */
-    .extended-reading {
-      background: var(--color-white);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      padding: 1.5rem 1.75rem;
-      margin-bottom: 3rem;
-    }
-
-    .extended-reading .er-label {
-      font-family: var(--font-sans);
-      font-size: 0.6875rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-ink-muted);
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-    }
-
-    .extended-reading p {
-      font-family: var(--font-serif);
-      font-size: 0.9375rem;
-      line-height: 1.75;
-      color: var(--color-ink-light);
-    }
-
-    .extended-reading a {
-      color: var(--color-accent);
-      text-decoration: none;
-    }
-
-    .extended-reading a:hover {
-      text-decoration: underline;
-    }
-
-    /* Footer */
-    .issue-footer {
-      text-align: center;
-      padding: 2.5rem 0 3rem;
-      border-top: 1px solid var(--color-border);
-    }
-
-    .issue-footer p {
-      font-family: var(--font-sans);
-      font-size: 0.75rem;
-      color: var(--color-ink-muted);
-      line-height: 1.8;
-    }
-
-    .issue-footer .footer-brand {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--color-ink);
-      margin-bottom: 0.375rem;
-    }
-
-    .issue-footer .subscribe-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.625rem 1.75rem;
-      background: var(--color-ink);
-      color: var(--color-white);
-      font-family: var(--font-sans);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      border-radius: 100px;
-      text-decoration: none;
-      letter-spacing: 0.03em;
-      transition: background 0.2s;
-    }
-
-    .issue-footer .subscribe-btn:hover {
-      background: var(--color-accent);
     }
 
     /* Editors info */
     .editors-info {
       margin-bottom: 3rem;
-      padding: 1.5rem 1.75rem;
+      padding: 1.75rem 2rem;
       background: var(--color-white);
       border: 1px solid var(--color-border);
       border-radius: 8px;
@@ -401,7 +317,7 @@
 
     .editors-info .ei-label {
       font-family: var(--font-sans);
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--color-ink-muted);
@@ -423,36 +339,100 @@
     }
 
     .editor-card .ec-avatar {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--color-white);
       flex-shrink: 0;
       margin-top: 0.125rem;
     }
 
-    .editor-card .ec-info {
-      flex: 1;
-    }
-
     .editor-card .ec-name {
       font-family: var(--font-sans);
-      font-size: 0.8125rem;
+      font-size: 0.9375rem;
       font-weight: 600;
       color: var(--color-ink);
     }
 
     .editor-card .ec-desc {
       font-family: var(--font-sans);
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       color: var(--color-ink-muted);
       line-height: 1.5;
     }
+
+    /* Extended Reading */
+    .extended-reading {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .extended-reading .er-label {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .extended-reading p {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--color-ink-light);
+    }
+
+    .extended-reading a { color: var(--color-accent); text-decoration: none; }
+    .extended-reading a:hover { text-decoration: underline; }
+
+    /* Footer */
+    .issue-footer {
+      text-align: center;
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .issue-footer p {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      line-height: 1.8;
+    }
+
+    .issue-footer .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.375rem;
+    }
+
+    .issue-footer .subscribe-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 2rem;
+      background: var(--color-ink);
+      color: var(--color-white);
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      border-radius: 100px;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+
+    .issue-footer .subscribe-btn:hover { background: var(--color-accent); }
 
     /* Demo Banner */
     .demo-banner {
@@ -461,19 +441,19 @@
       text-align: center;
       padding: 0.625rem;
       font-family: var(--font-sans);
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       letter-spacing: 0.05em;
     }
 
-    @media (max-width: 640px) {
-      .container { padding: 1.5rem 1.25rem; }
-      .main-story h1 { font-size: 1.3125rem; }
+    @media (max-width: 840px) {
+      .container { padding: 1.75rem 1.25rem; }
+      .main-story h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="demo-banner">DEMO ISSUE — 內容來自 2026.03.23 真實信源</div>
+  <div class="demo-banner">DEMO ISSUE — 內容來自真實信源，連結皆可點擊</div>
 
   <div class="container">
 
@@ -481,6 +461,7 @@
     <header class="issue-header">
       <div class="brand">The Pass</div>
       <div class="brand-sub">by 名廚 MINGCHU</div>
+      <div class="tagline">Intelligence, served.</div>
       <div class="issue-meta">
         2026 年 3 月 23 日・週一
       </div>
@@ -515,14 +496,11 @@
 
         <p>這是 AI 進入廚房最真實的張力。它不是機器人來搶你的工作，而是一雙永遠不眨眼的眼睛，看著你工作。</p>
         <p>韓國餐飲業正在大規模擁抱這類技術。아워홈不是第一個，也不會是最後一個。但很少有人在問一個更根本的問題：廚房是一個需要信任的地方——師傅信任徒弟、管理者信任團隊。<strong>當信任被演算法取代，廚房的文化會怎樣改變？</strong></p>
-        <p>也許會更安全。也許會更高效。但會不會也更冰冷？</p>
       </div>
-      <a href="demo-issue-001-detail.html" class="read-more-btn">
-        繼續閱讀 →
-      </a>
+      <a href="demo-issue-001-detail.html" class="read-more-btn">繼續閱讀 →</a>
       <br>
-      <a href="https://www.fnnews.com/news/202603161404580352" class="source-link" style="margin-top: 0.75rem;">
-        <span class="arrow">→</span> 파이낸셜뉴스（韓文原文）
+      <a href="https://www.fnnews.com/news/202603161404580352" class="source-link" target="_blank" style="margin-top: 0.75rem;">
+        → 파이낸셜뉴스（韓文原文）
       </a>
     </section>
 
@@ -538,50 +516,60 @@
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🇯🇵</span> 日本拉麵連鎖山岡家用 AI 排煮麵順序，新人培訓從 500 天砍到 350 天</h3>
+        <h3><span class="news-flag">🇯🇵</span> <a href="demo-issue-001-yamaokaya.html">日本拉麵連鎖山岡家用 AI 排煮麵順序，新人培訓從 500 天砍到 350 天</a></h3>
         <div class="news-tags">
           <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
           <span class="tag tag-culture">🍜 飲食文化</span>
         </div>
         <p class="news-context">拉麵山岡家把券賣機的訂單數據即時上傳 Amazon Bedrock，由生成式 AI 分析所有待處理訂單，自動排列最佳煮麵順序，包含每碗麵的茹で時間。結果：出餐速度加快 30 秒、麵的口感更一致。最酷的是他們設計了三層備援——雲端掛了就切本地系統，本地也掛了就靠老師傅。被問到會不會出問題？山岡家的回答是：<strong>「そんなヤワじゃありません」（我們沒那麼脆弱）。</strong></p>
-        <p class="news-source">ITmedia / AWS Japan Blog・2026.03</p>
+        <p class="news-source"><a href="https://www.itmedia.co.jp/aiplus/articles/2506/27/news088.html" target="_blank">ITmedia AI+</a> / <a href="https://aws.amazon.com/jp/blogs/news/aws-serverless-yamaokaya-kitchen/" target="_blank">AWS Japan Blog</a></p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🧠</span> 你的大腦其實不喜歡植物肉，即使你嘴上說喜歡</h3>
+        <h3><span class="news-flag">🇹🇭</span> <a href="demo-issue-001-easyrice.html">一粒米也不放過：泰國 AI 新創 3 分鐘搞定傳統 20 分鐘的稻米品檢</a></h3>
+        <div class="news-tags">
+          <span class="tag tag-tech">🔬 食品科技</span>
+          <span class="tag tag-supply">🌾 供應鏈</span>
+        </div>
+        <p class="news-context">泰國新創 EasyRice 用電腦視覺做稻米品質檢測——3-5 分鐘分析 25 公克米粒的品質與污染程度，傳統人工需要 15-20 分鐘。準確率 95%，速度是人工的 10 倍。一年內拿下泰國米出口 30% 的檢測市場。更厲害的是，它能辨識 84 種泰國稻米品種。創辦人 Phuvin 說：「AI 不會取代檢測員，因為最終仍需由人來認證。」</p>
+        <p class="news-source"><a href="https://www.bangkokpost.com/business/general/2632183/easyrice-uses-artificial-intelligence-for-food-revolution" target="_blank">Bangkok Post</a> / <a href="https://thethaiger.com/hot-news/technology/easyrice-transforms-thai-rice-industry-with-ai-powered-inspection-solutions" target="_blank">The Thaiger</a></p>
+      </div>
+
+      <div class="news-item">
+        <h3><span class="news-flag">🧠</span> <a href="demo-issue-001-thimus.html">你的大腦其實不喜歡植物肉，即使你嘴上說喜歡</a></h3>
         <div class="news-tags">
           <span class="tag tag-tech">🔬 食品科技</span>
         </div>
         <p class="news-context">義大利新創 THIMUS 用 EEG 腦波頭帶測量消費者吃東西時的真實反應。結果發現：人們在社會壓力下會說「當然喜歡植物漢堡，我要救地球」，但腦波數據顯示大腦其實並不買單。創辦人 Mario Ubiali 說：「大腦傾向追求熟悉和舒適的食物體驗。」這項技術每秒取樣 251 次腦波，正在改變食品公司測試新品的方式。</p>
-        <p class="news-source">The Spoon・2026.03.13</p>
+        <p class="news-source"><a href="https://thespoon.tech/the-future-of-food-testing-may-be-in-your-brainwaves/" target="_blank">The Spoon・2026.03.13</a></p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🇰🇷</span> 韓國炸雞品牌用生成式 AI 拍了一整支廣告，零真人參與</h3>
+        <h3><span class="news-flag">🇰🇷</span> <a href="demo-issue-001-norang.html">韓國炸雞品牌用生成式 AI 拍了一整支廣告，零真人參與</a></h3>
         <div class="news-tags">
           <span class="tag tag-ops">🏪 餐廳經營</span>
         </div>
         <p class="news-context">노랑통닭（Norang Tongdak）為新品「우도 땅콩 치킨」（牛島花生炸雞）製作了一支廣告，從角色設計、影片導演到音樂製作，全程使用生成式 AI。以濟州島特產為靈感的卡通角色和品牌吉祥物在片中「合作」推薦產品——整支廣告沒有一個真人參與製作。</p>
-        <p class="news-source">식품외식경제・2026.03.17</p>
+        <p class="news-source"><a href="https://www.youthdaily.co.kr/news/article.html?no=215542" target="_blank">청년일보・2026.03.17</a></p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🌾</span> Cargill 用 Boston Dynamics 的機器狗巡檢食品工廠</h3>
+        <h3><span class="news-flag">🌾</span> <a href="demo-issue-001-cargill.html">Cargill 用 Boston Dynamics 的機器狗巡檢食品工廠</a></h3>
         <div class="news-tags">
           <span class="tag tag-supply">🌾 供應鏈</span>
         </div>
         <p class="news-context">全球最大農產品貿易商 Cargill 在阿姆斯特丹的加工廠部署了 AI 驅動的 Spot 機器狗，每週執行約一萬次安全與設備巡檢。他們的 R&D 副總裁說了一句值得記住的話：「AI 在增強專家判斷時才能發揮最大價值，而不是取代它。」</p>
-        <p class="news-source">AgFunder News・2026.03</p>
+        <p class="news-source"><a href="https://agfundernews.com/cargills-new-robot-dog-is-one-part-of-a-much-larger-shift-towards-responsible-ai" target="_blank">AgFunder News</a></p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🤖</span> 人形機器人不會來幫你做飯——至少現在不會</h3>
+        <h3><span class="news-flag">🤖</span> <a href="demo-issue-001-posha.html">人形機器人不會來幫你做飯——至少現在不會</a></h3>
         <div class="news-tags">
           <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
           <span class="tag tag-tech">🔬 食品科技</span>
         </div>
         <p class="news-context">CES 上展出的人形機器人很酷，但真正有可能走進家庭廚房的是檯面型料理機器人。新創 Posha 的 CEO 把自家產品比喻為「Thermomix plus plus」：你不用再站在旁邊盯了，就像自駕車一樣，你可以放手。Nosh 在 Kickstarter 上募了超過 80 萬美元。</p>
-        <p class="news-source">The Spoon・2026.03.17</p>
+        <p class="news-source"><a href="https://thespoon.tech/humanoid-robots-are-coming-just-not-to-cook-your-dinner-at-least-not-yet/" target="_blank">The Spoon・2026.03.17</a></p>
       </div>
 
     </section>
@@ -596,8 +584,8 @@
         <span class="editor-name">Fumet</span>
         <span class="editor-role">— 提問者</span>
       </div>
-      <p class="closing-question">今天兩則來自東亞的故事：韓國用 AI 攝影機「看」廚師、日本用 AI「教」新人煮麵。一個是監控，一個是輔助。同樣是 AI 進廚房，為什麼感覺完全不一樣？</p>
-      <p class="closing-context">如果 AI 在你的廚房裡只能做一件事，你希望它做什麼？</p>
+      <p class="closing-question">今天的故事橫跨韓國、日本、泰國、義大利、荷蘭、美國。每個地方用 AI 做的事不同，但有一件事很像：他們都在問「這件事還需要人來做嗎？」</p>
+      <p class="closing-context">不過更有趣的問題或許是反過來的——在你的工作裡，有沒有什麼事，你希望永遠不要交給 AI？</p>
     </section>
 
     <!-- Editors Info -->
@@ -630,7 +618,7 @@
     <div class="extended-reading">
       <div class="er-label">延伸閱讀 — 名廚 MINGCHU</div>
       <p>關於廚房裡的信任與傳承，名廚曾深入採訪多位亞洲主廚。<br>
-      → <a href="#">主廚以外的餐廳夥伴：那些廚房裡看不見的默契</a></p>
+      → <a href="https://www.mingchu.io" target="_blank">主廚以外的餐廳夥伴：那些廚房裡看不見的默契</a></p>
     </div>
 
     <!-- Footer -->
@@ -639,7 +627,7 @@
       <p>AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
       如實呈現，不誇大，不接商單。</p>
       <a href="#" class="subscribe-btn">訂閱 The Pass</a>
-      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">所有日報</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">RSS</a></p>
+      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: none;">關於</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">RSS</a></p>
     </footer>
 
   </div>
