@@ -41,53 +41,61 @@
 
     /* Header */
     .issue-header {
-      text-align: center;
-      padding: 3.5rem 0 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 2rem 0 1.5rem;
       border-bottom: 1px solid var(--color-border);
       margin-bottom: 2.5rem;
     }
 
+    .issue-header .header-left {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
     .issue-header .brand {
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--color-ink);
       letter-spacing: 0.02em;
-    }
-
-    .issue-header .brand-sub {
-      font-family: var(--font-sans);
-      font-size: 0.8125rem;
-      color: var(--color-ink-muted);
-      margin-top: 0.25rem;
-      letter-spacing: 0.05em;
+      line-height: 1;
     }
 
     .issue-header .tagline {
       font-family: var(--font-display);
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-style: italic;
-      color: var(--color-ink-light);
-      margin-top: 0.375rem;
+      color: var(--color-ink-muted);
       letter-spacing: 0.03em;
+      position: relative;
+      top: -1px;
+    }
+
+    .issue-header .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
     }
 
     .issue-header .issue-meta {
-      margin-top: 1.25rem;
       font-family: var(--font-sans);
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       color: var(--color-ink-muted);
     }
 
     .issue-header .filter-count {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-size: 0.8125rem;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
       color: var(--color-accent);
       border: 1px solid var(--color-accent-light);
       border-radius: 100px;
-      padding: 0.25rem 0.875rem;
+      padding: 0.2rem 0.75rem;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     /* Tags */
@@ -448,6 +456,8 @@
     @media (max-width: 840px) {
       .container { padding: 1.75rem 1.25rem; }
       .main-story h1 { font-size: 1.5rem; }
+      .issue-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .issue-header .header-right { align-self: flex-start; }
     }
   </style>
 </head>
@@ -459,12 +469,14 @@
 
     <!-- Header -->
     <header class="issue-header">
-      <div class="brand">The Pass</div>
-      <div class="tagline">Intelligence, served.</div>
-      <div class="issue-meta">
-        2026 年 3 月 23 日・週一
+      <div class="header-left">
+        <div class="brand">The Pass</div>
+        <div class="tagline">Intelligence, served.</div>
       </div>
-      <span class="filter-count">從 53 條資訊中篩選</span>
+      <div class="header-right">
+        <div class="issue-meta">2026.03.23 週一</div>
+        <span class="filter-count">從 53 條中篩選</span>
+      </div>
     </header>
 
     <!-- Main Story -->
