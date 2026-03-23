@@ -72,6 +72,61 @@
 
     nav .back-link:hover { color: var(--color-accent); }
 
+    /* Tags */
+    .tag {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      border-radius: 100px;
+      padding: 0.125rem 0.625rem;
+      margin-right: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .tag-tech { color: #6366F1; background: rgba(99,102,241,0.08); }
+    .tag-ops { color: #059669; background: rgba(5,150,105,0.08); }
+    .tag-supply { color: #D97706; background: rgba(217,119,6,0.08); }
+    .tag-kitchen { color: #DC2626; background: rgba(220,38,38,0.08); }
+    .tag-biz { color: #7C3AED; background: rgba(124,58,237,0.08); }
+    .tag-culture { color: #B8860B; background: rgba(184,134,11,0.08); }
+
+    /* Editor byline */
+    .editor-byline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .editor-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: var(--color-white);
+    }
+
+    .avatar-mise { background: #5A6178; }
+    .avatar-passe { background: #B8860B; }
+    .avatar-fumet { background: #7C3AED; }
+
+    .editor-name {
+      font-weight: 600;
+      color: var(--color-ink-light);
+    }
+
+    .editor-role {
+      color: var(--color-ink-muted);
+    }
+
     /* Article Header */
     .article-header {
       max-width: var(--max-width);
@@ -83,7 +138,7 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       flex-wrap: wrap;
     }
 
@@ -91,17 +146,6 @@
       font-family: var(--font-sans);
       font-size: 0.8125rem;
       color: var(--color-ink-muted);
-    }
-
-    .article-header .tag {
-      font-family: var(--font-sans);
-      font-size: 0.625rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--color-white);
-      background: var(--color-ink);
-      border-radius: 3px;
-      padding: 0.15rem 0.5rem;
     }
 
     .article-header .country-tag {
@@ -246,6 +290,30 @@
       border-radius: 8px;
     }
 
+    .question-block .qb-byline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+    }
+
+    .question-block .qb-byline .editor-avatar {
+      width: 20px;
+      height: 20px;
+      font-size: 0.5625rem;
+    }
+
+    .question-block .qb-byline .editor-name {
+      color: rgba(255,255,255,0.6);
+      font-weight: 600;
+    }
+
+    .question-block .qb-byline .editor-role {
+      color: rgba(255,255,255,0.4);
+    }
+
     .question-block p {
       color: rgba(255,255,255,0.9);
       margin-bottom: 1rem;
@@ -356,6 +424,11 @@
       color: var(--color-ink-muted);
     }
 
+    footer a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
     @media (max-width: 640px) {
       .article-header { padding: 2rem 1.25rem 1.5rem; }
       .article-body { padding: 0 1.25rem 2rem; }
@@ -377,8 +450,14 @@
   <header class="article-header">
     <div class="meta-row">
       <span class="date">2026.03.23</span>
-      <span class="tag">AI</span>
+      <span class="tag tag-ops">🏪 餐廳經營</span>
+      <span class="tag tag-tech">🔬 食品科技</span>
       <span class="country-tag">🇰🇷 韓國</span>
+    </div>
+    <div class="editor-byline">
+      <span class="editor-avatar avatar-mise">M</span>
+      <span class="editor-name">Mise</span>
+      <span class="editor-role">— 主筆</span>
     </div>
     <h1>韓國最大團膳企業在廚房裝了 AI 攝影機，廚師一走進去就被「看」了</h1>
     <p class="lead">아워홈（Ourhome）導入한화비전（Hanwha Vision）的 AI 攝影機系統，即時監控廚師的衛生行為。這可能是韓國餐飲業走向 AI 監管的起點——但廚房裡的「信任」，會跟著改變嗎？</p>
@@ -436,12 +515,15 @@
     <p>而且아워홈不是唯一一個。報導指出，三星旗下的團膳事業也在同步推進類似的 FoodTech 技術。韓國的團膳市場，正在成為 AI 進入餐飲業的第一個大規模試驗場。</p>
 
     <div class="question-block">
-      <p>但這裡有一個沒人在問的問題。</p>
+      <div class="qb-byline">
+        <span class="editor-avatar avatar-fumet">F</span>
+        <span class="editor-name">Fumet</span>
+        <span class="editor-role">— 提問者</span>
+      </div>
       <p>廚房是一個需要信任的地方。師傅信任徒弟會按照標準做事。管理者信任團隊會維持品質。這種信任是廚房文化的基礎。</p>
       <p><strong>當信任被演算法取代，廚房的文化會怎樣改變？</strong></p>
       <p>也許會更安全、更高效。但當你每天走進廚房，第一個「看」你的不是師傅而是攝影機——那個空間的氣氛，還會一樣嗎？</p>
       <p>아워홈的官方聲明說，「料理專注度會提升」。但另一種解讀是：<strong>因為你知道有人在看。</strong></p>
-      <p>這個問題沒有標準答案。但它值得被問出來。</p>
     </div>
 
     <!-- Sources -->
@@ -479,7 +561,7 @@
   <!-- Footer -->
   <footer>
     <p>The Pass — AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
-    <a href="demo-issue-001.html" style="color: var(--color-accent); text-decoration: none;">← 返回本期日報</a></p>
+    <a href="demo-issue-001.html">← 返回本期日報</a> ・ <a href="methodology.html">方法論</a> ・ <a href="editorial-guidelines.html">編輯指南</a></p>
   </footer>
 
 </body>

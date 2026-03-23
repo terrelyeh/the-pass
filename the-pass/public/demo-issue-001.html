@@ -81,6 +81,61 @@
       cursor: pointer;
     }
 
+    /* Tags */
+    .tag {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      border-radius: 100px;
+      padding: 0.125rem 0.625rem;
+      margin-right: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .tag-tech { color: #6366F1; background: rgba(99,102,241,0.08); }
+    .tag-ops { color: #059669; background: rgba(5,150,105,0.08); }
+    .tag-supply { color: #D97706; background: rgba(217,119,6,0.08); }
+    .tag-kitchen { color: #DC2626; background: rgba(220,38,38,0.08); }
+    .tag-biz { color: #7C3AED; background: rgba(124,58,237,0.08); }
+    .tag-culture { color: #B8860B; background: rgba(184,134,11,0.08); }
+
+    /* Editor byline */
+    .editor-byline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+      margin-bottom: 1rem;
+    }
+
+    .editor-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.625rem;
+      font-weight: 700;
+      color: var(--color-white);
+    }
+
+    .avatar-mise { background: #5A6178; }
+    .avatar-passe { background: #B8860B; }
+    .avatar-fumet { background: #7C3AED; }
+
+    .editor-name {
+      font-weight: 600;
+      color: var(--color-ink-light);
+    }
+
+    .editor-role {
+      color: var(--color-ink-muted);
+    }
+
     /* Main Story */
     .main-story {
       margin-bottom: 3rem;
@@ -93,6 +148,10 @@
       text-transform: uppercase;
       color: var(--color-accent);
       font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .story-tags {
       margin-bottom: 1rem;
     }
 
@@ -102,7 +161,7 @@
       font-weight: 700;
       line-height: 1.5;
       color: var(--color-ink);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .main-story .flag-inline {
@@ -145,8 +204,28 @@
     }
 
     .source-link:hover { color: var(--color-accent); }
-
     .source-link .arrow { font-size: 0.75rem; }
+
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--color-accent);
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--color-accent-light);
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .read-more-btn:hover {
+      background: var(--color-accent);
+      color: var(--color-white);
+    }
 
     /* Divider */
     .section-divider {
@@ -186,6 +265,10 @@
       font-weight: 600;
       line-height: 1.6;
       color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .news-tags {
       margin-bottom: 0.375rem;
     }
 
@@ -203,21 +286,32 @@
       color: var(--color-ink-muted);
     }
 
-    /* AI × 餐飲 tag */
-    .tag-ai {
-      display: inline-block;
-      font-family: var(--font-sans);
-      font-size: 0.625rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--color-white);
-      background: var(--color-ink);
-      border-radius: 3px;
-      padding: 0.125rem 0.5rem;
-      margin-left: 0.375rem;
-      vertical-align: middle;
-      position: relative;
-      top: -1px;
+    /* Closing Question */
+    .closing-section {
+      background: var(--color-bg-warm);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .closing-section .section-label {
+      margin-bottom: 0.5rem;
+    }
+
+    .closing-section .closing-question {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.7;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .closing-section .closing-context {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      color: var(--color-ink-light);
     }
 
     /* Extended Reading */
@@ -296,6 +390,70 @@
       background: var(--color-accent);
     }
 
+    /* Editors info */
+    .editors-info {
+      margin-bottom: 3rem;
+      padding: 1.5rem 1.75rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+    }
+
+    .editors-info .ei-label {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .editor-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.625rem 0;
+    }
+
+    .editor-card:not(:last-child) {
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .editor-card .ec-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: var(--color-white);
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+    }
+
+    .editor-card .ec-info {
+      flex: 1;
+    }
+
+    .editor-card .ec-name {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    .editor-card .ec-desc {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+      line-height: 1.5;
+    }
+
     /* Demo Banner */
     .demo-banner {
       background: var(--color-ink);
@@ -326,12 +484,21 @@
       <div class="issue-meta">
         2026 年 3 月 23 日・週一
       </div>
-      <span class="filter-count">從 47 條資訊中篩選</span>
+      <span class="filter-count">從 53 條資訊中篩選</span>
     </header>
 
     <!-- Main Story -->
     <section class="main-story">
       <div class="section-label">今日觀察</div>
+      <div class="editor-byline">
+        <span class="editor-avatar avatar-mise">M</span>
+        <span class="editor-name">Mise</span>
+        <span class="editor-role">— 主筆</span>
+      </div>
+      <div class="story-tags">
+        <span class="tag tag-ops">🏪 餐廳經營</span>
+        <span class="tag tag-tech">🔬 食品科技</span>
+      </div>
       <h1>
         <span class="flag-inline">🇰🇷</span>
         韓國最大團膳企業在廚房裝了 AI 攝影機，<br>
@@ -349,14 +516,13 @@
         <p>這是 AI 進入廚房最真實的張力。它不是機器人來搶你的工作，而是一雙永遠不眨眼的眼睛，看著你工作。</p>
         <p>韓國餐飲業正在大規模擁抱這類技術。아워홈不是第一個，也不會是最後一個。但很少有人在問一個更根本的問題：廚房是一個需要信任的地方——師傅信任徒弟、管理者信任團隊。<strong>當信任被演算法取代，廚房的文化會怎樣改變？</strong></p>
         <p>也許會更安全。也許會更高效。但會不會也更冰冷？</p>
-        <p>這個問題沒有標準答案。但它值得被問出來。</p>
       </div>
-      <a href="demo-issue-001-detail.html" class="source-link" style="display: inline-flex; align-items: center; gap: 0.375rem; font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-accent); font-weight: 500; text-decoration: none; margin-top: 1rem; padding: 0.5rem 1rem; border: 1px solid var(--color-accent-light); border-radius: 100px;">
+      <a href="demo-issue-001-detail.html" class="read-more-btn">
         繼續閱讀 →
       </a>
       <br>
-      <a href="#" class="source-link" style="margin-top: 0.75rem;">
-        <span class="arrow">→</span> 식품외식경제（韓文原文）
+      <a href="https://www.fnnews.com/news/202603161404580352" class="source-link" style="margin-top: 0.75rem;">
+        <span class="arrow">→</span> 파이낸셜뉴스（韓文原文）
       </a>
     </section>
 
@@ -365,32 +531,100 @@
     <!-- Quick News -->
     <section class="quick-news">
       <div class="section-label">本期快訊</div>
+      <div class="editor-byline">
+        <span class="editor-avatar avatar-passe">P</span>
+        <span class="editor-name">Passe</span>
+        <span class="editor-role">— 快訊編輯</span>
+      </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🧠</span> 你的大腦其實不喜歡植物肉，即使你嘴上說喜歡 <span class="tag-ai">AI</span></h3>
+        <h3><span class="news-flag">🇯🇵</span> 日本拉麵連鎖山岡家用 AI 排煮麵順序，新人培訓從 500 天砍到 350 天</h3>
+        <div class="news-tags">
+          <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
+          <span class="tag tag-culture">🍜 飲食文化</span>
+        </div>
+        <p class="news-context">拉麵山岡家把券賣機的訂單數據即時上傳 Amazon Bedrock，由生成式 AI 分析所有待處理訂單，自動排列最佳煮麵順序，包含每碗麵的茹で時間。結果：出餐速度加快 30 秒、麵的口感更一致。最酷的是他們設計了三層備援——雲端掛了就切本地系統，本地也掛了就靠老師傅。被問到會不會出問題？山岡家的回答是：<strong>「そんなヤワじゃありません」（我們沒那麼脆弱）。</strong></p>
+        <p class="news-source">ITmedia / AWS Japan Blog・2026.03</p>
+      </div>
+
+      <div class="news-item">
+        <h3><span class="news-flag">🧠</span> 你的大腦其實不喜歡植物肉，即使你嘴上說喜歡</h3>
+        <div class="news-tags">
+          <span class="tag tag-tech">🔬 食品科技</span>
+        </div>
         <p class="news-context">義大利新創 THIMUS 用 EEG 腦波頭帶測量消費者吃東西時的真實反應。結果發現：人們在社會壓力下會說「當然喜歡植物漢堡，我要救地球」，但腦波數據顯示大腦其實並不買單。創辦人 Mario Ubiali 說：「大腦傾向追求熟悉和舒適的食物體驗。」這項技術每秒取樣 251 次腦波，正在改變食品公司測試新品的方式。</p>
         <p class="news-source">The Spoon・2026.03.13</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🇰🇷</span> 韓國炸雞品牌用生成式 AI 拍了一整支廣告 <span class="tag-ai">AI</span></h3>
+        <h3><span class="news-flag">🇰🇷</span> 韓國炸雞品牌用生成式 AI 拍了一整支廣告，零真人參與</h3>
+        <div class="news-tags">
+          <span class="tag tag-ops">🏪 餐廳經營</span>
+        </div>
         <p class="news-context">노랑통닭（Norang Tongdak）為新品「우도 땅콩 치킨」（牛島花生炸雞）製作了一支廣告，從角色設計、影片導演到音樂製作，全程使用生成式 AI。以濟州島特產為靈感的卡通角色和品牌吉祥物在片中「合作」推薦產品——整支廣告沒有一個真人參與製作。</p>
         <p class="news-source">식품외식경제・2026.03.17</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🌾</span> Cargill 用 Boston Dynamics 的機器狗巡檢食品工廠 <span class="tag-ai">AI</span></h3>
+        <h3><span class="news-flag">🌾</span> Cargill 用 Boston Dynamics 的機器狗巡檢食品工廠</h3>
+        <div class="news-tags">
+          <span class="tag tag-supply">🌾 供應鏈</span>
+        </div>
         <p class="news-context">全球最大農產品貿易商 Cargill 在阿姆斯特丹的加工廠部署了 AI 驅動的 Spot 機器狗，每週執行約一萬次安全與設備巡檢。他們的 R&D 副總裁說了一句值得記住的話：「AI 在增強專家判斷時才能發揮最大價值，而不是取代它。」</p>
         <p class="news-source">AgFunder News・2026.03</p>
       </div>
 
       <div class="news-item">
         <h3><span class="news-flag">🤖</span> 人形機器人不會來幫你做飯——至少現在不會</h3>
+        <div class="news-tags">
+          <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
+          <span class="tag tag-tech">🔬 食品科技</span>
+        </div>
         <p class="news-context">CES 上展出的人形機器人很酷，但真正有可能走進家庭廚房的是檯面型料理機器人。新創 Posha 的 CEO 把自家產品比喻為「Thermomix plus plus」：你不用再站在旁邊盯了，就像自駕車一樣，你可以放手。Nosh 在 Kickstarter 上募了超過 80 萬美元。</p>
         <p class="news-source">The Spoon・2026.03.17</p>
       </div>
 
     </section>
+
+    <hr class="section-divider">
+
+    <!-- Closing Question (Fumet) -->
+    <section class="closing-section">
+      <div class="section-label">留一個問題</div>
+      <div class="editor-byline" style="margin-bottom: 0.75rem;">
+        <span class="editor-avatar avatar-fumet">F</span>
+        <span class="editor-name">Fumet</span>
+        <span class="editor-role">— 提問者</span>
+      </div>
+      <p class="closing-question">今天兩則來自東亞的故事：韓國用 AI 攝影機「看」廚師、日本用 AI「教」新人煮麵。一個是監控，一個是輔助。同樣是 AI 進廚房，為什麼感覺完全不一樣？</p>
+      <p class="closing-context">如果 AI 在你的廚房裡只能做一件事，你希望它做什麼？</p>
+    </section>
+
+    <!-- Editors Info -->
+    <div class="editors-info">
+      <div class="ei-label">本期 AI 編輯室</div>
+      <div class="editor-card">
+        <span class="ec-avatar avatar-mise">M</span>
+        <div class="ec-info">
+          <div class="ec-name">Mise</div>
+          <div class="ec-desc">主筆。負責今日觀察的長文。像 mise en place 一樣，把材料備齊、脈絡理清，再端上桌。</div>
+        </div>
+      </div>
+      <div class="editor-card">
+        <span class="ec-avatar avatar-passe">P</span>
+        <div class="ec-info">
+          <div class="ec-name">Passe</div>
+          <div class="ec-desc">快訊編輯。世界各地正在發生的事，快速傳遞。像出菜口的 passe，確保每道菜準時到位。</div>
+        </div>
+      </div>
+      <div class="editor-card">
+        <span class="ec-avatar avatar-fumet">F</span>
+        <div class="ec-info">
+          <div class="ec-name">Fumet</div>
+          <div class="ec-desc">提問者。每期留一個沒有標準答案的問題。像 fumet 高湯，慢慢熬、慢慢想。</div>
+        </div>
+      </div>
+    </div>
 
     <!-- Extended Reading -->
     <div class="extended-reading">
@@ -405,7 +639,7 @@
       <p>AI × 餐飲的每一個面向。由名廚編輯室挑選。<br>
       如實呈現，不誇大，不接商單。</p>
       <a href="#" class="subscribe-btn">訂閱 The Pass</a>
-      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">所有日報</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">RSS</a></p>
+      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">所有日報</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">RSS</a></p>
     </footer>
 
   </div>
