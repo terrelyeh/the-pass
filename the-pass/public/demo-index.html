@@ -88,20 +88,14 @@
     .ic-num { font-family: var(--sans); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); }
     .ic-badge { font-family: var(--sans); font-size: 0.625rem; font-weight: 600; color: var(--ink-muted); background: var(--bg-warm); padding: 0.15rem 0.5rem; border-radius: 100px; }
 
-    .ic-headline { font-family: var(--serif); font-size: 1.125rem; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: 0.5rem; }
-    .ic-desc { font-family: var(--serif); font-size: 0.875rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 0.75rem; }
+    .ic-stories { list-style: none; margin-bottom: 1rem; }
+    .ic-story { display: flex; gap: 0.625rem; padding: 0.5rem 0; align-items: baseline; }
+    .ic-story + .ic-story { border-top: 1px solid var(--border); }
+    .ic-story-num { font-family: var(--sans); font-size: 0.6875rem; font-weight: 700; color: var(--accent); min-width: 1.25rem; padding-top: 0.1rem; }
+    .ic-story-title { font-family: var(--serif); font-size: 0.9375rem; font-weight: 600; color: var(--ink); line-height: 1.55; }
 
-    .ic-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 0.75rem; }
-    .ic-tag { font-family: var(--sans); font-size: 0.625rem; font-weight: 500; border-radius: 100px; padding: 0.1rem 0.5rem; }
-    .ic-tag.tech { color: #6366F1; background: rgba(99,102,241,0.08); }
-    .ic-tag.ops { color: #059669; background: rgba(5,150,105,0.08); }
-    .ic-tag.supply { color: #D97706; background: rgba(217,119,6,0.08); }
-    .ic-tag.kitchen { color: #DC2626; background: rgba(220,38,38,0.08); }
-    .ic-tag.culture { color: #B8860B; background: rgba(184,134,11,0.08); }
-
-    .ic-meta { display: flex; justify-content: space-between; align-items: center; }
-    .ic-countries { font-family: var(--sans); font-size: 0.8125rem; letter-spacing: 0.1rem; }
-    .ic-count { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-muted); }
+    .ic-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .ic-more { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-muted); }
     .ic-arrow { font-family: var(--sans); font-size: 0.8125rem; color: var(--accent); font-weight: 500; }
 
     footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; }
@@ -162,18 +156,22 @@
         <span class="ic-date">2026.03.23 週一</span>
         <span class="ic-num">#001</span>
       </div>
-      <div class="ic-headline">🇰🇷 韓國最大團膳企業在廚房裝了 AI 攝影機，廚師一走進去就被「看」了</div>
-      <div class="ic-desc">아워홈導入 AI 攝影機即時監控廚師衛生行為。另外：日本山岡家用 AI 排煮麵順序、泰國 EasyRice 用電腦視覺檢測稻米、義大利用腦波測試揭穿植物肉的謊言。</div>
-      <div class="ic-tags">
-        <span class="ic-tag ops">🏪 餐廳經營</span>
-        <span class="ic-tag tech">🔬 食品科技</span>
-        <span class="ic-tag kitchen">👨‍🍳 廚房現場</span>
-        <span class="ic-tag supply">🌾 供應鏈</span>
-        <span class="ic-tag culture">🍜 飲食文化</span>
-      </div>
-      <div class="ic-meta">
-        <span class="ic-countries">🇰🇷 🇯🇵 🇹🇭 🇮🇹 🇳🇱 🇺🇸</span>
-        <span class="ic-count">從 53 條中篩選 · 7 則報導</span>
+      <ul class="ic-stories">
+        <li class="ic-story">
+          <span class="ic-story-num">01</span>
+          <span class="ic-story-title">🇰🇷 韓國最大團膳企業在廚房裝了 AI 攝影機，廚師一走進去就被「看」了</span>
+        </li>
+        <li class="ic-story">
+          <span class="ic-story-num">02</span>
+          <span class="ic-story-title">🇯🇵 日本山岡家拉麵用 Amazon AI 排出最佳煮麵順序，一碗麵的等待時間少了 30 秒</span>
+        </li>
+        <li class="ic-story">
+          <span class="ic-story-num">03</span>
+          <span class="ic-story-title">🇮🇹 義大利新創用腦波測試，揭穿植物肉的「美味謊言」</span>
+        </li>
+      </ul>
+      <div class="ic-bottom">
+        <span class="ic-more">＋4 則快訊</span>
         <span class="ic-arrow">閱讀 →</span>
       </div>
     </a>
