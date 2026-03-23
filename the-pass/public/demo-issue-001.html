@@ -123,6 +123,30 @@
       font-size: 0.6875rem;
     }
 
+    /* The Pass Frame — 出菜口 */
+    .pass-frame {
+      position: relative;
+      margin: 1.5rem 0;
+      padding: 6px;
+      border: 1.5px solid rgba(44,51,69,0.15);
+      border-radius: 10px;
+      background: var(--color-bg);
+    }
+    .pass-frame img {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+    }
+    .pass-frame .pass-bell {
+      position: absolute;
+      bottom: 14px;
+      left: 16px;
+      font-size: 0.75rem;
+      color: rgba(44,51,69,0.3);
+      font-family: var(--font-sans);
+      letter-spacing: 0.02em;
+    }
+
     /* Article number */
     .article-number {
       font-family: var(--font-display);
@@ -563,8 +587,9 @@
         <span class="meta-tag">餐廳經營</span>
       </div>
 
-      <div class="article-illustration" style="margin: 1.5rem 0; border-radius: 8px; overflow: hidden;">
-        <img src="img/01-ourhome.png" alt="AI 攝影機注視著走進廚房的廚師" style="width: 100%; display: block;">
+      <div class="pass-frame">
+        <img src="img/01-ourhome.png" alt="AI 攝影機注視著走進廚房的廚師">
+        <span class="pass-bell">🔔</span>
       </div>
 
       <div class="story-body">
@@ -628,8 +653,9 @@
         <span class="meta-tag">食品科技</span>
       </div>
 
-      <div class="article-illustration" style="margin: 1.5rem 0; border-radius: 8px; overflow: hidden;">
-        <img src="img/02-thimus.png" alt="戴著腦波頭帶吃東西的人，旁邊科學家在記錄" style="width: 100%; display: block;">
+      <div class="pass-frame">
+        <img src="img/02-thimus.png" alt="戴著腦波頭帶吃東西的人，旁邊科學家在記錄">
+        <span class="pass-bell">🔔</span>
       </div>
 
       <div class="story-body">
