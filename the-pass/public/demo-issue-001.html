@@ -117,6 +117,17 @@
     .tag-biz { color: #7C3AED; background: rgba(124,58,237,0.08); }
     .tag-culture { color: #B8860B; background: rgba(184,134,11,0.08); }
 
+    /* Article number */
+    .article-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 400;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
     /* Editor byline */
     .editor-byline {
       display: flex;
@@ -147,8 +158,10 @@
     .editor-name { font-weight: 600; color: var(--color-ink-light); }
     .editor-role { color: var(--color-ink-muted); }
 
-    /* Main Story */
-    .main-story { margin-bottom: 3rem; }
+    /* Long Article */
+    .long-article {
+      margin-bottom: 3rem;
+    }
 
     .section-label {
       font-family: var(--font-sans);
@@ -162,7 +175,7 @@
 
     .story-tags { margin-bottom: 1rem; }
 
-    .main-story h1 {
+    .long-article h1 {
       font-family: var(--font-serif);
       font-size: 1.75rem;
       font-weight: 700;
@@ -171,9 +184,9 @@
       margin-bottom: 1rem;
     }
 
-    .main-story .flag-inline { font-size: 1.25rem; margin-right: 0.25rem; }
+    .long-article .flag-inline { font-size: 1.25rem; margin-right: 0.25rem; }
 
-    .main-story .story-body p {
+    .long-article .story-body p {
       font-family: var(--font-serif);
       font-size: 1rem;
       line-height: 2;
@@ -181,7 +194,7 @@
       margin-bottom: 1.25rem;
     }
 
-    .main-story .story-body .highlight {
+    .long-article .story-body .highlight {
       background: var(--color-bg-warm);
       padding: 1.25rem 1.5rem;
       border-radius: 6px;
@@ -189,29 +202,97 @@
       border-left: 3px solid var(--color-accent);
     }
 
-    .main-story .story-body .highlight p {
+    .long-article .story-body .highlight p {
       font-style: italic;
       margin-bottom: 0;
       color: var(--color-ink);
     }
 
-    .read-more-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.375rem;
-      font-family: var(--font-sans);
-      font-size: 0.9375rem;
-      color: var(--color-accent);
-      font-weight: 500;
-      text-decoration: none;
-      margin-top: 1rem;
-      padding: 0.5rem 1.125rem;
-      border: 1px solid var(--color-accent-light);
-      border-radius: 100px;
-      transition: all 0.2s;
+    /* Pullquote (from detail pages) */
+    .long-article .pullquote {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      background: var(--color-bg-warm);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 6px 6px 0;
     }
 
-    .read-more-btn:hover { background: var(--color-accent); color: var(--color-white); }
+    .long-article .pullquote p {
+      font-style: italic;
+      color: var(--color-ink);
+      margin-bottom: 0;
+      line-height: 1.9;
+    }
+
+    .long-article .pullquote .quote-attr {
+      font-style: normal;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* Subsection headings inside long articles */
+    .long-article .story-body h2 {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* Detail Cards */
+    .detail-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .detail-card h4 {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .detail-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .detail-card ul li {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      color: var(--color-ink);
+      padding: 0.375rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .detail-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
 
     .source-link {
       display: inline-flex;
@@ -236,16 +317,46 @@
       margin: 2.5rem 0;
     }
 
-    /* Quick News */
-    .quick-news { margin-bottom: 3rem; }
+    /* Full-width divider between long and short sections */
+    .section-divider-full {
+      height: 1px;
+      background: var(--color-border);
+      border: none;
+      margin: 3rem 0;
+    }
+
+    /* Quick News Section */
+    .quick-news-section {
+      margin-bottom: 3rem;
+    }
+
+    .quick-news-section .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .quick-news-section .section-label {
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
 
     .news-item {
-      padding: 1.5rem 0;
+      padding: 1.75rem 0;
       border-bottom: 1px solid var(--color-border);
     }
 
-    .news-item:first-of-type { padding-top: 0; }
     .news-item:last-of-type { border-bottom: none; }
+
+    .news-item .news-number {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 0.375rem;
+      letter-spacing: -0.02em;
+    }
 
     .news-item h3 {
       font-family: var(--font-serif);
@@ -256,18 +367,10 @@
       margin-bottom: 0.5rem;
     }
 
-    .news-item h3 a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .news-item h3 a:hover { color: var(--color-accent); }
-
-    .news-item .news-flag { font-size: 1.0625rem; margin-right: 0.375rem; }
     .news-tags { margin-bottom: 0.5rem; }
 
-    .news-item .news-context,
+    .news-item .news-flag { font-size: 1.0625rem; margin-right: 0.375rem; }
+
     .news-item .news-body {
       font-family: var(--font-serif);
       font-size: 1rem;
@@ -319,145 +422,6 @@
       color: var(--color-ink-light);
     }
 
-    /* Editors info */
-    .editors-info {
-      margin-bottom: 3rem;
-      padding: 1.75rem 2rem;
-      background: var(--color-white);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-    }
-
-    .editors-info .ei-label {
-      font-family: var(--font-sans);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-ink-muted);
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .editor-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.625rem 0;
-    }
-
-    .editor-card:not(:last-child) {
-      border-bottom: 1px solid var(--color-border);
-      padding-bottom: 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .editor-card .ec-avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--color-white);
-      flex-shrink: 0;
-      margin-top: 0.125rem;
-    }
-
-    .editor-card .ec-name {
-      font-family: var(--font-sans);
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: var(--color-ink);
-    }
-
-    .editor-card .ec-desc {
-      font-family: var(--font-sans);
-      font-size: 0.8125rem;
-      color: var(--color-ink-muted);
-      line-height: 1.5;
-    }
-
-    /* Extended Reading */
-    .extended-reading {
-      background: var(--color-white);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      padding: 1.75rem 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .extended-reading .er-label {
-      font-family: var(--font-sans);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-ink-muted);
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-    }
-
-    .extended-reading p {
-      font-family: var(--font-serif);
-      font-size: 1rem;
-      line-height: 1.75;
-      color: var(--color-ink-light);
-    }
-
-    .extended-reading a { color: var(--color-accent); text-decoration: none; }
-    .extended-reading a:hover { text-decoration: underline; }
-
-    /* Footer */
-    .issue-footer {
-      text-align: center;
-      padding: 2.5rem 0 3rem;
-      border-top: 1px solid var(--color-border);
-    }
-
-    .issue-footer p {
-      font-family: var(--font-sans);
-      font-size: 0.8125rem;
-      color: var(--color-ink-muted);
-      line-height: 1.8;
-    }
-
-    .issue-footer .footer-brand {
-      font-family: var(--font-display);
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--color-ink);
-      margin-bottom: 0.375rem;
-    }
-
-    .issue-footer .subscribe-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 2rem;
-      background: var(--color-ink);
-      color: var(--color-white);
-      font-family: var(--font-sans);
-      font-size: 0.9375rem;
-      font-weight: 500;
-      border-radius: 100px;
-      text-decoration: none;
-      letter-spacing: 0.03em;
-      transition: background 0.2s;
-    }
-
-    .issue-footer .subscribe-btn:hover { background: var(--color-accent); }
-
-    /* Demo Banner */
-    .demo-banner {
-      background: var(--color-ink);
-      color: var(--color-white);
-      text-align: center;
-      padding: 0.625rem;
-      font-family: var(--font-sans);
-      font-size: 0.8125rem;
-      letter-spacing: 0.05em;
-    }
-
     /* Subscribe CTA */
     .subscribe-cta {
       background: var(--color-ink, #2C3345); border-radius: 12px; padding: 2.5rem 2rem;
@@ -497,10 +461,44 @@
       color: rgba(255,255,255,0.3); margin-top: 0.75rem;
     }
 
+    /* Footer */
+    .issue-footer {
+      text-align: center;
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .issue-footer p {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      line-height: 1.8;
+    }
+
+    .issue-footer .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.375rem;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      background: var(--color-ink);
+      color: var(--color-white);
+      text-align: center;
+      padding: 0.625rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      letter-spacing: 0.05em;
+    }
+
     @media (max-width: 840px) {
       .container { padding: 1.75rem 1.25rem; }
       .issue-header .brand { font-size: 2.25rem; }
-      .main-story h1 { font-size: 1.5rem; }
+      .long-article h1 { font-size: 1.5rem; }
+      .article-number { font-size: 2.25rem; }
     }
   </style>
 </head>
@@ -522,8 +520,11 @@
       </div>
     </header>
 
-    <!-- Main Story -->
-    <section class="main-story">
+    <!-- ============================================ -->
+    <!-- ARTICLE 01 — LONG (Mise) -->
+    <!-- ============================================ -->
+    <section class="long-article">
+      <div class="article-number">01</div>
       <div class="section-label">今日觀察</div>
       <div class="editor-byline">
         <span class="editor-avatar avatar-mise">M</span>
@@ -539,6 +540,9 @@
         韓國最大團膳企業在廚房裝了 AI 攝影機，<br>
         廚師一走進去就被「看」了
       </h1>
+
+      <!-- 🖼️ 插圖預留位置 -->
+
       <div class="story-body">
         <p>아워홈（Ourhome），韓國最大的團體膳食企業之一，最近在旗下的中央廚房裡導入了一套來自한화비전（Hanwha Vision）的 AI 攝影機系統。</p>
         <p>這套系統做的事很直覺：廚師走進廚房的那一刻，AI 就開始看。它即時辨識你有沒有戴帽子、圍裙綁了沒有、有沒有按規定洗手。如果偵測到違規，系統立刻發出提醒。</p>
@@ -550,18 +554,123 @@
 
         <p>這是 AI 進入廚房最真實的張力。它不是機器人來搶你的工作，而是一雙永遠不眨眼的眼睛，看著你工作。</p>
         <p>韓國餐飲業正在大規模擁抱這類技術。아워홈不是第一個，也不會是最後一個。但很少有人在問一個更根本的問題：廚房是一個需要信任的地方——師傅信任徒弟、管理者信任團隊。<strong>當信任被演算法取代，廚房的文化會怎樣改變？</strong></p>
+
+        <div class="pullquote">
+          <p>「透過 AI 技術即時監控作業人員狀態和廚房狀況，衛生及安全管理將變得更加容易。我們也期待，隨著料理專注度的提升，食物品質也會跟著進步。」</p>
+          <span class="quote-attr">— 아워홈 官方聲明</span>
+        </div>
+
+        <h2>不只是攝影機</h2>
+
+        <p>但 AI 攝影機只是冰山一角。아워홈這次導入的，其實是一整套「智慧廚房」系統：</p>
+
+        <div class="detail-card">
+          <h4>📹 AI 即時衛生監控</h4>
+          <ul>
+            <li>廚師進入廚房時，即時辨識服裝是否合規（帽子、圍裙、衛生手套）</li>
+            <li>偵測異常聲音——可能意味著設備故障或緊急事故</li>
+            <li>溫度異常偵測——預防火災等安全風險</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h4>📦 AI 自動進貨管理</h4>
+          <ul>
+            <li>BCR（條碼攝影機辨識）系統：食材送到時自動掃碼，即時登錄庫存</li>
+            <li>AI 根據庫存水位和消耗模式，<strong>自動生成採購訂單</strong>——不再需要人手動下單</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h4>📊 AI 菜單優化</h4>
+          <ul>
+            <li>分析用餐者的飲食偏好數據</li>
+            <li>根據數據調整和優化菜單——讓菜單不再只靠廚師的直覺，而是加上數據的判斷</li>
+          </ul>
+        </div>
+
+        <h2>更大的圖景</h2>
+
+        <p>這個計畫不只是아워홈的單獨行動。它是韓華集團（Hanwha Group）「Tech × Life」戰略的第一個落地案例——把集團旗下的科技部門（한화비전、韓華機器人）和生活服務部門（아워홈、Galleria 百貨）連結起來。</p>
+
+        <p>下一步，他們計劃在飯店和百貨公司部署 <strong>VINOBOT</strong>（비노봇）——一款 AI 侍酒機器人，以及料理機器人。從廚房的監控攝影機、到庫存的自動管理、到餐桌上的機器人侍酒師，韓華正在試圖用 AI 貫穿整個餐飲服務的鏈條。</p>
+
+        <p>而且아워홈不是唯一一個。報導指出，三星旗下的團膳事業也在同步推進類似的 FoodTech 技術。韓國的團膳市場，正在成為 AI 進入餐飲業的第一個大規模試驗場。</p>
       </div>
-      <a href="demo-issue-001-detail.html" class="read-more-btn">繼續閱讀 →</a>
-      <br>
-      <a href="https://www.fnnews.com/news/202603161404580352" class="source-link" target="_blank" style="margin-top: 0.75rem;">
-        → 파이낸셜뉴스（韓文原文）
+
+      <a href="https://www.fnnews.com/news/202603161404580352" class="source-link" target="_blank">
+        完整原文內容 → 파이낸셜뉴스（韓文）
       </a>
     </section>
 
     <hr class="section-divider">
 
-    <!-- Quick News -->
-    <section class="quick-news">
+    <!-- ============================================ -->
+    <!-- ARTICLE 02 — LONG (Mise) -->
+    <!-- ============================================ -->
+    <section class="long-article">
+      <div class="article-number">02</div>
+      <div class="editor-byline">
+        <span class="editor-avatar avatar-mise">M</span>
+        <span class="editor-name">Mise</span>
+        <span class="editor-role">— 主筆</span>
+      </div>
+      <div class="story-tags">
+        <span class="tag tag-tech">🔬 食品科技</span>
+      </div>
+      <h1>
+        <span class="flag-inline">🇮🇹</span>
+        你的大腦覺得植物肉很好吃，但你的腦波說不是
+      </h1>
+
+      <!-- 🖼️ 插圖預留位置 -->
+
+      <div class="story-body">
+        <p>食品公司推出新品前，通常會找一群消費者來試吃，然後問他們喜不喜歡。問題是，人會說謊——不一定是故意的，而是社會壓力。</p>
+
+        <p>「你覺得這個植物漢堡好吃嗎？」在 2026 年，很少有人會當面說「不好吃」。你知道植物肉是為了環保，你知道全桌的人都在點頭，你也跟著說了。</p>
+
+        <p>但你的大腦沒有說謊。</p>
+
+        <h2>THIMUS 的 T-Box</h2>
+
+        <p>義大利新創 THIMUS 開發了一款名為 T-Box 的 EEG 腦波頭帶。受測者戴上後吃東西，頭帶即時記錄大腦的電生理反應——每秒取樣 251 次。它不問你「好不好吃」，它直接測量你的大腦覺得好不好吃。</p>
+
+        <div class="detail-card">
+          <h4>🧠 THIMUS 技術細節</h4>
+          <ul>
+            <li>EEG 腦波感測，每秒 <strong>251 次取樣</strong></li>
+            <li>測量大腦對食物的真實情緒反應（愉悅、厭惡、驚訝、無感）</li>
+            <li>結果與口頭問卷的差異最高達 <strong>30-40%</strong></li>
+            <li>已被 Beyond Meat、Barilla 等大型食品公司用於產品開發</li>
+          </ul>
+        </div>
+
+        <p>創辦人 Mario Ubiali 的解釋是：大腦傾向追求熟悉和舒適的食物體驗。你的嘴巴可以配合社會期待，但你的神經迴路不會。這項技術正在改變食品公司測試新品的方式——以前問你「好不好吃」，現在直接看你的大腦覺得好不好吃。</p>
+
+        <div class="pullquote">
+          <p>「大腦傾向追求熟悉和舒適的食物體驗。當我們用腦波數據替代問卷，才看到消費者真正的反應。」</p>
+          <span class="quote-attr">— Mario Ubiali，THIMUS 創辦人</span>
+        </div>
+
+        <h2>對食品產業的意義</h2>
+
+        <p>如果 THIMUS 的技術變成行業標準，食品公司將不再需要「猜」消費者喜歡什麼。AI 分析腦波數據，直接告訴你：這個口感讓大腦興奮，那個風味讓大腦皺眉。對植物肉產業來說，這意味著他們終於可以知道——消費者說「好吃」的時候，大腦是不是真的同意。</p>
+
+        <p>更深一層的問題是：當我們開始用 AI 讀取大腦對食物的「真實感受」，我們是在做更好的產品，還是在製造更容易讓大腦上癮的食物？如果有一天，餐廳的菜單不是根據你說了什麼來設計，而是根據你的大腦真正想要什麼呢？</p>
+      </div>
+
+      <a href="https://thespoon.tech/the-future-of-food-testing-may-be-in-your-brainwaves/" class="source-link" target="_blank">
+        完整原文內容 → The Spoon（英文）
+      </a>
+    </section>
+
+    <hr class="section-divider-full">
+
+    <!-- ============================================ -->
+    <!-- ARTICLES 03-05 — SHORT (Passe) -->
+    <!-- ============================================ -->
+    <section class="quick-news-section">
       <div class="section-label">本期快訊</div>
       <div class="editor-byline">
         <span class="editor-avatar avatar-passe">P</span>
@@ -570,6 +679,7 @@
       </div>
 
       <div class="news-item">
+        <div class="news-number">03</div>
         <h3><span class="news-flag">🇯🇵</span> 一碗拉麵少等 30 秒，但那 30 秒原本是師傅的判斷</h3>
         <div class="news-tags">
           <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
@@ -578,10 +688,11 @@
         <p class="news-body">日本連鎖拉麵山岡家最近導入了 Amazon Bedrock 的 AI 系統，專門計算廚房裡同時煮多碗麵時的最佳下鍋順序。每碗麵的粗細、湯底、配料都不同，AI 會即時排出最有效率的組合。</p>
         <p class="news-body">結果：平均每碗麵的出餐時間少了約 30 秒，麵的口感也更一致。但有趣的是，這個判斷以前是煮麵師傅靠經驗做的——老師傅一眼掃過去就知道先煮哪碗、後煮哪碗。現在 AI 做這件事，更快也更準，但師傅的那個「一眼」，就此消失了。</p>
         <p class="news-body">山岡家倒是留了一手：系統設計了三層備援，雲端掛了就切本地，本地也掛了就靠老師傅。被問到會不會出問題？回答是：<strong>「そんなヤワじゃありません」（我們沒那麼脆弱）。</strong></p>
-        <p class="news-source">完整原文內容 → < href="https://www.itmedia.co.jp/aiplus/articles/2506/27/news088.html" target="_blank">ITmedia AI+</a> / <a href="https://aws.amazon.com/jp/blogs/news/aws-serverless-yamaokaya-kitchen/" target="_blank">AWS Japan Blog</a>（日文）</p>
+        <p class="news-source">完整原文內容 → <a href="https://www.itmedia.co.jp/aiplus/articles/2506/27/news088.html" target="_blank">ITmedia AI+</a> / <a href="https://aws.amazon.com/jp/blogs/news/aws-serverless-yamaokaya-kitchen/" target="_blank">AWS Japan Blog</a>（日文）</p>
       </div>
 
       <div class="news-item">
+        <div class="news-number">04</div>
         <h3><span class="news-flag">🇹🇭</span> 泰國稻農過去靠眼睛分好壞米，現在 AI 兩秒就看完一批</h3>
         <div class="news-tags">
           <span class="tag tag-tech">🔬 食品科技</span>
@@ -590,50 +701,18 @@
         <p class="news-body">泰國新創 EasyRice 做了一件事：用電腦視覺取代人眼做稻米品質檢測。傳統的方式是檢測員拿著放大鏡一粒一粒看，25 公克的米要花 15 到 20 分鐘。EasyRice 的機器 3 到 5 分鐘就搞定，準確率 95%。</p>
         <p class="news-body">更厲害的是，它能辨識 84 種泰國稻米品種。一年內就拿下了泰國米出口 30% 的檢測市場。對一個農業大國來說，這不是小事。</p>
         <p class="news-body">創辦人 Phuvin 說了一句話：「AI 不會取代檢測員，因為最終仍需由人來認證。」這句話聽起來像是在安慰人，但他可能是認真的——在食品安全這件事上，最後簽名的那個人，暫時還不能是機器。</p>
-        <p class="news-source">完整原文內容 → < href="https://www.bangkokpost.com/business/general/2632183/easyrice-uses-artificial-intelligence-for-food-revolution" target="_blank">Bangkok Post</a> / <a href="https://thethaiger.com/hot-news/technology/easyrice-transforms-thai-rice-industry-with-ai-powered-inspection-solutions" target="_blank">The Thaiger</a>（英文）</p>
+        <p class="news-source">完整原文內容 → <a href="https://www.bangkokpost.com/business/general/2632183/easyrice-uses-artificial-intelligence-for-food-revolution" target="_blank">Bangkok Post</a> / <a href="https://thethaiger.com/hot-news/technology/easyrice-transforms-thai-rice-industry-with-ai-powered-inspection-solutions" target="_blank">The Thaiger</a>（英文）</p>
       </div>
 
       <div class="news-item">
-        <h3><span class="news-flag">🇮🇹</span> 你的大腦覺得植物肉很好吃，但你的腦波說不是</h3>
-        <div class="news-tags">
-          <span class="tag tag-tech">🔬 食品科技</span>
-        </div>
-        <p class="news-body">義大利新創 THIMUS 做了一個實驗：讓人們戴著 EEG 腦波頭帶吃東西，看看大腦的真實反應。結果很有意思——人們在社會壓力下會說「當然喜歡植物漢堡，我要救地球」，但腦波數據說的是另一回事。</p>
-        <p class="news-body">創辦人 Mario Ubiali 的解釋是：大腦傾向追求熟悉和舒適的食物體驗。你的嘴巴可以配合社會期待，但你的神經迴路不會。這項技術每秒取樣 251 次腦波，正在改變食品公司測試新品的方式——以前問你「好不好吃」，現在直接看你的大腦覺得好不好吃。</p>
-        <p class="news-body">如果有一天，餐廳的菜單不是根據你說了什麼來設計，而是根據你的大腦真正想要什麼呢？</p>
-        <p class="news-source">完整原文內容 → < href="https://thespoon.tech/the-future-of-food-testing-may-be-in-your-brainwaves/" target="_blank">The Spoon・2026.03.13</a>（英文）</p>
-      </div>
-
-      <div class="news-item">
+        <div class="news-number">05</div>
         <h3><span class="news-flag">🇰🇷</span> 這支炸雞廣告從頭到尾沒有一個真人參與製作</h3>
         <div class="news-tags">
           <span class="tag tag-ops">🏪 餐廳經營</span>
         </div>
         <p class="news-body">韓國連鎖炸雞品牌노랑통닭（Norang Tongdak）為新品「牛島花生炸雞」做了一支廣告。從角色設計、分鏡、影片導演到配樂，全部由生成式 AI 完成。以濟州島特產為靈感的卡通角色在片中跟品牌吉祥物一起推薦產品。</p>
         <p class="news-body">整支廣告的品質不差，至少在社群上引起了話題。但這件事真正值得注意的不是「AI 也能拍廣告了」——而是對一間連鎖炸雞店來說，行銷預算有限，以前請不起拍片團隊的品牌，現在可以自己做了。門檻降低，對小品牌來說是機會，對廣告公司來說是警訊。</p>
-        <p class="news-source">完整原文內容 → < href="https://www.youthdaily.co.kr/news/article.html?no=215542" target="_blank">청년일보・2026.03.17</a>（韓文）</p>
-      </div>
-
-      <div class="news-item">
-        <h3><span class="news-flag">🇳🇱</span> 阿姆斯特丹的食品工廠裡，巡檢員有四條腿</h3>
-        <div class="news-tags">
-          <span class="tag tag-supply">🌾 供應鏈</span>
-        </div>
-        <p class="news-body">全球最大農產品貿易商 Cargill 在阿姆斯特丹的加工廠裡，部署了 Boston Dynamics 的 Spot 機器狗做安全巡檢。這隻機器狗每週執行大約一萬次檢查——偵測設備異常、溫度變化、洩漏風險。它不會累、不會漏看、也不會因為週五下午就想早點下班。</p>
-        <p class="news-body">不過 Cargill 的 R&D 副總裁說了一句值得記住的話：「AI 在增強專家判斷時才能發揮最大價值，而不是取代它。」機器狗巡檢完，最後做決策的還是人。至少目前是這樣。</p>
-        <p class="news-source">完整原文內容 → < href="https://agfundernews.com/cargills-new-robot-dog-is-one-part-of-a-much-larger-shift-towards-responsible-ai" target="_blank">AgFunder News</a>（英文）</p>
-      </div>
-
-      <div class="news-item">
-        <h3><span class="news-flag">🇺🇸</span> 人形機器人不會來幫你做飯——但一台桌上型的可能會</h3>
-        <div class="news-tags">
-          <span class="tag tag-kitchen">👨‍🍳 廚房現場</span>
-          <span class="tag tag-tech">🔬 食品科技</span>
-        </div>
-        <p class="news-body">CES 上那些人形機器人看起來很酷，但離走進你家廚房還很遠。真正有可能先到的，是放在檯面上的料理機器人。新創 Posha 的 CEO 把自家產品形容為「Thermomix plus plus」——你把食材丟進去，它自己煮，你不用站在旁邊盯。就像自駕車一樣，你可以放手。</p>
-        <p class="news-body">另一家新創 Nosh 在 Kickstarter 上募了超過 80 萬美元，也是走這個路線。看起來消費者對「不用顧爐子」這件事，是真的願意掏錢的。</p>
-        <p class="news-body">不過也有人問：如果煮飯這件事完全交給機器，那「下廚」這個動詞，還剩下什麼意思？</p>
-        <p class="news-source">完整原文內容 → < href="https://thespoon.tech/humanoid-robots-are-coming-just-not-to-cook-your-dinner-at-least-not-yet/" target="_blank">The Spoon・2026.03.17</a>（英文）</p>
+        <p class="news-source">完整原文內容 → <a href="https://www.youthdaily.co.kr/news/article.html?no=215542" target="_blank">청년일보</a>（韓文）</p>
       </div>
 
     </section>
@@ -648,43 +727,11 @@
         <span class="editor-name">Fumet</span>
         <span class="editor-role">— 提問者</span>
       </div>
-      <p class="closing-question">今天的故事橫跨韓國、日本、泰國、義大利、荷蘭、美國。每個地方用 AI 做的事不同，但有一件事很像：他們都在問「這件事還需要人來做嗎？」</p>
+      <p class="closing-question">今天的五則故事橫跨韓國、日本、泰國、義大利。每個地方用 AI 做的事不同，但有一件事很像：他們都在問「這件事還需要人來做嗎？」</p>
       <p class="closing-context">不過更有趣的問題或許是反過來的——在你的工作裡，有沒有什麼事，你希望永遠不要交給 AI？</p>
     </section>
 
-    <!-- Editors Info -->
-    <div class="editors-info">
-      <div class="ei-label">本期 AI 編輯室</div>
-      <div class="editor-card">
-        <span class="ec-avatar avatar-mise">M</span>
-        <div class="ec-info">
-          <div class="ec-name">Mise</div>
-          <div class="ec-desc">主筆。負責今日觀察的長文。像 mise en place 一樣，把材料備齊、脈絡理清，再端上桌。</div>
-        </div>
-      </div>
-      <div class="editor-card">
-        <span class="ec-avatar avatar-passe">P</span>
-        <div class="ec-info">
-          <div class="ec-name">Passe</div>
-          <div class="ec-desc">快訊編輯。世界各地正在發生的事，快速傳遞。像出菜口的 passe，確保每道菜準時到位。</div>
-        </div>
-      </div>
-      <div class="editor-card">
-        <span class="ec-avatar avatar-fumet">F</span>
-        <div class="ec-info">
-          <div class="ec-name">Fumet</div>
-          <div class="ec-desc">提問者。每期留一個沒有標準答案的問題。像 fumet 高湯，慢慢熬、慢慢想。</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Extended Reading -->
-    <div class="extended-reading">
-      <div class="er-label">延伸閱讀</div>
-      <p>關於廚房裡的信任與傳承，我們曾深入採訪多位亞洲主廚。<br>
-      → <a href="https://www.mingchu.io" target="_blank">主廚以外的餐廳夥伴：那些廚房裡看不見的默契</a></p>
-    </div>
-
+    <!-- Subscribe CTA -->
     <div class="subscribe-cta">
       <h2>AI 正在改變餐飲業的每一個環節</h2>
       <div class="cta-tagline">Intelligence, served.</div>
@@ -701,8 +748,7 @@
       <div class="footer-brand">The Pass</div>
       <p>AI × 餐飲的每一個面向。由 The Pass 編輯室挑選。<br>
       如實呈現，不誇大，不接業配。</p>
-      <a href="#" class="subscribe-btn">訂閱 The Pass</a>
-      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: none;">關於</a> ・ <a href="#" style="color: var(--color-ink-muted); text-decoration: none;">RSS</a></p>
+      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: none;">關於</a></p>
     </footer>
 
   </div>
