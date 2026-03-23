@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信源清單 — The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap');
+
+    :root {
+      --ink: #2C3345; --ink-light: #5A6178; --ink-muted: #8B90A0;
+      --bg: #FAFAF8; --bg-warm: #F5F3EF; --accent: #B8860B; --accent-light: #D4A843;
+      --border: #E8E6E1; --white: #FFFFFF;
+      --red: #DC2626; --amber: #D97706; --green: #059669;
+      --serif: 'Noto Serif TC', Georgia, serif;
+      --sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --display: 'Instrument Serif', var(--serif);
+      --mono: 'JetBrains Mono', monospace;
+      --max-w: 960px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; scroll-behavior: smooth; }
+    body { font-family: var(--sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { font-family: var(--display); font-size: 1.25rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { font-size: 0.8125rem; color: var(--ink-light); text-decoration: none; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero { padding: 7rem 2rem 3rem; text-align: center; background: var(--white); border-bottom: 1px solid var(--border); }
+    .hero-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1.25rem; }
+    .hero h1 { font-family: var(--display); font-size: clamp(2rem, 4.5vw, 2.75rem); font-weight: 400; color: var(--ink); margin-bottom: 1.25rem; line-height: 1.3; }
+    .hero-sub { font-family: var(--serif); font-size: 1rem; color: var(--ink-light); max-width: 600px; margin: 0 auto; line-height: 1.9; }
+
+    .content { max-width: var(--max-w); margin: 0 auto; padding: 3rem 2rem 4rem; }
+
+    /* Stats bar */
+    .stats-bar { display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; padding: 1.5rem 0; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .stat { text-align: center; }
+    .stat-num { font-family: var(--display); font-size: 2rem; color: var(--ink); line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.25rem; }
+
+    /* Tier header */
+    .tier-header { display: flex; align-items: center; gap: 0.75rem; margin-top: 3rem; margin-bottom: 0.75rem; }
+    .tier-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .tier-dot.t1 { background: var(--red); }
+    .tier-dot.t2 { background: var(--amber); }
+    .tier-dot.t3 { background: var(--green); }
+    .tier-title { font-family: var(--display); font-size: 1.5rem; font-weight: 400; color: var(--ink); }
+    .tier-desc { font-family: var(--serif); font-size: 0.9375rem; color: var(--ink-light); margin-bottom: 1.5rem; }
+
+    /* Source card */
+    .source-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.25rem 1.5rem; margin-bottom: 0.75rem;
+      display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start;
+      transition: border-color 0.2s;
+    }
+    .source-card:hover { border-color: var(--accent-light); }
+
+    .source-main { min-width: 0; }
+    .source-name-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
+    .source-name { font-family: var(--sans); font-size: 0.9375rem; font-weight: 700; color: var(--ink); }
+    .source-name a { color: inherit; text-decoration: none; }
+    .source-name a:hover { color: var(--accent); }
+    .source-lang { font-family: var(--mono); font-size: 0.625rem; font-weight: 700; color: var(--white); padding: 0.1rem 0.375rem; border-radius: 3px; }
+    .lang-en { background: #6366F1; }
+    .lang-kr { background: #DC2626; }
+    .lang-jp { background: #2C3345; }
+    .lang-th { background: #059669; }
+    .lang-tw { background: #D97706; }
+
+    .source-desc { font-family: var(--serif); font-size: 0.875rem; color: var(--ink-light); line-height: 1.7; }
+    .source-why { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink); margin-top: 0.375rem; }
+    .source-why strong { color: var(--accent); font-weight: 600; }
+
+    .source-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.375rem; flex-shrink: 0; }
+    .source-rss { font-family: var(--mono); font-size: 0.625rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 3px; }
+    .rss-yes { background: #F0F9F4; color: var(--green); border: 1px solid #D4EDDA; }
+    .rss-maybe { background: #FFFBEB; color: var(--amber); border: 1px solid #FDE68A; }
+    .rss-no { background: #FDF2F2; color: #999; border: 1px solid #F5D5D5; }
+    .source-freq { font-family: var(--sans); font-size: 0.6875rem; color: var(--ink-muted); white-space: nowrap; }
+
+    /* Section divider */
+    .sep { width: 40px; height: 1.5px; background: var(--accent); margin: 3rem auto; border: none; }
+
+    /* Language summary */
+    .lang-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin: 2rem 0; }
+    .lang-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; text-align: center; }
+    .lang-card .lc-num { font-family: var(--display); font-size: 1.75rem; color: var(--ink); line-height: 1; }
+    .lang-card .lc-label { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.25rem; }
+
+    .content p { font-family: var(--serif); font-size: 1rem; line-height: 1.9; color: var(--ink); margin-bottom: 1.25rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; background: var(--white); }
+    footer p { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.8; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero { padding: 6rem 1.5rem 2.5rem; }
+      .content { padding: 2rem 1.25rem 3rem; }
+      .source-card { grid-template-columns: 1fr; }
+      .source-meta { flex-direction: row; align-items: center; }
+      .stats-bar { gap: 1.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="demo-issue-001.html" class="nav-brand">The Pass</a>
+      <ul class="nav-links">
+        <li><a href="methodology.html">方法論</a></li>
+        <li><a href="editorial-guidelines.html">編輯指南</a></li>
+        <li><a href="project-brief.html">關於</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-label">Source Directory</div>
+    <h1>信源清單</h1>
+    <p class="hero-sub">The Pass 的內容從這裡來。29 個信源，橫跨 5 種語言、8 個國家。每一個都經過驗證，確認活躍且有價值。</p>
+  </header>
+
+  <div class="content">
+
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num">29</div><div class="stat-label">信源</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">語言</div></div>
+      <div class="stat"><div class="stat-num">18</div><div class="stat-label">有 RSS</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-label">國家</div></div>
+    </div>
+
+    <div class="lang-summary">
+      <div class="lang-card"><div class="lc-num">10</div><div class="lc-label">🌐 英文</div></div>
+      <div class="lang-card"><div class="lc-num">7</div><div class="lc-label">🇯🇵 日文</div></div>
+      <div class="lang-card"><div class="lc-num">5</div><div class="lc-label">🇰🇷 韓文</div></div>
+      <div class="lang-card"><div class="lc-num">4</div><div class="lc-label">🇹🇼 中文</div></div>
+      <div class="lang-card"><div class="lc-num">3</div><div class="lc-label">🇹🇭 泰文</div></div>
+    </div>
+
+    <!-- ═══════════════════ TIER 1 ═══════════════════ -->
+
+    <div class="tier-header">
+      <span class="tier-dot t1"></span>
+      <span class="tier-title">Tier 1 — 核心信源</span>
+    </div>
+    <p class="tier-desc">每天必須監測。The Pass 的「主食材」，缺了任何一個內容品質都會打折。</p>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://thespoon.tech" target="_blank">The Spoon</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">AI × 食品科技、智慧廚房、替代蛋白、機器人廚房。由食品科技記者 Michael Wolf 主持。</p>
+        <p class="source-why"><strong>護城河：</strong>全球最專注的 AI × Food 媒體，沒有之一。Demo #001 有三則素材來自這裡。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每週 3-5 篇</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://agfundernews.com" target="_blank">AgFunder News</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">食品科技投融資、精準農業、替代蛋白、AI 農業應用。兼營創投平台，有第一手融資數據。</p>
+        <p class="source-why"><strong>護城河：</strong>知道錢往哪裡流，就知道趨勢往哪裡走。Cargill 機器狗的故事來自這裡。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.restaurantdive.com" target="_blank">Restaurant Dive</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">餐廳產業新聞與分析。科技專區涵蓋 AI 導入、外送平台、自動化、機器人。</p>
+        <p class="source-why"><strong>護城河：</strong>餐廳端的 AI 應用報導品質最高的英文媒體。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://foodtech-japan.com" target="_blank">Foovo フーボ</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">日本食品科技專門媒體。培養肉、植物肉、精密發酵、食品機器人、自販機創新、食物浪費。</p>
+        <p class="source-why"><strong>護城河：</strong>日本唯一的食品科技專門媒體。英文媒體不會報的日本 food tech，只有這裡有。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">近每日 + 週報</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.foodbank.co.kr" target="_blank">식품외식경제</a></span>
+          <span class="source-lang lang-kr">KR</span>
+        </div>
+        <p class="source-desc">韓國最大餐飲產業媒體。食品製造、連鎖加盟、餐飲經營、產業趨勢。1996 年創立。</p>
+        <p class="source-why"><strong>護城河：</strong>韓國食品餐飲產業覆蓋面最廣。아워홈 AI 廚房的故事源頭。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日多篇</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.foodnext.net" target="_blank">食力 foodNEXT</a></span>
+          <span class="source-lang lang-tw">TW</span>
+        </div>
+        <p class="source-desc">臺灣食品知識平台。食品科學、食安調查、農業創新、產業分析。有季刊。</p>
+        <p class="source-why"><strong>護城河：</strong>臺灣最嚴謹的食品報導，科學基底、調查性格。自家人不能不看。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日 + 季刊</span>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- ═══════════════════ TIER 2 ═══════════════════ -->
+
+    <div class="tier-header">
+      <span class="tier-dot t2"></span>
+      <span class="tier-title">Tier 2 — 重要補充</span>
+    </div>
+    <p class="tier-desc">每週掃描 2-3 次。提供不同角度和地域深度，讓 The Pass 的視野更廣。</p>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.restaurantbusinessonline.com" target="_blank">Restaurant Business Online</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">餐廳產業，有專屬科技專欄 "Tech Check"，由記者 Joe Guszkowski 主筆。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每週多篇</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://foodinstitute.com" target="_blank">The Food Institute</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">食品產業全面覆蓋——農業、製造、零售、餐飲、M&A、數據分析。1928 年成立。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日多篇</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.fooddive.com" target="_blank">Food Dive</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">食品製造、加工、法規、創新。中游視角——CPG 和製造端的 AI 導入。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.foodnavigator.com" target="_blank">FoodNavigator</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">歐洲最大食品產業新聞。食品原料、科學、法規、AI 應用。有歐洲版和美國版。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.ssnp.co.jp" target="_blank">食品産業新聞社</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">日本最全面的食品產業媒體。飲料、肉品、穀物、冷凍、乳製品、調味料、餐飲、流通。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日多篇</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://food-stadium.com" target="_blank">フードスタジアム</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">日本餐廳開幕、主廚訪談、餐飲趨勢。有東京、關西、東海等地區版。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.foodrink.co.jp" target="_blank">フードリンクニュース FDN</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">餐飲業「真話」（ホンネ）新聞。主打業者的真實聲音，能分辨炒作 vs. 真實導入。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日 + 週二報</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.kfoodtimes.com" target="_blank">한국외식신문</a></span>
+          <span class="source-lang lang-kr">KR</span>
+        </div>
+        <p class="source-desc">韓國外食業協會旗下媒體。代表韓國 300 萬餐飲勞動力，覆蓋政策、營運、人力。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://platum.kr" target="_blank">플래텀 Platum</a></span>
+          <span class="source-lang lang-kr">KR</span>
+        </div>
+        <p class="source-desc">韓國最大新創媒體。追蹤食品科技融資、AI 新創、加速器計畫。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-maybe">RSS ⚠</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.newsmarket.com.tw" target="_blank">上下游 Newsmarket</a></span>
+          <span class="source-lang lang-tw">TW</span>
+        </div>
+        <p class="source-desc">臺灣最受尊敬的獨立食農媒體。農業、食安、食物文化、調查報導。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://nommagazine.com" target="_blank">NOM Magazine</a></span>
+          <span class="source-lang lang-tw">TW</span>
+        </div>
+        <p class="source-desc">餐飲商業數據、主廚文化、食品科技。臺灣最接近「食品產業商業情報」的媒體。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">定期更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://brandinside.asia" target="_blank">Brand Inside แบรนด์อินไซด์</a></span>
+          <span class="source-lang lang-th">TH</span>
+        </div>
+        <p class="source-desc">泰國商業與創業媒體。餐飲品牌策略、連鎖擴張、食品品牌故事。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日多篇</span>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- ═══════════════════ TIER 3 ═══════════════════ -->
+
+    <div class="tier-header">
+      <span class="tier-dot t3"></span>
+      <span class="tier-title">Tier 3 — 補味信源</span>
+    </div>
+    <p class="tier-desc">不需要每天追蹤，但偶爾會出現 Tier 1-2 沒有的獨特故事。有好料時才用。</p>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.qsrmagazine.com" target="_blank">QSR Magazine</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">速食／快餐產業科技。Drive-thru 語音 AI、機器人、連鎖自動化。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-maybe">RSS ⚠</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://hospitalitytech.com" target="_blank">Hospitality Technology</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">飯店 + 餐廳科技。2026 年推出 MURTEC AI Summit。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-maybe">RSS ⚠</span>
+        <span class="source-freq">定期更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.technologyreview.com" target="_blank">MIT Technology Review</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">AI × 食品深度分析報告。每季偶爾一篇，但品質極高，研究等級。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每季數篇</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://gfi.org" target="_blank">Good Food Institute</a></span>
+          <span class="source-lang lang-en">EN</span>
+        </div>
+        <p class="source-desc">替代蛋白數據與研究報告。全球替代蛋白投資數據的唯一來源。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-no">RSS ✕</span>
+        <span class="source-freq">季度報告</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.nikkei.com/business/eating-out/" target="_blank">日經 外食版</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">日本大型連鎖企業 AI 策略。Mos Burger AI 點餐等獨家。有付費牆。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-maybe">RSS ⚠</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.inshokuten.com/foodist/" target="_blank">飲食店ドットコム</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">日本餐廳營運實務。連結供應商生態系（Synchro Food），非常落地。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-no">RSS ✕</span>
+        <span class="source-freq">週三報</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://gaishoku.co.jp" target="_blank">外食産業新聞社</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">日本中小餐飲業每日情報。1974 年創立，最久的外食專門紙。有每日電子報。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-no">RSS ✕</span>
+        <span class="source-freq">每日（平日）</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://news.nissyoku.co.jp" target="_blank">日本食糧新聞</a></span>
+          <span class="source-lang lang-jp">JP</span>
+        </div>
+        <p class="source-desc">日本食品產業財經。人事異動、財報、M&A、企業戰略。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-no">RSS ✕</span>
+        <span class="source-freq">每日多篇</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.thinkfood.co.kr" target="_blank">식품음료신문</a></span>
+          <span class="source-lang lang-kr">KR</span>
+        </div>
+        <p class="source-desc">韓國食品飲料製造、K-food 出口趨勢、食安政策。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-maybe">RSS ⚠</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.foodtoday.or.kr" target="_blank">푸드투데이</a></span>
+          <span class="source-lang lang-kr">KR</span>
+        </div>
+        <p class="source-desc">韓國食品產業、生技、農漁業。食品 × 生技交叉覆蓋。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-no">RSS ✕</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://positioningmag.com" target="_blank">Positioning Magazine</a></span>
+          <span class="source-lang lang-th">TH</span>
+        </div>
+        <p class="source-desc">泰國行銷雜誌。食品品牌策略、消費者洞察、外送平台趨勢。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-yes">RSS ✓</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.foodfocusthailand.com" target="_blank">Food Focus Thailand</a></span>
+          <span class="source-lang lang-th">TH</span>
+        </div>
+        <p class="source-desc">泰國食品加工技術月刊。工廠端的 AI 自動化導入。2006 年創立。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-no">RSS ✕</span>
+        <span class="source-freq">月刊</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.agriharvest.tw" target="_blank">農傳媒</a></span>
+          <span class="source-lang lang-tw">TW</span>
+        </div>
+        <p class="source-desc">臺灣農業、智慧農業、農村文化。豐年社出版，70+ 年歷史。上游視角。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-maybe">RSS ⚠</span>
+        <span class="source-freq">每日 + 月刊</span>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-main">
+        <div class="source-name-row">
+          <span class="source-name"><a href="https://www.bnext.com.tw" target="_blank">數位時代</a></span>
+          <span class="source-lang lang-tw">TW</span>
+        </div>
+        <p class="source-desc">臺灣科技媒體。偶爾覆蓋食品科技。當 AI × Food 進入主流科技圈的風向標。</p>
+      </div>
+      <div class="source-meta">
+        <span class="source-rss rss-no">RSS ✕</span>
+        <span class="source-freq">每日更新</span>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <p style="text-align: center; color: var(--ink-muted); font-family: var(--sans); font-size: 0.8125rem;">最後更新：2026.03.23 · 此清單為工作文件，將隨驗證結果持續調整</p>
+
+  </div>
+
+  <footer>
+    <p>The Pass Source Directory<br>
+    <a href="methodology.html">方法論</a> ・ <a href="editorial-guidelines.html">編輯指南</a> ・ <a href="project-brief.html">關於</a></p>
+  </footer>
+
+</body>
+</html>
