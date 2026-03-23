@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>方法論 — The Pass by 名廚</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --color-ink: #2C3345;
+      --color-ink-light: #5A6178;
+      --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8;
+      --color-bg-warm: #F5F3EF;
+      --color-accent: #B8860B;
+      --color-accent-light: #D4A843;
+      --color-border: #E8E6E1;
+      --color-white: #FFFFFF;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Playfair Display', var(--font-serif);
+      --max-width: 720px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      background: var(--color-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 250, 248, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    nav .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.875rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .brand {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    nav .brand span {
+      font-weight: 400;
+      color: var(--color-ink-muted);
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      margin-left: 0.75rem;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      font-size: 0.8125rem;
+      color: var(--color-ink-light);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    nav .nav-links a:hover {
+      color: var(--color-ink);
+    }
+
+    nav .nav-links a.active {
+      color: var(--color-ink);
+      font-weight: 500;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hero .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .hero .subtitle {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      color: var(--color-ink-light);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.9;
+      font-weight: 400;
+    }
+
+    /* ── Table of Contents ── */
+    .toc {
+      max-width: var(--max-width);
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .toc-inner {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 2rem 2.5rem;
+    }
+
+    .toc h3 {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+    }
+
+    .toc ol li {
+      counter-increment: toc-counter;
+      margin-bottom: 0.5rem;
+    }
+
+    .toc ol li a {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--color-ink);
+      text-decoration: none;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      transition: color 0.2s;
+    }
+
+    .toc ol li a::before {
+      content: counter(toc-counter, decimal-leading-zero);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .toc ol li a:hover {
+      color: var(--color-accent);
+    }
+
+    /* ── Article ── */
+    article {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+    }
+
+    article section {
+      margin-bottom: 4rem;
+    }
+
+    article h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--color-ink);
+      margin-bottom: 1.75rem;
+      padding-top: 2rem;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+    }
+
+    article h2 .section-num {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    article h3 {
+      font-family: var(--font-serif);
+      font-size: 1.1875rem;
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    article p {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--color-ink);
+      margin-bottom: 1.25rem;
+    }
+
+    article p.lead {
+      font-size: 1.125rem;
+      line-height: 2;
+      color: var(--color-ink-light);
+    }
+
+    /* ── Blockquote ── */
+    article blockquote {
+      margin: 2rem 0;
+      padding: 1.75rem 2rem;
+      background: var(--color-bg-warm);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 6px 6px 0;
+    }
+
+    article blockquote p {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      font-style: italic;
+      color: var(--color-ink);
+      margin-bottom: 0;
+      line-height: 1.85;
+    }
+
+    /* ── Lists ── */
+    article ul, article ol {
+      margin: 1rem 0 1.5rem 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    article ul li, article ol li {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--color-ink);
+      margin-bottom: 0.625rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    article ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    article ol {
+      counter-reset: list-counter;
+    }
+
+    article ol li {
+      counter-increment: list-counter;
+    }
+
+    article ol li::before {
+      content: counter(list-counter) ".";
+      position: absolute;
+      left: 0;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── Market Cards ── */
+    .market-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .market-card .flag-title {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .market-card .flag-title .flag {
+      font-size: 1.375rem;
+    }
+
+    .market-card .flag-title h4 {
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      letter-spacing: 0.01em;
+    }
+
+    .market-card p {
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+    }
+
+    .market-card ul {
+      margin: 0.5rem 0 0 0;
+    }
+
+    .market-card ul li {
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      margin-bottom: 0.375rem;
+    }
+
+    /* ── Tier System ── */
+    .tier-list {
+      margin: 1.5rem 0;
+    }
+
+    .tier-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tier-item:last-child {
+      border-bottom: none;
+    }
+
+    .tier-badge {
+      flex-shrink: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-top: 0.15rem;
+    }
+
+    .tier-badge.t1 { background: var(--color-accent); }
+    .tier-badge.t2 { background: #7B8A6E; }
+    .tier-badge.t3 { background: #6E7F8A; }
+    .tier-badge.t4 { background: #8A7B6E; }
+    .tier-badge.t5 { background: var(--color-ink-muted); }
+
+    .tier-content h4 {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .tier-content p {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--color-ink-light);
+      margin-bottom: 0;
+    }
+
+    /* ── Flow Diagram ── */
+    .flow {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .flow-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .flow-icon {
+      flex-shrink: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: var(--color-bg-warm);
+      border: 1.5px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    .flow-step:not(:last-child) .flow-icon::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1.5px;
+      height: 1.25rem;
+      background: var(--color-border);
+    }
+
+    .flow-text h4 {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.125rem;
+    }
+
+    .flow-text p {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: var(--color-ink-light);
+      margin-bottom: 0;
+    }
+
+    /* ── Criteria Cards ── */
+    .criteria-grid {
+      display: grid;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .criteria-card {
+      padding: 1.5rem 1.75rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .criteria-card:hover {
+      border-color: var(--color-accent-light);
+    }
+
+    .criteria-card h4 {
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .criteria-card h4 .criteria-icon {
+      font-size: 1.125rem;
+    }
+
+    .criteria-card p {
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--color-ink-light);
+      margin-bottom: 0;
+    }
+
+    /* ── Rules List ── */
+    .rules-list {
+      margin: 1.5rem 0;
+      counter-reset: rule-counter;
+    }
+
+    .rule-item {
+      counter-increment: rule-counter;
+      padding: 1.125rem 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .rule-item:first-child {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .rule-num {
+      flex-shrink: 0;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      padding-top: 0.2rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rule-num::before {
+      content: counter(rule-counter, decimal-leading-zero);
+    }
+
+    .rule-text {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--color-ink);
+    }
+
+    .rule-text strong {
+      font-weight: 600;
+    }
+
+    /* ── Separator ── */
+    .section-sep {
+      width: 40px;
+      height: 1.5px;
+      background: var(--color-accent);
+      margin: 4rem auto;
+      border: none;
+    }
+
+    /* ── Special Blocks ── */
+    .note-block {
+      margin: 2rem 0;
+      padding: 1.5rem 1.75rem;
+      background: var(--color-bg-warm);
+      border-radius: 8px;
+    }
+
+    .note-block h4 {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .note-block p {
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      margin-bottom: 0;
+    }
+
+    /* ── Two-Column Layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .col-card {
+      padding: 1.5rem 1.75rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+    }
+
+    .col-card h4 {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .col-card ul {
+      margin: 0;
+    }
+
+    .col-card ul li {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      margin-bottom: 0.375rem;
+    }
+
+    /* ── Transparency Checklist ── */
+    .checklist {
+      margin: 1.5rem 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .checklist-item:first-child {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .check-icon {
+      flex-shrink: 0;
+      width: 1.375rem;
+      height: 1.375rem;
+      border-radius: 50%;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.2rem;
+    }
+
+    .check-icon svg {
+      width: 0.75rem;
+      height: 0.75rem;
+      stroke: var(--color-white);
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .checklist-item p {
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      margin-bottom: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 3rem 2rem;
+      text-align: center;
+      background: var(--color-white);
+    }
+
+    footer p {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      line-height: 1.8;
+    }
+
+    footer .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero {
+        padding: 6.5rem 1.5rem 3rem;
+      }
+
+      article {
+        padding: 1.5rem 1.5rem 4rem;
+      }
+
+      .toc {
+        padding: 0 1.5rem;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      nav .nav-links {
+        display: none;
+      }
+
+      .market-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="brand">The Pass <span>by 名廚 MINGCHU</span></a>
+      <ul class="nav-links">
+        <li><a href="#">首頁</a></li>
+        <li><a href="#" class="active">方法論</a></li>
+        <li><a href="#">所有日報</a></li>
+        <li><a href="#">訂閱</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="label">Methodology</div>
+    <h1>方法論</h1>
+    <p class="subtitle">AI 正在走進廚房、改變餐桌、重新定義我們與食物的關係。<br>The Pass 幫你看懂。由名廚編輯室挑選。</p>
+  </header>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <div class="toc-inner">
+      <h3>目錄</h3>
+      <ol>
+        <li><a href="#why">為什麼做這件事</a></li>
+        <li><a href="#sources">我們的來源</a></li>
+        <li><a href="#filter">我們如何篩選</a></li>
+        <li><a href="#language">多語言處理</a></li>
+        <li><a href="#production">內容如何產生</a></li>
+        <li><a href="#human">人的角色</a></li>
+        <li><a href="#taste">關於品味</a></li>
+        <li><a href="#transparency">透明度</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <article>
+
+    <!-- Section 1: Why -->
+    <section id="why">
+      <h2>
+        <span class="section-num">01</span>
+        為什麼做這件事
+      </h2>
+      <p class="lead">AI 已經走進了廚房。</p>
+      <p>首爾有間披薩工廠讓機器做出每小時 300 片完全一致的餅皮，然後把「不完美」留給廚師手工加上去。東京的連鎖餐廳用 AI 預測明天每間店該進多少顆高麗菜，食材浪費降了四成。曼谷有間米其林餐廳的主廚開始用 AI 跟自己的食譜資料庫對話，尋找他從沒想過的風味組合。韓國最大的炸雞品牌用生成式 AI 拍了一支廣告，從腳本到畫面全部由 AI 完成。</p>
+      <p>這些事情正在發生，但多數餐飲從業者還沒意識到。因為 AI 媒體不懂餐飲，餐飲媒體不懂 AI。</p>
+      <p>The Pass 站在這個交叉口。</p>
+      <p>但我們關注的不只是技術。當一位廚師花 20 年練成的刀工，機器一天就學會了，那 20 年的意義是什麼？當演算法決定你今晚吃什麼，你跟食物之間的關係變了嗎？當 AI 能完美複製一道菜的味道，日本人說的「手仕事」、韓國人說的「손맛」，還存在嗎？</p>
+      <p><strong>AI 對餐飲的影響是方方面面的——技術面、人文面、文化面。The Pass 全部都看。</strong></p>
+      <p>我們不報導技術規格。我們說的是，AI 如何改變廚房裡和餐桌上的故事。</p>
+      <p style="margin-top: 2rem; font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-ink-muted); letter-spacing: 0.02em;">如實呈現，不誇大，不接商單。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 2: Sources -->
+    <section id="sources">
+      <h2>
+        <span class="section-num">02</span>
+        我們的來源
+      </h2>
+      <p>AI × 餐飲的內容散落在兩個世界裡——科技媒體報導了 AI，但不懂餐飲的脈絡；餐飲媒體報導了產業，但看不見 AI 正在帶來的變化。The Pass 同時監測這兩個世界，從交叉點中找到值得說的故事。</p>
+      <p>我們的信源橫跨英文、韓文、日文、泰文，涵蓋科技與餐飲兩端。</p>
+
+      <h3>信源覆蓋範圍</h3>
+
+      <div class="market-card">
+        <div class="flag-title">
+          <span class="flag">🤖</span>
+          <h4>AI 與食品科技端</h4>
+        </div>
+        <p>追蹤全球 AI 技術在食品與餐飲領域的最新應用——從機器人廚房、AI 食譜開發、到食品科技新創的融資動態。這些來源讓我們知道「AI 這邊在做什麼跟食物有關的事」。</p>
+        <ul>
+          <li>食品科技專門媒體（英文）</li>
+          <li>科技新聞的食品與 AI 交叉報導（英文）</li>
+          <li>食品科技投融資追蹤（英文）</li>
+          <li>亞太食品產業分析媒體（英文）</li>
+        </ul>
+      </div>
+
+      <div class="market-card">
+        <div class="flag-title">
+          <span class="flag">🍳</span>
+          <h4>亞洲餐飲產業端</h4>
+        </div>
+        <p>追蹤亞洲各市場的餐飲產業動態中與 AI、自動化、數位轉型相關的內容。同時也關注在地的飲食文化討論——當 AI 進入廚房時，那些關於技藝、傳統、손맛（手味）的對話。</p>
+        <ul>
+          <li>韓國餐飲產業媒體與 F&B Newsletter（韓文）</li>
+          <li>日本食品產業新聞與外食報導（日文）</li>
+          <li>東南亞餐飲媒體（英文／泰文）</li>
+          <li>食評家、主廚專欄與獨立觀點</li>
+        </ul>
+      </div>
+
+      <div class="market-card">
+        <div class="flag-title">
+          <span class="flag">💬</span>
+          <h4>人文與文化觀點</h4>
+        </div>
+        <p>AI 對餐飲的影響不只是效率和數字。我們也追蹤那些探討人與食物關係、職人精神、飲食文化認同的聲音——這些觀點多半來自獨立寫作者、Podcast、和主廚自己的表達。</p>
+        <ul>
+          <li>飲食文化獨立電子報與部落格</li>
+          <li>餐飲相關 Podcast 與影音內容</li>
+          <li>主廚與餐飲人的社群觀點</li>
+          <li>Kakao Brunch、note.com 等創作平台上的餐飲書寫</li>
+        </ul>
+      </div>
+
+      <h3>信源准入標準</h3>
+      <p>一個來源要被 The Pass 納入，必須符合以下標準：</p>
+      <ol>
+        <li><strong>可溯源</strong> — 有明確的編輯團隊或作者署名</li>
+        <li><strong>持續更新</strong> — 維持穩定的發佈頻率</li>
+        <li><strong>原創為主</strong> — 以原創報導或觀點為核心，不是純轉載</li>
+        <li><strong>餐飲相關</strong> — 內容與餐飲產業、食品供應鏈、飲食文化直接相關</li>
+      </ol>
+      <p>我們不納入的來源：純餐廳推薦食記、食譜內容、無法驗證出處的消息、明確為品牌業配的內容。</p>
+
+      <h3>信源分級</h3>
+      <p>不同類型的來源，在我們的系統中有不同的信任權重：</p>
+      <div class="tier-list">
+        <div class="tier-item">
+          <div class="tier-badge t1">1</div>
+          <div class="tier-content">
+            <h4>官方與權威機構</h4>
+            <p>各國食品安全主管機關、官方評鑑機構（米其林、50 Best、James Beard 等）、產業協會官方發佈。這些來源的事實準確度最高。</p>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-badge t2">2</div>
+          <div class="tier-content">
+            <h4>專業產業媒體</h4>
+            <p>以餐飲產業報導為主業的垂直媒體。有專業的編輯團隊，對產業脈絡有深度理解。</p>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-badge t3">3</div>
+          <div class="tier-content">
+            <h4>主流媒體飲食版</h4>
+            <p>各國大型新聞媒體的飲食或生活版面。覆蓋面廣，但餐飲深度不如專業媒體。</p>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-badge t4">4</div>
+          <div class="tier-content">
+            <h4>獨立媒體與個人創作者</h4>
+            <p>獨立部落格、個人電子報、Podcast。經常有最獨到的觀點和最在地的視角，是 The Pass 發現「有趣的事」的重要管道。</p>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-badge t5">5</div>
+          <div class="tier-content">
+            <h4>社群討論</h4>
+            <p>社群平台上的討論與動態。不作為獨立新聞來源，僅作為判斷話題熱度的參考信號。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 3: How We Filter -->
+    <section id="filter">
+      <h2>
+        <span class="section-num">03</span>
+        我們如何篩選
+      </h2>
+      <p>每天，我們的系統從所有信源中收集數十到上百條資訊。但 The Pass 每天只產出一則主要內容和幾則快訊。這意味著絕大多數的資訊會被捨棄。</p>
+      <p><strong>篩選本身就是我們最重要的工作。</strong></p>
+
+      <h3>每日流程</h3>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-icon">📡</div>
+          <div class="flow-text">
+            <h4>信源監測</h4>
+            <p>持續追蹤所有信源的更新，收集原始資訊</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon">📥</div>
+          <div class="flow-text">
+            <h4>資訊收集</h4>
+            <p>每天累積約 80–150 條來自不同市場、不同語言的原始內容</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon">🔗</div>
+          <div class="flow-text">
+            <h4>去重與歸類</h4>
+            <p>同一事件的不同語言報導被合併為一組。跨語言交叉驗證的事件可信度更高</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon">✦</div>
+          <div class="flow-text">
+            <h4>篩選評估</h4>
+            <p>套用五項選題標準，找出今天最值得說的那件事</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon">✍</div>
+          <div class="flow-text">
+            <h4>內容產出</h4>
+            <p>AI 依據編輯規則撰寫日報，自動比對名廚文章庫生成延伸閱讀</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon">📤</div>
+          <div class="flow-text">
+            <h4>每日發佈</h4>
+            <p>亞洲時間上午推送至網站、Email 及 RSS</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>去重：把噪音變成信號</h3>
+      <p>同一則新聞——例如「米其林首爾 2026 發佈」——可能同時出現在韓文產業媒體、英文生活媒體、和米其林官方網站。我們的系統會辨識這些是同一件事，把它們合併成一個「事件群組」。</p>
+      <p>一個事件被越多獨立來源、越多不同語言報導，代表它的可信度和重要性越高。特別是<strong>跨語言的交叉驗證</strong>——當一件事同時出現在韓文和英文媒體中，它的可信度會顯著提升。</p>
+
+      <h3>選題標準</h3>
+      <p>我們不用傳統的新聞標準——誰最緊急、誰影響最大——來決定選題。<br>我們問的是一組不同的問題：</p>
+
+      <div class="criteria-grid">
+        <div class="criteria-card">
+          <h4><span class="criteria-icon">✦</span> 新鮮感</h4>
+          <p>這件事對我們的讀者來說是新資訊嗎？如果中文媒體已經廣泛報導，我們不再說一次。我們優先選擇尚未被中文圈觸及的 AI × 餐飲動態。</p>
+        </div>
+        <div class="criteria-card">
+          <h4><span class="criteria-icon">✦</span> 故事性</h4>
+          <p>這件事背後有沒有一個值得說的故事？有人物、有決策、有轉折的事件，永遠比一則純粹的技術公告更值得被 The Pass 選上。</p>
+        </div>
+        <div class="criteria-card">
+          <h4><span class="criteria-icon">✦</span> 三個面向</h4>
+          <p>AI × 餐飲不只是技術。我們同時關注三個面向：<strong>技術面</strong>——AI 做了什麼；<strong>人文面</strong>——這對人意味著什麼；<strong>文化面</strong>——不同的飲食文化如何回應。三者缺一不可。</p>
+        </div>
+        <div class="criteria-card">
+          <h4><span class="criteria-icon">✦</span> 啟發性</h4>
+          <p>讀者看完之後，會不會產生「原來如此」的感覺？一個不懂技術的餐飲人，能不能看懂、覺得有趣、覺得跟自己有關？</p>
+        </div>
+        <div class="criteria-card">
+          <h4><span class="criteria-icon">✦</span> 連結性</h4>
+          <p>跟餐飲從業者的世界有交集嗎？廚師的技藝、餐廳的經營、食材的處理、職人的精神——如果 AI 影響到這些事，我們就在乎。</p>
+        </div>
+      </div>
+
+      <div class="note-block">
+        <h4>特殊情況</h4>
+        <p><strong>食品安全 × AI：</strong>當 AI 在食品安全領域發生重大事件（如 AI 檢測系統發現新型污染、或 AI 系統失誤導致安全問題），會優先報導。</p>
+        <p style="margin-top: 0.75rem; margin-bottom: 0;"><strong>重大產業動態：</strong>當 AI 對餐飲產業產生結構性影響的事件發生時（如主要平台推出改變遊戲規則的 AI 功能、重大食品科技融資或併購），即使不完全符合「有趣」標準也會報導。</p>
+      </div>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 4: Multi-language -->
+    <section id="language">
+      <h2>
+        <span class="section-num">04</span>
+        多語言處理
+      </h2>
+      <p>The Pass 的信源橫跨韓文、日文、泰文、馬來文、英文。所有非中文的內容，都經過 AI 理解原文後，以繁體中文重新撰寫。</p>
+      <p>我們的原則是：<strong>翻譯事實，保留原味。</strong></p>
+
+      <h3>具體做法</h3>
+      <ul>
+        <li><strong>專有名詞保留原文。</strong>人名、店名、地名，第一次出現時會標注原文，讓讀者能自行搜尋深入了解。例：「あさくま（Asakuma）」而非「朝熊」；「고피자（Gopizza）」而非「高披薩」。</li>
+        <li><strong>獨特概念不強行翻譯。</strong>日文、韓文中獨特的餐飲概念，在上下文中讓讀者自然理解，而非硬譯為可能失真的中文。</li>
+        <li><strong>所有內容附原始來源連結。</strong>如果你想看原文，連結就在那裡。</li>
+      </ul>
+
+      <div class="note-block">
+        <h4>誠實說明</h4>
+        <p>AI 處理多語言內容時，可能存在對原文語境的理解偏差。這是我們持續在優化的部分，也是為什麼每一則內容都附上原始來源——供你驗證、也供你發現更多。</p>
+      </div>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 5: How Content Is Produced -->
+    <section id="production">
+      <h2>
+        <span class="section-num">05</span>
+        內容如何產生
+      </h2>
+      <p>The Pass 的內容由 AI 撰寫，遵循名廚編輯室制定的規則。全流程——從信源監測、資訊收集、去重篩選、到最終撰寫——都是自動化的。這讓我們能以極低的運營成本，每天穩定產出內容。</p>
+
+      <h3>撰寫規則</h3>
+      <div class="rules-list">
+        <div class="rule-item">
+          <div class="rule-num"></div>
+          <div class="rule-text"><strong>說故事，不寫新聞稿。</strong>The Pass 的語氣像一個見多識廣的朋友在跟你分享今天看到的有趣的事。不是公告、不是摘要、是對話。</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num"></div>
+          <div class="rule-text"><strong>基於事實，不捏造細節。</strong>所有的事實描述都來自原始來源。如果來源中沒有提到的細節，AI 不會自行腦補。</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num"></div>
+          <div class="rule-text"><strong>有角度，但不下定論。</strong>The Pass 會呈現「這件事為什麼有趣」的角度，但不會替讀者做價值判斷。</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num"></div>
+          <div class="rule-text"><strong>保留原文關鍵詞。</strong>人名、店名、料理名稱、文化概念的原文都要保留。</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num"></div>
+          <div class="rule-text"><strong>每則內容附來源連結。</strong>沒有例外。</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num"></div>
+          <div class="rule-text"><strong>不使用誇張用語。</strong>不炸裂、不震撼、不史詩級。好內容不需要情緒綁架。</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num"></div>
+          <div class="rule-text"><strong>資訊不完整時，誠實標注。</strong>「截至發稿時」優於猜測。</div>
+        </div>
+      </div>
+
+      <h3>我們始終使用當前最強的語言模型</h3>
+      <p>AI 技術在快速進步。我們不綁定特定模型，而是持續使用當下能力最強的模型來處理多語言理解與內容撰寫。這代表 The Pass 的內容品質，會隨著 AI 技術的進步而自然提升。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 6: Human Role -->
+    <section id="human">
+      <h2>
+        <span class="section-num">06</span>
+        人的角色
+      </h2>
+      <p>The Pass 的核心原則：<strong>人定品味，AI 做執行。</strong></p>
+      <p>名廚編輯室負責定義「什麼值得被看見」的標準——</p>
+
+      <div class="two-col">
+        <div class="col-card">
+          <h4>名廚編輯室負責</h4>
+          <ul>
+            <li>信源管理：追蹤哪些來源、移除哪些、調整信任層級</li>
+            <li>選題品味：定義並優化「新鮮感」「故事性」「啟發性」等選題標準</li>
+            <li>品質監控：每日檢視產出，發現問題時調整規則</li>
+            <li>延伸閱讀：判斷哪些內容可連結回名廚的深度報導</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h4>名廚編輯室不做</h4>
+          <ul>
+            <li>不手動選題——每天出什麼由系統決定</li>
+            <li>不改寫 AI 產出的文字——品質不好就調規則</li>
+            <li>不接受商業合作影響選題</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>為什麼堅持這樣做？因為一旦人開始「碰」內容，就無法保證每天穩定、一致的產出品質。人的判斷會受情緒、偏好、疲勞影響。把人的智慧灌注在「規則」裡，讓系統去執行，反而能維持更高、更穩定的水準。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 7: About Taste -->
+    <section id="taste">
+      <h2>
+        <span class="section-num">07</span>
+        關於品味
+      </h2>
+
+      <blockquote>
+        <p>我們相信，在資訊過剩的時代，篩選本身就是一種觀點。</p>
+      </blockquote>
+
+      <p>The Pass 不宣稱自己是客觀的新聞服務。我們有明確的品味偏好：我們更在乎 AI 背後的人的故事而非技術規格、更在乎「機器和人如何共處」而非「機器取代了什麼」、更在乎文化面的思考而非效率的數字。</p>
+      <p>這個品味來自名廚。名廚自 2021 年起持續書寫亞洲餐飲圈最深度的人物故事與文化觀察，這些累積形成了我們看待餐飲世界的方式。當我們看 AI 走進廚房，我們問的不是「效率提升了多少」，而是「廚師和食物的關係改變了嗎」。</p>
+      <p>如果你想要的是 AI 技術分析或食品科技投資報告，The Pass 不是最好的選擇。但如果你是一位餐飲從業者，想要理解 AI 正在怎樣改變你的世界——不只是技術，還有技術背後的人和文化——</p>
+      <p><strong>歡迎來到出菜口。</strong></p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Section 8: Transparency -->
+    <section id="transparency">
+      <h2>
+        <span class="section-num">08</span>
+        透明度
+      </h2>
+
+      <div class="checklist">
+        <div class="checklist-item">
+          <div class="check-icon">
+            <svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"></polyline></svg>
+          </div>
+          <p>每一期 The Pass 都會標注「從 N 條資訊中篩選」，你可以查看當天的完整候選清單。</p>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">
+            <svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"></polyline></svg>
+          </div>
+          <p>本頁面公開我們的信源選擇標準、篩選邏輯、與編輯規則。信源清單如有更動，我們會在此頁更新。</p>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">
+            <svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"></polyline></svg>
+          </div>
+          <p>所有內容附原始來源連結，供你驗證事實、也讓你能循線發現更多。</p>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">
+            <svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"></polyline></svg>
+          </div>
+          <p>The Pass 的內容由 AI 撰寫。AI 對多語言原文的理解可能存在偏差。如果你發現任何錯誤，請告訴我們。</p>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">
+            <svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"></polyline></svg>
+          </div>
+          <p>The Pass 不接受任何形式的商業合作或置入內容。</p>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">The Pass</div>
+    <p>名廚 MINGCHU 的每日內容企劃<br>名廚自 2021 年起，持續書寫亞洲餐飲圈最深度的人物故事與文化觀察。</p>
+  </footer>
+
+</body>
+</html>
