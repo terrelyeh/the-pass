@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Pass — IG Post Repurpose Demo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --color-ink: #2C3345;
+      --color-ink-light: #5A6178;
+      --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8;
+      --color-bg-warm: #F5F3EF;
+      --color-accent: #B8860B;
+      --color-accent-light: #D4A843;
+      --color-border: #E8E6E1;
+      --color-white: #FFFFFF;
+      --color-cream: #F5F0E8;
+      --color-sage: #7C9A6E;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Instrument Serif', var(--font-serif);
+      --max-width: 850px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      background: var(--color-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.875rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.8125rem;
+      color: var(--color-ink-light);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--color-accent); }
+
+    /* Demo Banner */
+    .demo-banner {
+      background: var(--color-ink);
+      color: var(--color-white);
+      text-align: center;
+      padding: 0.625rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Page container */
+    .page-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+
+    /* Page header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .page-header h1 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+    .page-header .subtitle {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--color-ink-muted);
+    }
+    .page-header .source-tag {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-accent);
+      background: rgba(184,134,11,0.08);
+      padding: 0.2rem 0.625rem;
+      border-radius: 3px;
+      letter-spacing: 0.03em;
+      margin-top: 0.75rem;
+    }
+
+    /* Phone frame */
+    .phone-frame-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+    .phone-frame {
+      width: 100%;
+      max-width: 420px;
+      background: #1A1A1A;
+      border-radius: 32px;
+      padding: 12px;
+      box-shadow:
+        0 24px 80px rgba(44,51,69,0.18),
+        0 8px 24px rgba(44,51,69,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .phone-screen {
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      background: var(--color-ink);
+    }
+
+    /* IG Header bar */
+    .ig-header {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      padding: 0.75rem 1rem;
+      background: var(--color-ink);
+    }
+    .ig-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--color-white);
+    }
+    .ig-username {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-white);
+    }
+
+    /* Carousel */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+    }
+    .carousel-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      aspect-ratio: 1;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    /* Slide themes */
+    .slide-dark {
+      background: var(--color-ink);
+      color: var(--color-cream);
+    }
+    .slide-cream {
+      background: var(--color-cream);
+      color: var(--color-ink);
+    }
+
+    /* Navigation arrows */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.35);
+      border: none;
+      color: var(--color-white);
+      font-size: 1.125rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .carousel-container:hover .carousel-nav {
+      opacity: 1;
+    }
+    .carousel-nav:hover {
+      background: rgba(0,0,0,0.55);
+    }
+    .carousel-nav-prev { left: 8px; }
+    .carousel-nav-next { right: 8px; }
+    .carousel-nav:disabled {
+      opacity: 0 !important;
+      cursor: default;
+    }
+
+    /* Dot indicators */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      padding: 0.75rem 0;
+      background: var(--color-ink);
+    }
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s ease;
+    }
+    .carousel-dot.active {
+      background: #3897F0;
+    }
+
+    /* IG Action bar */
+    .ig-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--color-ink);
+    }
+    .ig-action-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .ig-action-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--color-white);
+      fill: none;
+      stroke-width: 1.5;
+    }
+    .ig-action-spacer { flex: 1; }
+    .ig-action-icon.bookmark svg {
+      stroke-width: 1.5;
+    }
+
+    /* Slide typography */
+    .slide-label {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .slide-dark .slide-label {
+      color: var(--color-accent-light);
+    }
+    .slide-cream .slide-label {
+      color: var(--color-accent);
+    }
+
+    .slide-large-text {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .slide-body {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      line-height: 1.85;
+    }
+    .slide-dark .slide-body {
+      color: rgba(245,240,232,0.85);
+    }
+    .slide-cream .slide-body {
+      color: var(--color-ink-light);
+    }
+
+    .slide-small {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      margin-top: 1.25rem;
+    }
+    .slide-dark .slide-small {
+      color: rgba(245,240,232,0.45);
+    }
+    .slide-cream .slide-small {
+      color: var(--color-ink-muted);
+    }
+
+    .slide-big-number {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--color-accent-light);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .slide-highlight {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.7;
+      margin-top: 1rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid rgba(184,134,11,0.25);
+    }
+    .slide-cream .slide-highlight {
+      color: var(--color-ink);
+      border-color: rgba(44,51,69,0.12);
+    }
+
+    /* Slide 5 Fumet */
+    .fumet-accent {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--color-sage);
+      margin-right: 0.375rem;
+      vertical-align: middle;
+    }
+    .slide-fumet-attr {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-sage);
+      margin-top: 1.25rem;
+    }
+
+    /* Slide 6 CTA */
+    .slide-logo {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-cream);
+      line-height: 1;
+      margin-bottom: 0.375rem;
+    }
+    .slide-tagline {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      font-style: italic;
+      color: var(--color-accent-light);
+      margin-bottom: 1.5rem;
+    }
+    .slide-cta-text {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: rgba(245,240,232,0.65);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .slide-cta-btn {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-ink);
+      background: var(--color-accent-light);
+      padding: 0.625rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Logo mark (bottom of slides) */
+    .slide-logo-mark {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.5rem;
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .slide-dark .slide-logo-mark {
+      color: rgba(245,240,232,0.2);
+    }
+    .slide-cream .slide-logo-mark {
+      color: rgba(44,51,69,0.12);
+    }
+
+    /* Issue label at bottom of slide 1 */
+    .slide-issue-label {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      margin-top: 1.5rem;
+    }
+    .slide-dark .slide-issue-label {
+      color: rgba(245,240,232,0.35);
+    }
+
+    /* Explanation section below frame */
+    .explanation {
+      max-width: 580px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+    }
+    .explanation h2 {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .explanation p {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      color: var(--color-ink-light);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+    .explanation .tech-note {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
+      margin-top: 1.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 840px) {
+      .nav-links { display: none; }
+      .page-container { padding: 1.5rem 1rem 3rem; }
+    }
+    @media (max-width: 480px) {
+      .phone-frame {
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
+      }
+      .phone-screen {
+        border-radius: 0;
+      }
+      .page-container { padding: 1rem 0 2.5rem; }
+      .page-header { padding: 0 1rem; }
+      .explanation { padding: 1.5rem 1rem 0; }
+      .carousel-slide { padding: 2rem 1.75rem; }
+      .slide-large-text { font-size: 1.3125rem; }
+      .slide-big-number { font-size: 3.5rem; }
+      .slide-logo { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="demo-index.html" class="nav-brand">The Pass</a>
+    <ul class="nav-links">
+      <li><a href="methodology.html">方法論</a></li>
+      <li><a href="sources.html">信源清單</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="demo-banner">DEMO — IG Post Repurpose，將電子報內容轉化為 Instagram 貼文</div>
+
+<div class="page-container">
+
+  <div class="page-header">
+    <h1>Instagram 輪播貼文</h1>
+    <div class="subtitle">從 Issue #002 Article 01 轉化</div>
+    <div class="source-tag">Re-purpose Demo</div>
+  </div>
+
+  <div class="phone-frame-wrapper">
+    <div class="phone-frame">
+      <div class="phone-screen">
+
+        <!-- IG Header -->
+        <div class="ig-header">
+          <div class="ig-avatar">P</div>
+          <div class="ig-username">thepass.news</div>
+        </div>
+
+        <!-- Carousel -->
+        <div class="carousel-container">
+          <button class="carousel-nav carousel-nav-prev" id="prevBtn" aria-label="上一張">&#8249;</button>
+          <button class="carousel-nav carousel-nav-next" id="nextBtn" aria-label="下一張">&#8250;</button>
+
+          <div class="carousel-track" id="carouselTrack">
+
+            <!-- Slide 1: Hook -->
+            <div class="carousel-slide slide-dark">
+              <div class="slide-large-text">AI 寫的菜單文案，</div>
+              <div class="slide-large-text">客人說比人寫的更有溫度。</div>
+              <div class="slide-issue-label">The Pass · Issue #002</div>
+              <div class="slide-logo-mark">The Pass</div>
+            </div>
+
+            <!-- Slide 2: Scene -->
+            <div class="carousel-slide slide-cream">
+              <div class="slide-label">場景</div>
+              <div class="slide-body">東京高田馬場的一間居酒屋。你翻開菜單，讀到一段讓你特別想點那道菜的描述。</div>
+              <div class="slide-body" style="margin-top: 1rem;">你不知道的是——那段話是 AI 寫的。</div>
+              <div class="slide-logo-mark">The Pass</div>
+            </div>
+
+            <!-- Slide 3: Data -->
+            <div class="carousel-slide slide-dark">
+              <div class="slide-label">數據</div>
+              <div class="slide-big-number">14%</div>
+              <div class="slide-body">AI 寫的菜單描述，在「溫度感」上比店長手寫的版本高出 14%。</div>
+              <div class="slide-small">1,200 名客人問卷調查</div>
+              <div class="slide-logo-mark">The Pass</div>
+            </div>
+
+            <!-- Slide 4: Insight -->
+            <div class="carousel-slide slide-cream">
+              <div class="slide-label">為什麼？</div>
+              <div class="slide-body">店長寫菜單時，傾向寫「正確的東西」——產地、烹調法、調味。</div>
+              <div class="slide-body" style="margin-top: 0.75rem;">AI 學的不是食材知識，而是食評人和客人描述食物時的情感語言。</div>
+              <div class="slide-highlight">「AI 學會的是情感的形狀，不是情感本身。」</div>
+              <div class="slide-logo-mark">The Pass</div>
+            </div>
+
+            <!-- Slide 5: Question (Fumet) -->
+            <div class="carousel-slide slide-dark">
+              <div class="slide-label">留一個問題</div>
+              <div class="slide-body" style="color: var(--color-cream);">如果 AI 能寫出比人更有溫度的文字，那「溫度」到底是什麼？</div>
+              <div class="slide-body" style="margin-top: 1rem; color: rgba(245,240,232,0.85);">是一種可以學會的技巧？還是需要一個真的吃過那道菜的人？</div>
+              <div class="slide-fumet-attr"><span class="fumet-accent"></span>Fumet — 文化觀察</div>
+              <div class="slide-logo-mark">The Pass</div>
+            </div>
+
+            <!-- Slide 6: CTA -->
+            <div class="carousel-slide slide-dark" style="align-items: center; text-align: center;">
+              <div class="slide-logo">The Pass</div>
+              <div class="slide-tagline">Intelligence, served.</div>
+              <div class="slide-cta-text">
+                AI &times; 餐飲的每一個面向<br>
+                每週一、三、五發刊
+              </div>
+              <button class="slide-cta-btn">訂閱 The Pass</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Dots -->
+        <div class="carousel-dots" id="carouselDots">
+          <button class="carousel-dot active" data-index="0" aria-label="第 1 張"></button>
+          <button class="carousel-dot" data-index="1" aria-label="第 2 張"></button>
+          <button class="carousel-dot" data-index="2" aria-label="第 3 張"></button>
+          <button class="carousel-dot" data-index="3" aria-label="第 4 張"></button>
+          <button class="carousel-dot" data-index="4" aria-label="第 5 張"></button>
+          <button class="carousel-dot" data-index="5" aria-label="第 6 張"></button>
+        </div>
+
+        <!-- IG Action bar -->
+        <div class="ig-actions">
+          <!-- Heart -->
+          <div class="ig-action-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <!-- Comment -->
+          <div class="ig-action-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <!-- Share -->
+          <div class="ig-action-icon">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </div>
+          <div class="ig-action-spacer"></div>
+          <!-- Bookmark -->
+          <div class="ig-action-icon bookmark">
+            <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Explanation -->
+  <div class="explanation">
+    <h2>Repurpose 概念</h2>
+    <p>這是一個將 The Pass 電子報長文轉化為 Instagram 輪播貼文的概念展示。同一篇故事，用不同的格式重新拆解——保留核心洞察，適應社群平台的閱讀節奏。</p>
+    <p>六張投影片的結構：鉤子（引起好奇）、場景（建立畫面）、數據（提供證據）、洞察（解釋為什麼）、提問（留一個好問題）、行動（回到品牌）。這是 The Pass 未來 Re-purpose 工作流的基本模板。</p>
+    <div class="tech-note">原始內容來源：Issue #002, Article 01 — 居酒屋 AI 菜單故事</div>
+  </div>
+
+</div>
+
+<script>
+  const track = document.getElementById('carouselTrack');
+  const dots = document.querySelectorAll('.carousel-dot');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const totalSlides = 6;
+  let currentSlide = 0;
+
+  function updateDots(index) {
+    dots.forEach(d => d.classList.remove('active'));
+    dots[index].classList.add('active');
+  }
+
+  function updateNavButtons(index) {
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === totalSlides - 1;
+  }
+
+  function goToSlide(index) {
+    if (index < 0 || index >= totalSlides) return;
+    currentSlide = index;
+    const slideWidth = track.offsetWidth;
+    track.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+    updateDots(index);
+    updateNavButtons(index);
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      goToSlide(parseInt(dot.dataset.index));
+    });
+  });
+
+  // Update dots on scroll (for swipe gestures)
+  let scrollTimeout;
+  track.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const slideWidth = track.offsetWidth;
+      const index = Math.round(track.scrollLeft / slideWidth);
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateDots(index);
+        updateNavButtons(index);
+      }
+    }, 50);
+  });
+
+  // Initial state
+  updateNavButtons(0);
+</script>
+
+</body>
+</html>
