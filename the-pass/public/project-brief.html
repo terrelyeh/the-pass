@@ -59,6 +59,8 @@
     .sidebar-nav a.active { color: var(--ink); background: var(--bg-warm); font-weight: 500; }
     .sidebar-nav a.active .nav-num { color: var(--accent); }
     .sidebar-nav .nav-num { font-variant-numeric: tabular-nums; color: var(--ink-muted); margin-right: 0.375rem; font-size: 0.625rem; }
+    .sidebar-nav ul li::before { display: none; }
+    .mobile-toc .sidebar-nav ul li::before { display: none; }
 
     /* ── Article ── */
     .main-content { max-width: var(--max-w); margin: 0 auto; padding: 2rem 2.5rem 4rem; }
@@ -273,11 +275,15 @@
     <li><a href="#s5" onclick="closeMobileToc()"><span class="nav-num">07</span>內容來源</a></li>
     <li><a href="#s6" onclick="closeMobileToc()"><span class="nav-num">08</span>AI 編輯團隊</a></li>
     <li><a href="#s7" onclick="closeMobileToc()"><span class="nav-num">09</span>品牌語氣</a></li>
-    <li><a href="#s8" onclick="closeMobileToc()"><span class="nav-num">10</span>每期結構</a></li>
-    <li><a href="#s9" onclick="closeMobileToc()"><span class="nav-num">11</span>技術架構</a></li>
-    <li><a href="#demo" onclick="closeMobileToc()"><span class="nav-num">12</span>Demo Issue</a></li>
-    <li><a href="#repurpose" onclick="closeMobileToc()"><span class="nav-num">13</span>Content Re-purpose</a></li>
-    <li><a href="#appendix" onclick="closeMobileToc()"><span class="nav-num">14</span>Appendix</a></li>
+    <li><a href="#s8" onclick="closeMobileToc()"><span class="nav-num">10</span>附錄</a>
+      <ul style="margin: 0.25rem 0 0.25rem 0.75rem; list-style: none;">
+        <li style="padding-left: 0;"><a href="#s8" onclick="closeMobileToc()" style="font-size: 0.8125rem; padding: 0.4rem 0.75rem;">每期結構</a></li>
+        <li style="padding-left: 0;"><a href="#s9" onclick="closeMobileToc()" style="font-size: 0.8125rem; padding: 0.4rem 0.75rem;">技術架構</a></li>
+        <li style="padding-left: 0;"><a href="#demo" onclick="closeMobileToc()" style="font-size: 0.8125rem; padding: 0.4rem 0.75rem;">Demo Issue</a></li>
+        <li style="padding-left: 0;"><a href="#repurpose" onclick="closeMobileToc()" style="font-size: 0.8125rem; padding: 0.4rem 0.75rem;">Content Re-purpose</a></li>
+        <li style="padding-left: 0;"><a href="#appendix" onclick="closeMobileToc()" style="font-size: 0.8125rem; padding: 0.4rem 0.75rem;">內部參考文件</a></li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -318,11 +324,15 @@
       <li><a href="#s5"><span class="nav-num">07</span>內容來源</a></li>
       <li><a href="#s6"><span class="nav-num">08</span>AI 編輯團隊</a></li>
       <li><a href="#s7"><span class="nav-num">09</span>品牌語氣</a></li>
-      <li><a href="#s8"><span class="nav-num">10</span>每期結構</a></li>
-      <li><a href="#s9"><span class="nav-num">11</span>技術架構</a></li>
-      <li><a href="#demo"><span class="nav-num">12</span>Demo Issue</a></li>
-      <li><a href="#repurpose"><span class="nav-num">13</span>Content Re-purpose</a></li>
-      <li><a href="#appendix"><span class="nav-num">14</span>Appendix</a></li>
+      <li><a href="#s8"><span class="nav-num">10</span>附錄</a>
+        <ul style="margin: 0.25rem 0 0.25rem 0.75rem; list-style: none;">
+          <li style="padding-left: 0;"><a href="#s8" style="font-size: 0.6875rem; padding: 0.2rem 0.5rem;">每期結構</a></li>
+          <li style="padding-left: 0;"><a href="#s9" style="font-size: 0.6875rem; padding: 0.2rem 0.5rem;">技術架構</a></li>
+          <li style="padding-left: 0;"><a href="#demo" style="font-size: 0.6875rem; padding: 0.2rem 0.5rem;">Demo Issue</a></li>
+          <li style="padding-left: 0;"><a href="#repurpose" style="font-size: 0.6875rem; padding: 0.2rem 0.5rem;">Content Re-purpose</a></li>
+          <li style="padding-left: 0;"><a href="#appendix" style="font-size: 0.6875rem; padding: 0.2rem 0.5rem;">內部參考文件</a></li>
+        </ul>
+      </li>
     </ul>
   </aside>
 
@@ -561,7 +571,7 @@
     <p>可能的再利用場景：未來如果舉辦 AI × 餐飲的線下活動，這份名單就是你的第一批邀請對象。如果要推出付費內容（例如季度深度報告），這些人是最有可能買單的族群。如果合作夥伴想觸及餐飲業決策者，這份名單就是你的談判籌碼——但前提是不做業配，名單的價值建立在讀者的信任上。</p>
 
     <h3>7. 一份內容，多種輸出</h3>
-    <p>同一篇文章可以自動轉化為 IG 輪播、Threads 短文、語音摘要等不同格式，在不同平台觸及不同讀者。完整的 Re-purpose 策略和 Demo 請見<a href="#repurpose" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">第 13 章 Content Re-purpose</a>。</p>
+    <p>同一篇文章可以自動轉化為 IG 輪播、Threads 短文、語音摘要等不同格式，在不同平台觸及不同讀者。完整的 Re-purpose 策略和 Demo 請見<a href="#repurpose" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">附錄 Content Re-purpose</a>。</p>
   </section>
 
   <hr class="sep">
@@ -753,9 +763,12 @@
 
   <hr class="sep">
 
-  <!-- 08 -->
+  <!-- 10 附錄 -->
   <section id="s8">
-    <h2><span class="num">10</span>每期內容結構</h2>
+    <h2><span class="num">10</span>附錄</h2>
+    <p>以下包含每期結構規格、技術架構、Demo 展示、內容再利用策略，以及所有內部參考文件的索引。</p>
+
+    <h3>每期內容結構</h3>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th>元素</th><th>數量</th><th>閱讀時間</th></tr></thead>
@@ -771,11 +784,8 @@
     <p><strong>一頁到底，全部展開。</strong>讀者從目錄點進當期頁面後，不需要再點擊進入第三層。所有內容在同一頁上閱讀完畢。長文配有主題插圖，快訊純文字。</p>
   </section>
 
-  <hr class="sep">
-
-  <!-- 09 -->
   <section id="s9">
-    <h2><span class="num">11</span>技術架構概覽</h2>
+    <h3>技術架構概覽</h3>
     <div class="cmp">
       <div class="card" style="border-left: 3px solid var(--green);">
         <h4>Prototype（已完成）</h4>
@@ -799,11 +809,8 @@
     </div>
   </section>
 
-  <hr class="sep">
-
-  <!-- Demo -->
   <section id="demo">
-    <h2><span class="num">12</span>Demo Issue</h2>
+    <h3>Demo Issue</h3>
     <p>以下是用 2026.03.23 真實信源內容製作的第一期 demo。一頁式全展開：2 則長文 + 3 則快訊，不需要點擊進入第三層。</p>
     <div class="doc-links" style="margin-bottom: 1.5rem;">
       <a href="demo-index.html" class="doc-link">📰 查看所有 Demo Issues →</a>
@@ -844,11 +851,8 @@
     </div>
   </section>
 
-  <hr class="sep">
-
-  <!-- Content Re-purpose -->
   <section id="repurpose">
-    <h2><span class="num">13</span>內容再利用 (Content Re-purpose)</h2>
+    <h3>內容再利用 (Content Re-purpose)</h3>
     <p>The Pass 的每一期內容不只是電子報。同一篇文章可以被自動轉化為不同格式，在不同平台觸及不同的讀者。</p>
 
     <h3>一篇內容，多種格式</h3>
@@ -884,11 +888,8 @@
     </ul>
   </section>
 
-  <hr class="sep">
-
-  <!-- Appendix -->
   <section id="appendix">
-    <h2><span class="num">14</span>Appendix — 參考文件</h2>
+    <h3>內部參考文件</h3>
     <p>以下是 The Pass 所有相關文件的完整索引。每份文件都可以獨立閱讀，也與本 Brief 的特定章節對應。</p>
     <div class="fr-grid" style="margin-top: 1.5rem;">
       <a href="demo-issue-001.html" class="fr-card">
