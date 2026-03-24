@@ -193,18 +193,86 @@
     footer p { font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.8; }
     footer .ft-brand { font-family: var(--display); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.375rem; }
 
+    /* ── Hamburger Menu (mobile TOC) ── */
+    .hamburger-btn {
+      display: none;
+      position: fixed; top: 0.75rem; right: 1rem; z-index: 200;
+      width: 2.5rem; height: 2.5rem; border-radius: 8px;
+      background: var(--white); border: 1px solid var(--border);
+      cursor: pointer; align-items: center; justify-content: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .hamburger-btn svg { width: 18px; height: 18px; color: var(--ink); }
+    .hamburger-btn .icon-close { display: none; }
+    .hamburger-btn.active .icon-menu { display: none; }
+    .hamburger-btn.active .icon-close { display: block; }
+
+    .mobile-toc {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 150;
+      background: rgba(250,250,248,0.98); backdrop-filter: blur(12px);
+      padding: 4.5rem 2rem 2rem; overflow-y: auto;
+    }
+    .mobile-toc.open { display: block; }
+    .mobile-toc .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; margin-bottom: 1rem; }
+    .mobile-toc .sidebar-nav { list-style: none; }
+    .mobile-toc .sidebar-nav li { margin-bottom: 0.25rem; }
+    .mobile-toc .sidebar-nav a { font-family: var(--sans); font-size: 0.9375rem; color: var(--ink-light); text-decoration: none; display: block; padding: 0.625rem 0.75rem; border-radius: 6px; line-height: 1.5; }
+    .mobile-toc .sidebar-nav a:hover { color: var(--ink); background: var(--bg-warm); }
+    .mobile-toc .sidebar-nav .nav-num { color: var(--accent); margin-right: 0.5rem; font-size: 0.75rem; font-weight: 600; }
+    .mobile-toc .sidebar-nav li::before { display: none; }
+
     @media (max-width: 840px) {
       .nav-links { display: none; }
-      .page-layout { grid-template-columns: 1fr; }
+      .page-layout { grid-template-columns: 1fr; max-width: 100%; overflow-x: hidden; }
       .sidebar { display: none; }
+      .hamburger-btn { display: flex; }
       .hero { padding: 6.5rem 1.5rem 3rem; }
-      .main-content { padding: 1.5rem 1.5rem 3rem; }
+      .main-content { padding: 1.5rem 1.5rem 3rem; max-width: 100%; overflow-x: hidden; }
       .cmp { grid-template-columns: 1fr; }
       .quadrant { max-width: 100% !important; }
+      .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      h2 { font-size: 1.375rem; }
+      h3 { font-size: 1rem; }
+      p { font-size: 0.875rem; }
+      li { font-size: 0.875rem; }
+      .card { padding: 1.25rem; }
+      .card p, .card li { font-size: 0.8125rem; }
+      table { font-size: 0.75rem; }
+      th, td { padding: 0.5rem; }
+      .persona { padding: 1.25rem 1.5rem; }
+      .flow { padding: 1.25rem; }
+      .highlight { padding: 1.25rem; }
+      blockquote { padding: 1rem 1.25rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- Hamburger Button (mobile only) -->
+<button class="hamburger-btn" onclick="document.querySelector('.mobile-toc').classList.toggle('open'); this.classList.toggle('active');" aria-label="章節目錄">
+  <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</button>
+
+<!-- Mobile TOC Overlay -->
+<div class="mobile-toc">
+  <div class="sidebar-title">章節</div>
+  <ul class="sidebar-nav">
+    <li><a href="#s1" onclick="closeMobileToc()"><span class="nav-num">01</span>這是什麼</a></li>
+    <li><a href="#s2" onclick="closeMobileToc()"><span class="nav-num">02</span>名廚 vs The Pass</a></li>
+    <li><a href="#s2b" onclick="closeMobileToc()"><span class="nav-num">03</span>目標讀者</a></li>
+    <li><a href="#s3" onclick="closeMobileToc()"><span class="nav-num">04</span>Scope</a></li>
+    <li><a href="#s4" onclick="closeMobileToc()"><span class="nav-num">05</span>為什麼值得做</a></li>
+    <li><a href="#s4b" onclick="closeMobileToc()"><span class="nav-num">06</span>成功的關鍵</a></li>
+    <li><a href="#s5" onclick="closeMobileToc()"><span class="nav-num">07</span>內容來源</a></li>
+    <li><a href="#s6" onclick="closeMobileToc()"><span class="nav-num">08</span>AI 編輯團隊</a></li>
+    <li><a href="#s7" onclick="closeMobileToc()"><span class="nav-num">09</span>品牌語氣</a></li>
+    <li><a href="#s8" onclick="closeMobileToc()"><span class="nav-num">10</span>每期結構</a></li>
+    <li><a href="#s9" onclick="closeMobileToc()"><span class="nav-num">11</span>技術架構</a></li>
+    <li><a href="#demo" onclick="closeMobileToc()"><span class="nav-num">12</span>Demo Issue</a></li>
+    <li><a href="#appendix" onclick="closeMobileToc()"><span class="nav-num">13</span>Appendix</a></li>
+  </ul>
+</div>
 
 <nav>
   <div class="nav-inner">
@@ -812,6 +880,12 @@
   <p>AI × 餐飲的每一個面向。由 The Pass 編輯室出品。</p>
 </footer>
 
-<script>document.querySelectorAll('a[href]:not([href^="#"])').forEach(a=>a.target="_blank")</script>
+<script>
+document.querySelectorAll('a[href]:not([href^="#"])').forEach(a=>a.target="_blank");
+function closeMobileToc() {
+  document.querySelector('.mobile-toc').classList.remove('open');
+  document.querySelector('.hamburger-btn').classList.remove('active');
+}
+</script>
 </body>
 </html>
