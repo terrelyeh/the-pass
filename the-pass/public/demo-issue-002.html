@@ -159,19 +159,19 @@
       align-items: center;
       gap: 0.5rem;
       font-family: var(--font-sans);
-      font-size: 0.8125rem;
+      font-size: 0.9375rem;
       color: var(--color-ink-muted);
       margin-bottom: 1rem;
     }
 
     .editor-avatar {
-      width: 22px;
-      height: 22px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.6875rem;
+      font-size: 0.8125rem;
       font-weight: 700;
       color: var(--color-white);
     }
@@ -190,7 +190,7 @@
 
     .section-label {
       font-family: var(--font-sans);
-      font-size: 0.75rem;
+      font-size: 1rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--color-accent);
@@ -323,12 +323,14 @@
       font-family: var(--font-sans);
       font-size: 0.875rem;
       color: var(--color-ink-muted);
-      text-decoration: none;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
       margin-top: 0.5rem;
       transition: color 0.2s;
     }
 
-    .source-link:hover { color: var(--color-accent); }
+    .source-link:hover { color: var(--color-accent); text-decoration-thickness: 2px; }
 
     /* Divider */
     .section-divider {
@@ -336,7 +338,7 @@
       height: 1.5px;
       background: var(--color-accent);
       border: none;
-      margin: 2.5rem 0;
+      margin: 3rem 0;
     }
 
     /* Full-width divider between long and short sections */
@@ -344,7 +346,7 @@
       height: 1px;
       background: var(--color-border);
       border: none;
-      margin: 3rem 0;
+      margin: 4rem 0;
     }
 
     /* Quick News Section */
@@ -360,7 +362,7 @@
     }
 
     .quick-news-section .section-label {
-      font-size: 0.875rem;
+      font-size: 1.125rem;
       margin-bottom: 0;
     }
 
@@ -411,7 +413,8 @@
 
     .news-item .news-source a {
       color: var(--color-accent);
-      text-decoration: none;
+      text-decoration: underline;
+      text-underline-offset: 2px;
       font-weight: 500;
     }
 
@@ -573,7 +576,7 @@
         <span class="meta-dot"></span>
         <span class="filter-count">從 47 條資訊中篩選</span>
       </div>
-      <a href="demo-index.html" style="display: inline-block; margin-top: 0.75rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); text-decoration: none;">← 所有期數</a>
+      <a href="demo-index.html" style="display: inline-block; margin-top: 0.75rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">← 所有期數</a>
     </header>
 
     <!-- ============================================ -->
@@ -591,6 +594,7 @@
       <div class="article-meta">
         <span class="meta-flag">🇯🇵</span>
         <span class="meta-tag">餐廳經營</span>
+        <span class="meta-tag">飲食文化</span>
       </div>
 
       <div class="article-illustration">
@@ -657,6 +661,7 @@
       <div class="article-meta">
         <span class="meta-flag">🇹🇭</span>
         <span class="meta-tag">廚房現場</span>
+        <span class="meta-tag">食品科技</span>
       </div>
 
       <div class="article-illustration">
@@ -717,7 +722,7 @@
       <div class="news-item">
         <div class="news-number">03</div>
         <h3><span class="news-flag">🇺🇸</span> McDonald's 的 AI 聽得懂你點什麼，但聽不懂「跟上次一樣」</h3>
-        <div class="news-meta"><span class="meta-tag">餐廳經營</span></div>
+        <div class="news-meta"><span class="meta-tag">餐廳經營</span> <span class="meta-tag">食品科技</span></div>
         <p class="news-body">McDonald's（麥當勞）和 IBM 合作開發的 AI 得來速點餐系統，已經在美國超過 200 間門市運作。系統對標準點餐的辨識準確率達到 85%，大多數客人可以從頭到尾不跟真人說話就完成點餐。但它有一個明顯的弱點：它聽不懂上下文。</p>
         <p class="news-body">「跟上次一樣」、「不要酸黃瓜，我每次都這樣講」、「我老婆那份不要洋蔥」——這類需要記憶、需要理解關係脈絡的指令，AI 全部聽不懂。McDonald's 內部的數據顯示，大約 15% 的訂單最終仍需要人類員工接手。而這 15% 的訂單通常來自最忠實的常客——那些已經建立了自己點餐「慣例」的人。</p>
         <p class="news-body">換句話說，AI 最搞不定的，是最熟的客人。</p>
@@ -727,7 +732,7 @@
       <div class="news-item">
         <div class="news-number">04</div>
         <h3><span class="news-flag">🇫🇷</span> 米其林指南開始用 AI 分析評論，但星星還是人給的</h3>
-        <div class="news-meta"><span class="meta-tag">產業動態</span></div>
+        <div class="news-meta"><span class="meta-tag">產業動態</span> <span class="meta-tag">餐廳經營</span></div>
         <p class="news-body">Guide Michelin（米其林指南）正在內部測試一套 AI 工具，用來掃描全球各地的線上評論、社群媒體貼文和美食部落格。目標不是讓 AI 決定誰能拿星，而是讓 AI 幫評審員更快找到「值得去吃的新餐廳」。過去，一位評審員平均要花三到四個月才能完成一個城市的初步掃描；AI 把這個時間壓縮到了兩週。</p>
         <p class="news-body">米其林國際總監 Gwendal Poullennec 對 Le Monde（世界報）表示，AI 只負責「發現」，不負責「判斷」。最終的星級評定仍由匿名評審員親自到場用餐後決定。但他也承認，AI 確實改變了一件事——以前評審員傾向回訪已知的餐廳，現在 AI 不斷把新名字推到他們面前。名單變得更不可預測了。</p>
         <p class="news-source">完整原文內容 → <a href="#" target="_blank">Le Monde</a>（法文）</p>
@@ -736,7 +741,7 @@
       <div class="news-item">
         <div class="news-number">05</div>
         <h3><span class="news-flag">🇰🇷</span> 你還沒打開外送 App，AI 已經猜到你今晚想吃什麼了</h3>
-        <div class="news-meta"><span class="meta-tag">食品科技</span></div>
+        <div class="news-meta"><span class="meta-tag">食品科技</span> <span class="meta-tag">餐廳經營</span></div>
         <p class="news-body">韓國最大外送平台배달의민족（Baemin，外送民族）上線了一項新功能：在你打開 App 之前，AI 已經預測好你今天晚餐想吃什麼了。系統根據你的歷史訂單、當天天氣、附近餐廳的即時備餐狀況、甚至你的行事曆（如果你授權的話），提前把推薦結果排好。</p>
         <p class="news-body">Baemin 公布的數據顯示，這個預測的準確率是 73%——也就是說，將近四分之三的情況下，你打開 App 看到的第一個推薦，就是你最後下單的那個。這個數字讓人印象深刻，也讓人有點不舒服。你的晚餐選擇在你自己意識到之前就被算出來了，這到底是方便，還是某種被看穿的感覺？</p>
         <p class="news-source">完整原文內容 → <a href="#" target="_blank">조선일보</a>（韓文）</p>
@@ -745,7 +750,7 @@
       <div class="news-item">
         <div class="news-number">06</div>
         <h3><span class="news-flag">🇸🇬</span> 新加坡用 AI 監測小販中心的食物衛生，攤販說「比衛生局還嚴」</h3>
-        <div class="news-meta"><span class="meta-tag">餐廳經營</span></div>
+        <div class="news-meta"><span class="meta-tag">餐廳經營</span> <span class="meta-tag">廚房現場</span></div>
         <p class="news-body">新加坡食品局（SFA）在三間小販中心（hawker centre）試裝了 AI 攝影機系統，即時監測攤位的衛生狀況——砧板有沒有生熟分開、食材有沒有在室溫下放太久、工作人員有沒有戴手套。違規時系統自動發出警告，同時紀錄存檔。</p>
         <p class="news-body">攤販的反應很直接。牛車水熟食中心的一位雞飯攤老闆對 The Straits Times（海峽時報）說：「衛生局的人一個月來一次，這個鏡頭一天看我十二個小時。」她不反對食安管理，但她質疑的是「被盯著」的程度。SFA 強調這套系統不做人臉辨識、不記錄個人身份，但信任一旦有了裂痕，技術規格說什麼都很難補回來。</p>
         <p class="news-source">完整原文內容 → <a href="#" target="_blank">The Straits Times</a>（英文）</p>
@@ -754,7 +759,7 @@
       <div class="news-item">
         <div class="news-number">07</div>
         <h3><span class="news-flag">🇦🇺</span> 澳洲農場用無人機和 AI 追蹤每一頭牛的健康狀況</h3>
-        <div class="news-meta"><span class="meta-tag">供應鏈</span></div>
+        <div class="news-meta"><span class="meta-tag">供應鏈</span> <span class="meta-tag">食品科技</span></div>
         <p class="news-body">澳洲昆士蘭州的大型畜牧場 Dotswood Station 開始用無人機搭配 AI 影像辨識系統，每天巡視牧場上的每一頭牛。AI 透過體態分析、步態辨識和熱感應影像，為每頭牛計算一個每日更新的「健康分數」。分數異常時，牧場管理員會收到通知，提前介入處理。</p>
         <p class="news-body">過去，一座 50,000 公頃的牧場靠三到四個牧工開車巡視，一圈下來要兩天。現在無人機半天就飛完，而且 AI 能看到人眼看不到的細節——一頭牛走路時微微偏左可能代表蹄部感染，體溫比周圍高 0.5 度可能是發炎前兆。Dotswood 的牧場主說，導入第一年，牲畜死亡率下降了 12%。每一頭牛都有自己的健康履歷了。</p>
         <p class="news-source">完整原文內容 → <a href="#" target="_blank">ABC Rural</a>（英文）</p>
@@ -792,7 +797,7 @@
     <footer class="issue-footer">
       <div class="footer-brand">The Pass</div>
       <p>AI × 餐飲的每一個面向。由 The Pass 編輯室挑選。</p>
-      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: none;">關於</a></p>
+      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">關於</a></p>
     </footer>
 
   </div>

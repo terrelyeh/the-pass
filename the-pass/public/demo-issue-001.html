@@ -159,19 +159,19 @@
       align-items: center;
       gap: 0.5rem;
       font-family: var(--font-sans);
-      font-size: 0.8125rem;
+      font-size: 0.9375rem;
       color: var(--color-ink-muted);
       margin-bottom: 1rem;
     }
 
     .editor-avatar {
-      width: 22px;
-      height: 22px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.6875rem;
+      font-size: 0.8125rem;
       font-weight: 700;
       color: var(--color-white);
     }
@@ -190,7 +190,7 @@
 
     .section-label {
       font-family: var(--font-sans);
-      font-size: 0.75rem;
+      font-size: 1rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--color-accent);
@@ -323,12 +323,14 @@
       font-family: var(--font-sans);
       font-size: 0.875rem;
       color: var(--color-ink-muted);
-      text-decoration: none;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
       margin-top: 0.5rem;
       transition: color 0.2s;
     }
 
-    .source-link:hover { color: var(--color-accent); }
+    .source-link:hover { color: var(--color-accent); text-decoration-thickness: 2px; }
 
     /* Divider */
     .section-divider {
@@ -336,7 +338,7 @@
       height: 1.5px;
       background: var(--color-accent);
       border: none;
-      margin: 2.5rem 0;
+      margin: 3rem 0;
     }
 
     /* Full-width divider between long and short sections */
@@ -344,7 +346,7 @@
       height: 1px;
       background: var(--color-border);
       border: none;
-      margin: 3rem 0;
+      margin: 4rem 0;
     }
 
     /* Quick News Section */
@@ -360,7 +362,7 @@
     }
 
     .quick-news-section .section-label {
-      font-size: 0.875rem;
+      font-size: 1.125rem;
       margin-bottom: 0;
     }
 
@@ -411,7 +413,8 @@
 
     .news-item .news-source a {
       color: var(--color-accent);
-      text-decoration: none;
+      text-decoration: underline;
+      text-underline-offset: 2px;
       font-weight: 500;
     }
 
@@ -573,7 +576,7 @@
         <span class="meta-dot"></span>
         <span class="filter-count">從 53 條資訊中篩選</span>
       </div>
-      <a href="demo-index.html" style="display: inline-block; margin-top: 0.75rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); text-decoration: none;">← 所有期數</a>
+      <a href="demo-index.html" style="display: inline-block; margin-top: 0.75rem; font-family: var(--font-sans); font-size: 0.8125rem; color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">← 所有期數</a>
     </header>
 
     <!-- ============================================ -->
@@ -591,6 +594,7 @@
       <div class="article-meta">
         <span class="meta-flag">🇰🇷</span>
         <span class="meta-tag">餐廳經營</span>
+        <span class="meta-tag">廚房現場</span>
       </div>
 
       <div class="article-illustration">
@@ -656,6 +660,7 @@
       <div class="article-meta">
         <span class="meta-flag">🇮🇹</span>
         <span class="meta-tag">食品科技</span>
+        <span class="meta-tag">飲食文化</span>
       </div>
 
       <div class="article-illustration">
@@ -710,7 +715,7 @@
       <div class="news-item">
         <div class="news-number">03</div>
         <h3><span class="news-flag">🇯🇵</span> 一碗拉麵少等 30 秒，但那 30 秒原本是師傅的判斷</h3>
-        <div class="news-meta"><span class="meta-tag">廚房現場</span></div>
+        <div class="news-meta"><span class="meta-tag">廚房現場</span> <span class="meta-tag">食品科技</span></div>
         <p class="news-body">日本連鎖拉麵山岡家最近導入了 Amazon Bedrock 的 AI 系統，專門計算廚房裡同時煮多碗麵時的最佳下鍋順序。每碗麵的粗細、湯底、配料都不同，AI 會即時排出最有效率的組合。</p>
         <p class="news-body">結果：平均每碗麵的出餐時間少了約 30 秒，麵的口感也更一致。但有趣的是，這個判斷以前是煮麵師傅靠經驗做的——老師傅一眼掃過去就知道先煮哪碗、後煮哪碗。現在 AI 做這件事，更快也更準，但師傅的那個「一眼」，就此消失了。</p>
         <p class="news-body">山岡家倒是留了一手：系統設計了三層備援，雲端掛了就切本地，本地也掛了就靠老師傅。被問到會不會出問題？回答是：<strong>「そんなヤワじゃありません」（我們沒那麼脆弱）。</strong></p>
@@ -720,7 +725,7 @@
       <div class="news-item">
         <div class="news-number">04</div>
         <h3><span class="news-flag">🇹🇭</span> 泰國稻農過去靠眼睛分好壞米，現在 AI 幾分鐘就看完一批</h3>
-        <div class="news-meta"><span class="meta-tag">食品科技</span></div>
+        <div class="news-meta"><span class="meta-tag">食品科技</span> <span class="meta-tag">供應鏈</span></div>
         <p class="news-body">泰國新創 EasyRice 做了一件事：用電腦視覺取代人眼做稻米品質檢測。傳統的方式是檢測員拿著放大鏡一粒一粒看，25 公克的米要花 15 到 20 分鐘。EasyRice 的機器 3 到 5 分鐘就搞定，準確率 95%。</p>
         <p class="news-body">更厲害的是，它能辨識 84 種泰國稻米品種。一年內就拿下了泰國米出口 30% 的檢測市場。對一個農業大國來說，這不是小事。</p>
         <p class="news-body">創辦人 Phuvin 說了一句話：「AI 不會取代檢測員，因為最終仍需由人來認證。」這句話聽起來像是在安慰人，但他可能是認真的——在食品安全這件事上，最後簽名的那個人，暫時還不能是機器。</p>
@@ -730,7 +735,7 @@
       <div class="news-item">
         <div class="news-number">05</div>
         <h3><span class="news-flag">🇰🇷</span> 這支炸雞廣告從頭到尾沒有一個真人參與製作</h3>
-        <div class="news-meta"><span class="meta-tag">餐廳經營</span></div>
+        <div class="news-meta"><span class="meta-tag">餐廳經營</span> <span class="meta-tag">產業動態</span></div>
         <p class="news-body">韓國連鎖炸雞品牌노랑통닭（Norang Tongdak）為新品「牛島花生炸雞」做了一支廣告。從角色設計、分鏡、影片導演到配樂，全部由生成式 AI 完成。以濟州島特產為靈感的卡通角色在片中跟品牌吉祥物一起推薦產品。</p>
         <p class="news-body">整支廣告的品質不差，至少在社群上引起了話題。但重點不在「AI 也能拍廣告了」——而是對一間連鎖炸雞店來說，行銷預算有限，以前請不起拍片團隊的品牌，現在可以自己做了。門檻降低，對小品牌來說是機會，對廣告公司來說是警訊。</p>
         <p class="news-source">完整原文內容 → <a href="https://www.youthdaily.co.kr/news/article.html?no=215542" target="_blank">청년일보</a>（韓文）</p>
@@ -768,7 +773,7 @@
     <footer class="issue-footer">
       <div class="footer-brand">The Pass</div>
       <p>AI × 餐飲的每一個面向。由 The Pass 編輯室挑選。</p>
-      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: none;">關於</a></p>
+      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">關於</a></p>
     </footer>
 
   </div>
