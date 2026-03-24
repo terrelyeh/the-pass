@@ -56,6 +56,8 @@
     .sidebar-nav li::before { display: none; }
     .sidebar-nav a { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-light); text-decoration: none; display: block; padding: 0.3rem 0.625rem; border-radius: 4px; line-height: 1.5; transition: all 0.15s; }
     .sidebar-nav a:hover { color: var(--ink); background: var(--bg-warm); }
+    .sidebar-nav a.active { color: var(--ink); background: var(--bg-warm); font-weight: 500; }
+    .sidebar-nav a.active .nav-num { color: var(--accent); }
     .sidebar-nav .nav-num { font-variant-numeric: tabular-nums; color: var(--ink-muted); margin-right: 0.375rem; font-size: 0.625rem; }
 
     /* ── Article ── */
@@ -514,41 +516,26 @@
     </div>
 
     <h3>4. 主題深度永不枯竭</h3>
-    <p>AI × 餐飲不是一個窄主題。它是一個跨國、跨產業鏈、跨維度的無底洞。以下只是冰山一角——每一個例子都能展開成一篇甚至一系列的故事。</p>
+    <p>AI × 餐飲不是一個窄主題。它橫跨整條產業鏈——從農場到餐桌、從技術到文化。以下各舉一個例子：</p>
 
-    <h4 style="font-family: var(--sans); font-size: 0.8125rem; font-weight: 700; color: var(--accent); margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.05em;">🌾 上游：食材、農業、原物料</h4>
     <div class="card" style="margin-bottom: 1rem;">
-      <p style="margin-bottom: 0.75rem;">🇹🇭 泰國 EasyRice 用電腦視覺檢測稻米品質，3 分鐘做完人工 20 分鐘的活，一年拿下泰國米出口 30% 的檢測市場。稻米是泰國的國家認同——AI 正在守護它。</p>
-      <p style="margin-bottom: 0.75rem;">🇳🇱 Cargill 在阿姆斯特丹的可可工廠部署 Boston Dynamics 機器狗，每週巡檢一萬次。你吃的巧克力，在到達你手上之前，已經被一隻四足機器人「聞」過了。</p>
-      <p style="margin-bottom: 0.75rem;">🇹🇼 臺灣茶農開始用 AI 分析土壤、日照、降雨數據，預測最佳採茶時機。當「春茶」不再只靠經驗判斷，茶的浪漫還在嗎？</p>
-      <p style="margin-bottom: 0;">🇦🇺 澳洲養殖業用 AI 監測鮭魚的游泳模式和進食行為，即時判斷魚群健康狀態。從前靠老師傅觀察水色，現在靠演算法讀數據。</p>
+      <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 0.75rem;">🌾 上游</h4>
+      <p style="margin-bottom: 0;">🇹🇭 泰國 EasyRice 用電腦視覺檢測稻米品質，3 分鐘做完人工 20 分鐘的活，一年拿下泰國米出口 30% 的檢測市場。</p>
+    </div>
+    <div class="card" style="margin-bottom: 1rem;">
+      <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 0.75rem;">🏭 中游</h4>
+      <p style="margin-bottom: 0;">🇯🇵 大阪王將的炒菜機器人分析 17 位「一級料理人」的鍋振動作，把職人技術數位化。機器學了動作，但學得走判斷嗎？</p>
+    </div>
+    <div class="card" style="margin-bottom: 1rem;">
+      <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 0.75rem;">🍽️ 下游</h4>
+      <p style="margin-bottom: 0;">🇹🇭 Grab Thailand 用 AI 為路邊攤自動生成高擬真食物照片。數位落差的另一面：AI 正在幫最小的店家跟連鎖品牌站在同一條線上。</p>
+    </div>
+    <div class="card" style="margin-bottom: 1rem;">
+      <h4 style="font-size: 0.8125rem; color: var(--accent); margin-bottom: 0.75rem;">🧠 人文面</h4>
+      <p style="margin-bottom: 0;">韓國人說的「손맛」（手味）、日本人說的「手仕事」——當 AI 能複製一道菜的味道，這些詞還有意義嗎？</p>
     </div>
 
-    <h4 style="font-family: var(--sans); font-size: 0.8125rem; font-weight: 700; color: var(--accent); margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.05em;">🏭 中游：食品加工、製造、物流</h4>
-    <div class="card" style="margin-bottom: 1rem;">
-      <p style="margin-bottom: 0.75rem;">🇯🇵 大阪王將的炒菜機器人 I-Robo2，花半年分析全國僅 17 位「一級料理人」的鍋振動作，把職人技術數位化。90 秒一盤炒飯，月營收增加 100 萬日圓。機器學了職人的動作，但學得走職人的判斷嗎？</p>
-      <p style="margin-bottom: 0.75rem;">🇰🇷 아워홈用 AI 攝影機即時監控廚師的衛生行為，同時用 BCR 攝影機自動掃碼登錄進貨庫存，AI 甚至能自動生成採購訂單。從食安到供應鏈，一套系統全包。</p>
-      <p style="margin-bottom: 0;">🇺🇸 美國新創 Apeel Sciences 用 AI 分析水果表皮的微觀結構，開發出能延長保鮮期兩倍的植物塗層。減少食物浪費，從一顆酪梨開始。</p>
-    </div>
-
-    <h4 style="font-family: var(--sans); font-size: 0.8125rem; font-weight: 700; color: var(--accent); margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.05em;">🍽️ 下游：餐廳、消費者、體驗</h4>
-    <div class="card" style="margin-bottom: 1rem;">
-      <p style="margin-bottom: 0.75rem;">🇯🇵 拉麵山岡家用 Amazon Bedrock 管理煮麵順序，新人培訓從 500 天砍到 350 天。被問到「系統掛了怎麼辦」，他們說：「そんなヤワじゃありません」（我們沒那麼脆弱）。</p>
-      <p style="margin-bottom: 0.75rem;">🇰🇷 日本最大連鎖居酒屋鳥貴族導入 AI 電話接待「さゆり」，累計處理超過 500 萬通預約電話。忘年會旺季單店單日最高接 476 通。你打電話訂位，接電話的不是人，但你可能根本分不出來。</p>
-      <p style="margin-bottom: 0.75rem;">🇹🇭 Grab Thailand 用 AI 為小攤販自動生成高擬真食物照片，讓路邊攤也能有精美的線上菜單。數位落差的另一面：AI 正在幫最小的店家跟連鎖品牌站在同一條線上。</p>
-      <p style="margin-bottom: 0;">🇰🇷 韓國炸雞品牌노랑통닭用生成式 AI 從零製作電視廣告——角色、導演、音樂，全部 AI。零真人參與。如果一間炸雞店都能自己做廣告了，廣告公司的價值在哪裡？</p>
-    </div>
-
-    <h4 style="font-family: var(--sans); font-size: 0.8125rem; font-weight: 700; color: var(--accent); margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.05em;">🧠 人文面：文化、哲學、那些 AI 回答不了的問題</h4>
-    <div class="card" style="margin-bottom: 1rem;">
-      <p style="margin-bottom: 0.75rem;">當 AI 能完美複製一道菜的味道，韓國人說的「손맛」（手味）、日本人說的「手仕事」還存在嗎？如果不均勻本身就是手工的證明，AI 做出來的「完美不均勻」算什麼？</p>
-      <p style="margin-bottom: 0.75rem;">一個廚師花 20 年練成的刀工，機器一天就學會了。那 20 年的意義是什麼——是技術的累積，還是一種修練？被 AI 縮短的學徒期，帶走的是冗餘，還是某種不可取代的東西？</p>
-      <p style="margin-bottom: 0.75rem;">義大利 THIMUS 用腦波測量消費者對食物的真實反應，發現人們嘴上說喜歡植物肉，但大腦不買單。食品公司應該聽你說的，還是聽你大腦說的？</p>
-      <p style="margin-bottom: 0.75rem;">當演算法決定你今晚吃什麼、推薦你去哪間餐廳，你跟食物之間那個「自己選的」的感覺，還在嗎？</p>
-      <p style="margin-bottom: 0;">法國人說 terroir——風土決定了一瓶酒的靈魂。如果 AI 能精確分析風土條件、預測最佳釀造方式，釀出來的酒更好喝了，但少了釀酒師那一年的猶豫和判斷。那瓶酒，還有靈魂嗎？</p>
-    </div>
-
-    <p>這只是我們目前想到的。AI 進入餐飲的速度比任何人預期的都快，每一天都有新的故事發生。<strong>The Pass 永遠不會沒東西寫。</strong></p>
+    <p>這只是冰山一角。AI 進入餐飲的速度比任何人預期的都快。<strong>The Pass 永遠不會沒東西寫。</strong></p>
 
     <h3>5. 運營成本極低（但不是零）</h3>
     <p>「極低」是相對於傳統做法——請一個全職編輯每月至少 $2,000 美元——而言的。The Pass 用 AI 自動化完成選題、翻譯、撰寫，但 AI 不是免費的。以下是實際的成本結構：</p>
@@ -954,6 +941,30 @@ function closeMobileToc() {
   document.querySelector('.mobile-toc').classList.remove('open');
   document.querySelector('.hamburger-btn').classList.remove('active');
 }
+
+// Scroll-spy: highlight sidebar TOC based on scroll position
+(function() {
+  const sidebarLinks = document.querySelectorAll('.sidebar .sidebar-nav a');
+  const sections = [];
+  sidebarLinks.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ id, el, link });
+  });
+
+  function updateActive() {
+    let current = sections[0];
+    const scrollY = window.scrollY + 120;
+    for (const s of sections) {
+      if (s.el.offsetTop <= scrollY) current = s;
+    }
+    sidebarLinks.forEach(l => l.classList.remove('active'));
+    if (current) current.link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+})();
 </script>
 </body>
 </html>
