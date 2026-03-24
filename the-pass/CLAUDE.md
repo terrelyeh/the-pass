@@ -58,7 +58,7 @@ the-pass/
 │   ├── project-brief.html        ← 完整 Project Brief（14 章）
 │   ├── editorial-guidelines.html ← 編輯指南 + AI 編輯人設 + 系統提示詞
 │   ├── methodology.html          ← 內容來源方法論
-│   ├── sources.html              ← 信源清單（36 個，含歐洲）
+│   ├── sources.html              ← 信源清單（33 個，含歐洲）
 │   ├── illustration-guide.html   ← 插畫風格指南
 │   ├── implementation-plan.html  ← 實作計畫（Skill vs Web 後台比較）
 │   ├── demo-index.html           ← Demo 目錄頁（3 期卡片）
@@ -86,7 +86,7 @@ the-pass/
 六個 tag，用 tag 不用 category（一篇可多個）：
 🔬 食品科技 · 🏪 餐廳經營 · 🌾 供應鏈 · 👨‍🍳 廚房現場 · 📊 產業動態 · 🍜 飲食文化
 
-每篇只標一個主要 tag（卡片和標題處）。
+每篇標 2 個 tag（卡片和標題處）。
 
 ## 尚未決定的事項
 
