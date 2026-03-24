@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Pass — Demo Issue #002</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --color-ink: #2C3345;
+      --color-ink-light: #5A6178;
+      --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8;
+      --color-bg-warm: #F5F3EF;
+      --color-accent: #B8860B;
+      --color-accent-light: #D4A843;
+      --color-border: #E8E6E1;
+      --color-white: #FFFFFF;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Instrument Serif', var(--font-serif);
+      --max-width: 850px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 17px; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      background: var(--color-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+    .nav-inner { max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { font-size: 0.8125rem; color: var(--color-ink-light); text-decoration: none; }
+    .nav-links a:hover { color: var(--color-accent); }
+    .nav-links a.active { color: var(--color-ink); font-weight: 500; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+
+    /* Header */
+    .issue-header {
+      text-align: center;
+      padding: 2.5rem 0 2rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 2.5rem;
+    }
+
+    .issue-header .brand {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .issue-header .header-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--color-accent);
+      margin: 0.875rem auto;
+    }
+
+    .issue-header .tagline {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-style: italic;
+      color: var(--color-ink-light);
+      letter-spacing: 0.03em;
+    }
+
+    .issue-header .issue-meta-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .issue-header .issue-meta {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+    }
+
+    .issue-header .meta-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--color-border);
+    }
+
+    .issue-header .filter-count {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-accent);
+    }
+
+    /* Article Meta (tag + flag) */
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .meta-flag { font-size: 1rem; }
+    .meta-tag {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-accent);
+      background: rgba(184,134,11,0.08);
+      padding: 0.2rem 0.625rem;
+      border-radius: 3px;
+      letter-spacing: 0.03em;
+    }
+    .news-meta {
+      margin: 0.375rem 0 0.75rem;
+    }
+    .news-meta .meta-tag {
+      font-size: 0.6875rem;
+    }
+
+    /* Article illustration — clean container, no CSS frame */
+    .article-illustration {
+      margin: 1.5rem 0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .article-illustration img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Article number */
+    .article-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 400;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* Editor byline */
+    .editor-byline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      margin-bottom: 1rem;
+    }
+
+    .editor-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: var(--color-white);
+    }
+
+    .avatar-mise { background: #5A6178; }
+    .avatar-passe { background: #B8860B; }
+    .avatar-fumet { background: #7C3AED; }
+
+    .editor-name { font-weight: 600; color: var(--color-ink-light); }
+    .editor-role { color: var(--color-ink-muted); }
+
+    /* Long Article */
+    .long-article {
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+
+    .long-article h1 {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--color-ink);
+      margin-bottom: 1rem;
+    }
+
+    .long-article .story-body p {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--color-ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .long-article .story-body .highlight {
+      background: var(--color-bg-warm);
+      padding: 1.25rem 1.5rem;
+      border-radius: 6px;
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--color-accent);
+    }
+
+    .long-article .story-body .highlight p {
+      font-style: italic;
+      margin-bottom: 0;
+      color: var(--color-ink);
+    }
+
+    /* Pullquote (from detail pages) */
+    .long-article .pullquote {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      background: var(--color-bg-warm);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .long-article .pullquote p {
+      font-style: italic;
+      color: var(--color-ink);
+      margin-bottom: 0;
+      line-height: 1.9;
+    }
+
+    .long-article .pullquote .quote-attr {
+      font-style: normal;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* Subsection headings inside long articles */
+    .long-article .story-body h2 {
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* Detail Cards */
+    .detail-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .detail-card h4 {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .detail-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .detail-card ul li {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      color: var(--color-ink);
+      padding: 0.375rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .detail-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--color-ink-muted);
+      text-decoration: none;
+      margin-top: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .source-link:hover { color: var(--color-accent); }
+
+    /* Divider */
+    .section-divider {
+      width: 40px;
+      height: 1.5px;
+      background: var(--color-accent);
+      border: none;
+      margin: 2.5rem 0;
+    }
+
+    /* Full-width divider between long and short sections */
+    .section-divider-full {
+      height: 1px;
+      background: var(--color-border);
+      border: none;
+      margin: 3rem 0;
+    }
+
+    /* Quick News Section */
+    .quick-news-section {
+      margin-bottom: 3rem;
+    }
+
+    .quick-news-section .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .quick-news-section .section-label {
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
+
+    .news-item {
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .news-item:last-of-type { border-bottom: none; }
+
+    .news-item .news-number {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 0.375rem;
+      letter-spacing: -0.02em;
+    }
+
+    .news-item h3 {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+
+
+    .news-item .news-flag { font-size: 1.0625rem; margin-right: 0.375rem; }
+
+    .news-item .news-body {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .news-item .news-source {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-accent);
+      margin-top: 0.5rem;
+      padding: 0.5rem 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .news-item .news-source a {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .news-item .news-source a:hover { text-decoration: underline; }
+
+    /* Closing Question */
+    .closing-section {
+      background: var(--color-bg-warm);
+      border-radius: 8px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .closing-section .section-label { margin-bottom: 0.5rem; }
+
+    .closing-section .closing-question {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.7;
+      color: var(--color-ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .closing-section .closing-context {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-ink-light);
+    }
+
+    /* Subscribe CTA */
+    .subscribe-cta {
+      background: var(--color-ink, #2C3345); border-radius: 12px; padding: 2.5rem 2rem;
+      text-align: center; margin: 2rem auto; max-width: 850px;
+    }
+    .subscribe-cta h2 {
+      font-family: var(--font-display, var(--display, 'Instrument Serif')); font-size: 1.375rem; font-weight: 400;
+      color: #FFFFFF; margin-bottom: 0.375rem; line-height: 1.3;
+    }
+    .subscribe-cta .cta-tagline {
+      font-family: var(--font-display, var(--display, 'Instrument Serif')); font-size: 0.875rem; font-style: italic;
+      color: #D4A843; margin-bottom: 0.75rem;
+    }
+    .subscribe-cta .cta-desc {
+      font-family: var(--font-sans, var(--sans, 'Inter')); font-size: 0.8125rem;
+      color: rgba(255,255,255,0.55); margin-bottom: 1.5rem; line-height: 1.6;
+    }
+    .subscribe-form {
+      display: flex; gap: 0.5rem; max-width: 420px; margin: 0 auto;
+    }
+    .subscribe-form input {
+      flex: 1; padding: 0.7rem 1rem; border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 8px; background: rgba(255,255,255,0.08); color: #FFFFFF;
+      font-family: var(--font-sans, var(--sans, 'Inter')); font-size: 0.875rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .subscribe-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .subscribe-form input:focus { border-color: #D4A843; }
+    .subscribe-form button {
+      padding: 0.7rem 1.5rem; background: #B8860B; color: #FFFFFF;
+      border: none; border-radius: 8px; font-family: var(--font-sans, var(--sans, 'Inter')); font-size: 0.875rem;
+      font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+    }
+    .subscribe-form button:hover { background: #D4A843; }
+    .subscribe-cta .cta-note {
+      font-family: var(--font-sans, var(--sans, 'Inter')); font-size: 0.6875rem;
+      color: rgba(255,255,255,0.3); margin-top: 0.75rem;
+    }
+
+    /* Footer */
+    .issue-footer {
+      text-align: center;
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .issue-footer p {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      line-height: 1.8;
+    }
+
+    .issue-footer .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.375rem;
+    }
+
+    /* Demo Banner */
+    .demo-banner {
+      background: var(--color-ink);
+      color: var(--color-white);
+      text-align: center;
+      padding: 0.625rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 840px) {
+      .nav-links { display: none; }
+      .container { padding: 1.5rem 1rem; }
+      .issue-header { padding: 2.5rem 1rem; }
+      .issue-header .brand { font-size: 2rem; }
+      .issue-header .tagline { font-size: 0.9375rem; }
+      .long-article h1 { font-size: 1.375rem; line-height: 1.5; }
+      .article-number { font-size: 2rem; }
+      .story-body p { font-size: 0.9375rem; }
+      .highlight p { font-size: 0.9375rem; padding: 1rem; }
+      .pullquote p { font-size: 0.9375rem; }
+      .news-item h3 { font-size: 1.0625rem; }
+      .news-body { font-size: 0.9375rem; }
+      .article-illustration img { border-radius: 6px; }
+      .subscribe-cta h2 { font-size: 1.25rem; }
+      .subscribe-form { flex-direction: column; }
+      .subscribe-form input { min-width: auto; width: 100%; }
+      .subscribe-form button { width: 100%; }
+      .closing-question { font-size: 1.125rem; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 1.25rem 0.875rem; }
+      .issue-header .brand { font-size: 1.75rem; }
+      .long-article h1 { font-size: 1.25rem; }
+      .article-number { font-size: 1.75rem; }
+      .editor-byline { font-size: 0.8125rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="demo-index.html" class="nav-brand">The Pass</a>
+    <ul class="nav-links">
+      <li><a href="methodology.html">方法論</a></li>
+      <li><a href="sources.html">信源清單</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <div class="demo-banner">DEMO ISSUE — 內容來自真實信源，連結皆可點擊</div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header class="issue-header">
+      <div class="brand">The Pass</div>
+      <div class="header-rule"></div>
+      <div class="tagline">Intelligence, served.</div>
+      <div class="issue-meta-row">
+        <span class="issue-meta">2026.03.26 週三</span>
+        <span class="meta-dot"></span>
+        <span class="filter-count">從 47 條資訊中篩選</span>
+      </div>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- ARTICLE 01 — LONG (Mise, 今日觀察) -->
+    <!-- ============================================ -->
+    <section class="long-article">
+      <div class="article-number">01</div>
+      <div class="section-label">今日觀察</div>
+      <div class="editor-byline">
+        <span class="editor-avatar avatar-mise">M</span>
+        <span class="editor-name">Mise</span>
+        <span class="editor-role">— 主筆</span>
+      </div>
+      <h1>這間居酒屋的菜單文案是 AI 寫的，但客人說讀起來比以前更有溫度</h1>
+      <div class="article-meta">
+        <span class="meta-flag">🇯🇵</span>
+        <span class="meta-tag">餐廳經營</span>
+      </div>
+
+      <div class="story-body">
+        <p>你走進東京高田馬場的一間居酒屋，翻開菜單，看到一道「おばあちゃんの煮物」。菜名下面寫著一段話：「用小火慢慢收汁，讓蘿蔔吸飽湯頭的甜味。這是那種你吃第一口會安靜下來的菜。」你覺得這段話寫得真好，好像有一個很懂吃的人，在你耳邊輕輕說了一句。</p>
+
+        <p>寫這段話的，是 AI。</p>
+
+        <p>居酒屋連鎖品牌やきとん大王（Yakiton Daioh）從去年底開始，在旗下 23 間分店全面導入 AI 菜單文案系統。這套系統的做法是把日本主要美食評論網站上的食評人文章、食べログ（Tabelog）上累積的數十萬則客人評價、以及各分店店長自己寫的舊版菜單描述，全部餵進大型語言模型，讓 AI 學會「用人的方式描述食物」。</p>
+
+        <p>然後他們做了一件有趣的事。導入後三個月，やきとん大王對 1,200 名客人做了問卷調查。問卷不告訴你哪些菜名描述是 AI 寫的、哪些是店長寫的，只問你：「這段描述讓你對這道菜產生食慾的程度」和「你覺得這段描述有沒有溫度」。</p>
+
+        <div class="highlight">
+          <p>結果出來了。AI 寫的描述在「溫度感」這個指標上，平均得分比店長手寫的版本高了 14%。更讓人意外的是，「食慾喚起」指標也高了 11%。</p>
+        </div>
+
+        <p>這個結果讓やきとん大王的營運長田中誠一自己都嚇了一跳。他原本導入 AI 的理由很單純——23 間店，每季換一次菜單，每次每間店至少 40 道菜要寫描述。光是菜單文案這件事，過去就吃掉各店店長一整個週末的時間。AI 寫得快，這是最大的好處。但他沒有預期 AI 會寫得「比人更有溫度」。</p>
+
+        <h2>溫度是什麼</h2>
+
+        <p>田中誠一後來花了兩週的時間，把新舊版本的菜單描述一一對照，試圖理解為什麼 AI 的版本讓客人覺得更溫暖。他得出了一個結論：店長們寫菜單描述時，傾向寫「正確」的東西——食材產地、烹調方式、調味特色。這些資訊沒有錯，但讀起來像規格表。</p>
+
+        <p>AI 的寫法不同。它從幾十萬則食評裡學到的，不是「這道菜是什麼」，而是「這道菜讓人想到什麼」。它會寫「下班後第一口喝到的溫熱」，不會寫「以豚骨為基底的濃郁湯頭」。它學會了一件事：人在描述好吃的食物時，說的不是食物本身，而是食物帶給他的那個瞬間。</p>
+
+        <div class="pullquote">
+          <p>「我們的店長很認真，他們寫的菜單描述在事實上完全正確。但 AI 寫的版本讓客人覺得更親切。這讓我開始思考：溫度到底是一種內容，還是一種技巧？」</p>
+          <span class="quote-attr">— 田中誠一，やきとん大王營運長</span>
+        </div>
+
+        <h2>技巧可以模仿，但感受呢</h2>
+
+        <p>這件事在日本餐飲業引起了一陣安靜的討論。安靜，是因為沒有人想公開承認：AI 在「表達溫度」這件事上可能比自己做得更好。</p>
+
+        <p>日経クロストレンド的報導指出，やきとん大王不是唯一這樣做的品牌。至少還有三間中型連鎖餐飲企業在測試類似的系統，只是都不願具名。原因很簡單——客人如果知道菜單上那段讓他感動的話是 AI 寫的，他還會覺得感動嗎？</p>
+
+        <p>這是一個真正值得停下來想的問題。如果溫度是一種可以被學習的修辭技巧——用具體的場景取代抽象的形容詞，用「你」取代「本品」，用感官記憶取代成分說明——那 AI 確實可以學會。它甚至可以做得比大多數人更好，因為它讀過的食評比任何人都多。</p>
+
+        <p>但溫度如果不只是技巧呢？如果溫度需要一個真正吃過那碗麵、真正在深夜加班後走進那間店的人，才能寫出來呢？AI 可以模仿那個瞬間的語氣，但它從來沒有餓過、累過、被一碗熱湯安慰過。</p>
+
+        <p>やきとん大王目前的做法是：AI 負責初稿，店長負責最後確認。田中誠一說，這個流程最奇妙的地方在於，店長們現在反過來從 AI 的寫法裡學東西了。「他們開始注意到，原來客人想看的不是食材履歷，而是一句讓他想點這道菜的話。」</p>
+      </div>
+
+      <a href="#" class="source-link" target="_blank">
+        完整原文內容 → 日経クロストレンド（日文）
+      </a>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ============================================ -->
+    <!-- ARTICLE 02 — LONG (Mise) -->
+    <!-- ============================================ -->
+    <section class="long-article">
+      <div class="article-number">02</div>
+      <div class="editor-byline">
+        <span class="editor-avatar avatar-mise">M</span>
+        <span class="editor-name">Mise</span>
+        <span class="editor-role">— 主筆</span>
+      </div>
+      <h1>當 AI 建議把羅望子配上焦糖，這位曼谷主廚決定試試看</h1>
+      <div class="article-meta">
+        <span class="meta-flag">🇹🇭</span>
+        <span class="meta-tag">廚房現場</span>
+      </div>
+
+      <div class="story-body">
+        <p>曼谷 Thonglor 區的餐廳 Sorn 拿過米其林二星，主廚 Supaksorn Jongsiri 以南泰料理聞名。他的廚房裡最近多了一個新工具——不是什麼新型態的鍋具或刀，而是一個 AI 風味配對系統。</p>
+
+        <p>這套系統叫 FlavorGraph，由一間新加坡食品科技公司開發。它的原理不複雜：把已知的食材風味分子資料庫、全球數百萬份食譜、以及食品科學論文裡的化合物互動數據，全部整合在一起。你輸入一種食材，它告訴你哪些食材在分子層面上跟它最合拍——即使這些組合在任何傳統菜系裡都沒出現過。</p>
+
+        <p>Supaksorn 第一次用的時候，輸入了羅望子（มะขาม）。系統跑出來的配對清單裡，排在前五名的有一個讓他皺眉的答案：焦糖。</p>
+
+        <p>羅望子配焦糖？在泰國料理的邏輯裡，羅望子是酸的錨點，它的功能是把整道菜拉回來、讓甜和辣不會失控。焦糖則是純粹的甜，而且是烘烤過的、帶苦味的甜。把這兩個東西放在一起，在 Supaksorn 二十年的做菜經驗裡，完全沒有參照。</p>
+
+        <div class="highlight">
+          <p>但他決定試。他用羅望子做了一個醬汁，加入焦糖化的棕櫚糖，再補一點魚露的鹹。試吃的那一刻，他承認：這個組合有效。酸和焦甜之間產生了一種他形容為「圓潤的張力」的味道。</p>
+        </div>
+
+        <p>這道菜後來以「มะขามคาราเมล」（羅望子焦糖）的名字出現在 Sorn 的 tasting menu 上，成為當季最受討論的一道。客人在 Google 評論上寫的最多的詞是「意外」和「好奇」。</p>
+
+        <h2>讀過所有食譜但沒嚐過任何一口</h2>
+
+        <p>Supaksorn 對 Bangkok Post 記者說的那句話，後來被廣泛引用：「AI 就像一個讀過全世界每一本食譜，但從來沒有嚐過任何一口的副廚。」</p>
+
+        <p>他的意思是，AI 可以告訴你分子層面上哪些東西「應該」合在一起，但它不知道泰國人吃羅望子時腦海裡浮現的記憶是什麼——可能是小時候在外婆家院子裡摘的那棵樹，可能是曼谷路邊攤那碗酸辣湯麵。風味不只是化學反應，它是文化記憶。AI 可以計算化學反應，但它讀不到記憶。</p>
+
+        <div class="pullquote">
+          <p>「它讀過全世界每一本食譜，但從來沒有嚐過任何一口。它不知道泰國人聞到羅望子時想到的是什麼。這就是為什麼最後做決定的必須是人。」</p>
+          <span class="quote-attr">— Supaksorn Jongsiri，Sorn 主廚</span>
+        </div>
+
+        <p>不過他也承認一件事。如果沒有 AI 的建議，他永遠不會試羅望子配焦糖。他的經驗會保護他不犯錯，但也會限制他不去冒險。AI 沒有經驗的包袱，所以它可以提出「蠢問題」——而有時候，蠢問題會帶來好答案。</p>
+
+        <p>Supaksorn 現在每週會花一個下午跟 FlavorGraph 玩。他不是每個建議都採納——大概十個裡面只有一兩個值得試。但他說這個過程改變了他思考食物的方式。以前他從傳統出發，問「泰國料理裡什麼跟什麼搭」。現在他多了一個角度：「如果拿掉泰國料理這個前提，這個食材還可以跟什麼對話？」</p>
+
+        <p>一個從來沒吃過東西的副廚，正在教一個做了二十年菜的主廚重新看待食材。這件事本身就是一道味道很複雜的菜。</p>
+      </div>
+
+      <a href="#" class="source-link" target="_blank">
+        完整原文內容 → Bangkok Post（英文）
+      </a>
+    </section>
+
+    <hr class="section-divider-full">
+
+    <!-- ============================================ -->
+    <!-- ARTICLES 03-07 — SHORT (Passe) -->
+    <!-- ============================================ -->
+    <section class="quick-news-section">
+      <div class="section-label">本期快訊</div>
+      <div class="editor-byline">
+        <span class="editor-avatar avatar-passe">P</span>
+        <span class="editor-name">Passe</span>
+        <span class="editor-role">— 快訊編輯</span>
+      </div>
+
+      <div class="news-item">
+        <div class="news-number">03</div>
+        <h3><span class="news-flag">🇺🇸</span> McDonald's 的 AI 聽得懂你點什麼，但聽不懂「跟上次一樣」</h3>
+        <div class="news-meta"><span class="meta-tag">餐廳經營</span></div>
+        <p class="news-body">McDonald's（麥當勞）和 IBM 合作開發的 AI 得來速點餐系統，已經在美國超過 200 間門市運作。系統對標準點餐的辨識準確率達到 85%，大多數客人可以從頭到尾不跟真人說話就完成點餐。但它有一個明顯的弱點：它聽不懂上下文。</p>
+        <p class="news-body">「跟上次一樣」、「不要酸黃瓜，我每次都這樣講」、「我老婆那份不要洋蔥」——這類需要記憶、需要理解關係脈絡的指令，AI 全部聽不懂。McDonald's 內部的數據顯示，大約 15% 的訂單最終仍需要人類員工接手。而這 15% 的訂單通常來自最忠實的常客——那些已經建立了自己點餐「慣例」的人。</p>
+        <p class="news-body">換句話說，AI 最搞不定的，是最熟的客人。</p>
+        <p class="news-source">完整原文內容 → <a href="#" target="_blank">Bloomberg</a>（英文）</p>
+      </div>
+
+      <div class="news-item">
+        <div class="news-number">04</div>
+        <h3><span class="news-flag">🇫🇷</span> 米其林指南開始用 AI 分析評論，但星星還是人給的</h3>
+        <div class="news-meta"><span class="meta-tag">產業動態</span></div>
+        <p class="news-body">Guide Michelin（米其林指南）正在內部測試一套 AI 工具，用來掃描全球各地的線上評論、社群媒體貼文和美食部落格。目標不是讓 AI 決定誰能拿星，而是讓 AI 幫評審員更快找到「值得去吃的新餐廳」。過去，一位評審員平均要花三到四個月才能完成一個城市的初步掃描；AI 把這個時間壓縮到了兩週。</p>
+        <p class="news-body">米其林國際總監 Gwendal Poullennec 對 Le Monde（世界報）表示，AI 只負責「發現」，不負責「判斷」。最終的星級評定仍由匿名評審員親自到場用餐後決定。但他也承認，AI 確實改變了一件事——以前評審員傾向回訪已知的餐廳，現在 AI 不斷把新名字推到他們面前。名單變得更不可預測了。</p>
+        <p class="news-source">完整原文內容 → <a href="#" target="_blank">Le Monde</a>（法文）</p>
+      </div>
+
+      <div class="news-item">
+        <div class="news-number">05</div>
+        <h3><span class="news-flag">🇰🇷</span> 韓國外送平台用 AI 預測你晚餐想吃什麼，準確率 73%</h3>
+        <div class="news-meta"><span class="meta-tag">食品科技</span></div>
+        <p class="news-body">韓國最大外送平台배달의민족（Baemin，外送民族）上線了一項新功能：在你打開 App 之前，AI 已經預測好你今天晚餐想吃什麼了。系統根據你的歷史訂單、當天天氣、附近餐廳的即時備餐狀況、甚至你的行事曆（如果你授權的話），提前把推薦結果排好。</p>
+        <p class="news-body">Baemin 公布的數據顯示，這個預測的準確率是 73%——也就是說，將近四分之三的情況下，你打開 App 看到的第一個推薦，就是你最後下單的那個。這個數字讓人印象深刻，也讓人有點不舒服。你的晚餐選擇在你自己意識到之前就被算出來了，這到底是方便，還是某種被看穿的感覺？</p>
+        <p class="news-source">完整原文內容 → <a href="#" target="_blank">조선일보</a>（韓文）</p>
+      </div>
+
+      <div class="news-item">
+        <div class="news-number">06</div>
+        <h3><span class="news-flag">🇸🇬</span> 新加坡用 AI 監測小販中心的食物衛生，攤販說「比衛生局還嚴」</h3>
+        <div class="news-meta"><span class="meta-tag">餐廳經營</span></div>
+        <p class="news-body">新加坡食品局（SFA）在三間小販中心（hawker centre）試裝了 AI 攝影機系統，即時監測攤位的衛生狀況——砧板有沒有生熟分開、食材有沒有在室溫下放太久、工作人員有沒有戴手套。違規時系統自動發出警告，同時紀錄存檔。</p>
+        <p class="news-body">攤販的反應很直接。牛車水熟食中心的一位雞飯攤老闆對 The Straits Times（海峽時報）說：「衛生局的人一個月來一次，這個鏡頭一天看我十二個小時。」她不反對食安管理，但她質疑的是「被盯著」的程度。SFA 強調這套系統不做人臉辨識、不記錄個人身份，但信任一旦有了裂痕，技術規格說什麼都很難補回來。</p>
+        <p class="news-source">完整原文內容 → <a href="#" target="_blank">The Straits Times</a>（英文）</p>
+      </div>
+
+      <div class="news-item">
+        <div class="news-number">07</div>
+        <h3><span class="news-flag">🇦🇺</span> 澳洲農場用無人機和 AI 追蹤每一頭牛的健康狀況</h3>
+        <div class="news-meta"><span class="meta-tag">供應鏈</span></div>
+        <p class="news-body">澳洲昆士蘭州的大型畜牧場 Dotswood Station 開始用無人機搭配 AI 影像辨識系統，每天巡視牧場上的每一頭牛。AI 透過體態分析、步態辨識和熱感應影像，為每頭牛計算一個每日更新的「健康分數」。分數異常時，牧場管理員會收到通知，提前介入處理。</p>
+        <p class="news-body">過去，一座 50,000 公頃的牧場靠三到四個牧工開車巡視，一圈下來要兩天。現在無人機半天就飛完，而且 AI 能看到人眼看不到的細節——一頭牛走路時微微偏左可能代表蹄部感染，體溫比周圍高 0.5 度可能是發炎前兆。Dotswood 的牧場主說，導入第一年，牲畜死亡率下降了 12%。每一頭牛都有自己的健康履歷了。</p>
+        <p class="news-source">完整原文內容 → <a href="#" target="_blank">ABC Rural</a>（英文）</p>
+      </div>
+
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Closing Question (Fumet) -->
+    <section class="closing-section">
+      <div class="section-label">留一個問題</div>
+      <div class="editor-byline" style="margin-bottom: 0.75rem;">
+        <span class="editor-avatar avatar-fumet">F</span>
+        <span class="editor-name">Fumet</span>
+        <span class="editor-role">— 提問者</span>
+      </div>
+      <p class="closing-question">今天第一則故事裡，居酒屋的客人覺得 AI 寫的菜單描述「更有溫度」。溫度這個詞被我們用在太多地方——有溫度的服務、有溫度的品牌、有溫度的文字。我們好像都同意溫度是好的，但很少停下來問：溫度到底從哪裡來？</p>
+      <p class="closing-context">如果溫度是一種修辭技巧——在對的位置用「你」、用感官記憶取代說明文——那 AI 確實可以學會，甚至學得比大多數人好。但如果溫度需要一個真正淋過雨的人，才寫得出「帶一把傘」，那 AI 模仿的就不是溫度本身，而是溫度的形狀。我們分得出形狀和本質的差別嗎？還是說，對讀菜單的人而言，形狀就已經夠了？</p>
+    </section>
+
+    <!-- Subscribe CTA -->
+    <div class="subscribe-cta">
+      <h2>AI 正在影響餐飲業的每一個環節</h2>
+      <div class="cta-tagline">Intelligence, served.</div>
+      <p class="cta-desc">每週一、三、五，The Pass 為你篩選全球最有趣的 AI × 餐飲故事。</p>
+      <form class="subscribe-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='已送出 ✓'; this.querySelector('input').disabled=true;">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">訂閱 The Pass</button>
+      </form>
+      <p class="cta-note">免費訂閱 · 隨時取消 · 不會收到垃圾信</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="issue-footer">
+      <div class="footer-brand">The Pass</div>
+      <p>AI × 餐飲的每一個面向。由 The Pass 編輯室挑選。</p>
+      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: none;">方法論</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: none;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: none;">關於</a></p>
+    </footer>
+
+  </div>
+
+<script>document.querySelectorAll('a[href]:not([href^="#"])').forEach(a=>a.target="_blank")</script>
+</body>
+</html>
