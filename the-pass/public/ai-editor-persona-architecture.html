@@ -54,7 +54,7 @@
       border-bottom: 1px solid var(--color-border);
     }
 
-    nav .nav-inner {
+    nav .nav-inner { position: relative;
       max-width: 1080px;
       margin: 0 auto;
       padding: 0.875rem 2rem;
@@ -1064,6 +1064,7 @@
       nav .nav-links {
         display: none;
       }
+      .nav-hamburger { display: block; }
 
       .criteria-card {
         padding: 1.25rem 1.5rem;
@@ -1093,6 +1094,32 @@
         padding: 1.25rem 1.5rem;
       }
     }
+  
+    /* Hamburger Menu */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--color-ink, #2C3345);
+    }
+    .nav-links.mobile-open {
+      display: flex !important;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 1rem;
+      background: var(--color-bg, #FAF9F6);
+      border: 1px solid var(--color-border, #E8E4DE);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      gap: 0.5rem;
+      min-width: 140px;
+    }
   </style>
 </head>
 <body>
@@ -1109,6 +1136,7 @@
         <li><a href="implementation-plan.html">實作計畫</a></li>
         <li><a href="demo-index.html">Demo</a></li>
       </ul>
+        <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" aria-label="選單">☰</button>
     </div>
   </nav>
 
@@ -1963,7 +1991,7 @@
   <!-- Footer -->
   <footer>
     <div class="footer-brand">The Pass</div>
-    <p>The Pass — AI × 餐飲的每一個面向。</p>
+    <p>AI × 餐飲的每一個面向。由 The Pass 編輯室出品。</p>
   </footer>
 
 </body>

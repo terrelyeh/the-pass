@@ -24,7 +24,7 @@
     body { font-family: var(--sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-    .nav-inner { max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .nav-inner { position: relative; max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; justify-content: space-between; align-items: center; }
     .nav-brand { font-family: var(--display); font-size: 1.25rem; font-weight: 700; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 1.5rem; list-style: none; }
     .nav-links a { font-size: 0.8125rem; color: var(--ink-light); text-decoration: none; }
@@ -108,6 +108,33 @@
       .source-meta { flex-direction: row; align-items: center; }
       .stats-bar { gap: 1.5rem; }
       .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+  
+    /* Hamburger Menu */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--color-ink, #2C3345);
+    }
+    .nav-links.mobile-open {
+      display: flex !important;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 1rem;
+      background: var(--color-bg, #FAF9F6);
+      border: 1px solid var(--color-border, #E8E4DE);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      gap: 0.5rem;
+      min-width: 140px;
     }
   </style>
 </head>
@@ -124,6 +151,7 @@
         <li><a href="implementation-plan.html">實作計畫</a></li>
         <li><a href="demo-index.html">Demo</a></li>
       </ul>
+        <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" aria-label="選單">☰</button>
     </div>
   </nav>
 
@@ -708,8 +736,8 @@
   </div>
 
   <footer>
-    <p>The Pass Source Directory<br>
-    <a href="methodology.html">關於 The Pass</a> ・ <a href="editorial-guidelines.html">編輯指南</a> ・ <a href="project-brief.html">關於</a></p>
+    <div class="footer-brand">The Pass</div>
+    <p>AI × 餐飲的每一個面向。由 The Pass 編輯室出品。</p>
   </footer>
 
 

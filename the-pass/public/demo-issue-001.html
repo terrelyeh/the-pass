@@ -34,7 +34,7 @@
     }
 
     nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
-    .nav-inner { max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .nav-inner { position: relative; max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem; display: flex; justify-content: space-between; align-items: center; }
     .nav-brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
     .nav-links { display: flex; gap: 1.5rem; list-style: none; }
     .nav-links a { font-size: 0.8125rem; color: var(--color-ink-light); text-decoration: none; }
@@ -522,6 +522,7 @@
 
     @media (max-width: 840px) {
       .nav-links { display: none; }
+      .nav-hamburger { display: block; }
       .container { padding: 1.5rem 1rem; }
       .issue-header { padding: 2.5rem 1rem; }
       .issue-header .brand { font-size: 2rem; }
@@ -548,6 +549,32 @@
       .article-number { font-size: 1.75rem; }
       .editor-byline { font-size: 0.8125rem; }
     }
+  
+    /* Hamburger Menu */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--color-ink, #2C3345);
+    }
+    .nav-links.mobile-open {
+      display: flex !important;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 1rem;
+      background: var(--color-bg, #FAF9F6);
+      border: 1px solid var(--color-border, #E8E4DE);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      gap: 0.5rem;
+      min-width: 140px;
+    }
   </style>
 </head>
 <body>
@@ -559,7 +586,8 @@
       <li><a href="methodology.html">關於 The Pass</a></li>
       <li><a href="editors.html">AI 編輯室</a></li>
     </ul>
-  </div>
+      <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" aria-label="選單">☰</button>
+    </div>
 </nav>
 
   <div class="demo-banner">DEMO ISSUE — 內容來自真實信源，連結皆可點擊</div>
@@ -775,11 +803,14 @@
     </div>
 
     <!-- Footer -->
-    <footer class="issue-footer">
-      <div class="footer-brand">The Pass</div>
-      <p>AI × 餐飲的每一個面向。由 The Pass 編輯室挑選。</p>
-      <p style="margin-top: 1.5rem;"><a href="methodology.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">關於 The Pass</a> ・ <a href="editorial-guidelines.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">編輯指南</a> ・ <a href="project-brief.html" style="color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px;">關於</a></p>
-    </footer>
+    <footer>
+    <div class="footer-brand">The Pass</div>
+    <p>Intelligence, served.</p>
+    <p style="margin-top: 1rem;">
+      <a href="methodology.html" style="color: var(--color-accent, #B8860B); text-decoration: underline; text-underline-offset: 3px;">關於 The Pass</a> ・
+      <a href="editors.html" style="color: var(--color-accent, #B8860B); text-decoration: underline; text-underline-offset: 3px;">AI 編輯室</a>
+    </p>
+  </footer>
 
   </div>
 

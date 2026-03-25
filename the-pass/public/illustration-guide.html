@@ -43,7 +43,7 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--color-border);
     }
-    nav .nav-inner {
+    nav .nav-inner { position: relative;
       max-width: 1080px; margin: 0 auto; padding: 0.875rem 2rem;
       display: flex; justify-content: space-between; align-items: center;
     }
@@ -335,11 +335,38 @@
       .hero { padding: 6.5rem 1.5rem 3rem; }
       article { padding: 2rem 1.5rem 4rem; }
       nav .nav-links { display: none; }
+      .nav-hamburger { display: block; }
       .image-grid { grid-template-columns: 1fr; }
       .rejected-row { grid-template-columns: 1fr; }
       .trait-grid { grid-template-columns: 1fr; }
       .color-palette { flex-direction: column; }
       .color-swatch { min-width: auto; }
+    }
+  
+    /* Hamburger Menu */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--color-ink, #2C3345);
+    }
+    .nav-links.mobile-open {
+      display: flex !important;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 1rem;
+      background: var(--color-bg, #FAF9F6);
+      border: 1px solid var(--color-border, #E8E4DE);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      gap: 0.5rem;
+      min-width: 140px;
     }
   </style>
 </head>
@@ -356,6 +383,7 @@
         <li><a href="implementation-plan.html">實作計畫</a></li>
         <li><a href="demo-index.html">Demo</a></li>
       </ul>
+        <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" aria-label="選單">☰</button>
     </div>
   </nav>
 
@@ -854,7 +882,8 @@ digital frame, clean geometric border, CSS-style border</div>
   </article>
 
   <footer>
-    <p>The Pass Illustration Style Guide<br>由 The Pass 編輯室制定 · 最後更新 2026.03.24<br><a href="project-brief.html" style="color: var(--color-accent); text-decoration: none;">&#8592; 回到 Project Brief</a></p>
+    <div class="footer-brand">The Pass</div>
+    <p>AI × 餐飲的每一個面向。由 The Pass 編輯室出品。</p>
   </footer>
 
 
