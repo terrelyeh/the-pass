@@ -290,10 +290,60 @@ Phase 0-1 先用 Skill 跑起來，驗證整個流程。等到知道「每天需
 | **Phase 0-1**（Week 1-4） | Claude Code Skills | 快速驗證流程、校準選題品味、調整 prompt。每天實際操作，發現哪些步驟需要人介入、哪些可以全自動。 |
 | **Phase 2**（Week 5-8） | Skill → API routes | 把 Skill 裡的核心邏輯抽出來，變成 Vercel 的 API routes。Skill 改成呼叫這些 API，而不是自己跑邏輯。這一步不影響你的操作方式。 |
 | **Phase 3**（需要時） | 加上 Web UI | 在 API routes 前面套一個 /admin 介面。因為你已經用 Skill 跑了幾週，非常清楚每個頁面、每個按鈕該做什麼。不會做白工。 |
+| **Phase 4**（穩定後） | 全自動 Pipeline | Cron Job 定時觸發，從抓信源到發佈完全自動化，人只需偶爾檢視。 |
 
 Soul + Memory 檔案結構不變。Phase 1 由 Skills 直接讀取 refs/；Phase 2-3 改由 API routes 從同一組檔案載入。遷移零成本。
 
 **Skill 不是臨時方案——它是建後台最好的 prototype。跑順了之後，你已經知道後台該長什麼樣了。**
+
+### Phase 4 全自動 Pipeline 技術細節
+
+當內容品質穩定後，可以讓整個流程全自動運行：
+
+**執行流程：**
+
+```
+定時觸發（Cron）
+    ↓
+1. 抓取 RSS 信源（Node.js fetch + RSS Parser）
+    ↓
+2. AI 翻譯 + 評分 + 篩選（Claude API）
+    ↓
+3. 載入 Soul + Memory，三位編輯各自產出內容（Claude API ×3）
+    ↓
+4. 總編輯自動審核（Claude API，獨立 System Prompt）
+    ↓
+5. 發佈到 Ghost（Ghost Admin API）
+    ↓
+6. 更新各編輯的 Memory（寫回 memory.md 或 Supabase）
+```
+
+**技術組件：**
+
+| 環節 | 工具 | 說明 |
+|---|---|---|
+| 定時觸發 | Vercel Cron / GitHub Actions | 每週二、五早上 6 點執行 |
+| 抓信源 | Node.js + RSS Parser | 從 33 個 RSS feed 抓最新文章 |
+| AI 處理 | Claude API | 翻譯 → 評分 → 選題 → 寫作 → 審核，每步用不同 system prompt |
+| 資料儲存 | Supabase | 存信源紀錄、評分結果、已發佈文章、編輯記憶 |
+| 發佈 | Ghost Admin API | 自動建立 post + 排程 email 發送 |
+| 記憶更新 | Supabase 或 git commit | 每期完成後更新各編輯的 memory |
+
+**最簡版本（GitHub Actions）：**
+
+不需要 Supabase，一個 workflow 檔案 + 一個 Node.js 腳本就能跑：
+
+```yaml
+# .github/workflows/publish-issue.yml
+name: Publish Issue
+on:
+  schedule:
+    - cron: '0 22 * * 1,4'  # UTC 22:00 = 台灣早上 6:00（週二、五）
+```
+
+腳本依序呼叫 Claude API（翻譯、評分、寫作 ×3、審核），最後呼叫 Ghost API 發佈。Soul 和 Memory 檔案直接從 repo 讀取。
+
+**重要原則：先跑順 Phase 1-3，確認內容品質穩定了，再考慮全自動化。自動化爛內容只是更快地產出垃圾。**
 
 ---
 

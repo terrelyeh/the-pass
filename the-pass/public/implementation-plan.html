@@ -627,17 +627,68 @@
               <td>加上 Web UI</td>
               <td>在 API routes 前面套一個 /admin 介面。因為你已經用 Skill 跑了幾週，非常清楚每個頁面、每個按鈕該做什麼。不會做白工。</td>
             </tr>
+            <tr>
+              <td><strong>Phase 4</strong><br>（穩定後）</td>
+              <td>全自動 Pipeline</td>
+              <td>Cron Job 定時觸發，從抓信源到發佈完全自動化，人只需偶爾檢視。</td>
+            </tr>
           </tbody>
         </table>
       </div>
 
       <div class="card" style="border-left: 3px solid var(--accent);">
         <h4 style="margin-top: 0;">Soul + Memory 遷移</h4>
-        <p style="margin-bottom: 0;">Soul + Memory 檔案結構不變。Phase 1 由 Skills 直接讀取 refs/；Phase 2-3 改由 API routes 從同一組檔案載入。遷移零成本。</p>
+        <p style="margin-bottom: 0;">Soul + Memory 檔案結構不變。Phase 1 由 Skills 直接讀取 refs/；Phase 2-3 改由 API routes 從同一組檔案載入；Phase 4 由 Cron Job 自動載入。遷移零成本。</p>
       </div>
 
       <div class="highlight" style="margin-top: 1rem;">
         <p style="margin-bottom: 0;"><strong>Skill 不是臨時方案——它是建後台最好的 prototype。跑順了之後，你已經知道後台該長什麼樣了。</strong></p>
+      </div>
+
+      <h3>Phase 4 全自動 Pipeline 技術細節</h3>
+      <p>當內容品質穩定後，可以讓整個流程全自動運行。</p>
+
+      <h4>執行流程</h4>
+      <pre style="background: var(--bg-alt, #f5f2eb); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; font-family: var(--mono, 'SF Mono', monospace); font-size: 0.8125rem; line-height: 1.8; overflow-x: auto; color: var(--ink);">定時觸發（Cron）
+    ↓
+1. 抓取 RSS 信源（Node.js fetch + RSS Parser）
+    ↓
+2. AI 翻譯 + 評分 + 篩選（Claude API）
+    ↓
+3. 載入 Soul + Memory，三位編輯各自產出內容（Claude API ×3）
+    ↓
+4. 總編輯自動審核（Claude API，獨立 System Prompt）
+    ↓
+5. 發佈到 Ghost（Ghost Admin API）
+    ↓
+6. 更新各編輯的 Memory（寫回 Supabase）</pre>
+
+      <h4>技術組件</h4>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>環節</th><th>工具</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td><strong>定時觸發</strong></td><td>Vercel Cron / GitHub Actions</td><td>每週二、五早上 6 點執行</td></tr>
+            <tr><td><strong>抓信源</strong></td><td>Node.js + RSS Parser</td><td>從 33 個 RSS feed 抓最新文章</td></tr>
+            <tr><td><strong>AI 處理</strong></td><td>Claude API</td><td>翻譯 → 評分 → 選題 → 寫作 → 審核，每步用不同 system prompt</td></tr>
+            <tr><td><strong>資料儲存</strong></td><td>Supabase</td><td>存信源紀錄、評分結果、已發佈文章、編輯記憶</td></tr>
+            <tr><td><strong>發佈</strong></td><td>Ghost Admin API</td><td>自動建立 post + 排程 email 發送</td></tr>
+            <tr><td><strong>記憶更新</strong></td><td>Supabase 或 git commit</td><td>每期完成後更新各編輯的 memory</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>最簡版本（GitHub Actions）</h4>
+      <p>不需要 Supabase，一個 workflow 檔案 + 一個 Node.js 腳本就能跑：</p>
+      <pre style="background: var(--bg-alt, #f5f2eb); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; font-family: var(--mono, 'SF Mono', monospace); font-size: 0.8125rem; line-height: 1.8; overflow-x: auto; color: var(--ink);"><span style="color: var(--ink-muted);"># .github/workflows/publish-issue.yml</span>
+name: Publish Issue
+on:
+  schedule:
+    - cron: '0 22 * * 1,4'  <span style="color: var(--ink-muted);"># UTC 22:00 = 台灣早上 6:00（週二、五）</span></pre>
+      <p>腳本依序呼叫 Claude API（翻譯、評分、寫作 ×3、審核），最後呼叫 Ghost API 發佈。Soul 和 Memory 檔案直接從 repo 讀取。</p>
+
+      <div class="highlight" style="margin-top: 1rem;">
+        <p style="margin-bottom: 0;"><strong>重要原則：先跑順 Phase 1-3，確認內容品質穩定了，再考慮全自動化。自動化爛內容只是更快地產出垃圾。</strong></p>
       </div>
     </div>
   </section>
