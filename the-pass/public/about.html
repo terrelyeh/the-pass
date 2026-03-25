@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>關於 The Pass</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --color-ink: #2C3345;
+      --color-ink-light: #5A6178;
+      --color-ink-muted: #8B90A0;
+      --color-bg: #FAFAF8;
+      --color-bg-warm: #F5F3EF;
+      --color-accent: #B8860B;
+      --color-accent-light: #D4A843;
+      --color-border: #E8E6E1;
+      --color-white: #FFFFFF;
+      --font-serif: 'Noto Serif TC', 'Georgia', serif;
+      --font-sans: 'Noto Sans TC', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Instrument Serif', var(--font-serif);
+      --max-width: 700px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 17px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+      background: var(--color-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 250, 248, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    nav .nav-inner {
+      position: relative;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.875rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      font-size: 0.8125rem;
+      color: var(--color-ink-light);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    nav .nav-links a:hover {
+      color: var(--color-ink);
+    }
+
+    nav .nav-links a.active {
+      color: var(--color-ink);
+      font-weight: 500;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hero .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .hero .subtitle {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      color: var(--color-ink-light);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.9;
+      font-weight: 400;
+    }
+
+    /* ── Article ── */
+    article {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    article section {
+      margin-bottom: 3.5rem;
+    }
+
+    article h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+    }
+
+    article p {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--color-ink);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Blockquote ── */
+    article blockquote {
+      margin: 2rem 0;
+      padding: 1.75rem 2rem;
+      background: var(--color-bg-warm);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 6px 6px 0;
+    }
+
+    article blockquote p {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      font-style: italic;
+      color: var(--color-ink);
+      margin-bottom: 0;
+      line-height: 1.85;
+    }
+
+    article blockquote p + p {
+      margin-top: 0.75rem;
+    }
+
+    /* ── Separator ── */
+    .section-sep {
+      width: 40px;
+      height: 1.5px;
+      background: var(--color-accent);
+      margin: 3.5rem auto;
+      border: none;
+    }
+
+    /* ── Editor Intro Cards ── */
+    .editors-intro {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .editor-intro-card {
+      padding: 1.25rem 1.5rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .editor-intro-card:hover {
+      border-color: var(--color-accent-light);
+    }
+
+    .editor-intro-card a {
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      text-decoration: none;
+    }
+
+    .editor-intro-card a:hover {
+      color: var(--color-accent);
+    }
+
+    .editor-intro-card span {
+      font-family: var(--font-serif);
+      font-size: 0.9375rem;
+      color: var(--color-ink-light);
+    }
+
+    /* ── Closing ── */
+    .closing {
+      text-align: center;
+      padding: 2rem 0 1rem;
+    }
+
+    .closing p {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--color-ink);
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Links ── */
+    article a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    article a:hover {
+      color: var(--color-ink);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 3rem 2rem;
+      text-align: center;
+      background: var(--color-white);
+    }
+
+    footer p {
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      line-height: 1.8;
+    }
+
+    footer .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Responsive ── */
+
+    /* Hamburger Menu */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--color-ink, #2C3345);
+    }
+    .nav-links.mobile-open {
+      display: flex !important;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 1rem;
+      background: var(--color-bg, #FAF9F6);
+      border: 1px solid var(--color-border, #E8E4DE);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      gap: 0.5rem;
+      min-width: 140px;
+    }
+
+    @media (max-width: 840px) {
+      .hero {
+        padding: 6.5rem 1.5rem 3rem;
+      }
+
+      article {
+        padding: 2rem 1.5rem 3rem;
+      }
+
+      nav .nav-links {
+        display: none;
+      }
+      .nav-hamburger { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="demo-index.html" class="nav-brand">The Pass</a>
+      <ul class="nav-links">
+        <li><a href="about.html" class="active">關於 The Pass</a></li>
+        <li><a href="methodology.html">方法論</a></li>
+        <li><a href="editors.html">AI 編輯室</a></li>
+      </ul>
+        <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" aria-label="選單">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="label">About</div>
+    <h1>關於 The Pass</h1>
+    <p style="font-family: var(--font-serif); font-size: 1.125rem; color: var(--color-ink-light, #5A6178); margin-top: 0.5rem; letter-spacing: 0.15em;">出菜口</p>
+    <p class="subtitle">從全球的噪音中，挑出我們覺得有趣的事，分享給你。</p>
+  </header>
+
+  <!-- Main Content -->
+  <article>
+
+    <!-- 名字的由來 -->
+    <section>
+      <h2>為什麼叫 The Pass</h2>
+      <p>在專業廚房裡，有一個位置叫做出菜口（the pass）。所有菜餚在離開廚房、送到客人面前之前，都要經過這裡被最後檢查一遍——擺盤對不對、溫度夠不夠、有沒有什麼不該出現的東西。出菜口是廚房與餐桌之間的最後一道關卡。</p>
+      <p>The Pass 做的事情一模一樣。</p>
+      <p>每一天，全球有大量關於 AI 與餐飲的資訊被產出。有些是真正重要的趨勢，有些只是噪音。我們從這些資訊中篩選、檢查、然後把值得你知道的事送到你面前。</p>
+      <p>就像出菜口一樣，我們在乎的不是速度，是品質。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- 我們做什麼 -->
+    <section>
+      <h2>我們做什麼</h2>
+      <p>The Pass 是一份關注「AI 如何改變餐飲」的電子報，每週二和週五出刊。我們的三位 AI 編輯從五種語言的信源中，挑出那些還沒被中文圈談到、但餐飲從業者該知道的事。</p>
+      <p>每一期有兩篇深度觀察、幾則值得關注的快訊，以及一個沒有答案的好問題。</p>
+      <p>我們不報導技術規格。我們說的是，AI 如何改變廚房裡和餐桌上的故事。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- Meta 故事 -->
+    <section>
+      <blockquote>
+        <p>我們報導 AI 如何走進廚房、改變餐桌、影響你點餐的方式。</p>
+        <p>而寫下這些故事的，也是 AI。</p>
+        <p>這不是秘密，這是我們的選擇。</p>
+      </blockquote>
+      <p>The Pass 的內容由三位 AI 編輯撰寫。她們有名字、有個性、有各自的偏好和盲點。她們讀得比任何人都快、覆蓋的語言比任何團隊都廣。但她們不完美，所以我們把每一條規則、每一個判斷標準都攤在陽光下。</p>
+      <p>我們相信，AI 寫內容不丟臉。不告訴你才是。</p>
+      <p>我們更在乎 AI 背後的人的故事而非技術規格。更在乎「機器和人如何共處」而非「機器取代了什麼」。更在乎文化面的思考而非效率的數字。這些是我們的選擇，也是我們覺得值得分享給你的角度。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- 三位編輯簡介 -->
+    <section>
+      <h2>三位編輯</h2>
+      <p>The Pass 的每一個字，都出自她們之手。每位編輯有自己的職責、自己的觀看方式、自己的聲音。</p>
+
+      <div class="editors-intro">
+        <div class="editor-intro-card">
+          <a href="editor-mise.html">Mise</a><span>  ——  主筆。從一個場景開始，帶你看見新聞背後的人。</span>
+        </div>
+        <div class="editor-intro-card">
+          <a href="editor-passe.html">Passe</a><span>  ——  快訊編輯。第一句話就是事實，精簡到不能再少。</span>
+        </div>
+        <div class="editor-intro-card">
+          <a href="editor-fumet.html">Fumet</a><span>  ——  提問者。不給答案，只留一個好問題。</span>
+        </div>
+      </div>
+
+      <p>想更了解她們？去<a href="editors.html">AI 編輯室</a>看看。</p>
+    </section>
+
+    <hr class="section-sep">
+
+    <!-- 收尾 -->
+    <div class="closing">
+      <p>歡迎來到出菜口。</p>
+    </div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">The Pass</div>
+    <p>Intelligence, served.</p>
+    <p style="margin-top: 1rem;">
+      <a href="about.html" style="color: var(--color-accent, #B8860B); text-decoration: underline; text-underline-offset: 3px;">關於 The Pass</a> ・
+      <a href="methodology.html" style="color: var(--color-accent, #B8860B); text-decoration: underline; text-underline-offset: 3px;">方法論</a> ・
+      <a href="editors.html" style="color: var(--color-accent, #B8860B); text-decoration: underline; text-underline-offset: 3px;">AI 編輯室</a>
+    </p>
+  </footer>
+
+</body>
+</html>

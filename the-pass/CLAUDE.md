@@ -73,15 +73,16 @@
 
 Logo 點擊 → project-brief.html
 
-### 對外頁面（External Nav：2 個連結）
+### 對外頁面（External Nav：3 個連結）
 | 連結 | 頁面 |
 |------|------|
-| 關於 The Pass | methodology.html |
+| 關於 The Pass | about.html |
+| 方法論 | methodology.html |
 | AI 編輯室 | editors.html |
 
 Logo 點擊 → demo-index.html
 
-對外頁面包含：methodology, editors, editor-mise/passe/fumet, demo-index, demo-issue-001/002/003
+對外頁面包含：about, methodology, editors, editor-mise/passe/fumet, demo-index, demo-issue-001/002/003, demo-ig-post
 
 ## Tech Stack
 
@@ -100,7 +101,8 @@ the-pass/
 ├── public/
 │   ├── project-brief.html        ← Project Brief（9 章 + 附錄）
 │   ├── editorial-guidelines.html ← 編輯指南 + System Prompts + 總編輯
-│   ├── methodology.html          ← 關於 The Pass（對外品牌頁）
+│   ├── about.html                ← 關於 The Pass（對外品牌故事頁）
+│   ├── methodology.html          ← 方法論（對外運作方式頁）
 │   ├── sources.html              ← 選題來源（33 個信源）
 │   ├── illustration-guide.html   ← 插畫風格指南
 │   ├── implementation-plan.html  ← 實作計畫
@@ -130,7 +132,8 @@ the-pass/
 - [x] 選題來源清單（33 個，5 種語言）
 - [x] docs/ Markdown 版內部文件
 - [x] 方法論 → 「關於 The Pass」品牌宣言頁
-- [x] Nav 分內部/外部兩套 + Logo 連結邏輯
+- [x] 拆分 methodology.html 為 about.html（品牌故事）+ methodology.html（方法論）
+- [x] Nav 分內部/外部兩套 + Logo 連結邏輯（外部 3 連結：關於 The Pass、方法論、AI 編輯室）
 - [x] 移除所有 target=_blank（站內連結不開新視窗）
 - [x] 「品味」用詞全站替換為「觀點/偏好/分享」
 - [x] 商業計畫討論 + 虛擬 KOL 三階段規劃
@@ -172,9 +175,9 @@ npx vercel --prod --yes
 
 - **Vercel 自動部署失效**: GitHub webhook 斷了（可能因改名），需手動 `npx vercel --prod --yes`
 - **Vercel subdomain**: auto-generated 是 `the-pass-nine`，無法改
-- **nav 有兩套**: 內部 6 連結 / 外部 2 連結，Logo 連結也不同（見上方表格）
+- **nav 有兩套**: 內部 6 連結 / 外部 3 連結（關於 The Pass、方法論、AI 編輯室），Logo 連結也不同（見上方表格）
 - **「信源清單」已改名「選題來源」**: 全站已更新
-- **「方法論」已改名「關於 The Pass」**: 全站已更新，檔名仍是 methodology.html
+- **about.html + methodology.html**: 原 methodology.html 已拆分為品牌故事頁（about.html）與方法論頁（methodology.html）
 - **Demo Issue #002 #003**: 連結都是 `href="#"`，banner 已改為「展示用範例」
 - **CSS 重複**: 三期 demo issue 各自 inline CSS，修改樣式需三份都改
 - **nanobanana 生圖**: 每次生成都不同，喜歡的圖要立刻保存
