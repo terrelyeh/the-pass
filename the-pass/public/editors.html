@@ -205,20 +205,7 @@
     }
 
     /* Mobile */
-    @media (max-width: 840px) {
-      .nav-links { display: none; }
-      .nav-hamburger { display: block; }
-      .page-header { padding: 2rem 1.25rem 1.5rem; }
-      .page-header h1 { font-size: 2rem; }
-      .editors-grid {
-        grid-template-columns: 1fr;
-        padding: 1.5rem 1.25rem 1rem;
-        gap: 1.25rem;
-      }
-      .editor-card { padding: 1.75rem 1.5rem; }
-      .philosophy { padding: 1.5rem 1.25rem 2.5rem; }
-    }
-  
+    
     /* Hamburger Menu */
     .nav-hamburger {
       display: none;
@@ -244,7 +231,21 @@
       gap: 0.5rem;
       min-width: 140px;
     }
-  </style>
+
+    @media (max-width: 840px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .page-header { padding: 2rem 1.25rem 1.5rem; }
+      .page-header h1 { font-size: 2rem; }
+      .editors-grid {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1.25rem 1rem;
+        gap: 1.25rem;
+      }
+      .editor-card { padding: 1.75rem 1.5rem; }
+      .philosophy { padding: 1.5rem 1.25rem 2.5rem; }
+    }
+</style>
 </head>
 <body>
 

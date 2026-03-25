@@ -103,14 +103,7 @@
     footer p { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-muted); }
     footer a { color: var(--accent); text-decoration: none; }
 
-    @media (max-width: 840px) {
-      .hero { padding: 2rem 1.25rem 1.5rem; }
-      .content { padding: 0 1.25rem 3rem; }
-      .issue-card { padding: 1.25rem 1.5rem; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: block; }
-    }
-  
+    
     /* Hamburger Menu */
     .nav-hamburger {
       display: none;
@@ -136,7 +129,15 @@
       gap: 0.5rem;
       min-width: 140px;
     }
-  </style>
+
+    @media (max-width: 840px) {
+      .hero { padding: 2rem 1.25rem 1.5rem; }
+      .content { padding: 0 1.25rem 3rem; }
+      .issue-card { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+</style>
 </head>
 <body>
 
