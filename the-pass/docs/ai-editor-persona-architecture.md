@@ -235,6 +235,114 @@ Memory 記錄這次互動
 
 ---
 
+## 技術實作方案
+
+### 三種操作模式
+
+Soul + Memory 架構可以透過三種方式操作，底層邏輯完全相同：
+
+| 模式 | 觸發方式 | 適合階段 |
+|------|---------|---------|
+| **Claude Code Skill** | Terminal 輸入 `/mise "題目"` | Phase 1（現在） |
+| **Web Backend UI** | 瀏覽器按按鈕，選編輯 + 輸入題目 | Phase 2（有團隊後） |
+| **全自動 Pipeline** | Cron Job / RSS 觸發 | Phase 3（穩定後） |
+
+不管用哪種模式，核心流程都是：
+Soul.md + Memory.md + Style Guide → 組合成 System Prompt → 餵給 Claude API → 產出內容
+
+### Skill 檔案結構
+
+```
+the-pass/.claude/skills/
+├── mise/
+│   ├── skill.md              ← Skill 定義 + 觸發條件
+│   └── refs/
+│       ├── soul.md           ← 人格核心（很少改）
+│       ├── memory.md         ← 記憶累積（每期更新）
+│       └── style-guide.md    ← 寫作風格規範
+├── passe/
+│   ├── skill.md
+│   └── refs/
+│       ├── soul.md
+│       ├── memory.md
+│       └── style-guide.md
+├── fumet/
+│   ├── skill.md
+│   └── refs/
+│       ├── soul.md
+│       ├── memory.md
+│       └── style-guide.md
+└── chief-editor/
+    ├── skill.md
+    └── refs/
+        ├── soul.md
+        └── review-checklist.md
+```
+
+### Skill 使用範例
+
+```bash
+# Mise 寫長文
+/mise "韓國團膳企業在廚房裝了 AI 攝影機"
+
+# Passe 寫快訊
+/passe "McDonald's AI 得來速上線 200 間門市"
+
+# Fumet 根據本期內容寫結尾
+/fumet
+
+# 總編輯審核整期
+/chief-editor
+
+# 更新記憶
+/update-memory mise "本期寫了아워홈 AI 攝影機，讀者回信都提到隱私問題"
+```
+
+### 記憶更新機制
+
+每期發佈後更新 `memory.md`：
+
+**自動更新（由總編輯 Skill 觸發）：**
+- 本期各編輯寫了什麼主題、用了什麼角度
+- 選了什麼、沒選什麼（含原因）
+- 整期的節奏和主題分布
+
+**手動補充：**
+- 讀者回信的重點摘要
+- 特別成功或失敗的嘗試
+- 編輯之間的互動紀錄
+
+### Memory.md 格式範例
+
+```markdown
+# Mise 記憶紀錄
+
+## Issue #001 (2026.03.23)
+- **寫了：** 韓國아워홈 AI 攝影機、義大利植物肉腦波研究
+- **角度：** 都從「人的感受」切入
+- **讀者回饋：** 3 封回信，主要關注隱私議題
+- **觀察：** 監控主題的讀者反應很強烈
+
+## Issue #002 (2026.03.26)
+- **寫了：** 東京居酒屋 AI 菜單、曼谷主廚 AI 配對
+- **角度：** 「溫度」和「創意」兩個不同面向
+- **讀者回饋：** 居酒屋那篇被轉發最多
+- **觀察：** 正面案例的分享率高於監控案例
+- **選題演化：** 開始注意到讀者對「AI 幫助人」的故事比「AI 取代人」更有共鳴
+```
+
+### 從 Skill 遷移到 Web Backend
+
+遷移零成本，因為檔案結構不變：
+
+**Phase 1 (Skill)：** Skill 直接讀取 `refs/` 資料夾
+**Phase 2 (API)：** API route 從同一組檔案載入，組合成 prompt
+**Phase 3 (Web UI)：** 前端呼叫 API route，背後還是同一組檔案
+
+唯一的差別是「誰觸發」——檔案、格式、載入邏輯完全一樣。
+
+---
+
 ## 實作清單
 
 ### 立即可做

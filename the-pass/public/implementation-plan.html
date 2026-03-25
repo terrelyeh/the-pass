@@ -391,6 +391,37 @@
       <li><strong>整期節奏</strong> -- 長短交錯、國家多元</li>
       <li><strong>品牌一致性</strong> -- 語氣是否符合 The Pass 調性</li>
     </ul>
+
+    <h3>人格與記憶架構</h3>
+    <p>三位 AI 編輯不只是 prompt 模板，而是擁有完整人格設定（Soul）與持續累積記憶（Memory）的虛擬角色。</p>
+
+    <h4>檔案結構</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>檔案</th><th>用途</th><th>更新頻率</th></tr></thead>
+        <tbody>
+          <tr><td><strong><code>soul.md</code></strong></td><td>價值觀、背景故事、好惡、審美偏好</td><td>很少改（季度檢視）</td></tr>
+          <tr><td><strong><code>memory.md</code></strong></td><td>寫過的文章、讀者回饋、選題紀錄、跨期觀察</td><td>每期更新</td></tr>
+          <tr><td><strong><code>style-guide.md</code></strong></td><td>寫作規範、範例、禁止事項</td><td>偶爾調整</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>載入順序</h4>
+    <p>每次產製內容時，系統會按順序載入：</p>
+    <ol>
+      <li><code>soul.md</code> → 定義「他是誰」</li>
+      <li><code>memory.md</code>（最近 10 期）→ 提供「他經歷了什麼」</li>
+      <li><code>style-guide.md</code> → 規範「他怎麼寫」</li>
+      <li>今日題目 / 原始新聞 → 產出內容</li>
+    </ol>
+
+    <h4>記憶更新流程</h4>
+    <p>每期發佈後，總編輯審核完成時自動將本期摘要寫入三位編輯的 <code>memory.md</code>，包含：寫了什麼主題、用了什麼角度、讀者有什麼回饋。</p>
+
+    <div class="doc-links">
+      <a href="ai-editor-persona-architecture.html" class="doc-link">AI 編輯人格架構 →</a>
+    </div>
   </section>
 
   <hr class="sep">
@@ -476,6 +507,26 @@
         </table>
       </div>
       <p>注意：<strong>/generate-issue 不是四個人四個 Skill，而是一個 Skill 裡面依序叫四個角色。</strong>就像餐廳裡你喊一聲「出菜」，前菜師傅、主菜師傅、甜點師傅各自動手，最後端出一整桌菜。</p>
+
+      <div class="card" style="border-left: 3px solid var(--accent);">
+        <h4 style="margin-top: 0;">Soul + Memory 載入</h4>
+        <p>每個 Skill 自動載入對應編輯的 <code>refs/soul.md</code>、<code>refs/memory.md</code>、<code>refs/style-guide.md</code> 作為 context。</p>
+        <h4>檔案結構</h4>
+        <pre style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8125rem; background: var(--bg-warm); padding: 1rem 1.25rem; border-radius: 6px; line-height: 1.7; overflow-x: auto; color: var(--ink-light); margin-top: 0.5rem;">.claude/skills/
+├── mise/
+│   ├── skill.md
+│   └── refs/
+│       ├── soul.md
+│       ├── memory.md
+│       └── style-guide.md
+├── passe/
+│   └── (same structure)
+├── fumet/
+│   └── (same structure)
+└── chief-editor/
+    └── (same structure)</pre>
+      </div>
+
       <h4>優點</h4>
       <ul>
         <li>每個 Skill 半小時就能建好，整套流程一天內可以跑起來</li>
@@ -529,6 +580,12 @@
           </tbody>
         </table>
       </div>
+
+      <div class="card" style="border-left: 3px solid var(--accent);">
+        <h4 style="margin-top: 0;">Soul + Memory 載入</h4>
+        <p style="margin-bottom: 0;">後台從 <code>docs/editors/</code> 載入 Soul + Memory 檔案，組合成 System Prompt 後呼叫 Claude API。</p>
+      </div>
+
       <h4>優點</h4>
       <ul>
         <li>視覺化介面——候選清單一目了然，勾選比打字快</li>
@@ -572,6 +629,11 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--accent);">
+        <h4 style="margin-top: 0;">Soul + Memory 遷移</h4>
+        <p style="margin-bottom: 0;">Soul + Memory 檔案結構不變。Phase 1 由 Skills 直接讀取 refs/；Phase 2-3 改由 API routes 從同一組檔案載入。遷移零成本。</p>
       </div>
 
       <div class="highlight" style="margin-top: 1rem;">

@@ -145,6 +145,28 @@ AI 總編輯自動 review 草稿，檢查事實核查、AI 味檢測、標題品
 - **整期節奏** -- 長短交錯、國家多元
 - **品牌一致性** -- 語氣是否符合 The Pass 調性
 
+### 人格與記憶架構
+
+三位 AI 編輯不只是 prompt 模板，而是擁有完整人格設定（Soul）與持續累積記憶（Memory）的虛擬角色。
+
+**檔案結構：**
+
+| 檔案 | 用途 | 更新頻率 |
+|------|------|---------|
+| `soul.md` | 價值觀、背景故事、好惡、審美偏好 | 很少改（季度檢視） |
+| `memory.md` | 寫過的文章、讀者回饋、選題紀錄、跨期觀察 | 每期更新 |
+| `style-guide.md` | 寫作規範、範例、禁止事項 | 偶爾調整 |
+
+**載入順序：** 每次產製內容時，系統會按順序載入：
+1. `soul.md` → 定義「他是誰」
+2. `memory.md`（最近 10 期）→ 提供「他經歷了什麼」
+3. `style-guide.md` → 規範「他怎麼寫」
+4. 今日題目 / 原始新聞 → 產出內容
+
+**記憶更新流程：** 每期發佈後，總編輯審核完成時自動將本期摘要寫入三位編輯的 `memory.md`，包含：寫了什麼主題、用了什麼角度、讀者有什麼回饋。
+
+→ 完整架構文件：[AI 編輯人格架構](ai-editor-persona-architecture.md)
+
 ---
 
 ## 05 自動化分級
@@ -193,6 +215,26 @@ AI 總編輯自動 review 草稿，檢查事實核查、AI 味檢測、標題品
 
 注意：**/generate-issue 不是四個人四個 Skill，而是一個 Skill 裡面依序叫四個角色。** 就像餐廳裡你喊一聲「出菜」，前菜師傅、主菜師傅、甜點師傅各自動手，最後端出一整桌菜。
 
+每個 Skill 自動載入對應編輯的 `refs/soul.md`、`refs/memory.md`、`refs/style-guide.md` 作為 context。
+
+**檔案結構：**
+
+```
+.claude/skills/
+├── mise/
+│   ├── skill.md
+│   └── refs/
+│       ├── soul.md
+│       ├── memory.md
+│       └── style-guide.md
+├── passe/
+│   └── (same structure)
+├── fumet/
+│   └── (same structure)
+└── chief-editor/
+    └── (same structure)
+```
+
 **優點**
 
 - 每個 Skill 半小時就能建好，整套流程一天內可以跑起來
@@ -221,6 +263,8 @@ AI 總編輯自動 review 草稿，檢查事實核查、AI 味檢測、標題品
 | 打 /review-issue | 審核結果自動顯示在預覽頁 | 同一個總編輯 prompt |
 | 打 /publish | 按「發佈」按鈕 | 同一個 Ghost API 呼叫 |
 
+後台從 `docs/editors/` 載入 Soul + Memory 檔案，組合成 System Prompt 後呼叫 Claude API。
+
 **優點**
 
 - 視覺化介面——候選清單一目了然，勾選比打字快
@@ -246,6 +290,8 @@ Phase 0-1 先用 Skill 跑起來，驗證整個流程。等到知道「每天需
 | **Phase 0-1**（Week 1-4） | Claude Code Skills | 快速驗證流程、校準選題品味、調整 prompt。每天實際操作，發現哪些步驟需要人介入、哪些可以全自動。 |
 | **Phase 2**（Week 5-8） | Skill → API routes | 把 Skill 裡的核心邏輯抽出來，變成 Vercel 的 API routes。Skill 改成呼叫這些 API，而不是自己跑邏輯。這一步不影響你的操作方式。 |
 | **Phase 3**（需要時） | 加上 Web UI | 在 API routes 前面套一個 /admin 介面。因為你已經用 Skill 跑了幾週，非常清楚每個頁面、每個按鈕該做什麼。不會做白工。 |
+
+Soul + Memory 檔案結構不變。Phase 1 由 Skills 直接讀取 refs/；Phase 2-3 改由 API routes 從同一組檔案載入。遷移零成本。
 
 **Skill 不是臨時方案——它是建後台最好的 prototype。跑順了之後，你已經知道後台該長什麼樣了。**
 
