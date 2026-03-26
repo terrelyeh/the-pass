@@ -1,6 +1,6 @@
 # CLAUDE.md — The Pass 出菜口 Project Context
 
-> Last updated: 2026-03-24
+> Last updated: 2026-03-26
 
 ## Project Overview
 
@@ -25,7 +25,7 @@
 | 信源策略 | 英文科技媒體（主食）+ 韓/日/泰在地語言媒體（香料）|
 | 地域 | 全球視野，穿插亞洲在地內容增加獨特性 |
 | Newsletter 平台 | Ghost Pro ($9/月) |
-| 域名 | thepass.news（待購買，建議在 Vercel 購買）|
+| 域名 | **thepass.cc**（已購買，已連結 Vercel，DNS 自動設定）|
 | 多國擴展 | 同一域名，子路徑或子域名分語言（tw/kr/jp）|
 
 ## AI 編輯團隊
@@ -87,7 +87,7 @@ Logo 點擊 → demo-index.html
 ## Tech Stack
 
 - **Framework:** Next.js 16 (Turbopack) + TypeScript
-- **Hosting:** Vercel（Production: `the-pass-nine.vercel.app`）
+- **Hosting:** Vercel（Production: `thepass.cc` + `the-pass-nine.vercel.app`）
 - **Repo:** github.com/terrelyeh/the-pass
 - **Database:** Supabase（尚未接入）
 - **Newsletter:** Ghost Pro ($9/月)
@@ -137,22 +137,29 @@ the-pass/
 - [x] 移除所有 target=_blank（站內連結不開新視窗）
 - [x] 「品味」用詞全站替換為「觀點/偏好/分享」
 - [x] 商業計畫討論 + 虛擬 KOL 三階段規劃
+- [x] 域名 thepass.cc 購買 + Vercel 連結
+- [x] Soul.md 初版完成（Mise / Passe / Fumet）+ 寫作影響整合
+- [x] AI 編輯人格架構文件完成（Soul + Memory + 技術實作方案）
+- [x] 四位作者風格拆解（Sunny、劉揚銘、Mokki、Agnes）並整合進 Soul
+- [x] 手機版漢堡選單修復（全部頁面 840px 斷點）
+- [x] Demo Issue #003 加入動態影片（靜態圖 → AI 動態化）
+- [x] 插畫指南新增：動態插畫規格（Sec.09）+ 視覺變化策略（Sec.10）
+- [x] 快訊 spot illustration 測試 → 決定不採用（閱讀斷裂感）
 
 ## 下一步（最優先）
 
-### 1. AI 編輯人格架構
-- 寫三位編輯的 soul.md 初版
-- 設計 memory 記錄格式
-- 詳見 `docs/ai-editor-persona-architecture.md`
-
-### 2. 篩選機制設計
+### 1. 篩選機制設計（下次 session 主要討論）
 - 演算法邏輯：從 33 個信源中如何自動判斷哪些值得報導
 - 評分標準：人的故事 > 純技術規格、在地獨家 > 全球已知
 - 選題流程：從「原料進來」到「選出 5-8 則」的完整 pipeline
 - 三位編輯各自的選題偏好（Mise 找人、Passe 找事實、Fumet 找問題）
 
+### 2. AI 編輯設定實作（下次 session）
+- 將 soul.md + style-guide 包裝成 Claude Code Skills（`/mise`、`/passe`、`/fumet`、`/chief-editor`）
+- 設計 memory.md 記錄格式與更新流程
+- 試跑一次完整的內容產製流程
+
 ### 3. 基礎建設
-- 購買域名 thepass.news（Vercel 購買）
 - 設定 Ghost Pro
 - 建 RSS 抓取 pipeline（先接 5 個核心信源）
 - 手動跑 2 週試水溫
@@ -174,7 +181,10 @@ npx vercel --prod --yes
 ## Common Pitfalls
 
 - **Vercel 自動部署失效**: GitHub webhook 斷了（可能因改名），需手動 `npx vercel --prod --yes`
-- **Vercel subdomain**: auto-generated 是 `the-pass-nine`，無法改
+- **Vercel subdomain**: auto-generated 是 `the-pass-nine`，但已有自訂域名 `thepass.cc`
+- **動態插畫流程**: 靜態插圖 → 加標題 → Google Flow (Veo) 生成動態，音效OK但禁止配音
+- **快訊不配圖**: 測試過 spot illustration，閱讀斷裂感太強，決定不採用
+- **插畫拱門問題**: nanobanana 容易重複生成廚房拱門構圖，prompt 需明確排除
 - **nav 有兩套**: 內部 6 連結 / 外部 3 連結（關於 The Pass、方法論、AI 編輯室），Logo 連結也不同（見上方表格）
 - **「信源清單」已改名「選題來源」**: 全站已更新
 - **about.html + methodology.html**: 原 methodology.html 已拆分為品牌故事頁（about.html）與方法論頁（methodology.html）
