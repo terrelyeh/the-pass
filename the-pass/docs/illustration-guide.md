@@ -301,7 +301,7 @@ digital frame, clean geometric border, CSS-style border
 |------|------|------|------|
 | **今日觀察**（Mise 長文 01） | 大圖 × 1 | 全寬 | 視主題而定 |
 | **今日觀察**（Mise 長文 02） | 大圖 × 1 | 全寬 | 與第一張形成對比 |
-| **本期快訊**（Passe） | spot illustration × 1 | 小尺寸（40-60%） | 偏冷（teal / 灰藍） |
+| **本期快訊**（Passe） | 選用 — spot illustration × 0-1 | 小尺寸（40-60%），橫式 3:2 | 偏冷（teal / 灰藍） |
 | **留一個問題**（Fumet） | 無 | — | — |
 
 ### Passe 快訊 Spot Illustration 規格
