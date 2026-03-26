@@ -898,7 +898,35 @@ digital frame, clean geometric border, CSS-style border</div>
         <tbody>
           <tr><td><strong>1. 靜態插圖</strong></td><td>Nanobanana（Google Imagen）</td><td>依照本指南風格詞生成 risograph 風格插圖</td></tr>
           <tr><td><strong>2. 加上標題</strong></td><td>手動排版</td><td>在插圖上配置該篇文章的標題文字</td></tr>
-          <tr><td><strong>3. 生成動態</strong></td><td>Google Flow（Veo）</td><td>將完成的靜態圖輸入，生成同風格的動態影片</td></tr>
+          <tr><td><strong>3. 標題轉譯</strong></td><td>手動 / AI 輔助</td><td>將讀者視角的標題轉為畫面描述（見下方規則）</td></tr>
+          <tr><td><strong>4. 生成動態</strong></td><td>Google Flow（Veo）</td><td>將靜態圖 + 轉譯後的 prompt 輸入，生成動態影片</td></tr>
+        </tbody>
+      </table>
+
+      <h3>標題轉譯規則</h3>
+      <p>文章標題是寫給讀者的（常用「你」），但 AI 影片生成工具需要的是<strong>畫面描述</strong>。直接用標題當 prompt，AI 不知道「你」是誰，生成結果會出錯。</p>
+      <div class="detail-list">
+        <div class="detail-item">
+          <div class="detail-icon check">&#10003;</div>
+          <div class="detail-text"><strong>把「你」換成具體人物：</strong>用圖中實際出現的角色描述（「一位廚師」「圖中的女性受試者」「一位客人」）</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon check">&#10003;</div>
+          <div class="detail-text"><strong>把抽象概念換成可見動作：</strong>「被看了」→「攝影機亮起紅燈」；「知道你想喝什麼」→「螢幕跳出一杯拿鐵」</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon check">&#10003;</div>
+          <div class="detail-text"><strong>保持場景一致：</strong>轉譯後的描述必須跟靜態插圖中的人物、場景、物件一致</div>
+        </div>
+      </div>
+      <table class="spec-table">
+        <thead>
+          <tr><th>文章標題（給讀者看）</th><th>動態 Prompt（給 AI 看）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>你的大腦覺得植物肉很好吃，但你的腦波說不是</td><td>一位女性受試者戴著 EEG 頭帶，咬了一口漢堡，螢幕上的腦波圖開始跳動</td></tr>
+          <tr><td>廚師一走進去就被「看」了</td><td>一位穿白色廚師服的人推開門，天花板上的攝影機亮起紅燈</td></tr>
+          <tr><td>走進首爾這間咖啡廳，店員已經知道你今天想喝什麼</td><td>一位客人走進咖啡廳，櫃檯螢幕自動跳出一杯拿鐵的圖示</td></tr>
         </tbody>
       </table>
 
@@ -934,7 +962,7 @@ digital frame, clean geometric border, CSS-style border</div>
         </div>
         <div class="detail-item">
           <div class="detail-icon check">&#10003;</div>
-          <div class="detail-text"><strong>音效：</strong>允許背景音效和環境音。<strong>禁止配音或人聲旁白。</strong></div>
+          <div class="detail-text"><strong>音效：</strong>允許背景音效（SFX）和環境音（ambient sounds）。<strong>禁止任何人聲，包含配音、旁白和對白。</strong></div>
         </div>
       </div>
 
