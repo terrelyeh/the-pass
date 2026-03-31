@@ -111,26 +111,26 @@
       border-radius: 100px; letter-spacing: 0.05em;
     }
 
-    /* Latest issue thumbnail */
+    /* Issue thumbnail */
     .ic-thumb {
-      width: 100%; max-height: 200px; object-fit: cover;
+      width: 100%; max-height: 220px; object-fit: cover; object-position: center center;
       border-radius: 8px; margin-bottom: 1rem;
     }
 
     .ic-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-    .ic-date { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-muted); }
-    .ic-num { font-family: var(--sans); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); }
+    .ic-date { font-family: var(--sans); font-size: 0.875rem; color: var(--ink-muted); }
+    .ic-num { font-family: var(--sans); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); }
     .ic-badge { font-family: var(--sans); font-size: 0.625rem; font-weight: 600; color: var(--ink-muted); background: var(--bg-warm); padding: 0.15rem 0.5rem; border-radius: 100px; }
 
     .ic-stories { list-style: none; margin-bottom: 1rem; }
     .ic-story { display: flex; gap: 0.625rem; padding: 0.5rem 0; align-items: baseline; }
     .ic-story + .ic-story { border-top: 1px solid var(--border); }
-    .ic-story-num { font-family: var(--sans); font-size: 0.6875rem; font-weight: 700; color: var(--accent); min-width: 1.25rem; padding-top: 0.1rem; }
-    .ic-story-title { font-family: var(--serif); font-size: 0.9375rem; font-weight: 600; color: var(--ink); line-height: 1.55; }
+    .ic-story-num { font-family: var(--sans); font-size: 0.75rem; font-weight: 700; color: var(--accent); min-width: 1.25rem; padding-top: 0.1rem; }
+    .ic-story-title { font-family: var(--serif); font-size: 1.0625rem; font-weight: 600; color: var(--ink); line-height: 1.6; }
 
     .ic-bottom { display: flex; justify-content: space-between; align-items: center; }
-    .ic-more { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-muted); }
-    .ic-arrow { font-family: var(--sans); font-size: 0.8125rem; color: var(--accent); font-weight: 500; }
+    .ic-more { font-family: var(--sans); font-size: 0.875rem; color: var(--ink-muted); }
+    .ic-arrow { font-family: var(--sans); font-size: 0.875rem; color: var(--accent); font-weight: 500; }
 
     footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; }
     footer p { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-muted); }
@@ -190,7 +190,7 @@
     <h1>The Pass</h1>
     <p class="brand-sub" style="font-family: var(--serif); font-size: 0.9375rem; color: var(--ink-light); margin-top: 0.375rem; letter-spacing: 0.15em;">出菜口</p>
     <p class="hero-sub">Intelligence, served.</p>
-    <p class="hero-intro">AI 正在走進廚房、改變餐桌、影響你我的飲食生活。<br>每週二和五，三位 AI 編輯為你篩選全球最有趣的故事。</p>
+    <p class="hero-intro">AI 正在走進廚房、改變餐桌、影響你我的飲食生活。<br>每週二和五，三位 AI 編輯為你篩選全球 AI × 餐飲的最新動態。</p>
   </div>
 
   <div class="content">
@@ -224,6 +224,7 @@
 
     <!-- Issue #002 -->
     <a href="demo-issue-002.html" class="issue-card">
+      <img src="img/03-izakaya.png" alt="Issue #002 插畫" class="ic-thumb">
       <div class="ic-top">
         <span class="ic-date">2026.03.26 週三</span>
         <span class="ic-num">#002</span>
@@ -250,6 +251,7 @@
 
     <!-- Issue #001 -->
     <a href="demo-issue-001.html" class="issue-card">
+      <img src="img/01-ourhome.png" alt="Issue #001 插畫" class="ic-thumb">
       <div class="ic-top">
         <span class="ic-date">2026.03.23 週一</span>
         <span class="ic-num">#001</span>
