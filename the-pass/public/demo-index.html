@@ -113,8 +113,10 @@
 
     /* Issue thumbnail */
     .ic-thumb {
-      width: 100%; max-height: 220px; object-fit: cover; object-position: center center;
+      width: 100%; max-height: 220px; object-fit: cover; object-position: center;
       border-radius: 8px; margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      object-position: center 20%;
     }
 
     .ic-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
@@ -167,6 +169,7 @@
       .hero { padding: 2rem 1.25rem 1.5rem; }
       .content { padding: 0 1.25rem 3rem; }
       .issue-card { padding: 1.25rem 1.5rem; }
+      .ic-thumb { max-height: 160px; }
       .nav-links { display: none; }
       .nav-hamburger { display: block; }
     }
