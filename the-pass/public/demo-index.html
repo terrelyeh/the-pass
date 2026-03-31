@@ -74,6 +74,19 @@
       color: rgba(255,255,255,0.3); margin-top: 0.75rem;
     }
 
+    /* Hero intro */
+    .hero-intro {
+      font-family: var(--sans); font-size: 0.875rem; color: var(--ink-light);
+      max-width: 480px; margin: 1.25rem auto 0; line-height: 1.7;
+    }
+
+    /* Hero illustration */
+    .hero-visual {
+      max-width: 280px; margin: 1.5rem auto 0; border-radius: 12px;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .hero-visual img { width: 100%; height: auto; display: block; }
+
     /* Issue Card */
     .issue-card {
       display: block; text-decoration: none; color: inherit;
@@ -83,6 +96,26 @@
     }
     .issue-card:hover { border-color: var(--accent-light); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
     .issue-card.upcoming { opacity: 0.5; pointer-events: none; }
+
+    /* Latest issue highlight */
+    .issue-card.latest {
+      border: 1.5px solid var(--accent-light);
+      background: var(--white);
+      position: relative;
+    }
+    .issue-card.latest::before {
+      content: '最新一期';
+      position: absolute; top: -0.625rem; left: 1.5rem;
+      font-family: var(--sans); font-size: 0.625rem; font-weight: 600;
+      color: var(--white); background: var(--accent); padding: 0.15rem 0.625rem;
+      border-radius: 100px; letter-spacing: 0.05em;
+    }
+
+    /* Latest issue thumbnail */
+    .ic-thumb {
+      width: 100%; max-height: 200px; object-fit: cover;
+      border-radius: 8px; margin-bottom: 1rem;
+    }
 
     .ic-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
     .ic-date { font-family: var(--sans); font-size: 0.8125rem; color: var(--ink-muted); }
@@ -155,14 +188,16 @@
 
   <div class="hero">
     <h1>The Pass</h1>
-    <p class="brand-sub" style="font-family: var(--font-serif); font-size: 0.9375rem; color: var(--color-ink-light, #5A6178); margin-top: 0.375rem; letter-spacing: 0.15em;">出菜口</p>
+    <p class="brand-sub" style="font-family: var(--serif); font-size: 0.9375rem; color: var(--ink-light); margin-top: 0.375rem; letter-spacing: 0.15em;">出菜口</p>
     <p class="hero-sub">Intelligence, served.</p>
+    <p class="hero-intro">AI 正在走進廚房、改變餐桌、影響你我的飲食生活。<br>每週二和五，三位 AI 編輯為你篩選全球最有趣的故事。</p>
   </div>
 
   <div class="content">
 
     <!-- Issue #003 (latest) -->
-    <a href="demo-issue-003.html" class="issue-card">
+    <a href="demo-issue-003.html" class="issue-card latest">
+      <img src="img/05-sweetgreen.png" alt="Issue #003 插畫" class="ic-thumb">
       <div class="ic-top">
         <span class="ic-date">2026.03.28 週五</span>
         <span class="ic-num">#003</span>
