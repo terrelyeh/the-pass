@@ -359,6 +359,14 @@ export const sources: Source[] = [
   { id: "foodtoday", name: "푸드투데이", url: "https://www.foodtoday.or.kr", feedUrl: "https://www.foodtoday.or.kr/data/rss/news.xml", language: "ko", category: "food-industry", tier: 4, stream: "A", feedType: "rss", status: "pending", description: "韓國食品媒體（audit autodiscover 可用，原誤標無 feed）" },
   { id: "digitalfoodlab", name: "DigitalFoodLab", url: "https://digitalfoodlab.com", feedUrl: "https://digitalfoodlab.com/feed/", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "pending", description: "獨立 food-tech 分析師 blog；補『獨立觀點』缺口（audit 可用）" },
   { id: "good-food-institute", name: "Good Food Institute", url: "https://gfi.org", feedUrl: "https://gfi.org/feed/", language: "en", category: "ai-food-tech", tier: 4, stream: "B", feedType: "rss", status: "pending", description: "替代蛋白智庫（audit 可用，原誤標無 feed）" },
+
+  // ============================================================
+  // 獨立 food-tech 電子報 / 觀點型（2026-06-09 web 搜尋 + feed/recency 驗證）
+  // 補機構媒體缺的「觀點/發現」聲音。已濾掉停更：Pluripotent(2023)、FoodTech Confidential(2022)、Axial(2025)。
+  // ============================================================
+  { id: "technically-food", name: "Technically Food", url: "https://technicallyfood.substack.com", feedUrl: "https://technicallyfood.substack.com/feed", language: "en", category: "ai-frontier", tier: 3, stream: "B", feedType: "rss", status: "active", description: "獨立記者 Larissa Zimberoff 的 food×tech 雙週報；觀點型，2026 仍活躍" },
+  { id: "food-tech-insider", name: "Food Tech Insider", url: "https://www.foodtechinsider.net", feedUrl: "https://www.foodtechinsider.net/feed", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "active", description: "AI/替代蛋白/培養肉 週報；2026 仍活躍" },
+  { id: "oy-vey-food", name: "Oy Vey It's A Food Newsletter", url: "https://oyveyitskay.substack.com", feedUrl: "https://oyveyitskay.substack.com/feed", language: "en", category: "culture-opinion", tier: 5, stream: "B", feedType: "rss", status: "pending", description: "kayla kaplan 諷刺素食視角；調性契合 Phase 2 第四位編輯企劃" },
 ];
 
 // === Helpers ===
