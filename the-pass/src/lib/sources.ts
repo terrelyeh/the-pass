@@ -359,6 +359,9 @@ export const sources: Source[] = [
   { id: "foodtoday", name: "푸드투데이", url: "https://www.foodtoday.or.kr", feedUrl: "https://www.foodtoday.or.kr/data/rss/news.xml", language: "ko", category: "food-industry", tier: 4, stream: "A", feedType: "rss", status: "pending", description: "韓國食品媒體（audit autodiscover 可用，原誤標無 feed）" },
   { id: "digitalfoodlab", name: "DigitalFoodLab", url: "https://digitalfoodlab.com", feedUrl: "https://digitalfoodlab.com/feed/", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "pending", description: "獨立 food-tech 分析師 blog；補『獨立觀點』缺口（audit 可用）" },
   { id: "good-food-institute", name: "Good Food Institute", url: "https://gfi.org", feedUrl: "https://gfi.org/feed/", language: "en", category: "ai-food-tech", tier: 4, stream: "B", feedType: "rss", status: "pending", description: "替代蛋白智庫（audit 可用，原誤標無 feed）" },
+  // 從 sources.html 17 個未分類來源 audit 補入（2026-06-10，只收真食物源）
+  { id: "the-caterer", name: "The Caterer", url: "https://www.thecaterer.com", feedUrl: "https://www.thecaterer.com/feed/", language: "en", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "active", description: "UK 餐飲/hospitality 產業報（audit 食物密度 32%）" },
+  { id: "qsr-magazine", name: "QSR Magazine", url: "https://www.qsrmagazine.com", feedUrl: "https://www.qsrmagazine.com/feed/", language: "en", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "active", description: "US 快餐（QSR）產業（audit 食物密度 15%）" },
 
   // ============================================================
   // 獨立 food-tech 電子報 / 觀點型（2026-06-09 web 搜尋 + feed/recency 驗證）
