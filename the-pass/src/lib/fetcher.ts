@@ -1,5 +1,5 @@
 import Parser from "rss-parser";
-import { sources, type Source } from "./sources";
+import { activeSources, type Source } from "./sources";
 
 export interface RawArticle {
   id: string;
@@ -28,7 +28,9 @@ async function fetchSource(source: Source): Promise<RawArticle[]> {
     const now = new Date().toISOString();
 
     return (feed.items || []).slice(0, 20).map((item, index) => ({
-      id: `${source.id}-${item.isoDate || index}-${Date.now()}`,
+      // 用文章 URL 當穩定唯一鍵（去重靠它）；無 link 時退回 source+日期。
+      // 絕不可含 Date.now()——否則同一篇每次抓 id 都不同，去重失效。
+      id: item.link || `${source.id}-${item.isoDate || index}`,
       sourceId: source.id,
       sourceName: source.name,
       sourceLanguage: source.language,
@@ -53,7 +55,9 @@ export async function fetchAllSources(): Promise<{
   const results: { sourceId: string; sourceName: string; count: number; error?: string }[] = [];
   const allArticles: RawArticle[] = [];
 
-  const fetches = sources.map(async (source) => {
+  // 只抓 status:"active"（pending 來源 feed 多為空/待驗證，見 sources.ts）。
+  // 目前 active 全是 feedType:"rss"；JSON 來源（如 HF Papers）需另建 fetcher。
+  const fetches = activeSources.map(async (source) => {
     try {
       const articles = await fetchSource(source);
       results.push({
@@ -97,11 +101,13 @@ export function filterRecent(articles: RawArticle[], hours: number = 48): RawArt
 export function scoreRelevance(article: RawArticle): number {
   const text = `${article.title} ${article.summary}`.toLowerCase();
 
+  // 注意：不要放裸 "ai"——includes("ai") 會誤中 tail/available/again 等字。
+  // "AI" 縮寫改用詞邊界比對（見下方 \bai\b）。
   const aiKeywords = [
-    "ai", "artificial intelligence", "machine learning", "robot", "automat",
+    "artificial intelligence", "machine learning", "robot", "automat",
     "algorithm", "neural", "gpt", "llm", "computer vision", "generative",
-    "인공지능", "ai ", "로봇", "자동화", "생성형", "스마트",
-    "ロボット", "自動化", "ai", "人工知能",
+    "인공지능", "로봇", "자동화", "생성형", "스마트",
+    "ロボット", "自動化", "人工知能",
   ];
 
   const foodKeywords = [
@@ -113,6 +119,9 @@ export function scoreRelevance(article: RawArticle): number {
 
   let aiScore = 0;
   let foodScore = 0;
+
+  // "AI" 縮寫用詞邊界比對，避免誤中 tail / available / again 等含 "ai" 的字
+  if (/\bai\b/.test(text) || text.includes("a.i.")) aiScore++;
 
   for (const kw of aiKeywords) {
     if (text.includes(kw)) aiScore++;
