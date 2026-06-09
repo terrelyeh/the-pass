@@ -13,9 +13,15 @@ export interface ReportPiece {
   dimensions: Dimensions;
   weighted: number;
   editor: Editor;
-  role: "feature" | "quick" | "fumet"; // 出刊角色：長文 / 快訊 / 提問
+  role: "feature" | "quick"; // 出刊角色：長文（Mise）/ 快訊（Passe）
   hook: string; // 主理由「為什麼是這篇」
   note?: string; // 切角建議
+}
+
+// Fumet 的結尾提問：從本期選出的長文「提煉」而來，不是從候選選稿、不打分。
+export interface FumetQuestion {
+  question: string;
+  from: string; // 提煉自哪幾篇長文
 }
 
 export interface ReportReject {
@@ -28,13 +34,14 @@ export interface SelectionReport {
   issueLabel: string; // 例：2026-06-10（週二）
   generatedAt: string;
   stats: { fetched: number; deduped: number; candidates: number; selected: number };
-  selected: ReportPiece[];
+  selected: ReportPiece[]; // 只含長文 + 快訊（從候選池選+打分）
+  fumet?: FumetQuestion; // 結尾提問（從本期長文提煉）
   backlog: ReportReject[]; // 合格沒選上（reason = 為什麼進庫存）
   screenedOut: ReportReject[]; // 硬閘門砍（reason = 為什麼）
   flags: string[]; // 編輯室提醒
 }
 
-const EDITOR_LABEL: Record<Editor, string> = { mise: "Mise 長文", passe: "Passe 快訊", fumet: "Fumet 提問" };
+const EDITOR_LABEL: Record<Editor, string> = { mise: "Mise 長文", passe: "Passe 快訊" };
 const DIM_LABEL = [
   ["surprise", "驚喜"],
   ["local", "在地"],
@@ -54,7 +61,7 @@ function dimBars(d: Dimensions): string {
 }
 
 function pieceCard(p: ReportPiece, idx: number): string {
-  const roleClass = p.role === "fumet" ? "fumet" : p.role === "feature" ? "feature" : "quick";
+  const roleClass = p.role === "feature" ? "feature" : "quick";
   return `
   <div class="piece ${roleClass}">
     <div class="piece-head">
@@ -78,7 +85,6 @@ function pieceCard(p: ReportPiece, idx: number): string {
 export function renderReport(r: SelectionReport): string {
   const features = r.selected.filter((p) => p.role === "feature");
   const quicks = r.selected.filter((p) => p.role === "quick");
-  const fumets = r.selected.filter((p) => p.role === "fumet");
 
   const rejectRows = (items: ReportReject[]) =>
     items
@@ -127,6 +133,9 @@ export function renderReport(r: SelectionReport): string {
 .dim .dbf{display:block;height:100%;background:var(--accent-light)}.dim .dv{font-weight:700;color:var(--ink-light)}
 .hook{font-family:var(--serif);font-size:.9rem;line-height:1.7;margin:.3rem 0 .15rem}.hook strong{color:var(--accent)}
 .note{font-size:.78rem;color:var(--ink-light);font-style:italic}
+.piece.fumet-q::before{background:#7B8A6E;width:4px}
+.fq{font-family:var(--serif);font-size:1.1rem;line-height:1.75;color:var(--ink);margin:.35rem 0 .2rem}
+.fq-tag{margin-left:auto;font-size:.66rem;color:var(--ink-muted)}
 table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:.5rem}
 th{text-align:left;padding:.45rem .6rem;border-bottom:2px solid var(--border);font-size:.66rem;letter-spacing:.05em;color:var(--ink-muted);text-transform:uppercase}
 td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.src{color:var(--ink-muted);white-space:nowrap;font-size:.74rem}td.why{color:var(--ink-light)}
@@ -157,7 +166,16 @@ td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}
   <div class="sec"><h2>本期建議出刊</h2><div class="h-sub">每篇附五面向分數 + 主理由 + 建議編輯。勾選框供選題會即時拍板（採用 / 換切角 / 退庫存）。</div></div>
   ${features.length ? `<div class="block-label">長文（Mise）</div>${features.map((p, i) => pieceCard(p, i + 1)).join("")}` : ""}
   ${quicks.length ? `<div class="block-label">快訊（Passe）</div>${quicks.map((p, i) => pieceCard(p, features.length + i + 1)).join("")}` : ""}
-  ${fumets.length ? `<div class="block-label">提問（Fumet）</div>${fumets.map((p, i) => pieceCard(p, features.length + quicks.length + i + 1)).join("")}` : ""}
+  ${
+    r.fumet
+      ? `<div class="block-label">結尾提問（Fumet）</div>
+    <div class="piece fumet-q">
+      <div class="piece-head"><span class="editor editor-fumet">Fumet 提問</span><span class="fq-tag">從本期長文提煉 · 非選稿</span></div>
+      <p class="fq">${esc(r.fumet.question)}</p>
+      <p class="note">🧩 提煉自：${esc(r.fumet.from)}</p>
+    </div>`
+      : ""
+  }
 
   ${
     r.backlog.length

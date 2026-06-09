@@ -14,7 +14,9 @@ import type { RawArticle } from "./fetcher";
 const SCREEN_MODEL = "claude-haiku-4-5";
 const SCORE_MODEL = "claude-opus-4-8";
 
-export type Editor = "mise" | "passe" | "fumet";
+// 來源故事只路由到 mise（長文）或 passe（快訊）。
+// Fumet 的結尾提問不在此選——它由本期選出的長文「提煉」而來（見 editorial-guidelines），不是從候選挑一篇。
+export type Editor = "mise" | "passe";
 
 export interface Dimensions {
   surprise: number; // 驚喜/新鮮
@@ -68,7 +70,8 @@ const SCORE_SYSTEM = `你是 The Pass（出菜口）的總編輯。為這篇 AI/
 - human 人味：有沒有具體的人、具體的處境？
 - conversation 可談性：能勾出一個好問題、讓人想轉發或回信嗎？
 - substance 事實扎實：有真材實料，不是空泛吹捧？
-再指派 best-fit 編輯：mise（有具體的人/處境→長文）、passe（事實夠硬夠新→快訊）、fumet（能引出好問題→提問）。
+再指派 best-fit 編輯：mise（有具體的人/處境→長文）、passe（事實夠硬夠新→快訊）。
+注意：不要指派 fumet——Fumet 的結尾提問是讀完本期選出的長文後「提煉」出來的，不從候選池選稿。可談性高的故事 = 給 Fumet 好素材，但仍歸 mise 或 passe。
 再寫一句 hook（主理由「為什麼是這篇」，繁體中文，≤40字，講故事鉤子不是分數）。只輸出 JSON。`;
 
 const SCREEN_SCHEMA = {
@@ -86,7 +89,7 @@ const SCORE_SCHEMA = {
     human: { type: "integer" },
     conversation: { type: "integer" },
     substance: { type: "integer" },
-    editor: { type: "string", enum: ["mise", "passe", "fumet"] },
+    editor: { type: "string", enum: ["mise", "passe"] },
     hook: { type: "string" },
   },
   required: ["surprise", "local", "human", "conversation", "substance", "editor", "hook"],
@@ -147,7 +150,7 @@ async function realScore(
     messages: [{ role: "user", content: articlePrompt(a) }],
   });
   const j = extractJson(firstText(resp.content)) as Record<string, number | string>;
-  const editor = (["mise", "passe", "fumet"].includes(String(j.editor)) ? j.editor : "passe") as Editor;
+  const editor = (["mise", "passe"].includes(String(j.editor)) ? j.editor : "passe") as Editor;
   return {
     dimensions: {
       surprise: clamp05(j.surprise as number),
@@ -177,7 +180,7 @@ function mockScore(a: RawArticle): { dimensions: Dimensions; editor: Editor; hoo
   const base = clamp05(scoreRelevance(a) / 4);
   return {
     dimensions: { surprise: base, local: 2, human: Math.max(1, base - 1), conversation: base, substance: 3 },
-    editor: base >= 4 ? "fumet" : "passe",
+    editor: base >= 4 ? "mise" : "passe",
     hook: "（dry-run）依關鍵字推估，待真實 LLM 評分",
   };
 }
