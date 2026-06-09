@@ -93,13 +93,13 @@ export const sources: Source[] = [
     id: "restaurant-business",
     name: "Restaurant Business",
     url: "https://www.restaurantbusinessonline.com",
-    feedUrl: "https://www.restaurantbusinessonline.com/rss.xml",
+    feedUrl: "https://www.restaurantbusinessonline.com/feed/", // ✅ audit 修正：可用 feed 是 /feed/（50篇），非 rss.xml
     language: "en",
     category: "food-industry",
     tier: 2,
     stream: "A",
     feedType: "rss",
-    status: "active", // ⚠️ feed 目前解析失敗（XML 含未跳脫的 &），待修或換寬鬆 parser
+    status: "active",
     description: "US restaurant industry news and analysis",
   },
   {
@@ -255,16 +255,16 @@ export const sources: Source[] = [
   },
   {
     id: "thinkfood",
-    name: "Thinkfood",
-    url: "",
-    feedUrl: "", // ❓ 找不到對應網域，來源身分待你確認
-    language: "th",
-    category: "ai-food-tech",
+    name: "식품음료신문 (Thinkfood)",
+    url: "https://www.thinkfood.co.kr",
+    feedUrl: "https://www.thinkfood.co.kr/rss/allArticle.xml", // ✅ audit 確認：韓國食品飲料報（非泰文），50篇
+    language: "ko",
+    category: "food-industry",
     tier: 3,
     stream: "A",
     feedType: "rss",
-    status: "pending",
-    description: "Food media; 來源網域不明，待確認",
+    status: "active",
+    description: "Korean food & beverage industry newspaper",
   },
   {
     id: "aitimes-kr",
@@ -344,6 +344,21 @@ export const sources: Source[] = [
     status: "pending", // 啟用前需把 fetcher User-Agent 改成瀏覽器字串
     description: "Pan-Asia tech media; 量大但食物密度低，且需瀏覽器 UA",
   },
+
+  // ============================================================
+  // 從 sources.html 連通 audit 補入（2026-06-09，feed 已實測可用，待 density 驗證）
+  // ============================================================
+  { id: "restaurant-dive", name: "Restaurant Dive", url: "https://www.restaurantdive.com", feedUrl: "https://www.restaurantdive.com/feeds/news/", language: "en", category: "food-industry", tier: 2, stream: "A", feedType: "rss", status: "pending", description: "US 餐廳產業科技/AI 導入報導（audit 可用，待 density）" },
+  { id: "food-institute", name: "The Food Institute", url: "https://foodinstitute.com", feedUrl: "https://foodinstitute.com/feed/", language: "en", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "pending", description: "US 食品產業分析（audit 可用，待 density）" },
+  { id: "food-stadium", name: "フードスタジアム", url: "https://food-stadium.com", feedUrl: "https://food-stadium.com/feed/", language: "ja", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "pending", description: "日本外食產業媒體（audit 可用，待 density）" },
+  { id: "foodrink-fdn", name: "フードリンクニュース FDN", url: "https://www.foodrink.co.jp", feedUrl: "https://www.foodrink.co.jp/rss.xml", language: "ja", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "pending", description: "日本外食情報（audit 可用 100篇，待 density）" },
+  { id: "kfoodtimes", name: "한국외식신문", url: "https://www.kfoodtimes.com", feedUrl: "https://www.kfoodtimes.com/rss/allArticle.xml", language: "ko", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "pending", description: "韓國外食產業報（audit 可用，待 density）" },
+  { id: "inshokuten", name: "飲食店ドットコム foodist", url: "https://www.inshokuten.com", feedUrl: "https://www.inshokuten.com/foodist/feed/", language: "ja", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "pending", description: "日本餐飲經營者媒體（audit 可用；sources.html 原誤標無 feed）" },
+  { id: "gaishoku", name: "外食産業新聞社", url: "https://gaishoku.co.jp", feedUrl: "https://gaishoku.co.jp/feed/", language: "ja", category: "food-industry", tier: 4, stream: "A", feedType: "rss", status: "pending", description: "日本外食產業報（audit 可用，原誤標無 feed）" },
+  { id: "nissyoku", name: "日本食糧新聞", url: "https://news.nissyoku.co.jp", feedUrl: "https://news.nissyoku.co.jp/feed/", language: "ja", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "pending", description: "日本食品產業報（audit 可用，原誤標無 feed）" },
+  { id: "foodtoday", name: "푸드투데이", url: "https://www.foodtoday.or.kr", feedUrl: "https://www.foodtoday.or.kr/data/rss/news.xml", language: "ko", category: "food-industry", tier: 4, stream: "A", feedType: "rss", status: "pending", description: "韓國食品媒體（audit autodiscover 可用，原誤標無 feed）" },
+  { id: "digitalfoodlab", name: "DigitalFoodLab", url: "https://digitalfoodlab.com", feedUrl: "https://digitalfoodlab.com/feed/", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "pending", description: "獨立 food-tech 分析師 blog；補『獨立觀點』缺口（audit 可用）" },
+  { id: "good-food-institute", name: "Good Food Institute", url: "https://gfi.org", feedUrl: "https://gfi.org/feed/", language: "en", category: "ai-food-tech", tier: 4, stream: "B", feedType: "rss", status: "pending", description: "替代蛋白智庫（audit 可用，原誤標無 feed）" },
 ];
 
 // === Helpers ===
