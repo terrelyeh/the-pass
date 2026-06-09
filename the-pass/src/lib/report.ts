@@ -101,7 +101,7 @@ export function renderReport(r: SelectionReport): string {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
 :root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--red:#C0392B;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:19px}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.72;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 .wrap{max-width:880px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 .hero{text-align:center;border-bottom:1px solid var(--border);padding-bottom:1.75rem;margin-bottom:1.5rem}
 .hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
@@ -128,15 +128,15 @@ export function renderReport(r: SelectionReport): string {
 .piece h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;line-height:1.45;margin:.1rem 0}
 .meta{font-size:.72rem;color:var(--ink-muted);margin-bottom:.55rem}.meta a{color:var(--accent);text-decoration:none}
 .dims{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:.5rem 0 .6rem}
-.dim{display:flex;align-items:center;gap:.3rem;font-size:.68rem}
-.dim .dl{color:var(--ink-muted);min-width:1.6rem}.dim .db{width:46px;height:5px;background:var(--bg-warm);border-radius:3px;overflow:hidden}
+.dim{display:flex;align-items:center;gap:.35rem;font-size:.8rem}
+.dim .dl{color:var(--ink-muted);min-width:1.9rem}.dim .db{width:54px;height:6px;background:var(--bg-warm);border-radius:3px;overflow:hidden}
 .dim .dbf{display:block;height:100%;background:var(--accent-light)}.dim .dv{font-weight:700;color:var(--ink-light)}
-.hook{font-family:var(--serif);font-size:.9rem;line-height:1.7;margin:.3rem 0 .15rem}.hook strong{color:var(--accent)}
-.note{font-size:.78rem;color:var(--ink-light);font-style:italic}
+.hook{font-family:var(--serif);font-size:1.02rem;line-height:1.72;margin:.4rem 0 .2rem}.hook strong{color:var(--accent)}
+.note{font-size:.86rem;color:var(--ink-light);font-style:italic}
 .piece.fumet-q::before{background:#7B8A6E;width:4px}
 .fq{font-family:var(--serif);font-size:1.1rem;line-height:1.75;color:var(--ink);margin:.35rem 0 .2rem}
 .fq-tag{margin-left:auto;font-size:.66rem;color:var(--ink-muted)}
-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:.5rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:.5rem}
 th{text-align:left;padding:.45rem .6rem;border-bottom:2px solid var(--border);font-size:.66rem;letter-spacing:.05em;color:var(--ink-muted);text-transform:uppercase}
 td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.src{color:var(--ink-muted);white-space:nowrap;font-size:.74rem}td.why{color:var(--ink-light)}
 .flags{background:var(--ink);color:rgba(255,255,255,.9);border-radius:10px;padding:1.1rem 1.4rem;margin-top:.6rem}
