@@ -291,9 +291,17 @@
       <h2><span class="num">05 · 兩段式篩選</span>便宜規則 + 精準 LLM</h2>
       <p>採混合策略：用便宜規則清掉雜訊，再讓 LLM 對少數候選做有品味的判斷——成本可控、判斷力到位。</p>
       <div class="option">
-        <div class="option-label">第一段</div>
+        <div class="option-label">第一段 · 依產量自適應</div>
         <h4>規則粗篩（便宜，砍雜訊）</h4>
-        <p>對池子裡所有新文章跑便宜規則：修好的關鍵字相關性 + 來源 tier + 時效。目的只有一個——<strong>把 ~140 篇砍到 ~25 篇候選</strong>，不浪費 LLM。</p>
+        <p>關鍵字相關性（已放寬到「<strong>AI + 鄰近科技 / 食品生技</strong>」，高召回）+ 來源 tier + 時效。但<strong>不是一刀切</strong>——依來源產量決定要不要粗篩：</p>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>來源產量</th><th>第一關做法</th></tr></thead>
+          <tbody>
+            <tr><td><strong>低</strong>（≤ ~20-30 新篇/天）</td><td>跳過關鍵字，<strong>直接交 LLM 全看</strong>——成本微小、免去漏網（最高召回）</td></tr>
+            <tr><td><strong>高</strong>（如 The Spoon 一次數百篇）</td><td>關鍵字先粗砍 → 再 LLM，控制成本</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:0.82rem;color:var(--ink-muted);">關鍵字粗篩本質是會漏、會誤判的省錢代用品（曾有 <code>tail→ai</code> 假陽性、也漏掉沒寫「AI」的食品科技如培養肉）。真正決定成本的是<strong>每日去重後的新篇數</strong>，不是 feed 大小。改用便宜模型（Haiku 級）做第一關語意判斷 + 去重壓小池子，多數來源可直接 LLM 看，關鍵字降級成「高產量來源的成本保險」。</p>
       </div>
       <div class="option recommended">
         <div class="option-label">第二段</div>
