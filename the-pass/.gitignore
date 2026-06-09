@@ -42,3 +42,6 @@ next-env.d.ts
 
 # pipeline runtime state (seen store + daily feed dumps)
 /data/*.json
+
+# generated 選題報告（artifact）
+public/selection-report-*.html
