@@ -1,18 +1,15 @@
-// === 第二段：LLM 評分（硬閘門 + 五面向）===
+// === LLM 評估：Opus 全程（硬閘門 + 五面向，同一次呼叫）===
 // 設計見 docs/selection-mechanism.md §5–§6。
-//   screen（硬閘門）：cheap 模型(Haiku) 判斷「真 AI/科技×食物、可成人話故事」→ pass/fail
-//   score（五面向）：strong 模型(Opus) 對過閘門者打 0–5 五面向 + 編輯路由 + 主理由
+//   去重後的每一篇 → Opus 一次呼叫：先過硬閘門(pass/fail)，過了就打五面向 + 編輯路由 + 主理由。
+//   不先用關鍵字粗篩、也不用便宜模型做第一關——關鍵字會漏會誤判，而每日去重後的池子夠小，
+//   值得用最強模型全看（最一致、最不漏稿）。產品決策（Terrel）：全程都用 Opus。
 // 沒有 ANTHROPIC_API_KEY 時自動走 dry-run（關鍵字代理），讓 pipeline 端到端可測。
-//
-// 模型選擇依產品決策（Terrel：第一關便宜模型、評分強模型）：
-//   SCREEN = claude-haiku-4-5（便宜快）  /  SCORE = claude-opus-4-8（強）
 
 import Anthropic from "@anthropic-ai/sdk";
 import { scoreRelevance } from "./relevance";
 import type { RawArticle } from "./fetcher";
 
-const SCREEN_MODEL = "claude-haiku-4-5";
-const SCORE_MODEL = "claude-opus-4-8";
+const MODEL = "claude-opus-4-8";
 
 // 來源故事只路由到 mise（長文）或 passe（快訊）。
 // Fumet 的結尾提問不在此選——它由本期選出的長文「提煉」而來（見 editorial-guidelines），不是從候選挑一篇。
@@ -34,7 +31,7 @@ export interface ScoredArticle {
   weighted: number;
   editor: Editor;
   hook: string; // 主理由「為什麼是這篇」
-  screenReason: string;
+  screenReason: string; // 硬閘門理由（過 or 砍）
 }
 
 export interface ScorePipelineResult {
@@ -53,37 +50,36 @@ const weightedOf = (d: Dimensions) =>
   ).toFixed(1);
 
 // ─────────────────────────────────────────────
-// Prompts
+// Prompt（硬閘門 + 五面向，一次完成）
 // ─────────────────────────────────────────────
 
-const SCREEN_SYSTEM = `你是 The Pass（出菜口）的總編輯，負責「硬閘門」初篩。
+const EVAL_SYSTEM = `你是 The Pass（出菜口）的總編輯，獨自完成整個選題評估。
 The Pass 用 AI 報導「AI/科技如何改變你我的飲食生活」，調性是「新鮮感與發現的驚喜」，不是乾的產業新聞。
-判斷這篇是否「通過閘門」（pass=true）需同時滿足：
+
+第一步 · 硬閘門（pass）：需同時滿足
 1. 真的是 AI/科技 × 飲食的交集（語意判斷，不是關鍵字巧合，例如餐廳名含 "tail" 不算 AI）。
 2. 事實可查、不是空泛炒作或純廣告。
 3. 有潛力翻成「先找到人」的人味故事，而不是只有融資金額/技術規格的乾稿。
-寬鬆但誠實：寧可讓邊界案例通過交給後段評分，也不要漏掉有潛力的前沿題目。只輸出 JSON。`;
+寬鬆但誠實：寧可讓邊界案例通過，也不要漏掉有潛力的前沿題目。
+沒過閘門 → pass=false、reason 說明原因、五面向全填 0、editor 填 passe、hook 留空字串。
 
-const SCORE_SYSTEM = `你是 The Pass（出菜口）的總編輯。為這篇 AI/科技×飲食新聞打「五面向」分數（每項 0–5 整數）。
+第二步 · 過閘門者打「五面向」（每項 0–5 整數）：
 - surprise 驚喜/新鮮：是「我從沒想過 AI 還能這樣碰食物」，還是又一則融資稿？（最重要）
 - local 在地獨家：亞洲在地？英文大媒體還沒報？
 - human 人味：有沒有具體的人、具體的處境？
 - conversation 可談性：能勾出一個好問題、讓人想轉發或回信嗎？
 - substance 事實扎實：有真材實料，不是空泛吹捧？
 再指派 best-fit 編輯：mise（有具體的人/處境→長文）、passe（事實夠硬夠新→快訊）。
-注意：不要指派 fumet——Fumet 的結尾提問是讀完本期選出的長文後「提煉」出來的，不從候選池選稿。可談性高的故事 = 給 Fumet 好素材，但仍歸 mise 或 passe。
-再寫一句 hook（主理由「為什麼是這篇」，繁體中文，≤40字，講故事鉤子不是分數）。只輸出 JSON。`;
+注意：不要指派 fumet——Fumet 的結尾提問是讀完本期選出的長文後「提煉」出來的，不從候選池選稿。可談性高 = 給 Fumet 好素材，但仍歸 mise 或 passe。
+再寫一句 hook（主理由「為什麼是這篇」，繁體中文，≤40字，講故事鉤子不是分數）。
 
-const SCREEN_SCHEMA = {
-  type: "object",
-  properties: { pass: { type: "boolean" }, reason: { type: "string" } },
-  required: ["pass", "reason"],
-  additionalProperties: false,
-} as const;
+只輸出 JSON。`;
 
-const SCORE_SCHEMA = {
+const EVAL_SCHEMA = {
   type: "object",
   properties: {
+    pass: { type: "boolean" },
+    reason: { type: "string" },
     surprise: { type: "integer" },
     local: { type: "integer" },
     human: { type: "integer" },
@@ -92,7 +88,7 @@ const SCORE_SCHEMA = {
     editor: { type: "string", enum: ["mise", "passe"] },
     hook: { type: "string" },
   },
-  required: ["surprise", "local", "human", "conversation", "substance", "editor", "hook"],
+  required: ["pass", "reason", "surprise", "local", "human", "conversation", "substance", "editor", "hook"],
   additionalProperties: false,
 } as const;
 
@@ -122,36 +118,31 @@ function firstText(content: Anthropic.Messages.ContentBlock[]): string {
   return b?.text ?? "";
 }
 
-// ─────────────────────────────────────────────
-// 真實 LLM 呼叫
-// ─────────────────────────────────────────────
-
-async function realScreen(client: Anthropic, a: RawArticle): Promise<{ pass: boolean; reason: string }> {
-  const resp = await client.messages.create({
-    model: SCREEN_MODEL,
-    max_tokens: 256,
-    system: SCREEN_SYSTEM,
-    output_config: { format: { type: "json_schema", schema: SCREEN_SCHEMA } },
-    messages: [{ role: "user", content: articlePrompt(a) }],
-  });
-  const j = extractJson(firstText(resp.content));
-  return { pass: Boolean(j.pass), reason: String(j.reason ?? "") };
+interface Evaluation {
+  pass: boolean;
+  reason: string;
+  dimensions: Dimensions;
+  editor: Editor;
+  hook: string;
 }
 
-async function realScore(
-  client: Anthropic,
-  a: RawArticle
-): Promise<{ dimensions: Dimensions; editor: Editor; hook: string }> {
+// ─────────────────────────────────────────────
+// 真實 LLM 呼叫（Opus 一次完成硬閘門 + 五面向）
+// ─────────────────────────────────────────────
+
+async function realEvaluate(client: Anthropic, a: RawArticle): Promise<Evaluation> {
   const resp = await client.messages.create({
-    model: SCORE_MODEL,
+    model: MODEL,
     max_tokens: 512,
-    system: SCORE_SYSTEM,
-    output_config: { format: { type: "json_schema", schema: SCORE_SCHEMA } },
+    system: EVAL_SYSTEM,
+    output_config: { format: { type: "json_schema", schema: EVAL_SCHEMA } },
     messages: [{ role: "user", content: articlePrompt(a) }],
   });
-  const j = extractJson(firstText(resp.content)) as Record<string, number | string>;
+  const j = extractJson(firstText(resp.content)) as Record<string, number | string | boolean>;
   const editor = (["mise", "passe"].includes(String(j.editor)) ? j.editor : "passe") as Editor;
   return {
+    pass: Boolean(j.pass),
+    reason: String(j.reason ?? ""),
     dimensions: {
       surprise: clamp05(j.surprise as number),
       local: clamp05(j.local as number),
@@ -168,17 +159,22 @@ async function realScore(
 // dry-run（無金鑰）：用關鍵字分數做確定性代理，讓 pipeline 可測
 // ─────────────────────────────────────────────
 
-function mockScreen(a: RawArticle): { pass: boolean; reason: string } {
+function mockEvaluate(a: RawArticle): Evaluation {
   const s = scoreRelevance(a);
+  const pass = s >= 10;
+  if (!pass) {
+    return {
+      pass: false,
+      reason: "dry-run：關鍵字代理未達雙重命中",
+      dimensions: { surprise: 0, local: 0, human: 0, conversation: 0, substance: 0 },
+      editor: "passe",
+      hook: "",
+    };
+  }
+  const base = clamp05(s / 4);
   return {
-    pass: s >= 10,
-    reason: s >= 10 ? "dry-run：關鍵字代理判定 AI×食物雙重命中" : "dry-run：關鍵字代理未達雙重命中",
-  };
-}
-
-function mockScore(a: RawArticle): { dimensions: Dimensions; editor: Editor; hook: string } {
-  const base = clamp05(scoreRelevance(a) / 4);
-  return {
+    pass: true,
+    reason: "dry-run：關鍵字代理判定 AI×食物雙重命中",
     dimensions: { surprise: base, local: 2, human: Math.max(1, base - 1), conversation: base, substance: 3 },
     editor: base >= 4 ? "mise" : "passe",
     hook: "（dry-run）依關鍵字推估，待真實 LLM 評分",
@@ -186,7 +182,7 @@ function mockScore(a: RawArticle): { dimensions: Dimensions; editor: Editor; hoo
 }
 
 // ─────────────────────────────────────────────
-// Pipeline：candidates → screen → score → 排序
+// Pipeline：候選 → Opus 評估（硬閘門 + 五面向）→ 排序
 // ─────────────────────────────────────────────
 
 export async function scorePipeline(
@@ -201,19 +197,18 @@ export async function scorePipeline(
   let screenedOut = 0;
 
   for (const a of pool) {
-    const screen = dry ? mockScreen(a) : await realScreen(client!, a);
-    if (!screen.pass) {
+    const ev = dry ? mockEvaluate(a) : await realEvaluate(client!, a);
+    if (!ev.pass) {
       screenedOut++;
       continue;
     }
-    const sc = dry ? mockScore(a) : await realScore(client!, a);
     scored.push({
       article: a,
-      dimensions: sc.dimensions,
-      weighted: weightedOf(sc.dimensions),
-      editor: sc.editor,
-      hook: sc.hook,
-      screenReason: screen.reason,
+      dimensions: ev.dimensions,
+      weighted: weightedOf(ev.dimensions),
+      editor: ev.editor,
+      hook: ev.hook,
+      screenReason: ev.reason,
     });
   }
 

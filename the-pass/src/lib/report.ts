@@ -1,5 +1,5 @@
 // === 選題報告產生器 ===
-// 每期 pipeline 跑完（fetch→dedup→prefilter→score）後，把結果渲染成「內部選題報告」HTML，
+// 每期 pipeline 跑完（fetch→dedup→Opus 評估）後，把結果渲染成「內部選題報告」HTML，
 // 供總編 + 團隊開選題會、做最後拍板。設計見 docs/selection-mechanism.md §7。
 
 import type { Dimensions, Editor } from "./scorer";
@@ -216,7 +216,7 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
 
   ${
     r.candidatePool && r.candidatePool.length
-      ? `<div class="sec"><h2>候選名單（完整候選池）</h2><div class="h-sub">本期所有通過初篩的候選（${r.candidatePool.length} 則），依分數排序，供選題會自由挑換。</div></div>
+      ? `<div class="sec"><h2>候選名單（完整候選池）</h2><div class="h-sub">本期所有通過 Opus 評估的候選（${r.candidatePool.length} 則），依分數排序，供選題會自由挑換。</div></div>
   <div class="tbl-wrap"><table><thead><tr><th>#</th><th>分</th><th>編輯</th><th>標題</th><th>來源</th><th class="dh">一句話</th></tr></thead><tbody>${r.candidatePool
           .map(
             (c, i) =>

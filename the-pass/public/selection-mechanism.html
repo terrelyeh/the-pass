@@ -214,7 +214,7 @@
       <li><a href="#s2"><span class="nav-num">02</span>全流程總覽</a></li>
       <li><a href="#s3"><span class="nav-num">03</span>兩條進料線</a></li>
       <li><a href="#s4"><span class="nav-num">04</span>抓取與去重</a></li>
-      <li><a href="#s5"><span class="nav-num">05</span>兩段式篩選</a></li>
+      <li><a href="#s5"><span class="nav-num">05</span>Opus 全程評估</a></li>
       <li><a href="#s6"><span class="nav-num">06</span>五面向評分</a></li>
       <li><a href="#s7"><span class="nav-num">07</span>評分範例</a></li>
       <li><a href="#s8"><span class="nav-num">08</span>誰決定？</a></li>
@@ -239,7 +239,7 @@
         <div class="flow-arrow"><span class="lbl">去重 ① URL 完全相同　② 語意 同則新聞不同來源</span><br>↓</div>
         <div class="flow-step flow-pool"><strong>標題池 Pool</strong>（累積 + 有狀態）<span class="meta">狀態：新 / 已評分 / 已出刊 / 已過期</span></div>
         <div class="flow-arrow"><span class="lbl">出刊前才跑（一週 2 次：週二、週五）</span><br>↓</div>
-        <div class="flow-step"><strong>① 規則粗篩</strong>（便宜）→ <strong>② LLM 五面向評分</strong>（精判）→ <strong>③ 排序 + 組成一期</strong></div>
+        <div class="flow-step"><strong>① Opus 評估</strong>（硬閘門 + 五面向，整池都看）→ <strong>② 排序 + 組成一期</strong></div>
         <div class="flow-arrow">↓</div>
         <div class="flow-step flow-decide"><strong>AI 初選</strong>：組好整期推薦 + 每篇主理由</div>
         <div class="flow-arrow"><span class="lbl">你拍板：approve / 換 / 否決 / 撈庫存</span><br>↓</div>
@@ -288,26 +288,11 @@
     </section>
 
     <section id="s5">
-      <h2><span class="num">05 · 兩段式篩選</span>便宜規則 + 精準 LLM</h2>
-      <p>採混合策略：用便宜規則清掉雜訊，再讓 LLM 對少數候選做有品味的判斷——成本可控、判斷力到位。</p>
-      <div class="option">
-        <div class="option-label">第一段 · 依產量自適應</div>
-        <h4>規則粗篩（便宜，砍雜訊）</h4>
-        <p>關鍵字相關性（已放寬到「<strong>AI + 鄰近科技 / 食品生技</strong>」，高召回）+ 來源 tier + 時效。但<strong>不是一刀切</strong>——依來源產量決定要不要粗篩：</p>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>來源產量</th><th>第一關做法</th></tr></thead>
-          <tbody>
-            <tr><td><strong>低</strong>（≤ ~20-30 新篇/天）</td><td>跳過關鍵字，<strong>直接交 LLM 全看</strong>——成本微小、免去漏網（最高召回）</td></tr>
-            <tr><td><strong>高</strong>（如 The Spoon 一次數百篇）</td><td>關鍵字先粗砍 → 再 LLM，控制成本</td></tr>
-          </tbody>
-        </table></div>
-        <p style="font-size:0.82rem;color:var(--ink-muted);">關鍵字粗篩本質是會漏、會誤判的省錢代用品（曾有 <code>tail→ai</code> 假陽性、也漏掉沒寫「AI」的食品科技如培養肉）。真正決定成本的是<strong>每日去重後的新篇數</strong>，不是 feed 大小。改用便宜模型（Haiku 級）做第一關語意判斷 + 去重壓小池子，多數來源可直接 LLM 看，關鍵字降級成「高產量來源的成本保險」。</p>
-      </div>
+      <h2><span class="num">05 · Opus 全程評估</span>不靠關鍵字，整池交給強模型</h2>
+      <p>去重後的<strong>每一篇</strong>都直接交給 Opus 做一次完整判斷——先過硬閘門、再打五面向，<strong>同一個模型、同一次呼叫</strong>。不先用關鍵字粗篩、也不用便宜模型墊一關。</p>
+      <blockquote><p>為什麼不先用關鍵字省錢？因為關鍵字<strong>會漏也會誤判</strong>（曾有 <code>tail→ai</code> 假陽性、也漏掉沒寫「AI」的食品科技如培養肉），而真正決定成本的是<strong>每日去重後的新篇數</strong>（通常 ≤25），不是 feed 大小。池子既然夠小，就值得用最強的模型整池全看——最一致、最不漏稿。</p></blockquote>
       <div class="option recommended">
-        <div class="option-label">第二段</div>
-        <h4>LLM 五面向評分（精判，只跑候選）</h4>
-        <p>只對存活的 ~25 篇做真正的編輯判斷。每篇要先過「硬閘門」，再打「五面向」。</p>
-        <h4 style="font-family:var(--sans);font-size:0.8rem;">硬閘門（pass / fail，沒過直接砍）</h4>
+        <div class="option-label">第一步 · 硬閘門（pass / fail，沒過直接砍）</div>
         <ul>
           <li>真的是 AI×食物的交集嗎？<span class="badge pass">語意判斷</span>（不靠字串，擋掉 <code>tail→ai</code> 那類誤判）</li>
           <li>事實可查嗎？不是謠言 / 純炒作稿？</li>
@@ -315,6 +300,11 @@
           <li>（Stream B 限定）翻得成人話嗎？翻不出人味的純技術規格 → 砍</li>
         </ul>
       </div>
+      <div class="option recommended">
+        <div class="option-label">第二步 · 五面向評分（過閘門者，同一次呼叫直接打分）</div>
+        <p>過閘門的文章，Opus 在<strong>同一次回應</strong>裡打「五面向」分數（見下節）、指派 best-fit 編輯（Mise / Passe）、並寫一句 hook 主理由。一篇文章＝一次 Opus 呼叫，省去多一次往返。</p>
+      </div>
+      <p style="font-size:0.82rem;color:var(--ink-muted);">成本上限怎麼控？靠去重把池子壓小，而不是靠關鍵字。若哪天單次抓取異常爆量，再加一個<strong>純數量</strong>上限當成本斷路器即可——絕不退回會誤判的關鍵字粗篩。</p>
     </section>
 
     <section id="s6">
@@ -432,8 +422,7 @@
       <ol>
         <li>修兩個 bug（去重、<code>"ai"</code> substring）</li>
         <li>建 seen store + 去重（先 JSON 檔，後 Supabase）</li>
-        <li>規則粗篩（修好的關鍵字 + tier + 時效 → ~25 候選）</li>
-        <li>LLM 評分 prompt（硬閘門 + 五面向 + 編輯路由 + 主理由）</li>
+        <li>Opus 評估 prompt（整池每篇：硬閘門 + 五面向 + 編輯路由 + 主理由，同一次呼叫）</li>
         <li>初選組裝（組合層級平衡）+ 拍板介面</li>
         <li>庫存 backlog + 保鮮期</li>
         <li>終選回寫 memory</li>

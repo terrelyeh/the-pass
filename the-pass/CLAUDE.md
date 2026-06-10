@@ -89,8 +89,8 @@ Logo 點擊 → demo-index.html
 - **Framework:** Next.js 16 (Turbopack) + TypeScript
 - **Hosting:** Vercel（Production: `thepass.cc` + `the-pass-nine.vercel.app`）
 - **Repo:** github.com/terrelyeh/the-pass
-- **選題 pipeline:** `src/lib/*`（fetcher / dedup / prefilter / relevance / scorer / report / sources），純 TS
-- **LLM:** `@anthropic-ai/sdk`（scorer：screen=`claude-haiku-4-5`、score=`claude-opus-4-8`）。**需 `ANTHROPIC_API_KEY` 才走 live，否則 dry-run（關鍵字代理）**
+- **選題 pipeline:** `src/lib/*`（fetcher / dedup / relevance / scorer / report / sources），純 TS
+- **LLM:** `@anthropic-ai/sdk`（scorer：**Opus 全程評估** `claude-opus-4-8`，硬閘門 + 五面向同一次呼叫）。**需 `ANTHROPIC_API_KEY` 才走 live，否則 dry-run（關鍵字代理）**
 - **Dev 工具:** `tsx`（跑/測 src/lib + scripts；`node` strip-types 無法處理 extensionless import）
 - **Database:** Supabase（尚未接入；seen store 暫用 `data/seen.json`）
 - **Newsletter:** Ghost Pro ($9/月，尚未接)
@@ -111,7 +111,7 @@ the-pass/
 ├── src/
 │   ├── lib/                      ← 選題 pipeline（見下方架構）
 │   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
-│   │   └── fetcher · dedup · prefilter · relevance · scorer · report .ts
+│   │   └── fetcher · dedup · relevance · scorer · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds、/sources-status（Next route，讀 sources.ts）
 ├── scripts/                      ← tsx 腳本：audit-feed / gen-sources-page / demo-report
 ├── .claude/skills/audit-sources/ ← 🆕 /audit-sources skill
@@ -125,8 +125,8 @@ the-pass/
 資料流（每期出刊前跑）：
 
 ```
-抓取 activeSources(RSS) → 去重(dedup: URL + 標題Jaccard 0.6) → 依產量自適應粗篩(prefilter)
-  → LLM 評分(scorer: 硬閘門 + 五面向 + 編輯路由 + hook；dry-run / live) → 排序選一期
+抓取 activeSources(RSS) → 去重(dedup: URL + 標題Jaccard 0.6)
+  → Opus 評估(scorer: 整池每篇都看，硬閘門 + 五面向 + 編輯路由 + hook，同一次呼叫；dry-run / live) → 排序選一期
   → 選題報告(report.ts → HTML) → 總編/團隊拍板
 ```
 
@@ -170,10 +170,10 @@ the-pass/
 ## 下一步（最優先）
 
 ### 1. ⛳ 編輯方向拍板（擋住下游，使用者內部會議中）
-決定：**維持硬性「AI×食物」交集** vs **轉「食物優先、AI 為其中一個角度」**。候選池實測已偏食物優先。**方向定了才動 `scorer.ts` 的硬閘門**——目前先不改。
+決定：**維持硬性「AI×食物」交集** vs **轉「食物優先、AI 為其中一個角度」**。候選池實測已偏食物優先。**方向定了才動硬閘門的「判準」**（AI×食物嚴格度）——模型架構已改 Opus 全程評估，但閘門條件先不動。
 
 ### 2. `/selection-report` skill（一週兩次核心）
-方向定版後，把「抓取→去重→粗篩→評分→產報告→部署」做成 skill（那時 rubric 才正確）。機械層已是程式（src/lib + scripts/demo-report.ts），skill 主要封裝編輯判斷。
+方向定版後，把「抓取→去重→Opus 評估→產報告→部署」做成 skill（那時 rubric 才正確）。機械層已是程式（src/lib + scripts/demo-report.ts），skill 主要封裝編輯判斷。
 
 ### 3. 接真實 LLM
 使用者自行在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。

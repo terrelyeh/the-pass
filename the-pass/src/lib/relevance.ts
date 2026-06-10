@@ -1,7 +1,8 @@
-// === 關鍵字相關性評分（第一關粗篩用）===
-// 純函式、零依賴，故 fetcher 與 prefilter 都能 import 而不產生循環或 RSS 依賴。
-// 「第一關粗篩」刻意放寬到 AI + 鄰近科技（含食品生技），高召回為主——
-// 「夠不夠 AI / 有沒有料」的品牌判斷交給後段 LLM 語意閘門（決策見 selection-mechanism.md）。
+// === 關鍵字相關性評分 ===
+// 純函式、零依賴，故 fetcher / scorer 都能 import 而不產生循環或 RSS 依賴。
+// 用途：scorer 在「dry-run（無金鑰）」時用它當確定性代理，讓 pipeline 端到端可測。
+// 正式評估已改為 Opus 全程（硬閘門 + 五面向），不再用關鍵字粗篩（決策見 selection-mechanism.md）。
+// 刻意放寬到 AI + 鄰近科技（含食品生技），高召回為主。
 
 export interface Scorable {
   title: string;
