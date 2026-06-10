@@ -20,6 +20,11 @@
 .p-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem;border-bottom:2px solid var(--accent-light);padding-bottom:.4rem;margin-bottom:.7rem}
 .p-head h2{font-family:var(--display);font-size:1.5rem;font-weight:400}.p-when{font-size:.78rem;color:var(--ink-muted)}
 .tldr{font-family:var(--serif);font-size:1rem;line-height:1.75;color:var(--ink);margin:.4rem 0 .6rem}
+.hours-bd{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:.2rem 0 .9rem;font-size:.74rem}
+.hours-bd .hb-lbl{color:var(--ink-muted);font-weight:600;letter-spacing:.03em;margin-right:.1rem}
+.hours-bd .hb{display:inline-flex;gap:.3rem;align-items:baseline;background:var(--bg-warm);border:1px solid var(--border);border-radius:100px;padding:.12rem .55rem;color:var(--ink-light)}
+.hours-bd .hb b{font-weight:700;color:var(--ink)}
+.hours-bd .hb.tot{background:rgba(184,134,11,.1);border-color:var(--accent-light);color:var(--accent);font-weight:700}
 .result{margin:0 0 .9rem;font-size:.86rem;font-weight:500}
 .tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.86rem}
 th{text-align:left;padding:.45rem .6rem;border-bottom:2px solid var(--border);font-size:.66rem;letter-spacing:.04em;color:var(--ink-muted);text-transform:uppercase;white-space:nowrap}
@@ -47,6 +52,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
   <section id="p-2026-06-10" class="period">
     <div class="p-head"><h2>本週實作</h2><span class="p-when">2026-06-10 · AI 協作 4 hr</span></div>
     <p class="tldr">完成「選題自動化系統」與「編輯會議用的選題報告」，並把來源庫收斂成 30 個聚焦食物的來源。本期請團隊拍板一個編輯方向。</p>
+    <div class="hours-bd"><span class="hb-lbl">AI 協作工時</span><span class="hb">6/09<b>2.5 hr</b></span><span class="hb">6/10<b>1.5 hr</b></span><span class="hb tot">合計 4 hr</span></div>
     <p class="result"><a href="https://thepass.cc/hub.html" target="_blank" rel="noopener">→ 看本週成果（選題系統入口）</a></p>
     <div class="tbl"><table><thead><tr><th>交付項目</th><th>內容 / 價值</th><th>連結</th><th>狀態</th></tr></thead><tbody>
       <tr><td class="it">選題自動化系統</td><td class="v">抓取 → 去重 → 初篩 → AI 評分 → 選題報告。把「憑感覺挑題」變成有方法、可重複</td><td>—</td><td class="st">完成</td></tr><tr><td class="it">來源庫盤點與收斂</td><td class="v">審核 50+ 來源 → 收斂成 30 個聚焦食物的來源 + 取材策略</td><td><a href="https://thepass.cc/sources-status" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">來源審核工具 /audit-sources</td><td class="v">一鍵評估新來源該不該收，可重複</td><td><a href="https://thepass.cc/audit-sources.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">選題報告（會議文件）</td><td class="v">建議出刊 + 完整候選名單 + 庫存 + 已篩除理由 + 本週掃描來源，會議可互動挑選</td><td><a href="https://thepass.cc/selection-report-demo.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">統一入口 hub + 機制/審核說明</td><td class="v">團隊隨時可看最新狀況</td><td><a href="https://thepass.cc/hub.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr>
