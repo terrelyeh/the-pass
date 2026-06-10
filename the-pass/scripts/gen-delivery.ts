@@ -66,17 +66,17 @@ const html = `<!DOCTYPE html>
 :root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
 *{margin:0;padding:0;box-sizing:border-box}html{font-size:18px;scroll-behavior:smooth}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 .top{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--border);background:var(--white)}
-.top-in{max-width:1080px;margin:0 auto;padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
-.top h1{font-family:var(--display);font-size:1.4rem;font-weight:400}.top h1 .s{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;display:block;font-family:var(--sans);margin-bottom:.1rem}
+.top-in{max-width:1080px;margin:0 auto;padding:.5rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.top h1{font-family:var(--display);font-size:1.25rem;font-weight:400;line-height:1.25}
 .top .stat{font-size:.78rem;color:var(--ink-muted)}.top .stat b{color:var(--accent);font-family:var(--display);font-size:1.05rem}
 .layout{display:grid;grid-template-columns:210px 1fr;max-width:1080px;margin:0 auto;min-height:calc(100vh - 4rem)}
-.side{position:sticky;top:3.4rem;align-self:start;height:calc(100vh - 3.4rem);overflow-y:auto;border-right:1px solid var(--border);background:var(--white);padding:1.6rem 1rem 2rem 1.25rem}
+.side{position:sticky;top:2.9rem;align-self:start;height:calc(100vh - 2.9rem);overflow-y:auto;border-right:1px solid var(--border);background:var(--white);padding:1.6rem 1rem 2rem 1.25rem}
 .side .lbl{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;margin-bottom:.7rem}
 .side a{display:block;text-decoration:none;padding:.45rem .6rem;border-radius:6px;margin-bottom:.2rem}.side a:hover{background:var(--bg-warm)}
 .side a .d{font-size:.78rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}.side a .t{font-size:.74rem;color:var(--ink-light);line-height:1.4}
 .side .more{font-size:.7rem;color:var(--ink-muted);margin-top:.4rem;padding:.3rem .6rem}
 .main{padding:1.8rem 2rem 4rem;max-width:760px}
-.period{margin-bottom:2.5rem;scroll-margin-top:3.8rem}
+.period{margin-bottom:2.5rem;scroll-margin-top:3.2rem}
 .p-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem;border-bottom:2px solid var(--accent-light);padding-bottom:.4rem;margin-bottom:.7rem}
 .p-head h2{font-family:var(--display);font-size:1.5rem;font-weight:400}.p-when{font-size:.78rem;color:var(--ink-muted)}
 .tldr{font-family:var(--serif);font-size:1rem;line-height:1.75;color:var(--ink);margin:.4rem 0 .6rem}
@@ -94,14 +94,13 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 @media(max-width:820px){.layout{grid-template-columns:1fr}.side{display:none}.main{padding:1.3rem 1.4rem 3rem}.top h1{font-size:1.2rem}}
 </style></head><body>
 <div class="top"><div class="top-in">
-  <h1><span class="s">Consulting</span>AI 編輯專案 ｜ 顧問交付紀錄</h1>
+  <h1>AI 編輯專案 ｜ 顧問交付紀錄</h1>
   <div class="stat">累計 <b>${totalItems}</b> 項交付 · AI 協作 <b>${totalHours}</b> hr</div>
 </div></div>
 <div class="layout">
   <aside class="side">
-    <div class="lbl">目錄</div>
+    <div class="lbl">進度紀錄</div>
     ${periods.map((p) => `<a href="#p-${esc(p.label)}"><span class="d">${esc(p.label)}</span><span class="t">${esc(p.topic)}</span></a>`).join("")}
-    <a href="hub.html" class="more">← 回入口</a>
   </aside>
   <main class="main">
     ${periods.map((p, i) => periodBlock(p, i === 0)).join("")}
