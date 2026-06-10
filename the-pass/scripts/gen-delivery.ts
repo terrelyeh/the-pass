@@ -52,7 +52,7 @@ const periodBlock = (p: Period, isLatest: boolean) => `
     <p class="tldr">${esc(p.tldr)}</p>
     ${p.resultLink ? `<p class="result"><a href="${esc(p.resultLink)}" target="_blank" rel="noopener">→ 看本週成果（選題系統入口）</a></p>` : ""}
     <div class="tbl"><table><thead><tr><th>交付項目</th><th>內容 / 價值</th><th>連結</th><th>狀態</th></tr></thead><tbody>
-      ${p.deliverables.map((d) => `<tr><td class="it">${esc(d.item)}</td><td class="v">${esc(d.value)}</td><td>${d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">看 ↗</a>` : "—"}</td><td class="st">${esc(d.status)}</td></tr>`).join("")}
+      ${p.deliverables.map((d) => `<tr><td class="it">${esc(d.item)}</td><td class="v">${esc(d.value)}</td><td>${d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">↗</a>` : "—"}</td><td class="st">${esc(d.status)}</td></tr>`).join("")}
     </tbody></table></div>
     <div class="blk decide"><h3>需團隊決策</h3><ul>${p.decisions.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
     <div class="blk"><h3>接下來任務</h3><ul>${p.next.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
