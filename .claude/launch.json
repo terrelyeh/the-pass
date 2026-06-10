@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["--prefix", "the-pass", "run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "the-pass-static",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "the-pass/public", "-l", "3001"],
+      "port": 3001
     }
   ]
 }
