@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>選題系統入口 — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:18px}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:3rem 1.5rem 5rem}
+.hero{text-align:center;margin-bottom:2rem}
+.hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h1{font-family:var(--display);font-size:2.6rem;font-weight:400;margin:.4rem 0 .35rem}
+.hero .sub{color:var(--ink-muted);font-size:.92rem;max-width:520px;margin:0 auto}
+.sec-label{font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:2.2rem 0 .8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.8rem}
+.card{display:block;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.3rem;text-decoration:none;transition:border-color .15s,transform .15s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--accent-light);transform:translateY(-2px)}
+.card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent-light)}
+.card.live::before{background:var(--green)}
+.card .t{font-family:var(--serif);font-size:1.08rem;font-weight:600;color:var(--ink);margin-bottom:.25rem;display:flex;align-items:center;gap:.4rem}
+.card .d{font-size:.82rem;color:var(--ink-light);line-height:1.55}
+.tag{font-size:.6rem;font-weight:700;padding:.1rem .45rem;border-radius:100px;background:rgba(39,174,96,.14);color:var(--green)}
+.foot{text-align:center;color:var(--ink-muted);font-size:.76rem;margin-top:3.5rem;border-top:1px solid var(--border);padding-top:1.5rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
+</style></head><body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">The Pass · 出菜口</div>
+    <h1>選題系統入口</h1>
+    <p class="sub">選題機制、來源、每期報告的統一入口。給編輯室與團隊隨時查看。</p>
+  </div>
+
+  <div class="sec-label">🍳 選題系統（運作中）</div>
+  <div class="grid">
+    <a class="card" href="selection-mechanism.html"><div class="t">篩選機制設計</div><div class="d">從原料到一期的完整流程：兩條進料線、去重、評分、初選、拍板。</div></a>
+    <a class="card live" href="sources.html"><div class="t">選題來源 <span class="tag">LIVE</span></div><div class="d">所有來源（tier 分組）。由 sources.ts 自動生成。</div></a>
+    <a class="card live" href="sources-status"><div class="t">來源狀態 <span class="tag">LIVE</span></div><div class="d">Active / Pending 即時狀態，依 Stream 分組。</div></a>
+    <a class="card" href="selection-report-demo.html"><div class="t">選題報告（示範）</div><div class="d">每期 pipeline 產出的選題會文件：建議出刊、庫存、已篩除、本週掃描來源。</div></a>
+  </div>
+
+  <div class="sec-label">📄 內部文件</div>
+  <div class="grid">
+    <a class="card" href="project-brief.html"><div class="t">提案簡報</div><div class="d">The Pass 完整專案說明，從定位到 Roadmap。</div></a>
+    <a class="card" href="editorial-guidelines.html"><div class="t">編輯指南</div><div class="d">品牌聲音、反 AI 味規則、四位編輯 System Prompts。</div></a>
+    <a class="card" href="editors.html"><div class="t">AI 編輯室</div><div class="d">Mise / Passe / Fumet 人設與 profile。</div></a>
+    <a class="card" href="illustration-guide.html"><div class="t">插畫指南</div><div class="d">利落線條 × Risograph 印刷感、動態插畫規格。</div></a>
+    <a class="card" href="implementation-plan.html"><div class="t">實作計畫</div><div class="d">系統架構、每期產出流程、自動化分級。</div></a>
+    <a class="card" href="demo-index.html"><div class="t">Demo 目錄</div><div class="d">所有示範期刊的索引頁。</div></a>
+  </div>
+
+  <div class="foot"><div class="b">The Pass 出菜口</div>選題系統入口 · Intelligence, served.</div>
+</div></body></html>
