@@ -12,8 +12,11 @@
 每期出刊前，pipeline 自動把世界各地的飲食新知選成一份「選題報告」，給編輯室開會拍板：
 
 ```
-抓取（active 來源 RSS）→ 去重 → 依產量自適應粗篩 → LLM 五面向評分 → 排序選一期 → 選題報告
+抓取（active 來源 RSS）→ 去重 → Opus 全程評估（硬閘門 + 五面向）
+  → 庫存合併競爭（上期沒選上的一起排序）→ 選一期 → 選題報告
 ```
+
+去重後每篇都由 Opus 做一次完整評估（不靠關鍵字粗篩）；合格沒選上的進**庫存**，帶保鮮期、下期跟新文章重新競爭——永遠選「當下最好的」。
 
 入口頁集中所有工具：[**thepass.cc/hub.html**](https://thepass.cc/hub.html)
 
@@ -41,9 +44,10 @@ npm run dev            # http://localhost:3000
 npx tsx scripts/audit-feed.ts <url...>      # 來源 feed 探測
 npx tsx scripts/gen-sources-page.ts         # 從 sources.ts 重生 public/sources.html
 npx tsx scripts/demo-report.ts              # 產出選題報告 HTML
+npx tsx scripts/test-backlog.ts             # 庫存跨期競爭測試
 ```
 
-- **Stack:** Next.js 16 (TypeScript) · `@anthropic-ai/sdk`（評分）· Vercel
+- **Stack:** Next.js 16 (TypeScript) · `@anthropic-ai/sdk`（Opus 評分）· Vercel
 - 真實 LLM 評分需在 `.env.local` 設 `ANTHROPIC_API_KEY`（否則走 dry-run）。
 - 來源是單一真實來源 `src/lib/sources.ts`——改它後重生頁面即可，勿手改 `public/sources.html`。
 

@@ -138,36 +138,11 @@ the-pass/
 - **報告**：`report.ts` 渲染品牌化 HTML（漏斗統計、建議出刊、完整候選池、庫存、已篩除、本週掃描來源）；切角可點選（A 預設）+ 退庫存即時互動（純前端、不存檔）。
 - 設計全文：`docs/selection-mechanism.md`；來源審核標準：`docs/source-verification-checklist.md`。
 
-## 已完成的里程碑
+## 已完成（功能全貌見 [README.md](README.md) 與 git log）
 
-- [x] 品牌定位 + Executive Summary（含 meta-narrative：用 AI 報導 AI）
-- [x] 品牌名確定：The Pass 出菜口
-- [x] Project Brief 完整版（9 章 + 附錄）
-- [x] 編輯指南 + 4 位 AI 編輯的 System Prompts
-- [x] 3 期 Demo Issues + 總編輯審核流程實測
-- [x] AI 編輯頭像 + profile 頁 + AI 編輯室
-- [x] 插畫風格確立 + 文章插畫
-- [x] IG Carousel Repurpose Demo
-- [x] 選題來源清單（33 個，5 種語言）
-- [x] docs/ Markdown 版內部文件
-- [x] 方法論 → 「關於 The Pass」品牌宣言頁
-- [x] 拆分 methodology.html 為 about.html（品牌故事）+ methodology.html（方法論）
-- [x] Nav 分內部/外部兩套 + Logo 連結邏輯（外部 3 連結：關於 The Pass、方法論、AI 編輯室）
-- [x] 移除所有 target=_blank（站內連結不開新視窗）
-- [x] 「品味」用詞全站替換為「觀點/偏好/分享」
-- [x] 商業計畫討論 + 虛擬 KOL 三階段規劃
-- [x] 域名 thepass.cc 購買 + Vercel 連結
-- [x] Soul.md 初版完成（Mise / Passe / Fumet）+ 寫作影響整合
-- [x] AI 編輯人格架構文件完成（Soul + Memory + 技術實作方案）
-- [x] 四位作者風格拆解（Sunny、劉揚銘、Mokki、Agnes）並整合進 Soul
-- [x] 手機版漢堡選單修復（全部頁面 840px 斷點）
-- [x] Demo Issue #003 加入動態影片（靜態圖 → AI 動態化）
-- [x] 插畫指南新增：動態插畫規格（Sec.09）+ 視覺變化策略（Sec.10）
-- [x] 快訊 spot illustration 測試 → 決定不採用（閱讀斷裂感）
-- [x] **選題 pipeline 實作**：抓取→去重→粗篩→LLM 評分→選題報告（src/lib/*，已測）
-- [x] **來源系統收斂**：食物優先、移除純 AI 源 → 30 來源（active 29），sources.ts 單一真實來源、頁面自動生成
-- [x] **選題報告**（內部編輯會議文件）+ 第一次真實 curate（29 來源、16 候選池、可互動切角）
-- [x] **統一入口 hub** + 來源狀態(即時) + **/audit-sources skill** + 說明頁
+- **選題系統（已上線）**：抓取 → 去重 → **Opus 全程評估** → **庫存跨期競爭** → 選題報告 → hub / 來源狀態 / `/audit-sources`。來源收斂成 30（active 29），`sources.ts` 單一真實來源、頁面自動生成。
+- **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
+- **品牌 / 編輯 / 網站基礎**：品牌定位 + Project Brief、4 位 AI 編輯人設 + Soul（`docs/editors/*-soul.md`）、3 期 Demo Issues、插畫指南、域名 thepass.cc + Vercel。
 
 ## 下一步（最優先）
 
