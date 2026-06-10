@@ -64,4 +64,7 @@ async function findAndParse(url: string) {
       console.log(`     • ${(it.title || "").slice(0, 70)}${snip ? " — " + snip : ""}`);
     });
   }
-})();
+})().then(
+  () => process.exit(0),
+  (e) => { console.error(e); process.exit(1); }
+);
