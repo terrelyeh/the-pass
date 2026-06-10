@@ -51,7 +51,7 @@ export const sources: Source[] = [
   { id: "food-tech-insider", name: "Food Tech Insider", url: "https://www.foodtechinsider.net", feedUrl: "https://www.foodtechinsider.net/feed", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "active", description: "AI/替代蛋白/培養肉 週報；食品科技導向" },
 
   // ============================================================
-  // Pending — 飲食/餐飲在地（Stream A，feed 已 audit，待啟用）
+  // 在地飲食/餐飲（Stream A）— 已啟用（除 nissyoku：feed 失效）
   // ============================================================
   { id: "restaurant-dive", name: "Restaurant Dive", url: "https://www.restaurantdive.com", feedUrl: "https://www.restaurantdive.com/feeds/news/", language: "en", category: "food-industry", tier: 2, stream: "A", feedType: "rss", status: "active", description: "US 餐廳產業科技/AI 導入報導（feed 可用，待 density）" },
   { id: "food-institute", name: "The Food Institute", url: "https://foodinstitute.com", feedUrl: "https://foodinstitute.com/feed/", language: "en", category: "food-industry", tier: 3, stream: "A", feedType: "rss", status: "active", description: "US 食品產業分析（feed 可用，待 density）" },
@@ -64,11 +64,19 @@ export const sources: Source[] = [
   { id: "foodtoday", name: "푸드투데이", url: "https://www.foodtoday.or.kr", feedUrl: "https://www.foodtoday.or.kr/data/rss/news.xml", language: "ko", category: "food-industry", tier: 4, stream: "A", feedType: "rss", status: "active", description: "韓國食品媒體（feed 可用）" },
 
   // ============================================================
-  // Pending — 食品科技 / 觀點（Stream B，輔助）
+  // 食品科技 / 觀點（Stream B，輔助）— 已啟用
   // ============================================================
   { id: "digitalfoodlab", name: "DigitalFoodLab", url: "https://digitalfoodlab.com", feedUrl: "https://digitalfoodlab.com/feed/", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "active", description: "獨立 food-tech 分析師 blog；補『獨立觀點』缺口（feed 可用）" },
   { id: "good-food-institute", name: "Good Food Institute", url: "https://gfi.org", feedUrl: "https://gfi.org/feed/", language: "en", category: "ai-food-tech", tier: 4, stream: "B", feedType: "rss", status: "active", description: "替代蛋白智庫（feed 可用）" },
   { id: "oy-vey-food", name: "Oy Vey It's A Food Newsletter", url: "https://oyveyitskay.substack.com", feedUrl: "https://oyveyitskay.substack.com/feed", language: "en", category: "culture-opinion", tier: 5, stream: "B", feedType: "rss", status: "active", description: "kayla kaplan 諷刺素食視角；Phase 2 第四位編輯候選" },
+
+  // ============================================================
+  // 獨立飲食文化電子報（觀點/聲音，Stream A）— web 搜尋 + recency 驗證
+  // 已濾掉停更：Foodstuff(2024)。紙本雜誌類（Picnic/Pit/Sandwich 等）無可用 feed，當編輯靈感、不進 pipeline。
+  // ============================================================
+  { id: "table-talk", name: "Table Talk", url: "https://tabletalkk.substack.com", feedUrl: "https://tabletalkk.substack.com/feed", language: "en", category: "culture-opinion", tier: 4, stream: "A", feedType: "rss", status: "active", description: "獨立飲食文化電子報；廚房實驗 + 飲食文化深掘（2026 活躍）" },
+  { id: "jennifer-makan", name: "Jennifer Makan", url: "https://jennifermakan.substack.com", feedUrl: "https://jennifermakan.substack.com/feed", language: "en", category: "culture-opinion", tier: 4, stream: "A", feedType: "rss", status: "active", description: "食物/酒/文化/政治觀點；偶觸 AI（如〈別用 AI 點酒〉）（2026 活躍）" },
+  { id: "sourced-journeys", name: "Sourced Journeys", url: "https://sourcedjourneys.substack.com", feedUrl: "https://sourcedjourneys.substack.com/feed", language: "en", category: "culture-opinion", tier: 4, stream: "A", feedType: "rss", status: "active", description: "SOURCED 餐廳文化研究 + 編輯觀點（2026 活躍）" },
 ];
 
 // === Helpers ===
