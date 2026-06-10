@@ -15,7 +15,7 @@ export interface ReportPiece {
   editor: Editor;
   role: "feature" | "quick"; // 出刊角色：長文（Mise）/ 快訊（Passe）
   hook: string; // 主理由「為什麼是這篇」
-  note?: string; // 切角建議
+  angles?: string[]; // 切角選項（≥2，供選題會挑換）
 }
 
 // Fumet 的結尾提問：從本期選出的長文「提煉」而來，不是從候選選稿、不打分。
@@ -82,23 +82,29 @@ function dimBars(d: Dimensions): string {
 
 function pieceCard(p: ReportPiece, idx: number): string {
   const roleClass = p.role === "feature" ? "feature" : "quick";
+  const angles = p.angles && p.angles.length ? p.angles : [];
+  const anglesHtml = angles.length
+    ? `<div class="angles"><div class="angles-h">🎬 切角（選一個重寫）</div>${angles
+        .map((a, i) => `<div class="angle"><span class="angle-k">${["A", "B", "C", "D"][i] ?? String(i + 1)}</span>${esc(a)}</div>`)
+        .join("")}</div>`
+    : "";
   return `
-  <div class="piece ${roleClass}">
+  <div class="piece ${roleClass}" data-decidable>
     <div class="piece-head">
       <span class="rank">${idx}</span>
       <span class="editor editor-${p.editor}">${EDITOR_LABEL[p.editor]}</span>
       <span class="weighted">${p.weighted}</span>
       <span class="decide">
-        <label><input type="checkbox" checked> 採用</label>
-        <label><input type="checkbox"> 換切角</label>
-        <label><input type="checkbox"> 退庫存</label>
+        <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
+        <label><input type="checkbox" class="dc-angle"> 換切角</label>
+        <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
       </span>
     </div>
     <h3>${esc(p.title)}</h3>
     <div class="meta">${esc(p.source)}${p.lang ? " · " + esc(p.lang) : ""}${p.date ? " · " + esc(p.date) : ""} · <a href="${esc(p.link)}" target="_blank" rel="noopener">原文 ↗</a></div>
     ${dimBars(p.dimensions)}
     <p class="hook"><strong>💡 為什麼是這篇：</strong>${esc(p.hook)}</p>
-    ${p.note ? `<p class="note">🎬 切角：${esc(p.note)}</p>` : ""}
+    ${anglesHtml}
   </div>`;
 }
 
@@ -153,6 +159,13 @@ export function renderReport(r: SelectionReport): string {
 .dim .dbf{display:block;height:100%;background:var(--accent-light)}.dim .dv{font-weight:700;color:var(--ink-light)}
 .hook{font-family:var(--serif);font-size:1.02rem;line-height:1.72;margin:.4rem 0 .2rem}.hook strong{color:var(--accent)}
 .note{font-size:.86rem;color:var(--ink-light);font-style:italic}
+.angles{margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border)}
+.angles-h{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin-bottom:.3rem}
+.angle{font-size:.86rem;color:var(--ink-light);line-height:1.6;margin:.18rem 0;display:flex;gap:.5rem;align-items:baseline}
+.angle-k{font-family:var(--sans);font-size:.66rem;font-weight:700;color:#fff;background:var(--accent-light);border-radius:4px;padding:.05rem .4rem;flex:none}
+.piece.dropped{opacity:.45}.piece.dropped h3{text-decoration:line-through}.piece.dropped .angles{display:none}
+.piece.reangle{box-shadow:inset 0 0 0 1.5px var(--accent-light)}.piece.reangle .angles{background:#fffdf6;border-radius:6px;padding:.5rem .6rem;border-top:none}
+.decide-summary{font-family:var(--sans);font-size:.84rem;font-weight:600;color:var(--ink-light);background:var(--bg-warm);border:1px solid var(--border);border-radius:8px;padding:.45rem .9rem;display:inline-block;margin:.2rem 0 .7rem}.decide-summary b{color:var(--ink)}
 .piece.fumet-q::before{background:#7B8A6E;width:4px}
 .fq{font-family:var(--serif);font-size:1.1rem;line-height:1.75;color:var(--ink);margin:.35rem 0 .2rem}
 .fq-tag{margin-left:auto;font-size:.66rem;color:var(--ink-muted)}
@@ -184,7 +197,8 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
     <div class="fstep hi"><div class="n">${r.stats.selected}</div><div class="l">建議入選</div></div>
   </div>
 
-  <div class="sec"><h2>本期建議出刊</h2><div class="h-sub">每篇附五面向分數 + 主理由 + 建議編輯。勾選框供選題會即時拍板（採用 / 換切角 / 退庫存）。</div></div>
+  <div class="sec"><h2>本期建議出刊</h2><div class="h-sub">每篇附五面向分數 + 主理由 + 多個切角。勾選即時更新畫面（換切角＝故事留、換角度；退庫存＝整則退、變灰）。決定不會儲存，純會議輔助。</div></div>
+  <div class="decide-summary" id="ds">採用 <b>—</b> · 換切角 <b>—</b> · 退庫存 <b>—</b></div>
   ${features.length ? `<div class="block-label">長文（Mise）</div>${features.map((p, i) => pieceCard(p, i + 1)).join("")}` : ""}
   ${quicks.length ? `<div class="block-label">快訊（Passe）</div>${quicks.map((p, i) => pieceCard(p, features.length + i + 1)).join("")}` : ""}
   ${
@@ -242,5 +256,31 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
   }
 
   <div class="foot"><div class="b">The Pass 出菜口</div>內部選題報告 · 機器初選、人來拍板</div>
-</div></body></html>`;
+</div>
+<script>
+(function(){
+  function refresh(){
+    var a=0,c=0,b=0;
+    document.querySelectorAll('.piece[data-decidable]').forEach(function(p){
+      var ad=p.querySelector('.dc-adopt'),an=p.querySelector('.dc-angle'),bk=p.querySelector('.dc-backlog');
+      p.classList.toggle('dropped', bk.checked);
+      p.classList.toggle('reangle', an.checked && !bk.checked);
+      if(bk.checked) b++; else if(ad.checked) a++;
+      if(an.checked && !bk.checked) c++;
+    });
+    var ds=document.getElementById('ds');
+    if(ds) ds.innerHTML='採用 <b>'+a+'</b> · 換切角 <b>'+c+'</b> · 退庫存 <b>'+b+'</b>';
+  }
+  document.addEventListener('change', function(e){
+    var t=e.target; if(!t.classList) return;
+    if(!(t.classList.contains('dc-adopt')||t.classList.contains('dc-angle')||t.classList.contains('dc-backlog'))) return;
+    var p=t.closest('.piece');
+    if(t.classList.contains('dc-backlog') && t.checked){ var ad=p.querySelector('.dc-adopt'); if(ad) ad.checked=false; }
+    if(t.classList.contains('dc-adopt') && t.checked){ var bk=p.querySelector('.dc-backlog'); if(bk) bk.checked=false; }
+    refresh();
+  });
+  refresh();
+})();
+</script>
+</body></html>`;
 }
