@@ -84,8 +84,8 @@ function pieceCard(p: ReportPiece, idx: number): string {
   const roleClass = p.role === "feature" ? "feature" : "quick";
   const angles = p.angles && p.angles.length ? p.angles : [];
   const anglesHtml = angles.length
-    ? `<div class="angles"><div class="angles-h">🎬 切角（選一個重寫）</div>${angles
-        .map((a, i) => `<div class="angle"><span class="angle-k">${["A", "B", "C", "D"][i] ?? String(i + 1)}</span>${esc(a)}</div>`)
+    ? `<div class="angles"><div class="angles-h">🎬 切角（A 為預設，點選即換）</div>${angles
+        .map((a, i) => `<div class="angle${i === 0 ? " sel" : ""}"><span class="angle-k">${["A", "B", "C", "D"][i] ?? String(i + 1)}</span><span class="angle-t">${esc(a)}</span></div>`)
         .join("")}</div>`
     : "";
   return `
@@ -96,7 +96,6 @@ function pieceCard(p: ReportPiece, idx: number): string {
       <span class="weighted">${p.weighted}</span>
       <span class="decide">
         <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
-        <label><input type="checkbox" class="dc-angle"> 換切角</label>
         <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
       </span>
     </div>
@@ -161,8 +160,11 @@ export function renderReport(r: SelectionReport): string {
 .note{font-size:.86rem;color:var(--ink-light);font-style:italic}
 .angles{margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border)}
 .angles-h{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin-bottom:.3rem}
-.angle{font-size:.86rem;color:var(--ink-light);line-height:1.6;margin:.18rem 0;display:flex;gap:.5rem;align-items:baseline}
+.angle{font-size:.86rem;color:var(--ink-light);line-height:1.55;margin:.12rem 0;display:flex;gap:.5rem;align-items:baseline;cursor:pointer;border-radius:6px;padding:.25rem .4rem;transition:background .12s}
+.angle:hover{background:var(--bg-warm)}
+.angle.sel{background:#fffaf0;box-shadow:inset 0 0 0 1px var(--accent-light)}.angle.sel .angle-t{color:var(--ink);font-weight:500}
 .angle-k{font-family:var(--sans);font-size:.66rem;font-weight:700;color:#fff;background:var(--accent-light);border-radius:4px;padding:.05rem .4rem;flex:none}
+.angle.sel .angle-k{background:var(--accent)}
 .piece.dropped{opacity:.45}.piece.dropped h3{text-decoration:line-through}.piece.dropped .angles{display:none}
 .piece.reangle{box-shadow:inset 0 0 0 1.5px var(--accent-light)}.piece.reangle .angles{background:#fffdf6;border-radius:6px;padding:.5rem .6rem;border-top:none}
 .decide-summary{font-family:var(--sans);font-size:.84rem;font-weight:600;color:var(--ink-light);background:var(--bg-warm);border:1px solid var(--border);border-radius:8px;padding:.45rem .9rem;display:inline-block;margin:.2rem 0 .7rem}.decide-summary b{color:var(--ink)}
@@ -197,8 +199,8 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
     <div class="fstep hi"><div class="n">${r.stats.selected}</div><div class="l">建議入選</div></div>
   </div>
 
-  <div class="sec"><h2>本期建議出刊</h2><div class="h-sub">每篇附五面向分數 + 主理由 + 多個切角。勾選即時更新畫面（換切角＝故事留、換角度；退庫存＝整則退、變灰）。決定不會儲存，純會議輔助。</div></div>
-  <div class="decide-summary" id="ds">採用 <b>—</b> · 換切角 <b>—</b> · 退庫存 <b>—</b></div>
+  <div class="sec"><h2>本期建議出刊</h2><div class="h-sub">每篇附五面向分數 + 主理由 + 多個切角（A 為預設，點 B/C 即換角度）。採用/退庫存即時更新；不存檔，純會議輔助。</div></div>
+  <div class="decide-summary" id="ds">採用 <b>—</b> · 換角度 <b>—</b> · 退庫存 <b>—</b></div>
   ${features.length ? `<div class="block-label">長文（Mise）</div>${features.map((p, i) => pieceCard(p, i + 1)).join("")}` : ""}
   ${quicks.length ? `<div class="block-label">快訊（Passe）</div>${quicks.map((p, i) => pieceCard(p, features.length + i + 1)).join("")}` : ""}
   ${
@@ -262,18 +264,29 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
   function refresh(){
     var a=0,c=0,b=0;
     document.querySelectorAll('.piece[data-decidable]').forEach(function(p){
-      var ad=p.querySelector('.dc-adopt'),an=p.querySelector('.dc-angle'),bk=p.querySelector('.dc-backlog');
+      var ad=p.querySelector('.dc-adopt'),bk=p.querySelector('.dc-backlog');
       p.classList.toggle('dropped', bk.checked);
-      p.classList.toggle('reangle', an.checked && !bk.checked);
+      var angs=p.querySelectorAll('.angle'), sel=0;
+      angs.forEach(function(el,i){ if(el.classList.contains('sel')) sel=i; });
+      var changed = sel>0 && !bk.checked;
+      p.classList.toggle('reangle', changed);
       if(bk.checked) b++; else if(ad.checked) a++;
-      if(an.checked && !bk.checked) c++;
+      if(changed) c++;
     });
     var ds=document.getElementById('ds');
-    if(ds) ds.innerHTML='採用 <b>'+a+'</b> · 換切角 <b>'+c+'</b> · 退庫存 <b>'+b+'</b>';
+    if(ds) ds.innerHTML='採用 <b>'+a+'</b> · 換角度 <b>'+c+'</b> · 退庫存 <b>'+b+'</b>';
   }
+  document.addEventListener('click', function(e){
+    var ang=e.target.closest ? e.target.closest('.angle') : null;
+    if(!ang) return;
+    var p=ang.closest('.piece'); if(!p) return;
+    p.querySelectorAll('.angle').forEach(function(el){ el.classList.remove('sel'); });
+    ang.classList.add('sel');
+    refresh();
+  });
   document.addEventListener('change', function(e){
     var t=e.target; if(!t.classList) return;
-    if(!(t.classList.contains('dc-adopt')||t.classList.contains('dc-angle')||t.classList.contains('dc-backlog'))) return;
+    if(!(t.classList.contains('dc-adopt')||t.classList.contains('dc-backlog'))) return;
     var p=t.closest('.piece');
     if(t.classList.contains('dc-backlog') && t.checked){ var ad=p.querySelector('.dc-adopt'); if(ad) ad.checked=false; }
     if(t.classList.contains('dc-adopt') && t.checked){ var bk=p.querySelector('.dc-backlog'); if(bk) bk.checked=false; }
