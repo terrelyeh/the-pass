@@ -1,6 +1,6 @@
 # CLAUDE.md — The Pass 出菜口 Project Context
 
-> Last updated: 2026-03-26
+> Last updated: 2026-06-10
 
 ## Project Overview
 
@@ -89,35 +89,52 @@ Logo 點擊 → demo-index.html
 - **Framework:** Next.js 16 (Turbopack) + TypeScript
 - **Hosting:** Vercel（Production: `thepass.cc` + `the-pass-nine.vercel.app`）
 - **Repo:** github.com/terrelyeh/the-pass
-- **Database:** Supabase（尚未接入）
-- **Newsletter:** Ghost Pro ($9/月)
-- **AI:** Claude API（翻譯、摘要、撰寫、總編輯 review）
+- **選題 pipeline:** `src/lib/*`（fetcher / dedup / prefilter / relevance / scorer / report / sources），純 TS
+- **LLM:** `@anthropic-ai/sdk`（scorer：screen=`claude-haiku-4-5`、score=`claude-opus-4-8`）。**需 `ANTHROPIC_API_KEY` 才走 live，否則 dry-run（關鍵字代理）**
+- **Dev 工具:** `tsx`（跑/測 src/lib + scripts；`node` strip-types 無法處理 extensionless import）
+- **Database:** Supabase（尚未接入；seen store 暫用 `data/seen.json`）
+- **Newsletter:** Ghost Pro ($9/月，尚未接)
 - **Image:** AI 圖片生成（nanobanana）
 
 ## 目錄結構
 
 ```
 the-pass/
-├── public/
-│   ├── project-brief.html        ← Project Brief（9 章 + 附錄）
-│   ├── editorial-guidelines.html ← 編輯指南 + System Prompts + 總編輯
-│   ├── about.html                ← 關於 The Pass（對外品牌故事頁）
-│   ├── methodology.html          ← 方法論（對外運作方式頁）
-│   ├── sources.html              ← 選題來源（33 個信源）
-│   ├── illustration-guide.html   ← 插畫風格指南
-│   ├── implementation-plan.html  ← 實作計畫
-│   ├── editors.html              ← AI 編輯室（三位編輯總覽）
-│   ├── editor-mise/passe/fumet.html ← 各編輯 profile
-│   ├── demo-index.html           ← Demo 目錄頁
-│   ├── demo-issue-001/002/003.html ← Demo Issues
-│   ├── demo-ig-post.html         ← IG Carousel Repurpose Demo
-│   └── img/                      ← 插畫 + 編輯頭像
-├── docs/                         ← Markdown 版內部文件（給 AI 參考用）
-│   ├── ai-editor-persona-architecture.md ← AI 編輯人格架構（Soul + Memory）
-│   └── *.md                      ← 其他內部文件的 MD 版
-├── src/app/                      ← Next.js App Router
+├── public/                       ← 靜態頁（部署即上線）
+│   ├── hub.html                  ← 🆕 選題系統入口（連各頁）
+│   ├── sources.html              ← 🆕 選題來源（由 sources.ts 自動生成，勿手改）
+│   ├── audit-sources.html        ← 🆕 /audit-sources skill 說明頁
+│   ├── selection-mechanism.html  ← 🆕 篩選機制設計
+│   ├── selection-report-demo.html← 🆕 選題報告（每期會議文件；gen 自 scripts/demo-report.ts；gitignore）
+│   ├── project-brief / editorial-guidelines / about / methodology / illustration-guide / implementation-plan / editors / editor-*.html
+│   └── demo-index / demo-issue-001~003 / demo-ig-post.html、img/
+├── src/
+│   ├── lib/                      ← 選題 pipeline（見下方架構）
+│   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
+│   │   └── fetcher · dedup · prefilter · relevance · scorer · report .ts
+│   └── app/                      ← Next App Router；api/fetch-feeds、/sources-status（Next route，讀 sources.ts）
+├── scripts/                      ← tsx 腳本：audit-feed / gen-sources-page / demo-report
+├── .claude/skills/audit-sources/ ← 🆕 /audit-sources skill
+├── docs/                         ← MD 內部文件（selection-mechanism、source-verification-checklist、persona…）
+├── data/                         ← runtime（seen.json、feed-*.json；gitignore）
 └── CLAUDE.md                     ← 本檔案
 ```
+
+## 選題 Pipeline（架構）
+
+資料流（每期出刊前跑）：
+
+```
+抓取 activeSources(RSS) → 去重(dedup: URL + 標題Jaccard 0.6) → 依產量自適應粗篩(prefilter)
+  → LLM 評分(scorer: 硬閘門 + 五面向 + 編輯路由 + hook；dry-run / live) → 排序選一期
+  → 選題報告(report.ts → HTML) → 總編/團隊拍板
+```
+
+- **單一真實來源 = `src/lib/sources.ts`**（現 30 來源：active 29 / pending 1）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`；`/sources-status`（Next route）自動同步。
+- **兩條進料線**：Stream A 飲食媒體 / Stream B 食品科技·觀點（輔助）。**刻意不收台灣源**（TA 是台灣讀者，價值＝台灣沒有的新鮮事）。食物優先、AI/科技為輔。
+- **評分**：`scorer.ts` 有金鑰走 Opus（五面向 0–5 加權 + mise/passe 路由 + hook），無金鑰 dry-run（關鍵字代理）。**Fumet 提問不選稿**，從選出的長文「提煉」。
+- **報告**：`report.ts` 渲染品牌化 HTML（漏斗統計、建議出刊、完整候選池、庫存、已篩除、本週掃描來源）；切角可點選（A 預設）+ 退庫存即時互動（純前端、不存檔）。
+- 設計全文：`docs/selection-mechanism.md`；來源審核標準：`docs/source-verification-checklist.md`。
 
 ## 已完成的里程碑
 
@@ -145,29 +162,30 @@ the-pass/
 - [x] Demo Issue #003 加入動態影片（靜態圖 → AI 動態化）
 - [x] 插畫指南新增：動態插畫規格（Sec.09）+ 視覺變化策略（Sec.10）
 - [x] 快訊 spot illustration 測試 → 決定不採用（閱讀斷裂感）
+- [x] **選題 pipeline 實作**：抓取→去重→粗篩→LLM 評分→選題報告（src/lib/*，已測）
+- [x] **來源系統收斂**：食物優先、移除純 AI 源 → 30 來源（active 29），sources.ts 單一真實來源、頁面自動生成
+- [x] **選題報告**（內部編輯會議文件）+ 第一次真實 curate（29 來源、16 候選池、可互動切角）
+- [x] **統一入口 hub** + 來源狀態(即時) + **/audit-sources skill** + 說明頁
 
 ## 下一步（最優先）
 
-### 1. 篩選機制設計（下次 session 主要討論）
-- 演算法邏輯：從 33 個信源中如何自動判斷哪些值得報導
-- 評分標準：人的故事 > 純技術規格、在地獨家 > 全球已知
-- 選題流程：從「原料進來」到「選出 5-8 則」的完整 pipeline
-- 三位編輯各自的選題偏好（Mise 找人、Passe 找事實、Fumet 找問題）
+### 1. ⛳ 編輯方向拍板（擋住下游，使用者內部會議中）
+決定：**維持硬性「AI×食物」交集** vs **轉「食物優先、AI 為其中一個角度」**。候選池實測已偏食物優先。**方向定了才動 `scorer.ts` 的硬閘門**——目前先不改。
 
-### 2. AI 編輯設定實作（下次 session）
-- 將 soul.md + style-guide 包裝成 Claude Code Skills（`/mise`、`/passe`、`/fumet`、`/chief-editor`）
-- 設計 memory.md 記錄格式與更新流程
-- 試跑一次完整的內容產製流程
+### 2. `/selection-report` skill（一週兩次核心）
+方向定版後，把「抓取→去重→粗篩→評分→產報告→部署」做成 skill（那時 rubric 才正確）。機械層已是程式（src/lib + scripts/demo-report.ts），skill 主要封裝編輯判斷。
 
-### 3. 基礎建設
-- 設定 Ghost Pro
-- 建 RSS 抓取 pipeline（先接 5 個核心信源）
-- 手動跑 2 週試水溫
+### 3. 接真實 LLM
+使用者自行在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
 
-### 4. 推廣策略
-- 冷啟動：LinkedIn 文章（meta 故事）+ 餐飲社群
-- 成長期：IG Reels + 電子報互推 + 活動演講
-- 變現期：免費/付費版 + 產業報告 + 企業訂閱
+### 4. 基礎建設
+seen store 接 Supabase（取代 `data/seen.json`）；報告「決定」的後端儲存（目前互動不存檔）；終選回寫編輯 memory；Ghost Pro。
+
+### 5. 待修 / 待 audit
+`nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
+
+### 6. AI 編輯人設 skills（roadmap）
+`/mise`、`/passe`、`/fumet`、`/chief-editor` + memory 更新流程（soul.md 已備）。
 
 ## 部署
 
@@ -180,6 +198,12 @@ npx vercel --prod --yes
 
 ## Common Pitfalls
 
+- **sources.ts 是單一真實來源**: 改來源只動 `src/lib/sources.ts` → `npx tsx scripts/gen-sources-page.ts` 重生 sources.html → 部署。**勿手改 `public/sources.html`**（會被覆蓋）。
+- **scorer 需 API key**: 無 `ANTHROPIC_API_KEY` 時 scorer 走 dry-run（關鍵字代理，非真評分）。AI 不能代填金鑰，需使用者自己加到 `.env.local`。
+- **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
+- **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。
+- **Fumet 不選稿**: 結尾提問從選出的長文「提煉」，不從候選池打分選一篇（editorial-guidelines 規定）。
+- **selection-report-demo.html / data/*.json 已 gitignore**: 是 gen 出的 artifact，不 commit；部署時 vercel 從本機 public/ 上傳。
 - **Vercel 自動部署失效**: GitHub webhook 斷了（可能因改名），需手動 `npx vercel --prod --yes`
 - **Vercel subdomain**: auto-generated 是 `the-pass-nine`，但已有自訂域名 `thepass.cc`
 - **動態插畫流程**: 靜態插圖 → 加標題 → Google Flow (Veo) 生成動態，音效OK但禁止配音
