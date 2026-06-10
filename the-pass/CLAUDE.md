@@ -111,12 +111,12 @@ the-pass/
 ├── src/
 │   ├── lib/                      ← 選題 pipeline（見下方架構）
 │   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
-│   │   └── fetcher · dedup · relevance · scorer · report .ts
+│   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds、/sources-status（Next route，讀 sources.ts）
 ├── scripts/                      ← tsx 腳本：audit-feed / gen-sources-page / demo-report
 ├── .claude/skills/audit-sources/ ← 🆕 /audit-sources skill
 ├── docs/                         ← MD 內部文件（selection-mechanism、source-verification-checklist、persona…）
-├── data/                         ← runtime（seen.json、feed-*.json；gitignore）
+├── data/                         ← runtime（seen.json、backlog.json、feed-*.json；gitignore）
 └── CLAUDE.md                     ← 本檔案
 ```
 
@@ -126,13 +126,15 @@ the-pass/
 
 ```
 抓取 activeSources(RSS) → 去重(dedup: URL + 標題Jaccard 0.6)
-  → Opus 評估(scorer: 整池每篇都看，硬閘門 + 五面向 + 編輯路由 + hook，同一次呼叫；dry-run / live) → 排序選一期
-  → 選題報告(report.ts → HTML) → 總編/團隊拍板
+  → Opus 評估(scorer: 整池每篇都看，硬閘門 + 五面向 + 編輯路由 + hook，同一次呼叫；dry-run / live)
+  → 庫存合併(backlog: 上期倖存者 + 本期新評分一起排序) → 選一期
+  → 選題報告(report.ts → HTML) → 總編/團隊拍板 → 出刊的移出庫存、沒選上的留庫存
 ```
 
 - **單一真實來源 = `src/lib/sources.ts`**（現 30 來源：active 29 / pending 1）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`；`/sources-status`（Next route）自動同步。
 - **兩條進料線**：Stream A 飲食媒體 / Stream B 食品科技·觀點（輔助）。**刻意不收台灣源**（TA 是台灣讀者，價值＝台灣沒有的新鮮事）。食物優先、AI/科技為輔。
 - **評分**：`scorer.ts` 有金鑰走 Opus（五面向 0–5 加權 + mise/passe 路由 + hook），無金鑰 dry-run（關鍵字代理）。**Fumet 提問不選稿**，從選出的長文「提煉」。
+- **庫存 backlog**：`backlog.ts`（`BacklogStore` + `buildCompetitorPool`）持久化「合格沒選上」的，JSON `data/backlog.json`，保鮮期預設 14 天。每期 `prune(過期淘汰)` → 合併庫存+新評分排序 → 選一期 → `remove(出刊)` / `upsert(沒選上)` → `save`。重進不續命（保留原 enteredAt）。`scripts/test-backlog.ts` 驗證跨期迴圈（11 checks）。**注意：v1 是單一 14 天 flat window**，頁面 §9 講的「分型保鮮期」（融資稿短、常青長）是未來精修。
 - **報告**：`report.ts` 渲染品牌化 HTML（漏斗統計、建議出刊、完整候選池、庫存、已篩除、本週掃描來源）；切角可點選（A 預設）+ 退庫存即時互動（純前端、不存檔）。
 - 設計全文：`docs/selection-mechanism.md`；來源審核標準：`docs/source-verification-checklist.md`。
 
@@ -179,7 +181,7 @@ the-pass/
 使用者自行在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
 
 ### 4. 基礎建設
-seen store 接 Supabase（取代 `data/seen.json`）；報告「決定」的後端儲存（目前互動不存檔）；終選回寫編輯 memory；Ghost Pro。
+**庫存 backlog store 已實作**（`backlog.ts`，JSON）。仍待：**編輯 Memory 回寫**（Soul 已有 `docs/editors/*-soul.md`，但動態 Memory 未實作）；報告「決定」的後端儲存（目前互動不存檔）；seen + backlog 兩個 JSON store 升級 Supabase（介面已抽象，可直接換）；Ghost Pro。三者卡同一件事：**還沒有正式儲存層**，目前只有本機 JSON。
 
 ### 5. 待修 / 待 audit
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
