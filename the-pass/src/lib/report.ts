@@ -38,6 +38,16 @@ export interface ScannedSource {
   stream?: "A" | "B";
 }
 
+// 候選名單一列（完整候選池，供選題會自由挑換）
+export interface CandidateRow {
+  title: string;
+  source: string;
+  link: string;
+  weighted: number;
+  editor: Editor;
+  oneLine: string;
+}
+
 export interface SelectionReport {
   issueLabel: string; // 例：2026-06-10（週二）
   generatedAt: string;
@@ -48,6 +58,7 @@ export interface SelectionReport {
   screenedOut: ReportReject[]; // 硬閘門砍（reason = 為什麼）
   flags: string[]; // 編輯室提醒
   scannedSources?: ScannedSource[]; // 本週掃描來源列表與狀態
+  candidatePool?: CandidateRow[]; // 完整候選名單（供選題會挑換）
 }
 
 const EDITOR_LABEL: Record<Editor, string> = { mise: "Mise 長文", passe: "Passe 快訊" };
@@ -184,6 +195,18 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
       <p class="fq">${esc(r.fumet.question)}</p>
       <p class="note">🧩 提煉自：${esc(r.fumet.from)}</p>
     </div>`
+      : ""
+  }
+
+  ${
+    r.candidatePool && r.candidatePool.length
+      ? `<div class="sec"><h2>候選名單（完整候選池）</h2><div class="h-sub">本期所有通過初篩的候選（${r.candidatePool.length} 則），依分數排序，供選題會自由挑換。</div></div>
+  <div class="tbl-wrap"><table><thead><tr><th>#</th><th>分</th><th>編輯</th><th>標題</th><th>來源</th><th class="dh">一句話</th></tr></thead><tbody>${r.candidatePool
+          .map(
+            (c, i) =>
+              `<tr><td>${i + 1}</td><td><strong>${c.weighted}</strong></td><td><span class="badge ${c.editor === "mise" ? "pass" : "warn"}">${c.editor}</span></td><td><a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a></td><td class="src">${esc(c.source)}</td><td class="why">${esc(c.oneLine)}</td></tr>`
+          )
+          .join("")}</tbody></table></div>`
       : ""
   }
 

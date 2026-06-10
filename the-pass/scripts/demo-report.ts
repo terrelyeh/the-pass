@@ -1,58 +1,75 @@
-// 示範用：把一份固定的選題資料渲染成 public/selection-report-demo.html。
-// 用途：renderer 改版後重新產出示範報告。真實 pipeline 會用 scorer 的輸出取代這份固定資料。
-// 跑法：npx tsx scripts/demo-report.ts
+// 產出 public/selection-report-demo.html。
+// 目前內容 = 2026-06-10 第一次編輯會議的真實 curate（29 來源、總編輯人工評分）。
+// renderer 改版或重新 curate 後重跑：npx tsx scripts/demo-report.ts
 import { renderReport, type SelectionReport } from "../src/lib/report";
 import { writeFileSync } from "fs";
 
+const FT = "Food Tech Insider", FV = "Foovo", RB = "Restaurant Business", AGF = "AgFunder News", DFL = "DigitalFoodLab", TS_ = "The Spoon", TF = "식품음료신문 (Thinkfood)", JM = "Jennifer Makan";
+
 const r: SelectionReport = {
-  issueLabel: "2026-06-10（示範）",
+  issueLabel: "2026-06-10 · 第一次編輯會議",
   generatedAt: "2026-06-10",
-  stats: { fetched: 199, deduped: 199, candidates: 18, selected: 5 },
+  stats: { fetched: 365, deduped: 344, candidates: 40, selected: 6 },
   selected: [
-    { role: "feature", editor: "mise", weighted: 44.5, title: "世界第一座「培養肉農場」在荷蘭開張", source: "Foovo", lang: "ja", date: "06-09", link: "https://foodtech-japan.com/2026/06/09/respectfarms-2/", dimensions: { surprise: 5, local: 3, human: 4, conversation: 4, substance: 4 }, hook: "養了一輩子牛的荷蘭酪農，開始在自家農場裡「種」細胞肉——這是農夫的下一步，還是最後一步？", note: "從那位酪農的早晨寫起，不要從『培養肉技術』寫起。" },
-    { role: "feature", editor: "mise", weighted: 41.5, title: "AI 正在殺死食譜部落格——然後另一個 AI 想救活它們", source: "The Spoon", lang: "en", date: "06-06", link: "https://thespoon.tech/ai-is-breaking-the-recipe-blog-model-allspice-thinks-it-can-also-save-it/", dimensions: { surprise: 5, local: 1, human: 4, conversation: 5, substance: 4 }, hook: "同一個技術同時是兇手和救星，獨立食譜創作者的生計卡在中間——天生就是 The Pass 的調性。" },
-    { role: "quick", editor: "passe", weighted: 34.5, title: "AI 兩週「設計」出一塊植物雞肉", source: "Food Tech Insider", lang: "en", date: "06-06", link: "https://foodtechinsider.net/36m-ai-built-a-plant-based-chicken-in-just-2-weeks/", dimensions: { surprise: 5, local: 1, human: 2, conversation: 4, substance: 4 }, hook: "食物研發從此以「週」計？" },
-    { role: "quick", editor: "passe", weighted: 32, title: "德國 Formo 用發酵做出牛起司的蛋白質，送 FDA", source: "Foovo", lang: "ja", date: "06-03", link: "https://foodtech-japan.com/2026/06/03/formo-7/", dimensions: { surprise: 4, local: 2, human: 2, conversation: 3, substance: 4 }, hook: "以後的起司，可能沒有牛。" },
-    { role: "quick", editor: "passe", weighted: 31.5, title: "Chef Robotics 累計出餐破 1 億份", source: "The Spoon", lang: "en", date: "04-22", link: "https://thespoon.tech/with-over-100-million-meals-served-chef-robotics-hopes-to-become-food-robotics-category-defining-success-story/", dimensions: { surprise: 3, local: 1, human: 4, conversation: 3, substance: 4 }, hook: "機器人廚房過了『玩具』階段，創辦人 8 年長跑的里程碑。" },
+    { role: "feature", editor: "mise", weighted: 44.5, title: "世界第一座「培養肉農場」在荷蘭開張", source: FV, lang: "ja", date: "06-09", link: "https://foodtech-japan.com/2026/06/09/respectfarms-2/", dimensions: { surprise: 5, local: 3, human: 4, conversation: 4, substance: 4 }, hook: "養了一輩子牛的荷蘭酪農，開始在自家農場裡「種」細胞肉——這是農夫的下一步，還是最後一步？", note: "從那位酪農的早晨寫起，不要從『培養肉技術』寫起。" },
+    { role: "feature", editor: "mise", weighted: 41, title: "拜託，別用 AI 幫你從酒單上點酒", source: JM, lang: "en", date: "06-08", link: "https://jennifermakan.substack.com/p/for-fcks-sake-dont-use-ai-to-order", dimensions: { surprise: 4, local: 2, human: 4, conversation: 5, substance: 4 }, hook: "獨立寫作者的怒吼：當 AI 能告訴你該喜歡哪支酒，那「品味」還剩多少是你的？", note: "保留她的第一人稱怒氣與幽默，這就是 The Pass 缺的『人聲』。" },
+    { role: "quick", editor: "passe", weighted: 38, title: "AI 生成的「假醫生」賣保健食品，遭韓國食藥處查處", source: TF, lang: "ko", date: "06-10", link: "https://www.thinkfood.co.kr/news/articleView.html?idxno=200527", dimensions: { surprise: 4, local: 4, human: 2, conversation: 4, substance: 3 }, hook: "AI 捏造的醫生，正在你的社群賣食品。" },
+    { role: "quick", editor: "passe", weighted: 36, title: "用二氧化碳做的蛋白質「Solein」在美國開賣", source: FV, lang: "ja", date: "06-10", link: "https://foodtech-japan.com/2026/06/10/solar-foods-19/", dimensions: { surprise: 5, local: 2, human: 2, conversation: 4, substance: 3 }, hook: "從空氣裡長出來的蛋白質，上架了。" },
+    { role: "quick", editor: "passe", weighted: 34.5, title: "AI 兩週「設計」出一塊植物雞肉", source: FT, lang: "en", date: "06-07", link: "https://foodtechinsider.net/36m-ai-built-a-plant-based-chicken-in-just-2-weeks/", dimensions: { surprise: 5, local: 1, human: 2, conversation: 4, substance: 4 }, hook: "食物研發從此以「週」計？" },
+    { role: "quick", editor: "passe", weighted: 34, title: "漢堡連鎖放棄植物肉，把焦點換回「真蔬菜」", source: RB, lang: "en", date: "06-08", link: "https://www.restaurantbusinessonline.com/food/burger-chains-rethink-plant-based-burgers-putting-focus-vegetables", dimensions: { surprise: 4, local: 2, human: 2, conversation: 4, substance: 4 }, hook: "植物『肉』退燒，真蔬菜回來了——White Castle、Shake Shack 帶頭。" },
   ],
   fumet: {
-    question: "一邊是農夫開始在田裡「種」肉，一邊是 AI 開始替我們寫食譜——當「養」和「記」都交給了技術，那個站在爐火前、用手感判斷鹹淡的人，未來到底還算不算數？",
-    from: "本期長文：荷蘭培養肉農場 × AI 與食譜部落格",
+    question: "一邊我們開始用細胞「種」出肉，一邊有人勸你別讓 AI 幫你選酒——當技術既能造出食物、又能告訴你該喜歡什麼，那一頓飯裡，還剩多少「口味」真的是你自己的？",
+    from: "本期長文：荷蘭培養肉農場 × 別用 AI 點酒",
   },
+  candidatePool: [
+    { title: "世界第一座「培養肉農場」在荷蘭開張", source: FV, link: "https://foodtech-japan.com/2026/06/09/respectfarms-2/", weighted: 44.5, editor: "mise", oneLine: "酪農在農場裡『種』細胞肉" },
+    { title: "拜託，別用 AI 幫你點酒", source: JM, link: "https://jennifermakan.substack.com/p/for-fcks-sake-dont-use-ai-to-order", weighted: 41, editor: "mise", oneLine: "AI 告訴你該喜歡什麼酒，品味還是你的嗎" },
+    { title: "AI 假醫生賣保健食品遭韓國查處", source: TF, link: "https://www.thinkfood.co.kr/news/articleView.html?idxno=200527", weighted: 38, editor: "passe", oneLine: "AI 捏造的醫生在社群賣食品" },
+    { title: "為什麼科技還沒拯救餐廳", source: RB, link: "https://www.restaurantbusinessonline.com/technology/why-technology-hasnt-saved-restaurants-yet", weighted: 37, editor: "mise", oneLine: "數位化救過餐廳，現在反而壓垮它" },
+    { title: "用 CO2 做的蛋白質 Solein 在美開賣", source: FV, link: "https://foodtech-japan.com/2026/06/10/solar-foods-19/", weighted: 36, editor: "passe", oneLine: "從空氣裡長出來的蛋白質" },
+    { title: "AI 兩週設計出一塊植物雞肉", source: FT, link: "https://foodtechinsider.net/36m-ai-built-a-plant-based-chicken-in-just-2-weeks/", weighted: 34.5, editor: "passe", oneLine: "食物研發以『週』計" },
+    { title: "漢堡連鎖放棄植物肉、回歸真蔬菜", source: RB, link: "https://www.restaurantbusinessonline.com/food/burger-chains-rethink-plant-based-burgers-putting-focus-vegetables", weighted: 34, editor: "passe", oneLine: "植物肉退燒，真蔬菜回來" },
+    { title: "下一個食物科技突破，可能來自太空", source: DFL, link: "https://digitalfoodlab.com/why-the-next-foodtech-breakthrough-may-come-from-space/", weighted: 33, editor: "mise", oneLine: "太空 × 食物的下一步" },
+    { title: "Cargill 用 AI 把肉從廚餘救回餐桌", source: TS_, link: "https://thespoon.tech/cargill-is-using-ai-to-divert-thousand-of-pounds-of-meat-back-on-the-table/", weighted: 32, editor: "passe", oneLine: "AI 在垃圾桶前攔下幾千磅的肉" },
+    { title: "4 顆馬鈴薯 = 1 公升牛奶的酪蛋白", source: FV, link: "https://foodtech-japan.com/2026/06/03/finally-foods-2/", weighted: 31, editor: "passe", oneLine: "用馬鈴薯種出牛奶蛋白" },
+    { title: "Fazer 細胞性可可：沒有可可的巧克力", source: FV, link: "https://foodtech-japan.com/2026/06/04/fazer-2/", weighted: 30, editor: "passe", oneLine: "沒有可可的巧克力" },
+    { title: "乳清短缺，價格暴漲 40%", source: FT, link: "https://foodtechinsider.net/whey-shortage-food-giants-scramble-as-prices-surge-40/", weighted: 29, editor: "passe", oneLine: "蛋白質貨架上的怪事" },
+    { title: "京大新創用魚自己的菌養殖魚", source: FV, link: "https://foodtech-japan.com/2026/06/05/holo-bio/", weighted: 28, editor: "passe", oneLine: "用魚的菌，養出更強壯的魚" },
+    { title: "AI 食物浪費工具：什麼有效、什麼是炒作", source: AGF, link: "https://agfundernews.com/what-investors-should-know-before-backing-ai-tools-for-food-waste-management-report", weighted: 27, editor: "passe", oneLine: "投資人該知道的 AI 食物浪費真相" },
+    { title: "植物肉的訃聞漏了什麼", source: AGF, link: "https://agfundernews.com/guest-article-what-the-obituaries-for-plant-based-meat-miss", weighted: 26, editor: "mise", oneLine: "植物肉真死了，還是只是太貴" },
+    { title: "韓國辣椒醬走向世界最佳醬料", source: TF, link: "https://www.thinkfood.co.kr/news/articleView.html?idxno=200439", weighted: 25, editor: "mise", oneLine: "Gochujang 如何進了牛津字典" },
+  ],
   backlog: [
-    { title: "點餐 AI 與餐廳『好客』能否共存", source: "Restaurant Business", link: "https://www.restaurantbusinessonline.com/financing/can-hospitality-coexist-ai-ordering-technology", reason: "來源是 podcast 摘要、事實薄，不適合當稿；但它的『效率 vs 溫度』張力是 Fumet 的好素材。" },
-    { title: "釀酒廠可能讓植物肉達成本平價", source: "Food Tech Insider", link: "https://foodtechinsider.net/alt-meat-cost-parity-breweries-might-finally-crack-it/", reason: "角度好，但這期替代蛋白已夠多，下期再戰。" },
-    { title: "40 家食品巨頭押注再生農業", source: "Food Tech Insider", link: "https://foodtechinsider.net/40-food-giants-just-placed-the-biggest-bet-on-regenerative-farming/", reason: "偏產業，待找到『人』的角度再上。" },
+    { title: "為什麼科技還沒拯救餐廳", source: RB, link: "https://www.restaurantbusinessonline.com/technology/why-technology-hasnt-saved-restaurants-yet", reason: "好題、feature 等級，但這期兩篇長文已滿——下期優先。" },
+    { title: "下一個食物科技突破，可能來自太空", source: DFL, link: "https://digitalfoodlab.com/why-the-next-foodtech-breakthrough-may-come-from-space/", reason: "角度新，但離『吃』較遠，下期看發展。" },
+    { title: "植物肉的訃聞漏了什麼", source: AGF, link: "https://agfundernews.com/guest-article-what-the-obituaries-for-plant-based-meat-miss", reason: "與『漢堡回歸蔬菜』同主題，留一篇就好。" },
   ],
   screenedOut: [
-    { title: "Chef Robotics 募資 $14.75M", source: "TechCrunch (2024-01)", link: "https://techcrunch.com/2024/01/26/chef-robotics-eyes-commercial-kitchens-with-a-14-75m-raise/", reason: "⏰ 時效：feed 回傳 2024 舊聞，過期。" },
-    { title: "HealthifyMe AI 印度菜辨識", source: "TechCrunch (2023-09)", link: "https://techcrunch.com/2023/09/21/khosla-backed-healthifyme-introduces-ai-powered-image-recognition-for-indian-food/", reason: "⏰ 時效：2023 舊聞。" },
-    { title: "Clover Food Lab 被金主救回", source: "Restaurant Business", link: "https://www.restaurantbusinessonline.com/emerging-brands/clover-food-lab-emotional-week-ends-high-note", reason: "🚫 無 AI/科技角度：純植物餐廳財務。" },
-    { title: "Appetronix 併購 Cibotica", source: "The Spoon", link: "https://thespoon.tech/appetronix-acquires-food-robot-startup-cibotica/", reason: "😴 產業 M&A，乾稿、無人味。" },
+    { title: "Food Tech 本週 $131M / $4.3B / 5 Bombshells（多篇週報摘要）", source: FT, reason: "😴 週報摘要、非單一故事——當趨勢脈搏可以，不整篇選為一則。" },
+    { title: "Where to Eat in Chicago（James Beard）", source: "Eater", link: "https://www.eater.com/maps/best-restaurants-chicago", reason: "🚫 純餐廳清單、無新意、20 天前。" },
+    { title: "DJI 用戶請 FCC 重新考慮無人機禁令", source: AGF, link: "https://agfundernews.com/please-reverse-this-decision-dji-users-urge-fcc-to-rethink-foreign-drone-ban", reason: "🚫 無關食物（無人機政策）。" },
+    { title: "農業機器人的黃金時代（泛論）", source: AGF, reason: "😴 農業機器人泛論、偏產業、無具體人/故事。" },
   ],
   flags: [
-    "本期偏替代蛋白（培養肉 / casein / 植物雞肉）——已壓一篇進庫存，你可考慮換更不同領域的進來。",
-    "TechCrunch Food feed 一直回 2023–24 舊聞——pipeline 待加嚴格時效過濾。",
-    "「40 家食品巨頭」出現兩篇（標題不同、Jaccard 沒抓到是同一則）——語意去重待 LLM 層補強。",
+    "本期候選偏 alt-protein/食品科技（Foovo + Food Tech Insider 量大）——已用 Jennifer Makan（別用 AI 點酒）、餐廳趨勢、韓國在地平衡，但可再補更多『人/在地餐飲』題。",
+    "식품외식경제（foodbank-kr）這次 feed DNS 失敗（getaddrinfo）——可能 http:// 或暫時性，已記待查（其餘 28 個來源正常）。",
+    "Food Tech Insider 多為『週報摘要』而非單一故事——適合當趨勢脈搏，但別整篇選為一則。",
+    "方向提醒：此候選池已偏『食物優先、AI 為其中一個角度』——請在會議上確認要維持硬性 AI×食物，還是正式轉『食物優先』。",
   ],
   scannedSources: [
-    { name: "The Spoon", count: 15, stream: "A" },
-    { name: "AgFunder News", count: 15, stream: "A" },
-    { name: "TechCrunch (Food)", count: 15, stream: "A" },
-    { name: "식품외식경제", count: 15, stream: "A" },
-    { name: "Restaurant Business", count: 15, stream: "A" },
-    { name: "Nation's Restaurant News", count: 15, stream: "A" },
-    { name: "Eater", count: 10, stream: "A" },
-    { name: "Foovo", count: 10, stream: "A" },
-    { name: "食品産業新聞社 (SSNP)", count: 15, stream: "A" },
-    { name: "식품음료신문 (Thinkfood)", count: 15, stream: "A" },
-    { name: "The Caterer", count: 12, stream: "A" },
-    { name: "QSR Magazine", count: 12, stream: "A" },
-    { name: "Momentum Works (The Lowdown)", count: 10, stream: "B" },
-    { name: "Technically Food", count: 15, stream: "B" },
-    { name: "Food Tech Insider", count: 10, stream: "B" },
+    { name: "The Spoon", count: 15, stream: "A" }, { name: "AgFunder News", count: 15, stream: "A" }, { name: "TechCrunch (Food)", count: 15, stream: "A" },
+    { name: "Restaurant Business", count: 15, stream: "A" }, { name: "Nation's Restaurant News", count: 15, stream: "A" }, { name: "QSR Magazine", count: 15, stream: "A" },
+    { name: "The Caterer", count: 15, stream: "A" }, { name: "食品産業新聞社 (SSNP)", count: 15, stream: "A" }, { name: "식품음료신문 (Thinkfood)", count: 15, stream: "A" },
+    { name: "フードリンク FDN", count: 15, stream: "A" }, { name: "한국외식신문", count: 15, stream: "A" }, { name: "푸드투데이", count: 15, stream: "A" },
+    { name: "Table Talk", count: 15, stream: "A" }, { name: "Jennifer Makan", count: 15, stream: "A" }, { name: "Sourced Journeys", count: 15, stream: "A" },
+    { name: "Technically Food", count: 15, stream: "B" }, { name: "Oy Vey It's A Food Newsletter", count: 15, stream: "B" },
+    { name: "Eater", count: 10, stream: "A" }, { name: "Restaurant Dive", count: 10, stream: "A" }, { name: "Foovo", count: 10, stream: "A" },
+    { name: "飲食店ドットコム foodist", count: 10, stream: "A" }, { name: "外食産業新聞社", count: 10, stream: "A" }, { name: "フードスタジアム", count: 10, stream: "A" },
+    { name: "The Food Institute", count: 10, stream: "A" }, { name: "Momentum Works (The Lowdown)", count: 10, stream: "B" }, { name: "DigitalFoodLab", count: 10, stream: "B" },
+    { name: "Good Food Institute", count: 10, stream: "B" }, { name: "Food Tech Insider", count: 10, stream: "B" }, { name: "식품외식경제", count: 0, stream: "A" },
   ],
 };
 
 writeFileSync(new URL("../public/selection-report-demo.html", import.meta.url), renderReport(r));
-console.log("✓ public/selection-report-demo.html 已重新產出（含本週掃描來源 + 來源連結）");
+console.log("✓ public/selection-report-demo.html 已產出（第一次編輯會議真實 curate）");
