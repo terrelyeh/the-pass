@@ -8,6 +8,7 @@ interface Period {
   range: string; // 2026/06/10
   topic: string; // 一句話主題（給左側目錄）
   aiHours: number; // 本期 AI 協作時數
+  resultLink?: string; // 本週成果入口（如選題系統 hub）
   tldr: string;
   deliverables: Deliverable[];
   decisions: string[];
@@ -20,6 +21,7 @@ const periods: Period[] = [
     range: "2026/06/10",
     topic: "選題自動化系統 + 來源庫收斂",
     aiHours: 4,
+    resultLink: "https://thepass.cc/hub.html",
     tldr: "完成「選題自動化系統」與「編輯會議用的選題報告」，並把來源庫收斂成 30 個聚焦食物的來源。本期請團隊拍板一個編輯方向。",
     deliverables: [
       { item: "選題自動化系統", value: "抓取 → 去重 → 初篩 → AI 評分 → 選題報告。把「憑感覺挑題」變成有方法、可重複", status: "✅" },
@@ -39,7 +41,6 @@ const baseline = [
   ["3 期 Demo Issues（成品格式範本）", "https://thepass.cc/demo-index.html"],
   ["域名 thepass.cc + Vercel 部署", "https://thepass.cc"],
 ];
-const roadmap = ["/selection-report 定版工具（方向定後）", "寫作階段：/mise /passe /fumet（選題 → 一期成品）", "自動化上線（排程 + Supabase + Ghost）"];
 
 const esc = (s: string) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const totalHours = periods.reduce((n, p) => n + p.aiHours, 0);
@@ -49,11 +50,12 @@ const periodBlock = (p: Period, isLatest: boolean) => `
   <section id="p-${esc(p.label)}" class="period">
     <div class="p-head"><h2>${isLatest ? "本週實作" : esc(p.range)}</h2><span class="p-when">${esc(p.label)} · 🤖 AI 協作 ${p.aiHours} hr</span></div>
     <p class="tldr">${esc(p.tldr)}</p>
+    ${p.resultLink ? `<p class="result"><a href="${esc(p.resultLink)}" target="_blank" rel="noopener">→ 看本週成果（選題系統入口）</a></p>` : ""}
     <div class="tbl"><table><thead><tr><th>交付項目</th><th>內容 / 價值</th><th>連結</th><th>狀態</th></tr></thead><tbody>
       ${p.deliverables.map((d) => `<tr><td class="it">${esc(d.item)}</td><td class="v">${esc(d.value)}</td><td>${d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">看 ↗</a>` : "—"}</td><td class="st">${esc(d.status)}</td></tr>`).join("")}
     </tbody></table></div>
     <div class="blk decide"><h3>需團隊決策</h3><ul>${p.decisions.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
-    <div class="blk"><h3>下期預告</h3><ul>${p.next.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
+    <div class="blk"><h3>接下來任務</h3><ul>${p.next.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
   </section>`;
 
 const html = `<!DOCTYPE html>
@@ -77,7 +79,8 @@ const html = `<!DOCTYPE html>
 .period{margin-bottom:2.5rem}
 .p-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem;border-bottom:2px solid var(--accent-light);padding-bottom:.4rem;margin-bottom:.7rem}
 .p-head h2{font-family:var(--display);font-size:1.5rem;font-weight:400}.p-when{font-size:.78rem;color:var(--ink-muted)}
-.tldr{font-family:var(--serif);font-size:1rem;line-height:1.75;color:var(--ink);margin:.4rem 0 .9rem}
+.tldr{font-family:var(--serif);font-size:1rem;line-height:1.75;color:var(--ink);margin:.4rem 0 .6rem}
+.result{margin:0 0 .9rem;font-size:.86rem;font-weight:500}
 .tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.86rem}
 th{text-align:left;padding:.45rem .6rem;border-bottom:2px solid var(--border);font-size:.66rem;letter-spacing:.04em;color:var(--ink-muted);text-transform:uppercase;white-space:nowrap}
 td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.it{font-weight:600;white-space:nowrap}td.v{color:var(--ink-light);font-size:.83rem;line-height:1.55}td.st{text-align:center}
@@ -91,7 +94,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 @media(max-width:820px){.layout{grid-template-columns:1fr}.side{display:none}.main{padding:1.3rem 1.4rem 3rem}.top h1{font-size:1.2rem}}
 </style></head><body>
 <div class="top"><div class="top-in">
-  <h1><span class="s">Consulting · 顧問交付</span>顧問交付紀錄</h1>
+  <h1><span class="s">Consulting</span>AI 編輯專案 ｜ 顧問交付紀錄</h1>
   <div class="stat">累計 <b>${totalItems}</b> 項交付 · AI 協作 <b>${totalHours}</b> hr</div>
 </div></div>
 <div class="layout">
@@ -104,8 +107,6 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
     ${periods.map((p, i) => periodBlock(p, i === 0)).join("")}
     <h2 class="sec-h">既有基礎</h2>
     <ul class="lst">${baseline.map(([t, l]) => `<li><a href="${esc(l)}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join("")}</ul>
-    <h2 class="sec-h">規劃中</h2>
-    <ul class="lst">${roadmap.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
     <div class="foot"><div class="b">The Pass 出菜口</div>顧問交付 · Terrel Yeh · AI 輔助實作</div>
   </main>
 </div></body></html>`;
