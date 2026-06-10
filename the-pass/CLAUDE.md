@@ -134,7 +134,7 @@ the-pass/
 - **單一真實來源 = `src/lib/sources.ts`**（現 30 來源：active 29 / pending 1）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`；`/sources-status`（Next route）自動同步。
 - **兩條進料線**：Stream A 飲食媒體 / Stream B 食品科技·觀點（輔助）。**刻意不收台灣源**（TA 是台灣讀者，價值＝台灣沒有的新鮮事）。食物優先、AI/科技為輔。
 - **評分**：`scorer.ts` 有金鑰走 Opus（五面向 0–5 加權 + mise/passe 路由 + hook），無金鑰 dry-run（關鍵字代理）。**Fumet 提問不選稿**，從選出的長文「提煉」。
-- **庫存 backlog**：`backlog.ts`（`BacklogStore` + `buildCompetitorPool`）持久化「合格沒選上」的，JSON `data/backlog.json`，保鮮期預設 14 天。每期 `prune(過期淘汰)` → 合併庫存+新評分排序 → 選一期 → `remove(出刊)` / `upsert(沒選上)` → `save`。重進不續命（保留原 enteredAt）。`scripts/test-backlog.ts` 驗證跨期迴圈（11 checks）。**注意：v1 是單一 14 天 flat window**，頁面 §9 講的「分型保鮮期」（融資稿短、常青長）是未來精修。
+- **庫存 backlog**：`backlog.ts`（`BacklogStore` + `buildCompetitorPool`）持久化「合格沒選上」的，JSON `data/backlog.json`，保鮮期預設 30 天（`DEFAULT_FRESHNESS_DAYS`）。每期 `prune(過期淘汰)` → 合併庫存+新評分排序 → 選一期 → `remove(出刊)` / `upsert(沒選上)` → `save`。重進不續命（保留原 enteredAt）。`scripts/test-backlog.ts` 驗證跨期迴圈（11 checks，測試用固定 14 天窗、不依賴預設值）。**注意：v1 是單一 flat window**，頁面 §9 講的「分型保鮮期」（融資稿短、常青長）是未來精修。
 - **報告**：`report.ts` 渲染品牌化 HTML（漏斗統計、建議出刊、完整候選池、庫存、已篩除、本週掃描來源）；切角可點選（A 預設）+ 退庫存即時互動（純前端、不存檔）。
 - 設計全文：`docs/selection-mechanism.md`；來源審核標準：`docs/source-verification-checklist.md`。
 

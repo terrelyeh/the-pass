@@ -51,7 +51,7 @@ try {
   const pool1 = buildCompetitorPool(r1, s1.all());
   const issue1 = selectTop(pool1, 2); // 選 A、B
   s1.remove(issue1.map((c) => c.link)); // 出刊的移出（本就不在庫存）
-  s1.upsert(pool1.slice(2), "2026-06-10T00:00:00Z"); // C、D 進庫存
+  s1.upsert(pool1.slice(2), "2026-06-10T00:00:00Z", 14); // C、D 進庫存（測試固定 14 天窗，不依賴預設值）
   s1.save();
   check("第1期出刊 = A,B", issue1.map((c) => c.title[0]).join("") === "AB");
   check("第1期後庫存 = C,D（2 篇）", s1.all().length === 2);
@@ -67,7 +67,7 @@ try {
   const issue2 = selectTop(pool2, 2); // C、E
   check("第2期出刊 = C,E（庫存的 C 打贏新的 E 之上）", issue2.map((c) => c.title[0]).join("") === "CE");
   s2.remove(issue2.map((c) => c.link)); // C 出刊 → 移出庫存
-  s2.upsert(pool2.filter((c) => !issue2.includes(c)), "2026-06-13T00:00:00Z"); // D,E,F 留庫存（D rounds+1）
+  s2.upsert(pool2.filter((c) => !issue2.includes(c)), "2026-06-13T00:00:00Z", 14); // D,E,F 留庫存（D rounds+1）
   s2.save();
   const d = s2.all().find((e) => e.title.startsWith("D"));
   check("C 出刊後移出庫存", !s2.all().some((e) => e.title.startsWith("C")));

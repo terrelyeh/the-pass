@@ -41,7 +41,7 @@ export interface Competitor {
   rounds: number; // backlog 來的才 > 0
 }
 
-export const DEFAULT_FRESHNESS_DAYS = 14;
+export const DEFAULT_FRESHNESS_DAYS = 30;
 const DAY_MS = 86_400_000;
 const addDays = (iso: string, days: number) =>
   new Date(new Date(iso).getTime() + days * DAY_MS).toISOString();
