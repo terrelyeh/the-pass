@@ -24,11 +24,11 @@ const periods: Period[] = [
     resultLink: "https://thepass.cc/hub.html",
     tldr: "完成「選題自動化系統」與「編輯會議用的選題報告」，並把來源庫收斂成 30 個聚焦食物的來源。本期請團隊拍板一個編輯方向。",
     deliverables: [
-      { item: "選題自動化系統", value: "抓取 → 去重 → 初篩 → AI 評分 → 選題報告。把「憑感覺挑題」變成有方法、可重複", status: "✅" },
-      { item: "選題報告（會議文件）", value: "建議出刊 + 完整候選名單 + 庫存 + 已篩除理由 + 本週掃描來源，會議可互動挑選", link: "https://thepass.cc/selection-report-demo.html", status: "✅" },
-      { item: "來源庫盤點與收斂", value: "審核 50+ 來源 → 收斂成 30 個聚焦食物的來源 + 取材策略", link: "https://thepass.cc/sources-status", status: "✅" },
-      { item: "來源審核工具 /audit-sources", value: "一鍵評估新來源該不該收，可重複", link: "https://thepass.cc/audit-sources.html", status: "✅" },
-      { item: "統一入口 hub + 機制/審核說明", value: "團隊隨時可看最新狀況", link: "https://thepass.cc/hub.html", status: "✅" },
+      { item: "選題自動化系統", value: "抓取 → 去重 → 初篩 → AI 評分 → 選題報告。把「憑感覺挑題」變成有方法、可重複", status: "完成" },
+      { item: "選題報告（會議文件）", value: "建議出刊 + 完整候選名單 + 庫存 + 已篩除理由 + 本週掃描來源，會議可互動挑選", link: "https://thepass.cc/selection-report-demo.html", status: "完成" },
+      { item: "來源庫盤點與收斂", value: "審核 50+ 來源 → 收斂成 30 個聚焦食物的來源 + 取材策略", link: "https://thepass.cc/sources-status", status: "完成" },
+      { item: "來源審核工具 /audit-sources", value: "一鍵評估新來源該不該收，可重複", link: "https://thepass.cc/audit-sources.html", status: "完成" },
+      { item: "統一入口 hub + 機制/審核說明", value: "團隊隨時可看最新狀況", link: "https://thepass.cc/hub.html", status: "完成" },
     ],
     decisions: ["編輯方向：維持嚴格「AI×食物」交集 vs 轉「食物優先、AI 為其中一個角度」（實測候選池已偏後者）"],
     next: ["方向定版後做 /selection-report 定版工具（每期一鍵產報告）", "規劃寫作階段（Mise/Passe/Fumet 把選出的題目寫成一期，對照既有 3 期 demo）"],
@@ -48,7 +48,7 @@ const totalItems = periods.reduce((n, p) => n + p.deliverables.length, 0);
 
 const periodBlock = (p: Period, isLatest: boolean) => `
   <section id="p-${esc(p.label)}" class="period">
-    <div class="p-head"><h2>${isLatest ? "本週實作" : esc(p.range)}</h2><span class="p-when">${esc(p.label)} · 🤖 AI 協作 ${p.aiHours} hr</span></div>
+    <div class="p-head"><h2>${isLatest ? "本週實作" : esc(p.range)}</h2><span class="p-when">${esc(p.label)} · AI 協作 ${p.aiHours} hr</span></div>
     <p class="tldr">${esc(p.tldr)}</p>
     ${p.resultLink ? `<p class="result"><a href="${esc(p.resultLink)}" target="_blank" rel="noopener">→ 看本週成果（選題系統入口）</a></p>` : ""}
     <div class="tbl"><table><thead><tr><th>交付項目</th><th>內容 / 價值</th><th>連結</th><th>狀態</th></tr></thead><tbody>
@@ -73,7 +73,7 @@ const html = `<!DOCTYPE html>
 .side{position:sticky;top:2.9rem;align-self:start;height:calc(100vh - 2.9rem);overflow-y:auto;border-right:1px solid var(--border);background:var(--white);padding:1.6rem 1rem 2rem 1.25rem}
 .side .lbl{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;margin-bottom:.7rem}
 .side a{display:block;text-decoration:none;padding:.45rem .6rem;border-radius:6px;margin-bottom:.2rem}.side a:hover{background:var(--bg-warm)}
-.side a .d{font-size:.78rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}.side a .t{font-size:.74rem;color:var(--ink-light);line-height:1.4}
+.side a .d{font-size:.78rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;display:block}.side a .t{font-size:.74rem;color:var(--ink-light);line-height:1.25;display:block;margin-top:.05rem}
 .side .more{font-size:.7rem;color:var(--ink-muted);margin-top:.4rem;padding:.3rem .6rem}
 .main{padding:1.8rem 2rem 4rem;max-width:760px}
 .period{margin-bottom:2.5rem;scroll-margin-top:3.2rem}
@@ -83,7 +83,7 @@ const html = `<!DOCTYPE html>
 .result{margin:0 0 .9rem;font-size:.86rem;font-weight:500}
 .tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.86rem}
 th{text-align:left;padding:.45rem .6rem;border-bottom:2px solid var(--border);font-size:.66rem;letter-spacing:.04em;color:var(--ink-muted);text-transform:uppercase;white-space:nowrap}
-td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.it{font-weight:600;white-space:nowrap}td.v{color:var(--ink-light);font-size:.83rem;line-height:1.55}td.st{text-align:center}
+td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.it{font-weight:600;white-space:nowrap}td.v{color:var(--ink-light);font-size:.83rem;line-height:1.55}td.st{text-align:center;color:var(--green);font-weight:600;white-space:nowrap}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .blk h3{font-size:.74rem;font-weight:700;letter-spacing:.04em;color:var(--accent);text-transform:uppercase;margin:.8rem 0 .3rem}
 .blk li,.lst li{list-style:none;position:relative;padding-left:1.2rem;font-size:.9rem;line-height:1.7;margin:.15rem 0}
