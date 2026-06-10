@@ -7,7 +7,7 @@ import { writeFileSync } from "fs";
 const r: SelectionReport = {
   issueLabel: "2026-06-10（示範）",
   generatedAt: "2026-06-10",
-  stats: { fetched: 200, deduped: 200, candidates: 18, selected: 5 },
+  stats: { fetched: 199, deduped: 199, candidates: 18, selected: 5 },
   selected: [
     { role: "feature", editor: "mise", weighted: 44.5, title: "世界第一座「培養肉農場」在荷蘭開張", source: "Foovo", lang: "ja", date: "06-09", link: "https://foodtech-japan.com/2026/06/09/respectfarms-2/", dimensions: { surprise: 5, local: 3, human: 4, conversation: 4, substance: 4 }, hook: "養了一輩子牛的荷蘭酪農，開始在自家農場裡「種」細胞肉——這是農夫的下一步，還是最後一步？", note: "從那位酪農的早晨寫起，不要從『培養肉技術』寫起。" },
     { role: "feature", editor: "mise", weighted: 41.5, title: "AI 正在殺死食譜部落格——然後另一個 AI 想救活它們", source: "The Spoon", lang: "en", date: "06-06", link: "https://thespoon.tech/ai-is-breaking-the-recipe-blog-model-allspice-thinks-it-can-also-save-it/", dimensions: { surprise: 5, local: 1, human: 4, conversation: 5, substance: 4 }, hook: "同一個技術同時是兇手和救星，獨立食譜創作者的生計卡在中間——天生就是 The Pass 的調性。" },
@@ -20,24 +20,39 @@ const r: SelectionReport = {
     from: "本期長文：荷蘭培養肉農場 × AI 與食譜部落格",
   },
   backlog: [
-    { title: "點餐 AI 與餐廳『好客』能否共存", source: "Restaurant Business", reason: "來源是 podcast 摘要、事實薄，不適合當稿；但它的『效率 vs 溫度』張力是 Fumet 的好素材。" },
-    { title: "釀酒廠可能讓植物肉達成本平價", source: "Food Tech Insider", reason: "角度好，但這期替代蛋白已夠多，下期再戰。" },
-    { title: "40 家食品巨頭押注再生農業", source: "Food Tech Insider", reason: "偏產業，待找到『人』的角度再上。" },
+    { title: "點餐 AI 與餐廳『好客』能否共存", source: "Restaurant Business", link: "https://www.restaurantbusinessonline.com/financing/can-hospitality-coexist-ai-ordering-technology", reason: "來源是 podcast 摘要、事實薄，不適合當稿；但它的『效率 vs 溫度』張力是 Fumet 的好素材。" },
+    { title: "釀酒廠可能讓植物肉達成本平價", source: "Food Tech Insider", link: "https://foodtechinsider.net/alt-meat-cost-parity-breweries-might-finally-crack-it/", reason: "角度好，但這期替代蛋白已夠多，下期再戰。" },
+    { title: "40 家食品巨頭押注再生農業", source: "Food Tech Insider", link: "https://foodtechinsider.net/40-food-giants-just-placed-the-biggest-bet-on-regenerative-farming/", reason: "偏產業，待找到『人』的角度再上。" },
   ],
   screenedOut: [
-    { title: "Chef Robotics 募資 $14.75M", source: "TechCrunch (2024-01)", reason: "⏰ 時效：feed 回傳 2024 舊聞，過期。" },
-    { title: "HealthifyMe AI 印度菜辨識", source: "TechCrunch (2023-09)", reason: "⏰ 時效：2023 舊聞。" },
-    { title: "Nestlé 收購 Yfood $469M", source: "TechCrunch (2023-04)", reason: "⏰ 時效：2023 舊聞。" },
-    { title: "Clover Food Lab 被金主救回", source: "Restaurant Business", reason: "🚫 無 AI/科技角度：純植物餐廳財務。" },
-    { title: "Goop 跨足食物", source: "Technically Food", reason: "🚫 無科技角度 + 偏舊。" },
-    { title: "Appetronix 併購 Cibotica", source: "The Spoon", reason: "😴 產業 M&A，乾稿、無人味。" },
+    { title: "Chef Robotics 募資 $14.75M", source: "TechCrunch (2024-01)", link: "https://techcrunch.com/2024/01/26/chef-robotics-eyes-commercial-kitchens-with-a-14-75m-raise/", reason: "⏰ 時效：feed 回傳 2024 舊聞，過期。" },
+    { title: "HealthifyMe AI 印度菜辨識", source: "TechCrunch (2023-09)", link: "https://techcrunch.com/2023/09/21/khosla-backed-healthifyme-introduces-ai-powered-image-recognition-for-indian-food/", reason: "⏰ 時效：2023 舊聞。" },
+    { title: "Clover Food Lab 被金主救回", source: "Restaurant Business", link: "https://www.restaurantbusinessonline.com/emerging-brands/clover-food-lab-emotional-week-ends-high-note", reason: "🚫 無 AI/科技角度：純植物餐廳財務。" },
+    { title: "Appetronix 併購 Cibotica", source: "The Spoon", link: "https://thespoon.tech/appetronix-acquires-food-robot-startup-cibotica/", reason: "😴 產業 M&A，乾稿、無人味。" },
   ],
   flags: [
     "本期偏替代蛋白（培養肉 / casein / 植物雞肉）——已壓一篇進庫存，你可考慮換更不同領域的進來。",
     "TechCrunch Food feed 一直回 2023–24 舊聞——pipeline 待加嚴格時效過濾。",
     "「40 家食品巨頭」出現兩篇（標題不同、Jaccard 沒抓到是同一則）——語意去重待 LLM 層補強。",
   ],
+  scannedSources: [
+    { name: "The Spoon", count: 15, stream: "A" },
+    { name: "AgFunder News", count: 15, stream: "A" },
+    { name: "TechCrunch (Food)", count: 15, stream: "A" },
+    { name: "식품외식경제", count: 15, stream: "A" },
+    { name: "Restaurant Business", count: 15, stream: "A" },
+    { name: "Nation's Restaurant News", count: 15, stream: "A" },
+    { name: "Eater", count: 10, stream: "A" },
+    { name: "Foovo", count: 10, stream: "A" },
+    { name: "食品産業新聞社 (SSNP)", count: 15, stream: "A" },
+    { name: "식품음료신문 (Thinkfood)", count: 15, stream: "A" },
+    { name: "The Caterer", count: 12, stream: "A" },
+    { name: "QSR Magazine", count: 12, stream: "A" },
+    { name: "Momentum Works (The Lowdown)", count: 10, stream: "B" },
+    { name: "Technically Food", count: 15, stream: "B" },
+    { name: "Food Tech Insider", count: 10, stream: "B" },
+  ],
 };
 
 writeFileSync(new URL("../public/selection-report-demo.html", import.meta.url), renderReport(r));
-console.log("✓ public/selection-report-demo.html 已重新產出");
+console.log("✓ public/selection-report-demo.html 已重新產出（含本週掃描來源 + 來源連結）");

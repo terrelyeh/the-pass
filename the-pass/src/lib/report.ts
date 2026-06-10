@@ -28,6 +28,14 @@ export interface ReportReject {
   title: string;
   source: string;
   reason: string;
+  link?: string; // 來源連結（庫存/已篩除也附上）
+}
+
+// 本週掃描的 active 來源與抓回篇數
+export interface ScannedSource {
+  name: string;
+  count: number;
+  stream?: "A" | "B";
 }
 
 export interface SelectionReport {
@@ -39,6 +47,7 @@ export interface SelectionReport {
   backlog: ReportReject[]; // 合格沒選上（reason = 為什麼進庫存）
   screenedOut: ReportReject[]; // 硬閘門砍（reason = 為什麼）
   flags: string[]; // 編輯室提醒
+  scannedSources?: ScannedSource[]; // 本週掃描來源列表與狀態
 }
 
 const EDITOR_LABEL: Record<Editor, string> = { mise: "Mise 長文", passe: "Passe 快訊" };
@@ -90,7 +99,7 @@ export function renderReport(r: SelectionReport): string {
     items
       .map(
         (x) =>
-          `<tr><td>${esc(x.title)}</td><td class="src">${esc(x.source)}</td><td class="why">${esc(x.reason)}</td></tr>`
+          `<tr><td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.title)} ↗</a>` : esc(x.title)}</td><td class="src">${esc(x.source)}</td><td class="why">${esc(x.reason)}</td></tr>`
       )
       .join("");
 
@@ -139,6 +148,7 @@ export function renderReport(r: SelectionReport): string {
 table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:.5rem}
 th{text-align:left;padding:.45rem .6rem;border-bottom:2px solid var(--border);font-size:.66rem;letter-spacing:.05em;color:var(--ink-muted);text-transform:uppercase}
 td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.src{color:var(--ink-muted);white-space:nowrap;font-size:.74rem}td.why{color:var(--ink-light)}
+table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:underline}
 .flags{background:var(--ink);color:rgba(255,255,255,.9);border-radius:10px;padding:1.1rem 1.4rem;margin-top:.6rem}
 .flags li{list-style:none;padding-left:1.2rem;position:relative;margin:.45rem 0;font-size:.85rem}
 .flags li::before{content:'▸';position:absolute;left:0;color:var(--accent-light)}
@@ -194,6 +204,17 @@ td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}
   ${
     r.flags.length
       ? `<div class="sec"><h2>編輯室提醒</h2></div><div class="flags"><ul>${r.flags.map((f) => `<li>${esc(f)}</li>`).join("")}</ul></div>`
+      : ""
+  }
+
+  ${
+    r.scannedSources && r.scannedSources.length
+      ? `<div class="sec"><h2>本週掃描來源</h2><div class="h-sub">這期實際抓取的 active 來源與抓回篇數（共 ${r.scannedSources.length} 個來源、${r.scannedSources.reduce((n, s) => n + s.count, 0)} 篇）。</div></div>
+  <div class="tbl-wrap"><table><thead><tr><th>來源</th><th>流</th><th>抓回篇數</th></tr></thead><tbody>${r.scannedSources
+          .slice()
+          .sort((a, b) => b.count - a.count)
+          .map((s) => `<tr><td>${esc(s.name)}</td><td>${s.stream ? `<span class="badge ${s.stream === "A" ? "pass" : "warn"}">${s.stream}</span>` : "—"}</td><td>${s.count}</td></tr>`)
+          .join("")}</tbody></table></div>`
       : ""
   }
 
