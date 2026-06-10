@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>來源審核 /audit-sources — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&family=JetBrains+Mono:wght@500&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:18px}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:3rem 1.5rem 5rem}
+.back{font-size:.8rem;color:var(--ink-muted);text-decoration:none}.back:hover{color:var(--accent)}
+.hero{text-align:center;border-bottom:1px solid var(--border);padding:1.5rem 0 1.8rem;margin-bottom:1.8rem}
+.hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h1{font-family:var(--display);font-size:2.5rem;font-weight:400;margin:.4rem 0 .3rem}
+.hero .cmd{font-family:var(--mono);font-size:.9rem;color:var(--accent);background:var(--bg-warm);border:1px solid var(--border);border-radius:6px;padding:.2rem .6rem;display:inline-block;margin-top:.5rem}
+.hero .sub{color:var(--ink-muted);font-size:.92rem;max-width:540px;margin:.8rem auto 0}
+.sec{margin:2.3rem 0 .8rem}.sec h2{font-family:var(--display);font-size:1.55rem;font-weight:400;display:flex;align-items:center;gap:.5rem}
+.sec .n{font-family:var(--sans);font-size:.72rem;font-weight:700;color:#fff;background:var(--accent);border-radius:50%;width:1.5rem;height:1.5rem;display:inline-flex;align-items:center;justify-content:center}
+p{margin:.5rem 0;font-size:.95rem}
+.lead{font-family:var(--serif);font-size:1.05rem;color:var(--ink-light);border-left:3px solid var(--accent);padding-left:1.1rem;margin:1rem 0}
+.flow{display:flex;flex-direction:column;gap:.4rem;margin:1rem 0}
+.step{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.7rem 1.1rem;font-size:.9rem}
+.step b{color:var(--ink)}.step .m{font-size:.78rem;color:var(--ink-muted)}
+.arr{text-align:center;color:var(--accent);font-size:.9rem}
+.dim{display:grid;grid-template-columns:auto 1fr;gap:.7rem 1rem;align-items:start;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.85rem 1.1rem;margin:.5rem 0}
+.dim .k{font-family:var(--sans);font-size:.7rem;font-weight:700;color:#fff;background:var(--accent-light);border-radius:5px;padding:.2rem .5rem;white-space:nowrap}
+.dim .t{font-size:.7rem;line-height:1.55}.dim .t b{font-size:.92rem;color:var(--ink);display:block;margin-bottom:.15rem;font-weight:600}
+.dim .t span{color:var(--ink-light);font-size:.85rem}
+.card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0}
+.card.dark{background:var(--ink);color:rgba(255,255,255,.9)}.card.dark b{color:var(--accent-light)}
+.card li,.lst li{list-style:none;position:relative;padding-left:1.2rem;font-size:.9rem;line-height:1.7;margin:.2rem 0}
+.card li::before,.lst li::before{content:'▸';position:absolute;left:0;color:var(--accent-light)}
+.card.dark li::before{color:var(--accent-light)}
+.example{font-family:var(--serif);font-size:.9rem;background:var(--bg-warm);border-left:3px solid var(--accent-light);border-radius:0 6px 6px 0;padding:.7rem 1rem;margin:.6rem 0;color:var(--ink-light);line-height:1.7}
+.example b{color:var(--ink)}
+.foot{text-align:center;color:var(--ink-muted);font-size:.76rem;margin-top:3rem;border-top:1px solid var(--border);padding-top:1.4rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
+.tag{font-size:.6rem;font-weight:700;padding:.1rem .45rem;border-radius:100px;background:rgba(39,174,96,.14);color:var(--green)}
+</style></head><body>
+<div class="wrap">
+  <a class="back" href="hub.html">← 回入口</a>
+  <div class="hero">
+    <div class="label">Skill · 來源審核</div>
+    <h1>來源審核</h1>
+    <div class="cmd">/audit-sources</div>
+    <p class="sub">把一批候選來源評估後，自動收進選題 pipeline。一個指令，取代每次重講方法。</p>
+  </div>
+
+  <div class="sec"><h2>目的</h2></div>
+  <p class="lead">同事推薦、或自己發現一批可能的來源時——快速、用同一套標準判斷「這值不值得收進 The Pass」，並把通過的自動落地。</p>
+  <p>The Pass 的內容好不好，七成決定在「料源」。但每次人工判斷容易飄、容易漏。這個 skill 把整套審核方法固化下來，讓每次評估都一致、可重複。</p>
+
+  <div class="sec"><h2><span class="n">·</span>做什麼（流程）</h2></div>
+  <div class="flow">
+    <div class="step"><b>① 取出候選清單</b> <span class="m">— 網址 / 名稱 / 一篇列媒體的文章都行</span></div>
+    <div class="arr">↓</div>
+    <div class="step"><b>② 機械層：連通 + 活性 + 樣本</b> <span class="m">— 找出可用 feed、近期更新狀況、抓近 12 篇樣本標題（scripts/audit-feed.ts）</span></div>
+    <div class="arr">↓</div>
+    <div class="step"><b>③ 讀樣本，判內容走向</b> <span class="m">— Claude 依六個角度評估每個來源（下方）</span></div>
+    <div class="arr">↓</div>
+    <div class="step"><b>④ 出審核卡 + 收/不收建議</b> <span class="m">— 附建議的 stream / tier / category</span></div>
+    <div class="arr">↓</div>
+    <div class="step"><b>⑤ 你確認 → 自動落地</b> <span class="m">— 加進 sources.ts、重生來源頁、部署</span></div>
+  </div>
+
+  <div class="sec"><h2>Audit 的六個角度</h2></div>
+  <div class="dim"><span class="k">① 連通</span><div class="t"><b>feed 抓得到嗎</b><span>沒有可用 feed（紙本/JS-only/擋 bot）→ 不進 pipeline，可當編輯靈感。</span></div></div>
+  <div class="dim"><span class="k">② 活性</span><div class="t"><b>還在更新嗎</b><span>最新一篇多久前、多久一篇。停更（&gt;90 天）→ 不收。</span></div></div>
+  <div class="dim"><span class="k">③ 內容走向</span><div class="t"><b>是哪種食物內容（核心）</b><span>類型分布（食譜 / 產業新聞 / 人物故事 / 文化觀點 / 科技 / 評論 / 趨勢 / 在地）＋ 調性（新鮮有趣 ↔ 乾的產業稿）＋ 餵哪位編輯（Mise 人物 / Passe 事實 / Fumet 觀點）。</span></div></div>
+  <div class="dim"><span class="k">④ 科技含量</span><div class="t"><b>食品科技 / AI 角度多不多</b><span>輔助線——食品科技導向加分，但不是必要；純 AI / 通用科技不收。</span></div></div>
+  <div class="dim"><span class="k">⑤ 新鮮獨家</span><div class="t"><b>台灣讀者 / 台灣媒體還沒看過的程度</b><span>越前沿、越奇、越有觀點 → 越高分。這是 The Pass 的價值核心：台灣沒有的新鮮事。</span></div></div>
+  <div class="dim"><span class="k">⑥ IG/影片</span><div class="t"><b>能不能延伸成 carousel / 短影音</b><span>有畫面、有故事、有數字 ↔ 純文字產業稿。</span></div></div>
+  <p style="font-size:.82rem;color:var(--ink-muted);margin-top:.6rem">→ 由以上推導出 <b>分類建議</b>：stream（A 飲食媒體 / B 食品科技·觀點）、tier（1 核心～5 觀察）、收（active）/ 待觀察（pending）/ 不收。</p>
+
+  <div class="sec"><h2>取材原則（判斷時的北極星）</h2></div>
+  <div class="card dark">
+    <ul>
+      <li><b>TA 是台灣讀者，但刻意不收台灣來源</b>——台灣飲食內容已太多，價值在「台灣沒有的新鮮事」：替台灣讀者開一扇窗，看世界上有趣的飲食新知 / 新聞 / 觀點。</li>
+      <li><b>食物 / 餐飲 / 上下游為主，AI / 科技為輔</b>——食品科技導向才收，純 AI / 通用科技不收。</li>
+      <li><b>調性：新鮮感與發現的驚喜</b>——不是乾的產業新聞。重人味、重觀點、反 AI slop。</li>
+    </ul>
+  </div>
+
+  <div class="sec"><h2>不收的常見情況</h2></div>
+  <ul class="lst">
+    <li>無可用 feed（紙本雜誌、JS-only、擋 bot）。</li>
+    <li>停更（最新 &gt; 90 天）。</li>
+    <li>純 AI / 通用科技 / 新創，食物密度趨近 0。</li>
+    <li>食譜為主——The Pass 不教做菜，食譜站適配弱。</li>
+  </ul>
+
+  <div class="sec"><h2>怎麼用</h2></div>
+  <div class="card">
+    <p style="margin:0">下次直接說：<br><span style="font-family:var(--mono);font-size:.88rem;color:var(--accent)">「幫我 audit 這些來源」+ 貼網址</span><br>或在 Claude Code 觸發 <span style="font-family:var(--mono);color:var(--accent)">/audit-sources</span>，就會自動跑完整套——不用再每次重講方法。</p>
+  </div>
+  <div class="example">範例審核卡：<br><b>Foovo</b> — 🟢 活躍（約 10 篇/週）<br>內容走向：90% 食品科技前沿（培養肉/精密發酵）+ 10% 報告導讀；偏技術但有發現感<br>餵：Passe 事實為主，偶有 Mise（創辦人專訪）｜科技高｜新鮮獨家高｜IG 潛力中<br>→ <b>收</b>：Stream A · ai-food-tech · tier 3 · active</div>
+
+  <div class="foot"><div class="b">The Pass 出菜口</div>來源審核 · /audit-sources · 機器跑流程、人定品味</div>
+</div></body></html>
