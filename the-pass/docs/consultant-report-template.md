@@ -2,6 +2,10 @@
 
 > 用法：每期複製「模板」區塊填空 → 送團隊（email / Slack / Notion）。
 > 線上版（最新週報 + 累積交付）：thepass.cc/delivery.html，每次更新自動同步。
+>
+> **自動產生器**：本模板的線上頁 + Markdown 週報已由 `/delivery-report` skill 從
+> `~/consulting/clients/the-pass/config.json` 一鍵生成（單一真實來源）。手動填本模板
+> 僅作為快速參考；正式產出走 skill。
 
 ---
 
