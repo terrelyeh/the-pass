@@ -155,8 +155,8 @@ the-pass/
 ### 3. 接真實 LLM
 使用者自行在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
 
-### 4. 基礎建設
-**庫存 backlog store 已實作**（`backlog.ts`，JSON）。仍待：**編輯 Memory 回寫**（Soul 已有 `docs/editors/*-soul.md`，但動態 Memory 未實作）；報告「決定」的後端儲存（目前互動不存檔）；seen + backlog 兩個 JSON store 升級 Supabase（介面已抽象，可直接換）；Ghost Pro。三者卡同一件事：**還沒有正式儲存層**，目前只有本機 JSON。
+### 4. 儲存策略（2026-06-11 定）+ 基礎建設
+三層、各用對的工具：**機器狀態**＝本機 JSON（`data/*.json`，backlog/seen 已實作）；**人看存檔**＝Terrel 本機 Obsidian vault（Markdown，vault 路徑待提供）；**團隊溝通**＝網頁 HTML 上 thepass.cc。**雙輸出原則**：同資料 → HTML（團隊、互動）+ Markdown（Obsidian）——`delivery-report` 已如此，`/selection-report` 比照（再寫一份含庫存表的 `.md` 進 vault）。**Supabase 暫不導入**，只有「排程自動化 / 團隊線上即時查」才需要。仍待：**編輯 Memory 回寫**（Soul 已有 `docs/editors/*-soul.md`，動態 Memory 未接）；報告「決定」後端；Ghost Pro。
 
 ### 5. 待修 / 待 audit
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
