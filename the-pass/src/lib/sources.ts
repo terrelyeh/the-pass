@@ -49,6 +49,7 @@ export const sources: Source[] = [
   { id: "momentum-lowdown", name: "Momentum Works (The Lowdown)", url: "https://thelowdown.momentum.asia", feedUrl: "https://thelowdown.momentum.asia/feed/", language: "en", category: "tech-startup", tier: 4, stream: "B", feedType: "rss", status: "active", description: "SEA 外送/食物商業洞察（密度 ~17%）" },
   { id: "technically-food", name: "Technically Food", url: "https://technicallyfood.substack.com", feedUrl: "https://technicallyfood.substack.com/feed", language: "en", category: "ai-frontier", tier: 3, stream: "B", feedType: "rss", status: "active", description: "獨立記者 Larissa Zimberoff 的 food×tech 雙週報；觀點型" },
   { id: "food-tech-insider", name: "Food Tech Insider", url: "https://www.foodtechinsider.net", feedUrl: "https://www.foodtechinsider.net/feed", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "active", description: "AI/替代蛋白/培養肉 週報；食品科技導向" },
+  { id: "bens-bites", name: "Ben's Bites", url: "https://bensbites.com", feedUrl: "https://bensbites.com/feed/", language: "en", category: "ai-frontier", tier: 4, stream: "B", feedType: "rss", status: "pending", description: "通用 AI 日報；AI→食物前沿雷達（2026 活躍）。食物密度低，列 pending 手動掃，暫不進 Opus 全程（避免為近 0 密度 firehose 付費）" },
 
   // ============================================================
   // 在地飲食/餐飲（Stream A）— 已啟用（除 nissyoku：feed 失效）
