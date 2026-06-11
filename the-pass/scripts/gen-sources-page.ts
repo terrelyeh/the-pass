@@ -87,7 +87,7 @@ ${NAV}
 <div class="stat off"><div class="n">${pending.length}</div><div class="l">Pending</div></div>
 <div class="stat"><div class="n">${aCount}/${bCount}</div><div class="l">Stream A / B</div></div>
 </div>
-<p class="note">💡 即時版（含完整狀態說明）：<a href="sources-status">/sources-status</a>。狀態 Active = 進 pipeline 抓取；Pending = 已登錄/部分驗證，尚未啟用。</p>
+<p class="note">本頁＝選題來源與狀態的單一文件，隨 <code>sources.ts</code> 每次部署同步。狀態 <span class="st on">● Active</span> = 進 pipeline 抓取；<span class="st off">○ Pending</span> = 已登錄／部分驗證，尚未啟用。</p>
 ${[1, 2, 3, 4, 5].map(tierSection).join("")}
 <div class="foot"><div class="b">The Pass 出菜口</div>選題來源 · 由 sources.ts 自動生成，全部經 feed 連通 + 食物密度 audit</div>
 </div></body></html>`;

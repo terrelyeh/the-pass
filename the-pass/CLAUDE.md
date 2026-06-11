@@ -16,7 +16,8 @@
 | 項目 | 決定 |
 |------|------|
 | 產品名 | The Pass 出菜口 |
-| 定位 | AI × 餐飲的每一個面向，用「分享有趣的事」的角度 |
+| 定位 | 飲食／餐飲／食物優先，AI／科技為輔與加分（2026-06-11 團隊定）；用「分享有趣的事」的角度 |
+| 編輯方向 | **食物優先**：硬閘門以食物為準，AI／科技角度是加分不是門檻 |
 | 語氣 | 像朋友分享有趣的事 + 留一個好問題 |
 | 不做的事 | 不下結論、不更動信源事實、不給觀點評論 |
 | 頻率 | 一週 2 期（週二、週五）|
@@ -102,7 +103,7 @@ Logo 點擊 → demo-index.html
 the-pass/
 ├── public/                       ← 靜態頁（部署即上線）
 │   ├── hub.html                  ← 🆕 選題系統入口（連各頁）
-│   ├── sources.html              ← 🆕 選題來源（由 sources.ts 自動生成，勿手改）
+│   ├── sources.html              ← 選題來源＋狀態 單一文件（sources.ts 自動生成，勿手改）
 │   ├── audit-sources.html        ← 🆕 /audit-sources skill 說明頁
 │   ├── selection-mechanism.html  ← 🆕 篩選機制設計
 │   ├── selection-report-demo.html← 🆕 選題報告（每期會議文件；gen 自 scripts/demo-report.ts；gitignore）
@@ -112,7 +113,7 @@ the-pass/
 │   ├── lib/                      ← 選題 pipeline（見下方架構）
 │   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
-│   └── app/                      ← Next App Router；api/fetch-feeds、/sources-status（Next route，讀 sources.ts）
+│   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
 ├── scripts/                      ← tsx 腳本：audit-feed / gen-sources-page / demo-report
 ├── .claude/skills/audit-sources/ ← 🆕 /audit-sources skill
 ├── docs/                         ← MD 內部文件（selection-mechanism、source-verification-checklist、persona…）
@@ -131,7 +132,7 @@ the-pass/
   → 選題報告(report.ts → HTML) → 總編/團隊拍板 → 出刊的移出庫存、沒選上的留庫存
 ```
 
-- **單一真實來源 = `src/lib/sources.ts`**（現 30 來源：active 29 / pending 1）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`；`/sources-status`（Next route）自動同步。
+- **單一真實來源 = `src/lib/sources.ts`**（現 31 來源：active 29 / pending 2）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`——**它＝「選題來源＋狀態」的單一文件**（tier 分組 + Active/Pending 徽章；`/sources-status` route 已退役併入，2026-06-11 團隊要求）。
 - **兩條進料線**：Stream A 飲食媒體 / Stream B 食品科技·觀點（輔助）。**刻意不收台灣源**（TA 是台灣讀者，價值＝台灣沒有的新鮮事）。食物優先、AI/科技為輔。
 - **評分**：`scorer.ts` 有金鑰走 Opus（五面向 0–5 加權 + mise/passe 路由 + hook），無金鑰 dry-run（關鍵字代理）。**Fumet 提問不選稿**，從選出的長文「提煉」。
 - **庫存 backlog**：`backlog.ts`（`BacklogStore` + `buildCompetitorPool`）持久化「合格沒選上」的，JSON `data/backlog.json`，保鮮期預設 30 天（`DEFAULT_FRESHNESS_DAYS`）。每期 `prune(過期淘汰)` → 合併庫存+新評分排序 → 選一期 → `remove(出刊)` / `upsert(沒選上)` → `save`。重進不續命（保留原 enteredAt）。`scripts/test-backlog.ts` 驗證跨期迴圈（11 checks，測試用固定 14 天窗、不依賴預設值）。**注意：v1 是單一 flat window**，頁面 §9 講的「分型保鮮期」（融資稿短、常青長）是未來精修。
@@ -146,11 +147,11 @@ the-pass/
 
 ## 下一步（最優先）
 
-### 1. ⛳ 編輯方向拍板（擋住下游，使用者內部會議中）
-決定：**維持硬性「AI×食物」交集** vs **轉「食物優先、AI 為其中一個角度」**。候選池實測已偏食物優先。**方向定了才動硬閘門的「判準」**（AI×食物嚴格度）——模型架構已改 Opus 全程評估，但閘門條件先不動。
+### 1. ✅ 編輯方向已定（2026-06-11 團隊會議）
+**飲食／餐飲／食物優先，AI／科技為輔與加分。** 硬閘門已改 food-first（`scorer.ts` EVAL_SYSTEM：食物為門檻、AI 非必要；AI／科技角度計入 surprise 加分，不再要求硬性 AI×食物交集）。下游（/selection-report、三位編輯寫作）皆依此方向。
 
-### 2. `/selection-report` skill（一週兩次核心）
-方向定版後，把「抓取→去重→Opus 評估→產報告→部署」做成 skill（那時 rubric 才正確）。機械層已是程式（src/lib + scripts/demo-report.ts），skill 主要封裝編輯判斷。
+### 2. `/selection-report` skill（一週兩次核心，方向已定、可動工）
+把「抓取→去重→Opus 評估→產報告→部署」做成 skill。**雙輸出**：HTML 上 thepass.cc（團隊、互動）+ Markdown 進 Obsidian vault（每期獨立存檔 `選題報告/<date>`、庫存落 `庫存.md`，路徑見記憶 project_storage_strategy）。機械層已是程式（src/lib + scripts/demo-report.ts），skill 主要封裝編輯判斷 + 落檔。
 
 ### 3. 接真實 LLM
 使用者自行在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。

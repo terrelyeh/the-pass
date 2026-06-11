@@ -55,7 +55,7 @@ const r: SelectionReport = {
     "本期候選偏 alt-protein/食品科技（Foovo + Food Tech Insider 量大）——已用 Jennifer Makan（別用 AI 點酒）、餐廳趨勢、韓國在地平衡，但可再補更多『人/在地餐飲』題。",
     "식품외식경제（foodbank-kr）這次 feed DNS 失敗（getaddrinfo）——可能 http:// 或暫時性，已記待查（其餘 28 個來源正常）。",
     "Food Tech Insider 多為『週報摘要』而非單一故事——適合當趨勢脈搏，但別整篇選為一則。",
-    "方向提醒：此候選池已偏『食物優先、AI 為其中一個角度』——請在會議上確認要維持硬性 AI×食物，還是正式轉『食物優先』。",
+    "方向已定（2026-06-11 團隊會議）：飲食／餐飲／食物優先，AI／科技為輔與加分。硬閘門以食物為準、AI／科技角度計入加分（不再要求硬性 AI×食物交集）。",
   ],
   scannedSources: [
     { name: "The Spoon", count: 15, stream: "A" }, { name: "AgFunder News", count: 15, stream: "A" }, { name: "TechCrunch (Food)", count: 15, stream: "A" },
