@@ -1,6 +1,6 @@
 # CLAUDE.md — The Pass 出菜口 Project Context
 
-> Last updated: 2026-06-10
+> Last updated: 2026-06-14
 
 ## Project Overview
 
