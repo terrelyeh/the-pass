@@ -105,7 +105,8 @@ the-pass/
 │   ├── hub.html                  ← 🆕 選題系統入口（連各頁）
 │   ├── sources.html              ← 選題來源＋狀態 單一文件（sources.ts 自動生成，勿手改）
 │   ├── audit-sources.html        ← 🆕 /audit-sources skill 說明頁
-│   ├── selection-mechanism.html  ← 🆕 篩選機制設計
+│   ├── selection-mechanism.html  ← 篩選機制設計
+│   ├── research-stage.html       ← 研究階段提案（內容源 vs 主題源；待團隊討論）
 │   ├── selection-report-demo.html← 🆕 選題報告（每期會議文件；gen 自 scripts/demo-report.ts；gitignore）
 │   ├── project-brief / editorial-guidelines / about / methodology / illustration-guide / implementation-plan / editors / editor-*.html
 │   └── demo-index / demo-issue-001~003 / demo-ig-post.html、img/
@@ -152,6 +153,8 @@ the-pass/
 
 ### 2. `/selection-report` skill（一週兩次核心，方向已定、可動工）
 把「抓取→去重→Opus 評估→產報告→部署」做成 skill。**雙輸出**：HTML 上 thepass.cc（團隊、互動）+ Markdown 進 Obsidian vault（每期獨立存檔 `選題報告/<date>`、庫存落 `庫存.md`，路徑見記憶 project_storage_strategy）。機械層已是程式（src/lib + scripts/demo-report.ts），skill 主要封裝編輯判斷 + 落檔。
+
+> **下游提案（待團隊討論）**：**研究階段**——來源分「內容源（RSS，可直接寫）vs 主題源（IG/YT/手動雷達，只給題目）」；主題源選上後多一個「研究/查證」步驟（web 搜尋+抓取+LLM brief）才寫作。提案頁 `public/research-stage.html`，未來獨立 `/research`（用 Firecrawl + deep-research）。**創作者/影片進料線**：YouTube 頻道用官方 RSS（`youtube.com/feeds/videos.xml?channel_id=...`，乾淨、直接進 sources.ts）；IG 無官方 API、爬蟲脆弱 → 走手動雷達（Obsidian `創作者雷達.md`）。
 
 ### 3. 接真實 LLM
 使用者自行在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
