@@ -170,12 +170,25 @@ the-pass/
 
 ## 部署
 
+**主要方式：git push 自動部署（2026-06-14 修復）。** push 到 `main` → Vercel 自動建置 + 上線 `thepass.cc`，**不需再手動部署**。
+
+```bash
+# 改完 code → 提交推送即自動部署
+git add . && git commit -m "..." && git push
+```
+
+備援（手動，仍可用，會從本機上傳）：
+
 ```bash
 cd the-pass
 npx vercel --prod --yes
 ```
 
-⚠️ GitHub 自動部署目前失效，每次都需手動部署。需到 Vercel Settings → Git 重新連結 webhook。
+> **2026-06-14 修復紀錄：** 「自動部署失效」其實有兩層原因 ——
+> (1) GitHub↔Vercel 連線斷（已用 `vercel git connect` 接回）；
+> (2) **真正主因**：Vercel 專案 **Root Directory 未設**。git repo 根目錄是 `Foodie-news/`、Next.js app 在 `the-pass/` 子目錄，自動建置從根目錄跑會找不到 app 而失敗（手動部署因先 `cd the-pass` 才沒踩到此雷）。已將 Vercel **Root Directory 設為 `the-pass`**。
+>
+> ⚠️ **自動部署只部署 git 內的檔案**：被 gitignore 的 artifact（如 `public/selection-report-*.html`）**不會**上線。以前手動部署會連本機 gitignored 檔一起上傳，現在不會 —— 要上線的檔案務必 commit（`public/sources.html` 已 commit、不受影響）。
 
 ## Common Pitfalls
 
@@ -184,8 +197,8 @@ npx vercel --prod --yes
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
 - **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。
 - **Fumet 不選稿**: 結尾提問從選出的長文「提煉」，不從候選池打分選一篇（editorial-guidelines 規定）。
-- **selection-report-demo.html / data/*.json 已 gitignore**: 是 gen 出的 artifact，不 commit；部署時 vercel 從本機 public/ 上傳。
-- **Vercel 自動部署失效**: GitHub webhook 斷了（可能因改名），需手動 `npx vercel --prod --yes`
+- **selection-report-demo.html / data/*.json 已 gitignore**: 是 gen 出的 artifact，不 commit。⚠️ **自動部署改 git 來源後（2026-06-14），gitignored 檔不會上線**（如 `selection-report-*.html`）；要上線的檔需 commit（`sources.html` 已 commit、不受影響）。手動 `vercel --prod` 才會連本機 gitignored 檔一起上傳。
+- **Vercel 自動部署（2026-06-14 已修復）**: 現在 push 到 `main` 即自動部署。當初失效主因是 **Root Directory 未設成 `the-pass`**（repo 根在 `Foodie-news/`、app 在子目錄），已修正；連線也用 `vercel git connect` 接回。手動 `npx vercel --prod --yes` 仍可作備援。
 - **Vercel subdomain**: auto-generated 是 `the-pass-nine`，但已有自訂域名 `thepass.cc`
 - **動態插畫流程**: 靜態插圖 → 加標題 → Google Flow (Veo) 生成動態，音效OK但禁止配音
 - **快訊不配圖**: 測試過 spot illustration，閱讀斷裂感太強，決定不採用
