@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>從線索到故事：研究階段 — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:18px;scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,250,248,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-in{max-width:880px;margin:0 auto;padding:.7rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.nav a{text-decoration:none;color:var(--ink-light);font-size:.82rem}.nav a:hover{color:var(--accent)}
+.nav .brand{font-family:var(--display);font-size:1.1rem;color:var(--ink)}
+.wrap{max-width:880px;margin:0 auto;padding:2.6rem 1.5rem 5rem}
+.hero{border-bottom:1px solid var(--border);padding-bottom:1.6rem;margin-bottom:1.8rem}
+.hero .label{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-family:var(--display);font-size:2.7rem;font-weight:400;margin:.4rem 0 .4rem;line-height:1.1}
+.hero .sub{color:var(--ink-muted);font-size:.96rem}
+.lead{font-family:var(--serif);font-size:1.12rem;line-height:1.85;color:var(--ink);margin:1.4rem 0 2rem}
+.sec{font-family:var(--display);font-size:1.55rem;font-weight:400;margin:2.6rem 0 1rem;padding-top:.6rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.3rem;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent-light)}
+.card.content::before{background:var(--green)}
+.card .tag{font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.card.content .tag{color:var(--green)}
+.card h3{font-family:var(--serif);font-size:1.1rem;font-weight:600;margin:.25rem 0 .45rem}
+.card p{font-size:.9rem;color:var(--ink-light);line-height:1.65}
+.card .eg{font-size:.8rem;color:var(--ink-muted);margin-top:.5rem;border-top:1px dashed var(--border);padding-top:.5rem}
+.flow{display:flex;align-items:stretch;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0}
+.step{flex:1;min-width:120px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.8rem .7rem;text-align:center;font-weight:600;font-size:.92rem;display:flex;flex-direction:column;justify-content:center}
+.step span{display:block;font-weight:400;font-size:.7rem;color:var(--ink-muted);margin-top:.25rem}
+.step.new{border-color:var(--accent);background:rgba(184,134,11,.07)}.step.new span{color:var(--accent);font-weight:600}
+.arr{display:flex;align-items:center;color:var(--accent-light);font-size:1.2rem}
+.example{background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;margin:1rem 0}
+.ex-row{display:flex;gap:.8rem;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.92rem;line-height:1.6}
+.ex-row:last-child{border-bottom:none}
+.ex-row .k{flex:none;width:4.2rem;font-weight:700;color:var(--accent);font-size:.82rem}
+.arch li,.qa li{list-style:none;position:relative;padding-left:1.3rem;font-size:.95rem;line-height:1.75;margin:.3rem 0}
+.arch li::before{content:'▸';position:absolute;left:0;color:var(--accent-light)}
+.qa li::before{content:'◆';position:absolute;left:0;color:var(--accent)}
+.note{font-size:.84rem;color:var(--ink-muted);background:var(--white);border-left:3px solid var(--accent-light);padding:.7rem 1rem;border-radius:0 8px 8px 0;margin-top:.9rem}
+p.body{font-size:.96rem;color:var(--ink-light);margin:.6rem 0}
+.foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3.5rem;border-top:1px solid var(--border);padding-top:1.5rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
+@media(max-width:680px){.two{grid-template-columns:1fr}.flow{flex-direction:column}.arr{justify-content:center;transform:rotate(90deg)}.hero h1{font-size:2.1rem}}
+</style></head><body>
+<div class="nav"><div class="nav-in">
+  <a class="brand" href="hub.html">The Pass</a>
+  <div><a href="hub.html">選題系統入口</a> &nbsp;·&nbsp; <a href="selection-mechanism.html">篩選機制</a></div>
+</div></div>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">Pipeline 提案 · 待團隊討論</div>
+    <h1>從線索到故事</h1>
+    <p class="sub">主題源與「研究階段」——為什麼 IG／YouTube 來的題目，選上之後還要再做一次研究。</p>
+  </div>
+
+  <p class="lead">不是每個來源都「自帶故事」。有的來源直接就是一篇報導；有的——像 IG 一張圖、一句話——只給你一個<strong>有趣的題目</strong>，故事還在外面，得去把它找回來。</p>
+
+  <h2 class="sec">來源有兩種</h2>
+  <div class="two">
+    <div class="card content">
+      <div class="tag">內容源</div>
+      <h3>故事就在來源裡</h3>
+      <p>RSS 飲食媒體、產業報導。內容夠，抓下來輕度查證就能寫。</p>
+      <p class="eg">例：The Spoon 報導某公司培養肉新進展——人事時地都齊。</p>
+    </div>
+    <div class="card seed">
+      <div class="tag">主題源 / 線索源</div>
+      <h3>來源只給你題目</h3>
+      <p>IG／YouTube／手動雷達。內容很少（一張圖、一句 caption），是個<strong>種子</strong>，得再研究才有料寫。</p>
+      <p class="eg">例：IG 看到「某店用 AI 做了會隨季節變味的巧克力」——就一張圖。</p>
+    </div>
+  </div>
+
+  <h2 class="sec">流程多了一個階段</h2>
+  <div class="flow">
+    <div class="step">發現<span>RSS + 手動雷達</span></div>
+    <div class="arr">→</div>
+    <div class="step">選題<span>Opus 評分 + 編輯拍板</span></div>
+    <div class="arr">→</div>
+    <div class="step new">研究 / 查證<span>← 新增這塊</span></div>
+    <div class="arr">→</div>
+    <div class="step">寫作<span>Mise / Passe</span></div>
+    <div class="arr">→</div>
+    <div class="step">查核<span>總編</span></div>
+  </div>
+  <p class="body">研究階段只跑「<strong>選上的</strong>」（一期約 6 則），不是所有候選——成本可控。內容源多半只需輕度查證，主題源才需要重度研究。</p>
+
+  <h2 class="sec">研究階段做兩件事</h2>
+  <div class="two">
+    <div class="card"><div class="tag">擴充</div><h3>把線索變成故事</h3><p>把一句 caption 變成「有人、有脈絡、有事實」的故事，補齊真材實料。</p></div>
+    <div class="card"><div class="tag">查證</div><h3>守住「我們從不騙你」</h3><p>IG 上的東西可能是行銷、可能是假的。研究順便驗「這是真的嗎」——查不到證的就退場。這是品牌承諾的第二道守門。</p></div>
+  </div>
+
+  <h2 class="sec">一個例子</h2>
+  <div class="example">
+    <div class="ex-row"><span class="k">IG 看到</span><span>一張圖：「這家店用 AI 做了會隨季節變味的巧克力」</span></div>
+    <div class="ex-row"><span class="k">選題</span><span>主題有趣、有畫面、台灣少見 → 選上，標「主題源 · 需研究」</span></div>
+    <div class="ex-row"><span class="k">研究</span><span>這家店／品牌是誰？找官網、報導 → 真的還是噱頭？→ 誰做的、用什麼技術、為什麼有意思、有沒有具體的人</span></div>
+    <div class="ex-row"><span class="k">產出</span><span>一份研究 brief：事實 + 來源連結 + 人物 + 角度 + 查證結果</span></div>
+    <div class="ex-row"><span class="k">寫作</span><span>Mise 從 brief 寫成長文（先找到人）</span></div>
+  </div>
+
+  <h2 class="sec">技術架構（怎麼做到）</h2>
+  <ul class="arch">
+    <li><strong>web 搜尋</strong>：用選上的主題去搜原始出處 + 相關報導</li>
+    <li><strong>抓內容</strong>：把關鍵頁面抓成乾淨文字</li>
+    <li><strong>整合 brief</strong>：AI 把蒐集到的整理成「事實 / 來源 / 人物 / 角度 / 查證結果」</li>
+    <li><strong>只跑選上的</strong>：一期約 6 則，成本可控</li>
+  </ul>
+  <p class="note">工具都已就位（Firecrawl 搜尋＋抓取、deep-research）。這階段會是未來一個獨立步驟（暫稱 <code>/research</code>），或併進選題的下游。</p>
+
+  <h2 class="sec">待團隊討論</h2>
+  <ul class="qa">
+    <li><strong>研究深度</strong>：每則做到多深？（快速查證 vs 深度研究）</li>
+    <li><strong>自動 vs 人工</strong>：brief 全自動產，還是 AI 草擬 + 編輯補？</li>
+    <li><strong>查不到證</strong>怎麼辦：退庫存、降級成快訊、還是砍？</li>
+    <li><strong>主題源比重</strong>：一期裡「需研究」的題目最多佔幾成才健康？</li>
+  </ul>
+
+  <div class="foot"><div class="b">The Pass 出菜口</div>Pipeline 提案 · 主題源與研究階段 · 待團隊討論</div>
+</div>
+</body></html>
