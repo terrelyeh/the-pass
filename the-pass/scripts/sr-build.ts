@@ -22,7 +22,7 @@ import {
   type FumetQuestion,
 } from "../src/lib/report";
 import type { RawArticle } from "../src/lib/fetcher";
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import path from "path";
 
 const SELECT_FEATURES = 2; // 長文（Mise）
@@ -286,7 +286,15 @@ async function main() {
 
   // 主輸出：HTML（永遠寫，給預覽/上線）
   const htmlName = `selection-report-${date}.html`;
-  writeFileSync(path.join(process.cwd(), "public", htmlName), renderReport(report));
+  const pubDir = path.join(process.cwd(), "public");
+  writeFileSync(path.join(pubDir, htmlName), renderReport(report));
+
+  // 維護選題報告索引（報告左側日期面板 + selection-report.html 入口都讀它，所以永遠最新）
+  const issues = readdirSync(pubDir)
+    .filter((f) => /^selection-report-\d{4}-\d{2}-\d{2}\.html$/.test(f))
+    .map((f) => ({ date: f.match(/(\d{4}-\d{2}-\d{2})/)![1], file: f }))
+    .sort((a, b) => b.date.localeCompare(a.date));
+  writeFileSync(path.join(pubDir, "selection-reports.json"), JSON.stringify(issues, null, 2));
 
   // 雙輸出 + 持久化（只在 --save：避免開發測試污染 vault / 庫存）
   if (persist) {

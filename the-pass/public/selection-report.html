@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>選題報告 — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Noto+Sans+TC:wght@400;500&display=swap');
+body{font-family:'Noto Sans TC',sans-serif;background:#FAFAF8;color:#5A6178;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;gap:.4rem}
+.b{font-family:'Instrument Serif',serif;font-size:1.6rem;color:#2C3345}
+.s{font-size:.85rem}
+a{color:#B8860B}
+</style></head><body>
+<div class="b">The Pass 出菜口</div>
+<div class="s" id="msg">正在開啟最新一期選題報告…</div>
+<script>
+fetch('selection-reports.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(list){
+  if(list&&list.length){ location.replace('selection-report-'+list[0].date+'.html'); }
+  else { document.getElementById('msg').innerHTML='尚無選題報告。'; }
+}).catch(function(){ document.getElementById('msg').innerHTML='讀取索引失敗，請稍後再試。'; });
+</script>
+</body></html>

@@ -127,7 +127,19 @@ export function renderReport(r: SelectionReport): string {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
 :root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--red:#C0392B;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
 *{margin:0;padding:0;box-sizing:border-box}html{font-size:19px}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.72;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.layout{display:flex;align-items:flex-start}
+.sidebar{position:sticky;top:0;align-self:flex-start;width:208px;flex:none;height:100vh;overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-warm);padding:1.4rem .9rem}
+.sb-h{font-family:var(--display);font-size:1.15rem;color:var(--ink);margin:0 .4rem .15rem}
+.sb-sub{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin:0 .4rem 1rem}
+.issue-list a{display:block;padding:.4rem .55rem;border-radius:7px;font-size:.82rem;color:var(--ink-light);text-decoration:none;margin:.12rem 0;font-variant-numeric:tabular-nums}
+.issue-list a:hover{background:var(--white)}
+.issue-list a.current{background:var(--accent);color:#fff;font-weight:600}
+.issue-list .empty{font-size:.74rem;color:var(--ink-muted);padding:.4rem .55rem;display:block}
+.main{flex:1;min-width:0}
+.export-btn{font-family:var(--sans);font-size:.78rem;font-weight:600;color:#fff;background:var(--accent);border:none;border-radius:8px;padding:.5rem .9rem;cursor:pointer;margin:.2rem 0 .7rem .5rem}
+.export-btn:hover{background:#a6790a}
 .wrap{max-width:880px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+@media(max-width:760px){.layout{flex-direction:column}.sidebar{position:static;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:.6rem .8rem;display:flex;align-items:baseline;gap:.4rem}.sb-sub{display:none}.issue-list{display:flex;gap:.3rem;overflow-x:auto}.issue-list a{white-space:nowrap;margin:0}.issue-list .empty{white-space:nowrap}}
 .hero{text-align:center;border-bottom:1px solid var(--border);padding-bottom:1.75rem;margin-bottom:1.5rem}
 .hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
 .hero h1{font-family:var(--display);font-size:2.4rem;font-weight:400;margin:.4rem 0 .3rem}
@@ -180,8 +192,11 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
 .flags li::before{content:'▸';position:absolute;left:0;color:var(--accent-light)}
 .foot{text-align:center;color:var(--ink-muted);font-size:.72rem;margin-top:3rem;border-top:1px solid var(--border);padding-top:1.5rem}
 .foot .b{font-family:var(--display);color:var(--ink);font-size:.95rem}
-@media print{.decide{display:none}body{background:#fff}}
+@media print{.decide,.sidebar,.export-btn{display:none}.layout{display:block}body{background:#fff}}
 </style></head><body>
+<div class="layout">
+<aside class="sidebar"><div class="sb-h">The Pass</div><div class="sb-sub">選題報告</div><nav class="issue-list" id="issueList"><span class="empty">載入中…</span></nav></aside>
+<div class="main">
 <div class="wrap">
   <div class="hero">
     <div class="label">Editorial Selection · 選題報告</div>
@@ -200,7 +215,7 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
   </div>
 
   <div class="sec"><h2>本期建議出刊</h2><div class="h-sub">每篇附五面向分數 + 主理由 + 多個切角（A 為預設，點 B/C 即換角度）。採用/退庫存即時更新；不存檔，純會議輔助。</div></div>
-  <div class="decide-summary" id="ds">採用 <b>—</b> · 換角度 <b>—</b> · 退庫存 <b>—</b></div>
+  <div class="decide-summary" id="ds">採用 <b>—</b> · 換角度 <b>—</b> · 退庫存 <b>—</b></div><button class="export-btn" id="exportBtn">⬇ 匯出決定</button>
   ${features.length ? `<div class="block-label">長文（Mise）</div>${features.map((p, i) => pieceCard(p, i + 1)).join("")}` : ""}
   ${quicks.length ? `<div class="block-label">快訊（Passe）</div>${quicks.map((p, i) => pieceCard(p, features.length + i + 1)).join("")}` : ""}
   ${
@@ -259,7 +274,9 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
 
   <div class="foot"><div class="b">The Pass 出菜口</div>內部選題報告 · 機器初選、人來拍板</div>
 </div>
+</div></div>
 <script>
+window.__ISSUE_DATE__=${JSON.stringify(r.generatedAt)};
 (function(){
   function refresh(){
     var a=0,c=0,b=0;
@@ -293,6 +310,38 @@ table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:u
     refresh();
   });
   refresh();
+
+  // 左側日期切換：讀 selection-reports.json（永遠最新），列出所有期、highlight 本期
+  (function loadIssues(){
+    var box=document.getElementById('issueList'); if(!box) return;
+    fetch('selection-reports.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(list){
+      if(!list||!list.length){ box.innerHTML='<span class="empty">（尚無其他期）</span>'; return; }
+      box.innerHTML=list.map(function(it){
+        var cur=it.date===window.__ISSUE_DATE__?' class="current"':'';
+        return '<a href="selection-report-'+it.date+'.html"'+cur+'>'+it.date+'</a>';
+      }).join('');
+    }).catch(function(){ box.innerHTML='<span class="empty">（索引讀取失敗）</span>'; });
+  })();
+
+  // 匯出決定：採用/退庫存 + 選的切角 → Markdown → 複製到剪貼簿（貼進 Obsidian 會議與決策）
+  var btn=document.getElementById('exportBtn');
+  if(btn) btn.addEventListener('click', function(){
+    var adopt=[], drop=[];
+    document.querySelectorAll('.piece[data-decidable]').forEach(function(p){
+      var h=p.querySelector('h3'), title=h?h.textContent.trim():'';
+      var e=p.querySelector('.editor'), ed=e?e.textContent.trim():'';
+      var bk=p.querySelector('.dc-backlog'), ad=p.querySelector('.dc-adopt');
+      if(bk&&bk.checked){ drop.push('- '+title); return; }
+      if(ad&&ad.checked){
+        var sel=p.querySelector('.angle.sel .angle-t');
+        adopt.push('- **'+title+'**（'+ed+'）'+(sel?'｜切角：'+sel.textContent.trim():''));
+      }
+    });
+    var md='# 選題決定 '+window.__ISSUE_DATE__+'\\n\\n## 採用（'+adopt.length+'）\\n'+(adopt.join('\\n')||'（無）')+'\\n\\n## 退庫存（'+drop.length+'）\\n'+(drop.join('\\n')||'（無）')+'\\n';
+    function done(){ btn.textContent='✓ 已複製，貼進 Obsidian'; setTimeout(function(){ btn.textContent='⬇ 匯出決定'; },2500); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(md).then(done,function(){ window.prompt('複製以下決定：',md); }); }
+    else window.prompt('複製以下決定：',md);
+  });
 })();
 </script>
 </body></html>`;
