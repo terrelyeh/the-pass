@@ -1,6 +1,6 @@
 # CLAUDE.md — The Pass 出菜口 Project Context
 
-> Last updated: 2026-06-14
+> Last updated: 2026-06-19
 
 ## Project Overview
 
@@ -115,8 +115,8 @@ the-pass/
 │   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
-├── scripts/                      ← tsx 腳本：audit-feed / gen-sources-page / demo-report
-├── .claude/skills/audit-sources/ ← 🆕 /audit-sources skill
+├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / demo-report / run-pipeline
+├── .claude/skills/                ← selection-report（每期核心）· audit-sources
 ├── docs/                         ← MD 內部文件（selection-mechanism、source-verification-checklist、persona…）
 ├── data/                         ← runtime（seen.json、backlog.json、feed-*.json；gitignore）
 └── CLAUDE.md                     ← 本檔案
@@ -135,14 +135,15 @@ the-pass/
 
 - **單一真實來源 = `src/lib/sources.ts`**（現 31 來源：active 29 / pending 2）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`——**它＝「選題來源＋狀態」的單一文件**（tier 分組 + Active/Pending 徽章；`/sources-status` route 已退役併入，2026-06-11 團隊要求）。
 - **兩條進料線**：Stream A 飲食媒體 / Stream B 食品科技·觀點（輔助）。**刻意不收台灣源**（TA 是台灣讀者，價值＝台灣沒有的新鮮事）。食物優先、AI/科技為輔。
-- **評分**：`scorer.ts` 有金鑰走 Opus（五面向 0–5 加權 + mise/passe 路由 + hook），無金鑰 dry-run（關鍵字代理）。**Fumet 提問不選稿**，從選出的長文「提煉」。
+- **評分（兩種模式）**：① **`/selection-report` skill（主要、零 API key）**：Haiku 子代理粗篩 + 本機 Claude Code 當總編評分（走 Claude Code 既有登入，不需金鑰）。② **`scorer.ts`（腳本／未來自動化）**：有金鑰走 Opus 全程、無金鑰 dry-run（關鍵字代理）。兩者共用五面向加權（`weightedOf`，已匯出）。**Fumet 提問不選稿**，從選出的長文「提煉」。
 - **庫存 backlog**：`backlog.ts`（`BacklogStore` + `buildCompetitorPool`）持久化「合格沒選上」的，JSON `data/backlog.json`，保鮮期預設 30 天（`DEFAULT_FRESHNESS_DAYS`）。每期 `prune(過期淘汰)` → 合併庫存+新評分排序 → 選一期 → `remove(出刊)` / `upsert(沒選上)` → `save`。重進不續命（保留原 enteredAt）。`scripts/test-backlog.ts` 驗證跨期迴圈（11 checks，測試用固定 14 天窗、不依賴預設值）。**注意：v1 是單一 flat window**，頁面 §9 講的「分型保鮮期」（融資稿短、常青長）是未來精修。
 - **報告**：`report.ts` 渲染品牌化 HTML（漏斗統計、建議出刊、完整候選池、庫存、已篩除、本週掃描來源）；切角可點選（A 預設）+ 退庫存即時互動（純前端、不存檔）。
 - 設計全文：`docs/selection-mechanism.md`；來源審核標準：`docs/source-verification-checklist.md`。
 
 ## 已完成（功能全貌見 [README.md](README.md) 與 git log）
 
-- **選題系統（已上線）**：抓取 → 去重 → **Opus 全程評估** → **庫存跨期競爭** → 選題報告 → hub / 來源狀態 / `/audit-sources`。來源收斂成 30（active 29），`sources.ts` 單一真實來源、頁面自動生成。
+- **選題系統（已上線）**：抓取 → 去重 → 評估 → **庫存跨期競爭** → 選題報告 → hub / 來源狀態 / `/audit-sources`。來源收斂成 30（active 29），`sources.ts` 單一真實來源、頁面自動生成。
+- **`/selection-report` skill（已建 2026-06-19）**：每期核心，**零 API key 在本機 Claude Code 跑**。`sr-prep`（抓取→去重→去噪候選池）→ **Haiku 子代理粗篩** → **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角）→ 庫存競爭 → `sr-build` 產 HTML（thepass.cc）+ Obsidian Markdown 雙輸出。報告含可點選切角（A 預設）。
 - **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
 - **品牌 / 編輯 / 網站基礎**：品牌定位 + Project Brief、4 位 AI 編輯人設 + Soul（`docs/editors/*-soul.md`）、3 期 Demo Issues、插畫指南、域名 thepass.cc + Vercel。
 
@@ -151,13 +152,13 @@ the-pass/
 ### 1. ✅ 編輯方向已定（2026-06-11 團隊會議）
 **飲食／餐飲／食物優先，AI／科技為輔與加分。** 硬閘門已改 food-first（`scorer.ts` EVAL_SYSTEM：食物為門檻、AI 非必要；AI／科技角度計入 surprise 加分，不再要求硬性 AI×食物交集）。下游（/selection-report、三位編輯寫作）皆依此方向。
 
-### 2. `/selection-report` skill（一週兩次核心，方向已定、可動工）
-把「抓取→去重→Opus 評估→產報告→部署」做成 skill。**雙輸出**：HTML 上 thepass.cc（團隊、互動）+ Markdown 進 Obsidian vault（每期獨立存檔 `選題報告/<date>`、庫存落 `庫存.md`，路徑見記憶 project_storage_strategy）。機械層已是程式（src/lib + scripts/demo-report.ts），skill 主要封裝編輯判斷 + 落檔。
+### 2. ✅ `/selection-report` skill（已建 2026-06-19）
+本機 Claude Code 執行、**零 API key**：`sr-prep`（抓取→去重→去噪出候選池 `pool.json`）→ **Haiku 子代理粗篩**（skill 內 spawn，走既有登入、不需金鑰）→ **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角，寫 `scores.json`）→ `sr-build --save`（庫存競爭→選一期→HTML 上 thepass.cc + Obsidian Markdown）。雙輸出落 `工作/顧問/AI編輯室 - The Pass/選題報告/<date> 選題報告.md` + `庫存.md`。**待精修**：Haiku 粗篩偏寬鬆（已加量化目標 12–15/批）；跨期 seen 持久化未接（v1 靠 RSS 自然汰換 + 庫存 remove）；尚未用「純 Haiku 流程」完整跑一期（線上 6/19 報告候選集仍為早期關鍵字版 + 切角）。
 
 > **下游提案（待團隊討論）**：**研究階段**——來源分「內容源（RSS，可直接寫）vs 主題源（IG/YT/手動雷達，只給題目）」；主題源選上後多一個「研究/查證」步驟（web 搜尋+抓取+LLM brief）才寫作。提案頁 `public/research-stage.html`，未來獨立 `/research`（用 Firecrawl + deep-research）。**創作者/影片進料線**：YouTube 頻道用官方 RSS（`youtube.com/feeds/videos.xml?channel_id=...`，乾淨、直接進 sources.ts）；IG 無官方 API、爬蟲脆弱 → 走手動雷達（Obsidian `創作者雷達.md`）。
 
-### 3. 接真實 LLM
-使用者自行在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
+### 3. 接真實 LLM（選用，非必要）
+**`/selection-report` 不需要金鑰**——評分由本機 Claude Code（+ Haiku 子代理）做。金鑰只在「腳本內全自動評分」（未來排程無人跑 `scorer.ts` 的 Opus 全程，或腳本直接呼叫 Haiku）才需要：在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
 
 ### 4. 儲存策略（2026-06-11 定）+ 基礎建設
 三層、各用對的工具：**機器狀態**＝本機 JSON（`data/*.json`，backlog/seen 已實作）；**人看存檔**＝Terrel 本機 Obsidian vault（Markdown，vault 路徑待提供）；**團隊溝通**＝網頁 HTML 上 thepass.cc。**雙輸出原則**：同資料 → HTML（團隊、互動）+ Markdown（Obsidian）——`delivery-report` 已如此，`/selection-report` 比照（再寫一份含庫存表的 `.md` 進 vault）。**Supabase 暫不導入**，只有「排程自動化 / 團隊線上即時查」才需要。仍待：**編輯 Memory 回寫**（Soul 已有 `docs/editors/*-soul.md`，動態 Memory 未接）；報告「決定」後端；Ghost Pro。
