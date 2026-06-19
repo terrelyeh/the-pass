@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 編輯室架構 — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:18px}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1000px;margin:0 auto;padding:.8rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.nav-brand{font-family:var(--display);font-size:1.15rem;font-weight:700;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:1.2rem;list-style:none}.nav-links a{font-size:.8rem;color:var(--ink-light);text-decoration:none}.nav-links a:hover{color:var(--accent)}.nav-links a.active{color:var(--ink);font-weight:500}
+.wrap{max-width:820px;margin:0 auto;padding:6rem 1.5rem 5rem}
+.hero{text-align:center;border-bottom:1px solid var(--border);padding-bottom:1.8rem;margin-bottom:2rem}
+.hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h1{font-family:var(--display);font-size:2.6rem;font-weight:400;margin:.4rem 0 .4rem}
+.hero .sub{color:var(--ink-muted);font-size:.92rem;max-width:600px;margin:0 auto}
+.lede{font-family:var(--serif);font-size:1.12rem;line-height:1.85;background:var(--bg-warm);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:1.1rem 1.3rem;margin:1.5rem 0 2.5rem}
+h2{font-family:var(--display);font-size:1.7rem;font-weight:400;margin:2.6rem 0 .3rem;border-top:1px solid var(--border);padding-top:1.8rem}
+h2.nobord{border-top:none;padding-top:0}
+.h-sub{color:var(--ink-muted);font-size:.84rem;margin-bottom:1rem}
+p{margin:.7rem 0}
+.diagram{margin:1.5rem 0 1rem;text-align:center}
+.diagram svg{max-width:100%;height:auto}
+.cap{font-size:.78rem;color:var(--ink-muted);text-align:center;margin-top:.4rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:1rem 0}
+th{text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border);font-size:.7rem;letter-spacing:.04em;color:var(--ink-muted);text-transform:uppercase}
+td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.r{font-weight:600;white-space:nowrap;color:var(--ink)}
+.principle{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;margin:.7rem 0}
+.principle b{color:var(--accent)}
+.gates{display:flex;flex-direction:column;gap:.5rem;margin:1rem 0}
+.gate{display:flex;gap:.7rem;align-items:baseline;background:#fffaf0;border:1px solid var(--accent-light);border-radius:8px;padding:.6rem .9rem}
+.gate .g{font-weight:700;color:var(--accent);white-space:nowrap}
+.foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3.5rem;border-top:1px solid var(--border);padding-top:1.5rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
+ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position:relative;margin:.45rem 0;font-size:.95rem}ul.clean li::before{content:'▸';position:absolute;left:0;color:var(--accent-light)}
+@media(max-width:680px){.nav-links{display:none}.hero h1{font-size:2rem}}
+</style></head><body>
+<nav><div class="nav-inner"><a href="hub.html" class="nav-brand">The Pass</a><ul class="nav-links">
+<li><a href="selection-mechanism.html">選題機制</a></li>
+<li><a href="write-issue-architecture.html" class="active">寫作架構</a></li>
+<li><a href="editorial-guidelines.html">編輯指南</a></li>
+<li><a href="editors.html">AI 編輯室</a></li>
+<li><a href="hub.html">系統入口</a></li></ul></div></nav>
+
+<div class="wrap">
+<div class="hero">
+<div class="label">AI Editorial Room · 核心架構</div>
+<h1>AI 編輯室怎麼寫一期</h1>
+<div class="sub">選題會拍板之後，<code>/write-issue</code> 怎麼把選出的稿，變成一期文章草稿。這是 The Pass 最核心的一塊。</div>
+</div>
+
+<div class="lede">選題決定<b>寫什麼</b>；<code>/write-issue</code> 負責<b>怎麼寫</b>。一個總指揮（orchestrator）調度四位 AI 編輯——各是獨立的工作分身——抓原文查證、各用自己的聲音寫、總編查核，中間設三個停點讓人拍板，最後產出草稿。核心精神：<b>AI 起草、人定稿。</b></div>
+
+<h2 class="nobord">整條產線</h2>
+<div class="h-sub">能並行的並行、有依賴的排序；金色是「停下來給人決定」的關卡。</div>
+
+<div class="diagram">
+<svg viewBox="0 0 700 880" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans TC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8B90A0"/></marker>
+</defs>
+<style>
+.box{fill:#fff;stroke:#E8E6E1;stroke-width:1.5;rx:10}
+.t{fill:#2C3345;font-size:15px;font-weight:600}
+.s{fill:#8B90A0;font-size:12px}
+.flow{stroke:#8B90A0;stroke-width:1.5;fill:none;marker-end:url(#ar)}
+.gate rect{fill:#fffaf0;stroke:#D4A843;stroke-width:1.5}
+.gatet{fill:#B8860B;font-size:13.5px;font-weight:700}
+.orch{fill:#fbf7ec;stroke:#B8860B;stroke-width:2}
+.sub{fill:#fff;stroke:#5A6178;stroke-width:1.5}
+.subt{fill:#2C3345;font-size:14px;font-weight:700}
+.subs{fill:#5A6178;font-size:11.5px}
+</style>
+
+<!-- selected.json -->
+<rect class="box" x="240" y="14" width="220" height="40" rx="10"/>
+<text class="t" x="350" y="33" text-anchor="middle">選題會拍板</text>
+<text class="s" x="350" y="48" text-anchor="middle">selected.json：選的稿 + 切角</text>
+<path class="flow" d="M350,54 L350,74"/>
+
+<!-- orchestrator -->
+<rect class="orch" x="120" y="74" width="460" height="52" rx="10"/>
+<text class="subt" x="350" y="96" text-anchor="middle">orchestrator（總指揮）</text>
+<text class="subs" x="350" y="114" text-anchor="middle">抓全文查證 · 調度 · 組裝 · 在 gate 問人 · 出稿（自己不寫稿）</text>
+<path class="flow" d="M350,126 L350,150"/>
+
+<!-- writers row -->
+<rect class="sub" x="118" y="150" width="218" height="58" rx="10"/>
+<text class="subt" x="227" y="174" text-anchor="middle">Mise subagent</text>
+<text class="subs" x="227" y="193" text-anchor="middle">寫 2 篇長文（場景式）</text>
+<rect class="sub" x="364" y="150" width="218" height="58" rx="10"/>
+<text class="subt" x="473" y="174" text-anchor="middle">Passe subagent</text>
+<text class="subs" x="473" y="193" text-anchor="middle">寫 4 則快訊（事實先行）</text>
+<text class="s" x="350" y="180" text-anchor="middle" font-style="italic">並行</text>
+<path class="flow" d="M227,208 L227,232"/>
+
+<!-- GATE 1 -->
+<g class="gate"><rect x="80" y="232" width="294" height="38" rx="8"/></g>
+<text class="gatet" x="227" y="256" text-anchor="middle">🚦 GATE 1 · 聲音校準（人）</text>
+<path class="flow" d="M227,270 L227,294 L350,294 L350,310"/>
+<path class="flow" d="M473,208 L473,294 L350,294"/>
+
+<!-- Fumet -->
+<rect class="sub" x="235" y="310" width="230" height="52" rx="10"/>
+<text class="subt" x="350" y="332" text-anchor="middle">Fumet subagent</text>
+<text class="subs" x="350" y="350" text-anchor="middle">從兩篇長文提煉一個提問</text>
+<path class="flow" d="M350,362 L350,386"/>
+
+<!-- 總編 -->
+<rect class="sub" x="150" y="386" width="400" height="52" rx="10"/>
+<text class="subt" x="350" y="408" text-anchor="middle">總編 subagent（獨立、不自審）</text>
+<text class="subs" x="350" y="426" text-anchor="middle">7 項審核 + 逐條對事實（拿到草稿 + 原文 + factsUsed）</text>
+<path class="flow" d="M350,438 L350,460"/>
+
+<!-- GATE 2 -->
+<g class="gate"><rect x="155" y="460" width="390" height="38" rx="8"/></g>
+<text class="gatet" x="350" y="484" text-anchor="middle">🚦 GATE 2 · 事實對不上 → 停下問人</text>
+<path class="flow" d="M350,498 L350,518"/>
+
+<!-- GATE 3 -->
+<g class="gate"><rect x="155" y="518" width="390" height="38" rx="8"/></g>
+<text class="gatet" x="350" y="542" text-anchor="middle">🚦 GATE 3 · 發佈前 → 人逐篇定稿</text>
+<path class="flow" d="M350,556 L350,580"/>
+
+<!-- output -->
+<rect class="box" x="232" y="580" width="236" height="46" rx="10"/>
+<text class="t" x="350" y="601" text-anchor="middle">Obsidian 文章草稿</text>
+<text class="s" x="350" y="617" text-anchor="middle">含總編摘要 + 待補 + 來源</text>
+<path class="flow" d="M350,626 L350,648"/>
+
+<!-- human -->
+<rect class="box" x="232" y="648" width="236" height="40" rx="10" stroke-dasharray="4 3"/>
+<text class="t" x="350" y="673" text-anchor="middle">你／編輯潤 → 發佈</text>
+
+<!-- principle footnote -->
+<text class="s" x="350" y="724" text-anchor="middle" font-size="12.5">四個 subagent 各開獨立 context = 聲音不互相滲透、總編不偏心</text>
+<text class="s" x="350" y="744" text-anchor="middle" font-size="12.5">每位寫完都附「factsUsed」：用了哪個數字/引述 ← 對應原文哪句</text>
+<text class="s" x="350" y="764" text-anchor="middle" font-size="12.5">三個金色 gate ＝ 人在這裡拍板（AI 起草、人定稿）</text>
+</svg>
+</div>
+
+<h2>為什麼是「四個獨立分身」，不是一個 AI 全寫</h2>
+<p>如果讓同一個 AI 在同一個腦袋裡寫完三種編輯的稿，聲音會互相滲透——寫完 Mise 那種場景式的溫度，馬上接 Passe 的俐落，語氣會糊掉。所以每位編輯各開一個獨立分身（subagent），腦袋裡<b>只裝自己的人格＋自己要寫的原文</b>，其他什麼都不知道。聲音因此乾淨。總編也是獨立分身，沒參與寫作、純挑錯，不會自己審自己偏心。</p>
+
+<table>
+<thead><tr><th>角色</th><th>寫什麼</th><th>為什麼這樣切</th></tr></thead>
+<tbody>
+<tr><td class="r">orchestrator</td><td>不寫稿；抓全文、調度、組裝、在 gate 問人、出稿</td><td>全期的總指揮</td></tr>
+<tr><td class="r">Mise</td><td>2 篇「今日觀察」長文（場景式、400–600 字）</td><td>一個人寫兩篇 → 能差異化、不自我重複</td></tr>
+<tr><td class="r">Passe</td><td>4 則「本期快訊」（事實先行、2–4 句）</td><td>一起寫 → 不重疊、不撞長文角度</td></tr>
+<tr><td class="r">Fumet</td><td>1 個結尾提問（從長文提煉、不選稿）</td><td>讀完長文才提問，所以排在後面</td></tr>
+<tr><td class="r">總編</td><td>7 項審核 + 逐條對事實</td><td>獨立審 → 不偏心</td></tr>
+</tbody>
+</table>
+
+<h2>三個停下來給人決定的關卡</h2>
+<div class="gates">
+<div class="gate"><span class="g">GATE 1</span><span>頭條長文寫完 → 停，確認聲音對不對、切角 OK 嗎，再寫其餘。</span></div>
+<div class="gate"><span class="g">GATE 2</span><span>總編查到數字／引述對不回原文 → 立刻停，問你：拿掉 / 去查證 / 你確認。不自己亂改。</span></div>
+<div class="gate"><span class="g">GATE 3</span><span>整期寫完、發佈前 → 停，你逐篇定奪：採用 / 要改哪 / 退。</span></div>
+</div>
+
+<h2>三個守門原則</h2>
+<div class="principle"><b>事實不可扭曲。</b>引號＝原文真有人說過、數字＝原文。寫之前一定先抓全文。付費牆只有預覽 → 只報「現象」、透明標註、找公開來源佐證，不憑預覽編造。</div>
+<div class="principle"><b>AI 起草、人定稿。</b>三個 gate 都停下來問人，AI 不替你做最終決定——跟選題的「AI 初選、人拍板」同一個哲學。</div>
+<div class="principle"><b>聲音隔離。</b>四個分身各自獨立，聲音不互相污染、總編不自審。</div>
+
+<h2>怎麼讓編輯越寫越好</h2>
+<ul class="clean">
+<li><b>調聲音規則</b>（最快）：改寫作守則，下一期就生效。</li>
+<li><b>接編輯記憶</b>（最深）：每期寫完把「寫了什麼、讀者反應」記起來，下期載入 → 三位編輯會記得自己寫過什麼、越來越貼品味。</li>
+<li><b>放好／壞對照範例</b>：AI 學樣，比學抽象規則有效。</li>
+<li><b>gate 的回饋就是訓練訊號</b>：你在關卡改的東西（像把切角換掉），就是該回寫進守則的線索。</li>
+</ul>
+
+<h2>三層：為什麼 → 怎麼做 → 實際指令</h2>
+<p>每位編輯的「人格（Soul）」寫的是<b>為什麼</b>這樣寫（動機、價值觀、好惡，很少改）；「寫作守則（Style Guide）」是<b>怎麼做</b>（可執行的規則）；跑的時候把兩者＋原文＋（未來的）記憶組起來，才成為那位編輯實際的指令。改人格影響的是「她在乎什麼、選什麼角度」，比改規則更深層。</p>
+
+<div class="foot"><div class="b">The Pass 出菜口</div>AI 編輯室核心架構 · AI 起草、人定稿</div>
+</div></body></html>
