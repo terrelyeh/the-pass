@@ -9,7 +9,7 @@
 // scores.json 形狀：{ "fumet": {question, from}?, "scores": [{id, pass, surprise, local, human,
 //   conversation, substance, editor("mise"|"passe"), hook, reason}, ...] }，id 對齊 candidates.json。
 
-import { canonicalUrl } from "../src/lib/dedup";
+import { canonicalUrl, SeenStore } from "../src/lib/dedup";
 import { weightedOf, type Dimensions, type Editor, type ScoredArticle } from "../src/lib/scorer";
 import { BacklogStore, buildCompetitorPool, type Competitor, type BacklogEntry } from "../src/lib/backlog";
 import {
@@ -306,6 +306,21 @@ async function main() {
     backlog.upsert(notSelected, now); // 合格未選的留/加回庫存
     backlog.save();
     writeFileSync(path.join(VAULT_BASE, "庫存.md"), mdBacklogFile(backlog.all(), date));
+
+    // 持久化 seen：本期候選池全標記 seen、出刊的標 published。
+    // 下期 sr-prep 的 selectNewArticles 會自動濾掉這些 → 不重複撈、不重複發。
+    // 只在 --save（出刊）寫，所以重跑 sr-prep 仍可重現（seen 在出刊那刻才定版）。
+    const seen = await new SeenStore().load();
+    try {
+      const pool = JSON.parse(readFileSync(path.join(dir, "pool.json"), "utf8")) as { id: string; title: string; link: string }[];
+      for (const p of pool) seen.add(canonicalUrl(p.link) || p.id, now, p.title);
+    } catch {
+      /* 無 pool.json（舊流程）→ 退而求其次只標記候選 */
+    }
+    for (const c of candidates) seen.add(c.id, now, c.title);
+    for (const c of selectedComp) seen.setStatus(canonicalUrl(c.link), "published");
+    await seen.save();
+    console.log(`✓ seen.json：${seen.size()} 筆（下期 sr-prep 自動去重，不重複撈/發）`);
   }
 
   // 終端摘要
