@@ -56,6 +56,7 @@ interface Score {
   substance: number;
   editor: Editor;
   hook: string;
+  angles?: string[]; // 切角：同一則的不同寫法（A 為預設）；長文 ~3、快訊 ~2
   reason: string;
 }
 interface ScoresFile {
@@ -66,8 +67,7 @@ interface Meta {
   date: string;
   fetched: number;
   deduped: number;
-  prefiltered: number;
-  relevanceFloor: number;
+  poolSize?: number;
   scannedSources: ScannedSource[];
 }
 
@@ -77,11 +77,16 @@ const dimLine = (d: Dimensions) =>
   `驚喜 ${d.surprise}／在地 ${d.local}／人味 ${d.human}／可談 ${d.conversation}／扎實 ${d.substance}`;
 
 function mdPiece(p: ReportPiece, i: number): string {
-  return [
+  const lines = [
     `${i}. **${p.title}** — ${p.source}${p.lang ? ` · ${p.lang}` : ""}${p.date ? ` · ${p.date}` : ""}  [原文](${p.link})`,
     `   - ${p.weighted} 分｜${dimLine(p.dimensions)}`,
     `   - 💡 ${p.hook}`,
-  ].join("\n");
+  ];
+  if (p.angles?.length) {
+    lines.push(`   - 🎬 切角（A 為預設）：`);
+    p.angles.forEach((a, k) => lines.push(`     - ${["A", "B", "C", "D"][k] ?? String(k + 1)}) ${a}`));
+  }
+  return lines.join("\n");
 }
 function mdRejectTable(items: ReportReject[]): string {
   if (!items.length) return "（無）\n";
@@ -180,6 +185,7 @@ async function main() {
   });
   const scored: ScoredArticle[] = [];
   const screened: { c: Candidate; reason: string }[] = [];
+  const anglesByUrl = new Map<string, string[]>();
   for (const c of candidates) {
     const s = scoreById.get(c.id);
     if (!s || !s.pass) {
@@ -194,6 +200,7 @@ async function main() {
       substance: s.substance,
     };
     scored.push({ article: toRaw(c), dimensions: dims, weighted: weightedOf(dims), editor: s.editor, hook: s.hook, screenReason: s.reason });
+    anglesByUrl.set(canonicalUrl(c.link), s.angles ?? []);
   }
 
   // 庫存跨期競爭
@@ -224,6 +231,7 @@ async function main() {
       editor: c.editor,
       role,
       hook: c.hook,
+      angles: anglesByUrl.get(c.url),
     };
   };
   const selectedPieces: ReportPiece[] = [
@@ -255,8 +263,8 @@ async function main() {
 
   const failed = meta.scannedSources.filter((s) => s.count === 0).map((s) => s.name);
   const flags = [
-    `漏斗：抓取 ${meta.fetched} → 去重後 ${meta.deduped} → 食物優先粗篩 ${meta.prefiltered} → 過閘門 ${scored.length}（砍 ${screened.length}）。`,
-    `評分模式：本機 Claude Code 當總編（零 API key）；粗篩取 food-first 前 ${meta.prefiltered} 篇交 Claude 細評。`,
+    `漏斗：抓取 ${meta.fetched} → 去重後 ${meta.deduped} → Haiku 粗篩 ${candidates.length} → 過閘門 ${scored.length}（砍 ${screened.length}）。`,
+    `評分模式：Haiku 子代理粗篩 + 本機 Claude Code 細評（零 API key）。`,
     notSelected.length > MAX_TABLE_ROWS ? `進庫存 ${notSelected.length} 篇，表格只列前 ${MAX_TABLE_ROWS}。` : null,
     screened.length > MAX_TABLE_ROWS ? `已篩除 ${screened.length} 篇，表格只列前 ${MAX_TABLE_ROWS}。` : null,
     failed.length ? `本期 0 篇來源：${failed.join("、")}。` : "本期所有來源都抓到文章。",
