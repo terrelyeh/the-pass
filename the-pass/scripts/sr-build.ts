@@ -296,6 +296,9 @@ async function main() {
     .sort((a, b) => b.date.localeCompare(a.date));
   writeFileSync(path.join(pubDir, "selection-reports.json"), JSON.stringify(issues, null, 2));
 
+  // 給 /write-issue 用：本期最終選出的稿（含切角）+ Fumet 種子，當寫作的輸入
+  writeFileSync(path.join(dir, "selected.json"), JSON.stringify({ date, selected: selectedPieces, fumet: report.fumet ?? null }, null, 2));
+
   // 雙輸出 + 持久化（只在 --save：避免開發測試污染 vault / 庫存）
   if (persist) {
     const reportDir = path.join(VAULT_BASE, "選題報告");
