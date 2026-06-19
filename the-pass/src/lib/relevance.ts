@@ -36,21 +36,39 @@ const foodKeywords = [
   "食品", "レストラン", "料理", "厨房",
 ];
 
-/** AI/科技 × 食物 關鍵字相關性分數。雙重命中 ≥10；只 AI/科技 ≥5；只食物 ≥2；無關 0。 */
-export function scoreRelevance(article: Scorable): number {
+export interface RelevanceDetail {
+  score: number; // 綜合分（向後相容 scoreRelevance）
+  food: number; // 命中幾個食物關鍵字
+  tech: number; // 命中幾個 AI/科技關鍵字
+}
+
+/**
+ * 拆解版：回傳綜合分 + 食物/科技各自命中數。
+ * /selection-report 的粗篩用 food/tech 分量做「食物優先」排序（有食物訊號者優先入池），
+ * 而非只看綜合分（綜合分對 AI×食物雙重命中灌水，會把純食物題擠到後面、違反食物優先方向）。
+ */
+export function relevanceDetail(article: Scorable): RelevanceDetail {
   const text = `${article.title} ${article.summary}`.toLowerCase();
 
-  let aiScore = 0;
-  let foodScore = 0;
+  let tech = 0;
+  let food = 0;
 
   // "AI" 縮寫用詞邊界比對，避免誤中 tail / available / again 等含 "ai" 的字
-  if (/\bai\b/.test(text) || text.includes("a.i.")) aiScore++;
+  if (/\bai\b/.test(text) || text.includes("a.i.")) tech++;
 
-  for (const kw of techKeywords) if (text.includes(kw)) aiScore++;
-  for (const kw of foodKeywords) if (text.includes(kw)) foodScore++;
+  for (const kw of techKeywords) if (text.includes(kw)) tech++;
+  for (const kw of foodKeywords) if (text.includes(kw)) food++;
 
-  if (aiScore > 0 && foodScore > 0) return 10 + aiScore + foodScore; // 雙重命中
-  if (aiScore > 0) return 5 + aiScore; // 只 AI/科技
-  if (foodScore > 0) return 2 + foodScore; // 只食物
-  return 0;
+  let score: number;
+  if (tech > 0 && food > 0) score = 10 + tech + food; // 雙重命中
+  else if (tech > 0) score = 5 + tech; // 只 AI/科技
+  else if (food > 0) score = 2 + food; // 只食物
+  else score = 0;
+
+  return { score, food, tech };
+}
+
+/** AI/科技 × 食物 關鍵字相關性分數。雙重命中 ≥10；只 AI/科技 ≥5；只食物 ≥2；無關 0。 */
+export function scoreRelevance(article: Scorable): number {
+  return relevanceDetail(article).score;
 }

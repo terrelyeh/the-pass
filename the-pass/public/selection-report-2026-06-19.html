@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>選題報告 2026-06-19 — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--red:#C0392B;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:19px}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.72;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:880px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+.hero{text-align:center;border-bottom:1px solid var(--border);padding-bottom:1.75rem;margin-bottom:1.5rem}
+.hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h1{font-family:var(--display);font-size:2.4rem;font-weight:400;margin:.4rem 0 .3rem}
+.hero .sub{color:var(--ink-muted);font-size:.85rem}
+.funnel{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0 2.5rem}
+.fstep{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.6rem 1rem;text-align:center;min-width:90px}
+.fstep .n{font-family:var(--display);font-size:1.5rem;color:var(--ink)}.fstep .l{font-size:.65rem;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.05em}
+.fstep.hi{border-color:var(--accent-light);background:#fffdf6}.fstep.hi .n{color:var(--accent)}
+.farrow{align-self:center;color:var(--accent);font-size:1.1rem}
+.sec{margin:2.5rem 0 1rem}.sec h2{font-family:var(--display);font-size:1.5rem;font-weight:400}.sec .h-sub{font-size:.78rem;color:var(--ink-muted);margin-top:.15rem}
+.block-label{font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:1.5rem 0 .5rem}
+.piece{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;margin:.7rem 0;position:relative;overflow:hidden}
+.piece::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent-light)}
+.piece.feature::before{background:var(--accent);width:4px}.piece.fumet::before{background:#7B8A6E}
+.piece-head{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.4rem}
+.rank{font-family:var(--display);font-size:1.1rem;color:var(--ink-muted);min-width:1.2rem}
+.editor{font-size:.66rem;font-weight:700;padding:.18rem .55rem;border-radius:100px;color:#fff}
+.editor-mise{background:var(--accent)}.editor-passe{background:#5A6178}.editor-fumet{background:#7B8A6E}
+.weighted{font-family:var(--display);font-size:1.35rem;color:var(--ink);margin-left:.1rem}
+.weighted::before{content:'分 ';font-family:var(--sans);font-size:.6rem;color:var(--ink-muted);vertical-align:middle}
+.decide{margin-left:auto;display:flex;gap:.7rem;font-size:.72rem;color:var(--ink-light)}
+.decide label{cursor:pointer;user-select:none}.decide input{vertical-align:-1px}
+.piece h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;line-height:1.45;margin:.1rem 0}
+.meta{font-size:.72rem;color:var(--ink-muted);margin-bottom:.55rem}.meta a{color:var(--accent);text-decoration:none}
+.dims{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:.5rem 0 .6rem}
+.dim{display:flex;align-items:center;gap:.35rem;font-size:.8rem}
+.dim .dl{color:var(--ink-muted);min-width:1.9rem}.dim .db{width:54px;height:6px;background:var(--bg-warm);border-radius:3px;overflow:hidden}
+.dim .dbf{display:block;height:100%;background:var(--accent-light)}.dim .dv{font-weight:700;color:var(--ink-light)}
+.hook{font-family:var(--serif);font-size:1.02rem;line-height:1.72;margin:.4rem 0 .2rem}.hook strong{color:var(--accent)}
+.note{font-size:.86rem;color:var(--ink-light);font-style:italic}
+.angles{margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border)}
+.angles-h{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin-bottom:.3rem}
+.angle{font-size:.86rem;color:var(--ink-light);line-height:1.55;margin:.12rem 0;display:flex;gap:.5rem;align-items:baseline;cursor:pointer;border-radius:6px;padding:.25rem .4rem;transition:background .12s}
+.angle:hover{background:var(--bg-warm)}
+.angle.sel{background:#fffaf0;box-shadow:inset 0 0 0 1px var(--accent-light)}.angle.sel .angle-t{color:var(--ink);font-weight:500}
+.angle-k{font-family:var(--sans);font-size:.66rem;font-weight:700;color:#fff;background:var(--accent-light);border-radius:4px;padding:.05rem .4rem;flex:none}
+.angle.sel .angle-k{background:var(--accent)}
+.piece.dropped{opacity:.45}.piece.dropped h3{text-decoration:line-through}.piece.dropped .angles{display:none}
+.piece.reangle{box-shadow:inset 0 0 0 1.5px var(--accent-light)}.piece.reangle .angles{background:#fffdf6;border-radius:6px;padding:.5rem .6rem;border-top:none}
+.decide-summary{font-family:var(--sans);font-size:.84rem;font-weight:600;color:var(--ink-light);background:var(--bg-warm);border:1px solid var(--border);border-radius:8px;padding:.45rem .9rem;display:inline-block;margin:.2rem 0 .7rem}.decide-summary b{color:var(--ink)}
+.piece.fumet-q::before{background:#7B8A6E;width:4px}
+.fq{font-family:var(--serif);font-size:1.1rem;line-height:1.75;color:var(--ink);margin:.35rem 0 .2rem}
+.fq-tag{margin-left:auto;font-size:.66rem;color:var(--ink-muted)}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:.5rem}
+th{text-align:left;padding:.45rem .6rem;border-bottom:2px solid var(--border);font-size:.66rem;letter-spacing:.05em;color:var(--ink-muted);text-transform:uppercase}
+td{padding:.5rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.src{color:var(--ink-muted);white-space:nowrap;font-size:.74rem}td.why{color:var(--ink-light)}
+table a{color:var(--accent);text-decoration:none}table a:hover{text-decoration:underline}
+.flags{background:var(--ink);color:rgba(255,255,255,.9);border-radius:10px;padding:1.1rem 1.4rem;margin-top:.6rem}
+.flags li{list-style:none;padding-left:1.2rem;position:relative;margin:.45rem 0;font-size:.85rem}
+.flags li::before{content:'▸';position:absolute;left:0;color:var(--accent-light)}
+.foot{text-align:center;color:var(--ink-muted);font-size:.72rem;margin-top:3rem;border-top:1px solid var(--border);padding-top:1.5rem}
+.foot .b{font-family:var(--display);color:var(--ink);font-size:.95rem}
+@media print{.decide{display:none}body{background:#fff}}
+</style></head><body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">Editorial Selection · 選題報告</div>
+    <h1>本期選題提案</h1>
+    <div class="sub">2026-06-19 · 由 pipeline 自動初選，供選題會拍板 · 產出 2026-06-19</div>
+  </div>
+
+  <div class="funnel">
+    <div class="fstep"><div class="n">470</div><div class="l">抓取</div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="n">450</div><div class="l">去重後</div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="n">11</div><div class="l">候選</div></div>
+    <div class="farrow">→</div>
+    <div class="fstep hi"><div class="n">6</div><div class="l">建議入選</div></div>
+  </div>
+
+  <div class="sec"><h2>本期建議出刊</h2><div class="h-sub">每篇附五面向分數 + 主理由 + 多個切角（A 為預設，點 B/C 即換角度）。採用/退庫存即時更新；不存檔，純會議輔助。</div></div>
+  <div class="decide-summary" id="ds">採用 <b>—</b> · 換角度 <b>—</b> · 退庫存 <b>—</b></div>
+  <div class="block-label">長文（Mise）</div>
+  <div class="piece feature" data-decidable>
+    <div class="piece-head">
+      <span class="rank">1</span>
+      <span class="editor editor-mise">Mise 長文</span>
+      <span class="weighted">44</span>
+      <span class="decide">
+        <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
+        <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
+      </span>
+    </div>
+    <h3>大塚食品、「失敗レシピ」もAIの資産に 「おいしさLENS」で熟練の味づくり継承</h3>
+    <div class="meta">食品産業新聞社ニュース (SSNP) · ja · 06-19 · <a href="https://www.ssnp.co.jp/seasoning/689890/" target="_blank" rel="noopener">原文 ↗</a></div>
+    <div class="dims"><div class="dim"><span class="dl">驚喜</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">在地</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">人味</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">可談</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">扎實</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div></div>
+    <p class="hook"><strong>💡 為什麼是這篇：</strong>做了一輩子咖哩的老師傅，把「失敗的配方」也餵給 AI——傳下去的是味道，還是那雙手的直覺？</p>
+    
+  </div>
+  <div class="piece feature" data-decidable>
+    <div class="piece-head">
+      <span class="rank">2</span>
+      <span class="editor editor-mise">Mise 長文</span>
+      <span class="weighted">41</span>
+      <span class="decide">
+        <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
+        <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
+      </span>
+    </div>
+    <h3>For F*ck's Sake, Don't Use AI to Order Off a Wine List</h3>
+    <div class="meta">Jennifer Makan · en · 06-07 · <a href="https://jennifermakan.substack.com/p/for-fcks-sake-dont-use-ai-to-order" target="_blank" rel="noopener">原文 ↗</a></div>
+    <div class="dims"><div class="dim"><span class="dl">驚喜</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">在地</span><span class="db"><span class="dbf" style="width:40%"></span></span><span class="dv">2</span></div><div class="dim"><span class="dl">人味</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">可談</span><span class="db"><span class="dbf" style="width:100%"></span></span><span class="dv">5</span></div><div class="dim"><span class="dl">扎實</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div></div>
+    <p class="hook"><strong>💡 為什麼是這篇：</strong>獨立寫作者的怒吼：當 AI 能告訴你該喜歡哪支酒，那「品味」還剩多少是你自己的？</p>
+    
+  </div>
+  <div class="block-label">快訊（Passe）</div>
+  <div class="piece quick" data-decidable>
+    <div class="piece-head">
+      <span class="rank">3</span>
+      <span class="editor editor-passe">Passe 快訊</span>
+      <span class="weighted">36</span>
+      <span class="decide">
+        <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
+        <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
+      </span>
+    </div>
+    <h3>フィンランド企業Solar Foodsの「ソレイン」、米国で初の消費者向け製品のオンライン販売開始｜今夏に全米展開目指す</h3>
+    <div class="meta">Foovo · ja · 06-10 · <a href="https://foodtech-japan.com/2026/06/10/solar-foods-19/" target="_blank" rel="noopener">原文 ↗</a></div>
+    <div class="dims"><div class="dim"><span class="dl">驚喜</span><span class="db"><span class="dbf" style="width:100%"></span></span><span class="dv">5</span></div><div class="dim"><span class="dl">在地</span><span class="db"><span class="dbf" style="width:40%"></span></span><span class="dv">2</span></div><div class="dim"><span class="dl">人味</span><span class="db"><span class="dbf" style="width:40%"></span></span><span class="dv">2</span></div><div class="dim"><span class="dl">可談</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">扎實</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div></div>
+    <p class="hook"><strong>💡 為什麼是這篇：</strong>從空氣裡的二氧化碳長出來的蛋白質，正式在美國上架了。</p>
+    
+  </div>
+  <div class="piece quick" data-decidable>
+    <div class="piece-head">
+      <span class="rank">4</span>
+      <span class="editor editor-passe">Passe 快訊</span>
+      <span class="weighted">33</span>
+      <span class="decide">
+        <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
+        <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
+      </span>
+    </div>
+    <h3>세계김치연구소, 김치 유래 기능성 유산균 산업화 확대</h3>
+    <div class="meta">식품외식경제 · ko · 06-18 · <a href="http://www.foodbank.co.kr/news/articleView.html?idxno=68110" target="_blank" rel="noopener">原文 ↗</a></div>
+    <div class="dims"><div class="dim"><span class="dl">驚喜</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div><div class="dim"><span class="dl">在地</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">人味</span><span class="db"><span class="dbf" style="width:40%"></span></span><span class="dv">2</span></div><div class="dim"><span class="dl">可談</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div><div class="dim"><span class="dl">扎實</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div></div>
+    <p class="hook"><strong>💡 為什麼是這篇：</strong>泡菜裡的乳酸菌要量產了——韓國把發酵的老智慧變成生技產業。</p>
+    
+  </div>
+  <div class="piece quick" data-decidable>
+    <div class="piece-head">
+      <span class="rank">5</span>
+      <span class="editor editor-passe">Passe 快訊</span>
+      <span class="weighted">33</span>
+      <span class="decide">
+        <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
+        <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
+      </span>
+    </div>
+    <h3>Cargill is Using AI to Divert Thousands of Pounds of Meat Back on the Table</h3>
+    <div class="meta">The Spoon · en · 05-26 · <a href="https://thespoon.tech/cargill-is-using-ai-to-divert-thousand-of-pounds-of-meat-back-on-the-table/" target="_blank" rel="noopener">原文 ↗</a></div>
+    <div class="dims"><div class="dim"><span class="dl">驚喜</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">在地</span><span class="db"><span class="dbf" style="width:40%"></span></span><span class="dv">2</span></div><div class="dim"><span class="dl">人味</span><span class="db"><span class="dbf" style="width:40%"></span></span><span class="dv">2</span></div><div class="dim"><span class="dl">可談</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">扎實</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div></div>
+    <p class="hook"><strong>💡 為什麼是這篇：</strong>AI 在垃圾桶前攔下幾千磅的肉，把它送回餐桌。</p>
+    
+  </div>
+  <div class="piece quick" data-decidable>
+    <div class="piece-head">
+      <span class="rank">6</span>
+      <span class="editor editor-passe">Passe 快訊</span>
+      <span class="weighted">31</span>
+      <span class="decide">
+        <label><input type="checkbox" class="dc-adopt" checked> 採用</label>
+        <label><input type="checkbox" class="dc-backlog"> 退庫存</label>
+      </span>
+    </div>
+    <h3>Amai Proteinsの精密発酵甘味タンパク質「sweelin」、シンガポールで認可取得｜アジア展開へ</h3>
+    <div class="meta">Foovo · ja · 06-15 · <a href="https://foodtech-japan.com/2026/06/15/amai-proteins-2/" target="_blank" rel="noopener">原文 ↗</a></div>
+    <div class="dims"><div class="dim"><span class="dl">驚喜</span><span class="db"><span class="dbf" style="width:80%"></span></span><span class="dv">4</span></div><div class="dim"><span class="dl">在地</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div><div class="dim"><span class="dl">人味</span><span class="db"><span class="dbf" style="width:20%"></span></span><span class="dv">1</span></div><div class="dim"><span class="dl">可談</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div><div class="dim"><span class="dl">扎實</span><span class="db"><span class="dbf" style="width:60%"></span></span><span class="dv">3</span></div></div>
+    <p class="hook"><strong>💡 為什麼是這篇：</strong>精密發酵做出的甜味蛋白，在新加坡拿到認可、準備敲開亞洲市場。</p>
+    
+  </div>
+  <div class="block-label">結尾提問（Fumet）</div>
+    <div class="piece fumet-q">
+      <div class="piece-head"><span class="editor editor-fumet">Fumet 提問</span><span class="fq-tag">從本期長文提煉 · 非選稿</span></div>
+      <p class="fq">一邊有老師傅把畢生的「味道直覺」連同失敗的配方一起交給 AI 保存，一邊有人對你大喊別讓 AI 幫你從酒單上點酒——當機器開始接手「什麼才好吃」的判斷，我們究竟是把味覺傳承了下去，還是親手交了出去？</p>
+      <p class="note">🧩 提煉自：本期長文：大塚食品 AI『おいしさLENS』味道傳承 × 別用 AI 幫你點酒</p>
+    </div>
+
+  <div class="sec"><h2>候選名單（完整候選池）</h2><div class="h-sub">本期所有通過 Opus 評估的候選（11 則），依分數排序，供選題會自由挑換。</div></div>
+  <div class="tbl-wrap"><table><thead><tr><th>#</th><th>分</th><th>編輯</th><th>標題</th><th>來源</th><th class="dh">一句話</th></tr></thead><tbody><tr><td>1</td><td><strong>44</strong></td><td><span class="badge pass">mise</span></td><td><a href="https://www.ssnp.co.jp/seasoning/689890/" target="_blank" rel="noopener">大塚食品、「失敗レシピ」もAIの資産に 「おいしさLENS」で熟練の味づくり継承 ↗</a></td><td class="src">食品産業新聞社ニュース (SSNP)</td><td class="why">做了一輩子咖哩的老師傅，把「失敗的配方」也餵給 AI——傳下去的是味道，還是那雙手的直覺？</td></tr><tr><td>2</td><td><strong>41</strong></td><td><span class="badge pass">mise</span></td><td><a href="https://jennifermakan.substack.com/p/for-fcks-sake-dont-use-ai-to-order" target="_blank" rel="noopener">For F*ck's Sake, Don't Use AI to Order Off a Wine List ↗</a></td><td class="src">Jennifer Makan</td><td class="why">獨立寫作者的怒吼：當 AI 能告訴你該喜歡哪支酒，那「品味」還剩多少是你自己的？</td></tr><tr><td>3</td><td><strong>36</strong></td><td><span class="badge warn">passe</span></td><td><a href="https://foodtech-japan.com/2026/06/10/solar-foods-19/" target="_blank" rel="noopener">フィンランド企業Solar Foodsの「ソレイン」、米国で初の消費者向け製品のオンライン販売開始｜今夏に全米展開目指す ↗</a></td><td class="src">Foovo</td><td class="why">從空氣裡的二氧化碳長出來的蛋白質，正式在美國上架了。</td></tr><tr><td>4</td><td><strong>35</strong></td><td><span class="badge pass">mise</span></td><td><a href="https://www.restaurantdive.com/news/Opinion-temo-benidze-restaurant-software-pitfalls/823072/" target="_blank" rel="noopener">Restaurant software was built by people who never worked a Friday night close ↗</a></td><td class="src">Restaurant Dive</td><td class="why">餐廳軟體給了一堆儀表板，但寫它的人沒收過週五晚上的爐火——科技到底還誰時間？</td></tr><tr><td>5</td><td><strong>33</strong></td><td><span class="badge warn">passe</span></td><td><a href="http://www.foodbank.co.kr/news/articleView.html?idxno=68110" target="_blank" rel="noopener">세계김치연구소, 김치 유래 기능성 유산균 산업화 확대 ↗</a></td><td class="src">식품외식경제</td><td class="why">泡菜裡的乳酸菌要量產了——韓國把發酵的老智慧變成生技產業。</td></tr><tr><td>6</td><td><strong>33</strong></td><td><span class="badge warn">passe</span></td><td><a href="https://thespoon.tech/cargill-is-using-ai-to-divert-thousand-of-pounds-of-meat-back-on-the-table/" target="_blank" rel="noopener">Cargill is Using AI to Divert Thousands of Pounds of Meat Back on the Table ↗</a></td><td class="src">The Spoon</td><td class="why">AI 在垃圾桶前攔下幾千磅的肉，把它送回餐桌。</td></tr><tr><td>7</td><td><strong>33</strong></td><td><span class="badge pass">mise</span></td><td><a href="https://thespoon.tech/why-hasnt-anyone-invented-a-rice-cooker-for-pasta-after-a-decade-one-inventor-has-done-just-that/" target="_blank" rel="noopener">Why Hasn’t Anyone Invented an Automated Cooker for Pasta?  After a Decade, One Inventor Has Done Just That ↗</a></td><td class="src">The Spoon</td><td class="why">花十年，一個爸爸做出了「煮義大利麵的電鍋」——為了他剛獨立生活的兒子。</td></tr><tr><td>8</td><td><strong>31</strong></td><td><span class="badge warn">passe</span></td><td><a href="https://foodtech-japan.com/2026/06/15/amai-proteins-2/" target="_blank" rel="noopener">Amai Proteinsの精密発酵甘味タンパク質「sweelin」、シンガポールで認可取得｜アジア展開へ ↗</a></td><td class="src">Foovo</td><td class="why">精密發酵做出的甜味蛋白，在新加坡拿到認可、準備敲開亞洲市場。</td></tr><tr><td>9</td><td><strong>30</strong></td><td><span class="badge warn">passe</span></td><td><a href="https://www.qsrmagazine.com/story/when-ai-ordering-becomes-more-hype-than-help/" target="_blank" rel="noopener">When AI Ordering Becomes More Hype Than Help ↗</a></td><td class="src">QSR Magazine</td><td class="why">AI 點餐越鋪越快，但它真的比你自己滑菜單更聰明嗎？</td></tr><tr><td>10</td><td><strong>28.5</strong></td><td><span class="badge warn">passe</span></td><td><a href="https://foodtech-japan.com/2026/06/18/the-protein-brewery-3/" target="_blank" rel="noopener">オランダのThe Protein Brewery、菌糸体原料「Fermotein」でEU新規食品の認可取得｜2027年に600トン供給計画 ↗</a></td><td class="src">Foovo</td><td class="why">用菌絲體做的蛋白質「Fermotein」拿到歐盟新食品認可，2027 年要供 600 噸。</td></tr><tr><td>11</td><td><strong>22.5</strong></td><td><span class="badge warn">passe</span></td><td><a href="https://foodtech-japan.com/2026/06/11/primary/" target="_blank" rel="noopener">牧草は食品原料になるか｜フィンランドVTT、牧草由来タンパク質と発酵原料化を研究 ↗</a></td><td class="src">Foovo</td><td class="why">牧草不只餵牛——芬蘭 VTT 想把它變成你盤子裡的蛋白質。</td></tr></tbody></table></div>
+
+  <div class="sec"><h2>進庫存</h2><div class="h-sub">合格但這期沒選上——下期重新競爭 / 餵 IG / 月報。</div></div>
+  <table><thead><tr><th>標題</th><th>來源</th><th>為什麼進庫存</th></tr></thead><tbody><tr><td><a href="https://www.restaurantdive.com/news/Opinion-temo-benidze-restaurant-software-pitfalls/823072/" target="_blank" rel="noopener">Restaurant software was built by people who never worked a Friday night close ↗</a></td><td class="src">Restaurant Dive</td><td class="why">合格未入選本期 → 進庫存下期競爭</td></tr><tr><td><a href="https://thespoon.tech/why-hasnt-anyone-invented-a-rice-cooker-for-pasta-after-a-decade-one-inventor-has-done-just-that/" target="_blank" rel="noopener">Why Hasn’t Anyone Invented an Automated Cooker for Pasta?  After a Decade, One Inventor Has Done Just That ↗</a></td><td class="src">The Spoon</td><td class="why">合格未入選本期 → 進庫存下期競爭</td></tr><tr><td><a href="https://www.qsrmagazine.com/story/when-ai-ordering-becomes-more-hype-than-help/" target="_blank" rel="noopener">When AI Ordering Becomes More Hype Than Help ↗</a></td><td class="src">QSR Magazine</td><td class="why">合格未入選本期 → 進庫存下期競爭</td></tr><tr><td><a href="https://foodtech-japan.com/2026/06/18/the-protein-brewery-3/" target="_blank" rel="noopener">オランダのThe Protein Brewery、菌糸体原料「Fermotein」でEU新規食品の認可取得｜2027年に600トン供給計画 ↗</a></td><td class="src">Foovo</td><td class="why">合格未入選本期 → 進庫存下期競爭</td></tr><tr><td><a href="https://foodtech-japan.com/2026/06/11/primary/" target="_blank" rel="noopener">牧草は食品原料になるか｜フィンランドVTT、牧草由来タンパク質と発酵原料化を研究 ↗</a></td><td class="src">Foovo</td><td class="why">合格未入選本期 → 進庫存下期競爭</td></tr></tbody></table>
+
+  <div class="sec"><h2>已篩除</h2><div class="h-sub">硬閘門砍掉——讓你知道沒漏掉，也看得到判斷理由。</div></div>
+  <table><thead><tr><th>標題</th><th>來源</th><th>為什麼砍</th></tr></thead><tbody><tr><td><a href="https://foodtechinsider.net/36m-ai-built-a-plant-based-chicken-in-just-2-weeks/" target="_blank" rel="noopener">$36M AI Built a Plant-Based Chicken in Just 2 Weeks ↗</a></td><td class="src">Food Tech Insider</td><td class="why">😴 Food Tech Insider 週報摘要型開頭，非單一可查證故事。</td></tr><tr><td><a href="https://techcrunch.com/2024/01/26/chef-robotics-eyes-commercial-kitchens-with-a-14-75m-raise/" target="_blank" rel="noopener">Chef Robotics eyes commercial kitchens with $14.75M raise ↗</a></td><td class="src">TechCrunch (Food)</td><td class="why">🚫 2024 舊聞，非本期新鮮事。</td></tr><tr><td><a href="https://thespoon.tech/appetronix-acquires-food-robot-startup-cibotica/" target="_blank" rel="noopener">Appetronix Acquires Food Robot Startup Cibotica ↗</a></td><td class="src">The Spoon</td><td class="why">🚫 50+ 天前的併購稿、偏產業。</td></tr><tr><td><a href="https://www.thecaterer.com/news/foodop-raises-44-million-to-bring-ai-to-professional-kitchens-still-running-on-paper-and-spreadsheets" target="_blank" rel="noopener">FoodOp raises £4.4m to bring AI to professional kitchens still running on paper and spreadsheets ↗</a></td><td class="src">The Caterer</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://foodtechinsider.net/food-techs-131m-week-ai-eats-plant-based-bleeds/" target="_blank" rel="noopener">Food Tech’s $131M Week: AI Eats, Plant-Based Bleeds ↗</a></td><td class="src">Food Tech Insider</td><td class="why">😴 週報彙整、非單一故事。</td></tr><tr><td><a href="https://foodtechinsider.net/big-foods-cultivated-meat-reckoning-3-lessons/" target="_blank" rel="noopener">“Big Food’s Cultivated Meat Reckoning: 3 Lessons” ↗</a></td><td class="src">Food Tech Insider</td><td class="why">😴 週報彙整/趨勢摘要。</td></tr><tr><td><a href="https://foodtechinsider.net/alt-meat-cost-parity-breweries-might-finally-crack-it/" target="_blank" rel="noopener">Alt-Meat Cost Parity? Breweries Might Finally Crack It ↗</a></td><td class="src">Food Tech Insider</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://thespoon.tech/with-over-100-million-meals-served-chef-robotics-hopes-to-become-food-robotics-category-defining-success-story/" target="_blank" rel="noopener">With Over 100 Million Meals Served, Chef Robotics Hopes to Become Food Robotics Category-Defining Success Story ↗</a></td><td class="src">The Spoon</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://techcrunch.com/2023/09/21/khosla-backed-healthifyme-introduces-ai-powered-image-recognition-for-indian-food/" target="_blank" rel="noopener">Khosla-backed HealthifyMe introduces AI-powered image recognition for Indian food ↗</a></td><td class="src">TechCrunch (Food)</td><td class="why">🚫 2023 舊聞。</td></tr><tr><td><a href="https://agfundernews.com/ais-role-in-agrifood-biotech-comes-into-sharper-focus" target="_blank" rel="noopener">AI’s role in agrifood biotech comes into sharper focus ↗</a></td><td class="src">AgFunder News</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://foodtechinsider.net/3-6b-food-mega-deal-glp-1-pill-approved-screwworm-spreads/" target="_blank" rel="noopener">$3.6B Food Mega-Deal, GLP-1 Pill Approved, Screwworm Spreads ↗</a></td><td class="src">Food Tech Insider</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://foodtechinsider.net/cultivated-meat-just-got-its-first-big-win-of-2026/" target="_blank" rel="noopener">Cultivated Meat Just Got Its First Big Win of 2026 ↗</a></td><td class="src">Food Tech Insider</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://foodtech-japan.com/2026/06/12/foovo-cell-based-food-report/" target="_blank" rel="noopener">細胞性食品（細胞培養食品）レポート・予約注文開始のお知らせ ↗</a></td><td class="src">Foovo</td><td class="why">🚫 報告預購促銷公告，非新聞。</td></tr><tr><td><a href="https://digitalfoodlab.com/europe-is-leading-alternative-proteins-can-it-turn-science-into-industry/" target="_blank" rel="noopener">Europe is leading alternative proteins; can it turn science into industry? ↗</a></td><td class="src">DigitalFoodLab</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://foodtechinsider.net/food-techs-4-3b-shake-up-why-the-industry-is-consolidating-now/" target="_blank" rel="noopener">Food Tech’s $4.3B Shake-Up: Why the Industry Is Consolidating Now ↗</a></td><td class="src">Food Tech Insider</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://thespoon.tech/ai-is-breaking-the-recipe-blog-model-allspice-thinks-it-can-also-save-it/" target="_blank" rel="noopener">AI Is Breaking the Recipe Blog Model. AllSpice Thinks It Can Also Save It ↗</a></td><td class="src">The Spoon</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://technicallyfood.substack.com/p/my-take-out-surprise" target="_blank" rel="noopener">Goop gets into food ↗</a></td><td class="src">Technically Food</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://techcrunch.com/2023/04/06/nestle-takes-a-big-swig-of-yfood-in-a-deal-that-values-the-meal-replacement-startup-at-469m/" target="_blank" rel="noopener">Nestlé takes a big swig of Yfood in a deal that values the meal replacement startup at $469M ↗</a></td><td class="src">TechCrunch (Food)</td><td class="why">🚫 2023 舊聞。</td></tr><tr><td><a href="https://foodtechinsider.net/i-dont-have-todays-food-tech-topics-in-front-of-me-yet-let-me-pull-the-latest-news-first-then-craft-the-title-89m-protein-from-air-plant-just-got-greenlit-is-this-the-end-of-farmi/" target="_blank" rel="noopener">I don’t have today’s food tech topics in front of me yet. Let me pull the latest news first, then craft the title.$89M “Protein From Air” Plant Just Got Greenlit — Is This the End of Farming? ↗</a></td><td class="src">Food Tech Insider</td><td class="why">🚫 非文章：RSS 誤把 AI 生成的草稿過程當成標題（對反 AI slop 的我們特別諷刺）。</td></tr><tr><td><a href="https://foodtech-japan.com/2026/06/18/brain-sbir-2/" target="_blank" rel="noopener">生研支援センターの2026年度SBIR、麹菌による乳タンパク質生産を採択｜昆虫タンパク質、養殖魚向け腸内細菌技術も ↗</a></td><td class="src">Foovo</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://restaurantbusinessonline.com/financing/how-restaurants-are-faring-spring?utm_source=How%20restaurants%20are%20faring%20this%20spring&amp;utm_medium=rb-feed&amp;utm_campaign=RSS-Feeds" target="_blank" rel="noopener">How restaurants are faring this spring ↗</a></td><td class="src">Restaurant Business</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://foodtech-japan.com/2026/06/16/leaft-foods-4/" target="_blank" rel="noopener">ラクト・ジャパン、葉由来ルビスコタンパク質のLeaft Foodsに出資｜日本での事業拡大へ ↗</a></td><td class="src">Foovo</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://digitalfoodlab.com/17-foodtech-insights-and-deals-to-know-this-week-2026-week-25/" target="_blank" rel="noopener">17 FoodTech insights and deals to know this week (2026 – week #25) ↗</a></td><td class="src">DigitalFoodLab</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://agfundernews.com/agrifood-signals-eif-commits-29m-to-irish-agrifoodtech-aphea-bio-and-bayer-team-up-glp-1-pills" target="_blank" rel="noopener">AgriFood Signals: EIF commits $29m to Irish agrifoodtech, Aphea.Bio and Bayer team up, GLP-1 pills ↗</a></td><td class="src">AgFunder News</td><td class="why">😴 AgriFood Signals 彙整、融資訊號。</td></tr><tr><td><a href="https://agfundernews.com/exclusive-upside-foods-submits-50m-stalking-horse-bid-for-believer-meats-us-cultivated-meat-facility" target="_blank" rel="noopener">Exclusive: UPSIDE Foods submits $50m stalking horse bid for Believer Meats’ US cultivated meat facility ↗</a></td><td class="src">AgFunder News</td><td class="why">🚫 併購競標稿、乾。</td></tr><tr><td><a href="https://foodtechinsider.net/3-6b-tate-lyle-deal-shocks-food-industry-5-more-bombshells-today/" target="_blank" rel="noopener">$3.6B Tate &amp; Lyle Deal Shocks Food Industry — 5 More Bombshells Today ↗</a></td><td class="src">Food Tech Insider</td><td class="why">😴 多則炸彈式彙整、非單一故事。</td></tr><tr><td><a href="https://digitalfoodlab.com/why-the-next-foodtech-breakthrough-may-come-from-space/" target="_blank" rel="noopener">Why the next FoodTech breakthrough may come from space ↗</a></td><td class="src">DigitalFoodLab</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://foodtechinsider.net/whey-shortage-food-giants-scramble-as-prices-surge-40/" target="_blank" rel="noopener">Whey Shortage: Food Giants Scramble as Prices Surge 40% ↗</a></td><td class="src">Food Tech Insider</td><td class="why">😴 週報彙整。</td></tr><tr><td><a href="https://digitalfoodlab.com/la-foodtech-europeenne-resiste-et-se-reorganise/" target="_blank" rel="noopener">La FoodTech européenne résiste et se réorganise ↗</a></td><td class="src">DigitalFoodLab</td><td class="why">未評分（不在 scores.json）</td></tr><tr><td><a href="https://thespoon.tech/food-industry-builders-heres-that-intro-to-vibe-coding-youve-been-waiting-for/" target="_blank" rel="noopener">Food Industry Builders: Here’s That Intro to Vibe Coding You’ve Been Waiting For ↗</a></td><td class="src">The Spoon</td><td class="why">未評分（不在 scores.json）</td></tr></tbody></table>
+
+  <div class="sec"><h2>編輯室提醒</h2></div><div class="flags"><ul><li>漏斗：抓取 470 → 去重後 450 → 食物優先粗篩 60 → 過閘門 11（砍 49）。</li><li>評分模式：本機 Claude Code 當總編（零 API key）；粗篩取 food-first 前 60 篇交 Claude 細評。</li><li>已篩除 49 篇，表格只列前 30。</li><li>本期所有來源都抓到文章。</li></ul></div>
+
+  <div class="sec"><h2>本週掃描來源</h2><div class="h-sub">這期實際抓取的 active 來源與抓回篇數（共 29 個來源、470 篇）。</div></div>
+  <div class="tbl-wrap"><table><thead><tr><th>來源</th><th>流</th><th>抓回篇數</th></tr></thead><tbody><tr><td>TechCrunch (Food)</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>식품외식경제</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>AgFunder News</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Technically Food</td><td><span class="badge warn">B</span></td><td>20</td></tr><tr><td>식품음료신문 (Thinkfood)</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>フードリンクニュース FDN</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Restaurant Business</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>QSR Magazine</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Jennifer Makan</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Sourced Journeys</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>한국외식신문</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Oy Vey It's A Food Newsletter</td><td><span class="badge warn">B</span></td><td>20</td></tr><tr><td>食品産業新聞社ニュース (SSNP)</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Table Talk</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>푸드투데이</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Nation's Restaurant News</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>The Spoon</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>The Caterer</td><td><span class="badge pass">A</span></td><td>20</td></tr><tr><td>Eater</td><td><span class="badge pass">A</span></td><td>10</td></tr><tr><td>飲食店ドットコム foodist</td><td><span class="badge pass">A</span></td><td>10</td></tr><tr><td>Momentum Works (The Lowdown)</td><td><span class="badge warn">B</span></td><td>10</td></tr><tr><td>Restaurant Dive</td><td><span class="badge pass">A</span></td><td>10</td></tr><tr><td>外食産業新聞社</td><td><span class="badge pass">A</span></td><td>10</td></tr><tr><td>Good Food Institute</td><td><span class="badge warn">B</span></td><td>10</td></tr><tr><td>Foovo</td><td><span class="badge pass">A</span></td><td>10</td></tr><tr><td>フードスタジアム</td><td><span class="badge pass">A</span></td><td>10</td></tr><tr><td>DigitalFoodLab</td><td><span class="badge warn">B</span></td><td>10</td></tr><tr><td>Food Tech Insider</td><td><span class="badge warn">B</span></td><td>10</td></tr><tr><td>The Food Institute</td><td><span class="badge pass">A</span></td><td>10</td></tr></tbody></table></div>
+
+  <div class="foot"><div class="b">The Pass 出菜口</div>內部選題報告 · 機器初選、人來拍板</div>
+</div>
+<script>
+(function(){
+  function refresh(){
+    var a=0,c=0,b=0;
+    document.querySelectorAll('.piece[data-decidable]').forEach(function(p){
+      var ad=p.querySelector('.dc-adopt'),bk=p.querySelector('.dc-backlog');
+      p.classList.toggle('dropped', bk.checked);
+      var angs=p.querySelectorAll('.angle'), sel=0;
+      angs.forEach(function(el,i){ if(el.classList.contains('sel')) sel=i; });
+      var changed = sel>0 && !bk.checked;
+      p.classList.toggle('reangle', changed);
+      if(bk.checked) b++; else if(ad.checked) a++;
+      if(changed) c++;
+    });
+    var ds=document.getElementById('ds');
+    if(ds) ds.innerHTML='採用 <b>'+a+'</b> · 換角度 <b>'+c+'</b> · 退庫存 <b>'+b+'</b>';
+  }
+  document.addEventListener('click', function(e){
+    var ang=e.target.closest ? e.target.closest('.angle') : null;
+    if(!ang) return;
+    var p=ang.closest('.piece'); if(!p) return;
+    p.querySelectorAll('.angle').forEach(function(el){ el.classList.remove('sel'); });
+    ang.classList.add('sel');
+    refresh();
+  });
+  document.addEventListener('change', function(e){
+    var t=e.target; if(!t.classList) return;
+    if(!(t.classList.contains('dc-adopt')||t.classList.contains('dc-backlog'))) return;
+    var p=t.closest('.piece');
+    if(t.classList.contains('dc-backlog') && t.checked){ var ad=p.querySelector('.dc-adopt'); if(ad) ad.checked=false; }
+    if(t.classList.contains('dc-adopt') && t.checked){ var bk=p.querySelector('.dc-backlog'); if(bk) bk.checked=false; }
+    refresh();
+  });
+  refresh();
+})();
+</script>
+</body></html>

@@ -23,7 +23,9 @@ export interface Dimensions {
   substance: number; // 事實扎實
 }
 
-const WEIGHTS = { surprise: 3, local: 2.5, human: 2.5, conversation: 2, substance: 1 };
+// 五面向權重。匯出供 /selection-report 的 build 階段（Claude Code 評分模式）重用同一套加權，
+// 確保 API 模式與本機評分模式算出的 weighted 可跨期比較（庫存競爭靠它排序）。
+export const WEIGHTS = { surprise: 3, local: 2.5, human: 2.5, conversation: 2, substance: 1 };
 
 export interface ScoredArticle {
   article: RawArticle;
@@ -40,7 +42,7 @@ export interface ScorePipelineResult {
 }
 
 const clamp05 = (n: number) => Math.max(0, Math.min(5, Math.round(Number(n) || 0)));
-const weightedOf = (d: Dimensions) =>
+export const weightedOf = (d: Dimensions) =>
   +(
     d.surprise * WEIGHTS.surprise +
     d.local * WEIGHTS.local +
