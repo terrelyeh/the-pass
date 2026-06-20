@@ -170,7 +170,7 @@ the-pass/
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
 
 ### 6. ✅ 寫作 skill `/write-issue`（已建 2026-06-19，harness）
-見「已完成」。**✅ 編輯 Memory 已接**（2026-06-20）：開寫載入各編輯 `*-memory.md`、定稿後 step 9 回寫（事實型自動／準則型 Terrel 確認）；種子＝Mise 標題鐵則。**下一步**：① **發佈 skill `/publish-issue` 已建**（2026-06-20）：定稿 md → issue 網頁＋長文配圖（nanobanana 直接生／gpt-image-2 暫交接提示詞）＋部署；真實跑一期驗收（首次跑抽 `issue.css` 避免每期重複 inline CSS）；② Ghost Pro 電子報；③ 真實運作幾期、迭代三位聲音與 memory 準則。
+見「已完成」。**✅ 編輯 Memory 已接**（2026-06-20）：開寫載入各編輯 `*-memory.md`、定稿後 step 9 回寫（事實型自動／準則型 Terrel 確認）；種子＝Mise 標題鐵則。**下一步**：① **發佈 skill `/publish-issue` 已建**（2026-06-20）：定稿 md → issue 網頁＋長文配圖（nanobanana 走 MCP／gpt-image-2 走 **Codex CLI**，兩者都直接生）＋部署；真實跑一期驗收（首次跑抽 `issue.css` 避免每期重複 inline CSS）；② Ghost Pro 電子報；③ 真實運作幾期、迭代三位聲音與 memory 準則。
 
 ## 部署
 
@@ -198,6 +198,8 @@ npx vercel --prod --yes
 
 - **sources.ts 是單一真實來源**: 改來源只動 `src/lib/sources.ts` → `npx tsx scripts/gen-sources-page.ts` 重生 sources.html → 部署。**勿手改 `public/sources.html`**（會被覆蓋）。
 - **editor-source.html 是生成頁（團隊看寫作源頭）**: 由 `scripts/gen-editor-source-page.ts` 從 9 個 md（`docs/editors/*-soul.md`+`*-memory.md`、`refs/voices.md`+`anti-slop.md`+`chief-editor-checklist.md`）渲染、內建零依賴 md→html。改那些 md 後跑 `npx tsx scripts/gen-editor-source-page.ts` 重生、commit 部署。**勿手改 `public/editor-source.html`**（會被覆蓋）。團隊優化寫作風格的入口（hub 有卡片）。
+- **gpt-image-2 生圖走 Codex CLI**（/publish-issue 用）: `codex exec --full-auto --skip-git-repo-check -C <寫入目錄> -o <msgfile> "...生圖存成 <檔名>...印出絕對路徑"`。codex 已登入 ChatGPT、內建 gpt-image，生到 `~/.codex/generated_images/<uuid>/ig_*.png` 再依指示 cp 到目標。**Bash 工具 timeout 設 ≥300000ms**（每張 1–2 分、~30–40k codex token；macOS 無 shell `timeout` 指令）。nanobanana 仍走 `mcp__nanobanana__generate_image`。
+- **回饋功能 = `public/feedback.js`**: 架構頁/編輯源頭頁靠 `<body data-fb-blocks="選擇器">` 自動注入每區塊「💬 回饋」鈕（導出式 mailto，零後端）。換收件信箱/改 Google Form 改 `feedback.js` 的 `EMAIL` 常數/`openFb`。
 - **scorer 需 API key**: 無 `ANTHROPIC_API_KEY` 時 scorer 走 dry-run（關鍵字代理，非真評分）。AI 不能代填金鑰，需使用者自己加到 `.env.local`。
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
 - **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。

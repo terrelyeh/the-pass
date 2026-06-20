@@ -25,9 +25,11 @@ The Pass 的視覺：**長文配插畫、快訊不配**（CLAUDE.md 既定）。
 2. **各寫一條提示詞，給兩個模型**（風格不同，分開寫）：
    - **nanobanana（Gemini／nb2）**：詳細自然語言、場景＋感官＋光線＋構圖＋風格（暖色系編輯插畫、扣 The Pass 調性，見 `illustration-guide.html`）；用 `negative_prompt` 排除**廚房拱門構圖**（nanobanana 慣性問題）、文字、浮水印、emoji。`aspect_ratio` 建議 `3:2` 或 `16:9`（封面橫式）。
    - **gpt-image-2**：簡潔描述式（主體＋氛圍＋風格一段話）。
-3. **生圖**：
-   - nanobanana → 我用 `mcp__nanobanana__generate_image` **直接生** n 張候選（存 `public/img/`）。
-   - gpt-image-2 → **目前無工具/金鑰**：輸出提示詞給 Terrel 去 ChatGPT／OpenAI 自己跑、把選的圖丟回；**或**之後接一個 OpenAI image MCP/CLI（＋金鑰）我就能直接生（見「擴充」）。
+3. **生圖（兩模型我都直接生）**：
+   - **nanobanana** → `mcp__nanobanana__generate_image`，存 `public/img/`。
+   - **gpt-image-2** → 透過本機 **Codex CLI**（已登入 ChatGPT、內建 gpt-image；2026-06-20 實測可行）：
+     `codex exec --full-auto --skip-git-repo-check -C the-pass/public/img -o /tmp/codex-img.txt "用你的 image 生成工具（OpenAI gpt-image）生一張圖：<gpt-image-2 提示詞>。存成 issue-<date>-N-gpt.png 到目前工作目錄（工具若存別處就 cp 過來），最後印出絕對路徑。"`
+     codex 先生到 `~/.codex/generated_images/<uuid>/ig_*.png` 再依指示複製到目標；讀 `/tmp/codex-img.txt` 取回路徑。約 30–40k codex token、1–2 分鐘/張 → **用 Bash 工具的 `timeout` 參數（≥300000ms）**，別用 shell `timeout`（macOS 無）。
 4. **🚦GATE A（人挑圖）**：把 nanobanana（＋gpt-image-2）候選列給 Terrel，**他挑一張/每篇**。存成 `public/img/issue-<date>-1.<ext>`、`-2.<ext>`。沒喜歡的就重生（nanobanana 每次不同，喜歡要立刻定）。
 
 ### 3 · 渲染 issue 頁
@@ -48,10 +50,10 @@ The Pass 的視覺：**長文配插畫、快訊不配**（CLAUDE.md 既定）。
 ## 眉角 / 邊界
 - **只發定稿**：草稿狀態不發。內文不改（發佈不是再編輯）。
 - **長文配圖、快訊不配**；插畫扣 `illustration-guide.html`、排除拱門構圖、禁文字/emoji 入圖。
-- **兩模型分開寫提示詞**（nanobanana 詳細自然語言＋負面詞；gpt-image-2 簡潔描述）。nanobanana 直接生；gpt-image-2 暫為提示詞交接。
+- **兩模型分開寫提示詞**（nanobanana 詳細自然語言＋負面詞；gpt-image-2 簡潔描述）。**兩者我都直接生**：nanobanana 走 MCP、gpt-image-2 走 Codex CLI。
 - **圖存 `public/img/` 且 commit**，否則自動部署不會上線。
 - **CSS 共用**：別重複 inline；用 `issue.css`（沒有就第一次抽出）。
 - **內部段落不上頁**：總編審核摘要、待補/存疑只在 Obsidian，不進公開 issue 頁。
 
-## 擴充：讓 gpt-image-2 也能自動生
-目前我只有 nanobanana 工具。要我直接生 gpt-image-2：接一個 OpenAI image 的 MCP 或 CLI（＋`OPENAI_API_KEY`，AI 不能代填）。接上後，步驟 2-3 的 gpt-image-2 從「交接提示詞」升級為「我直接生候選」，其餘流程不變。
+## 備註：gpt-image-2 走 Codex CLI（已通）
+gpt-image-2 不必自接 OpenAI 金鑰——用本機已登入的 **Codex CLI**（`codex` v0.124+；`codex login status` 應顯示 Logged in using ChatGPT，用 ChatGPT 額度）。codex `exec --full-auto` 內建 image 生成，能存到指定路徑、`-o` 回傳路徑（2026-06-20 實測生圖成功）。維持登入即可；登入/額度掉了只影響 gpt-image-2 那格，nanobanana 不受影響。
