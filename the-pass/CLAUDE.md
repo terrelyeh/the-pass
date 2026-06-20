@@ -118,7 +118,7 @@ the-pass/
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
 ├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / gen-editor-source-page / demo-report / run-pipeline
-├── .claude/skills/                ← selection-report（選題）· write-issue（寫作，含 refs/）· audit-sources
+├── .claude/skills/                ← selection-report（選題）· write-issue（寫作，含 refs/）· publish-issue（發佈，含長文配圖）· audit-sources
 ├── docs/                         ← MD（selection-mechanism、write-issue-architecture、editors/*-soul、source-verification-checklist…）
 ├── data/                         ← runtime（seen.json、backlog.json、sr/<date>/{pool,candidates,scores,selected}.json；gitignore）
 └── CLAUDE.md                     ← 本檔案
@@ -170,7 +170,7 @@ the-pass/
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
 
 ### 6. ✅ 寫作 skill `/write-issue`（已建 2026-06-19，harness）
-見「已完成」。**✅ 編輯 Memory 已接**（2026-06-20）：開寫載入各編輯 `*-memory.md`、定稿後 step 9 回寫（事實型自動／準則型 Terrel 確認）；種子＝Mise 標題鐵則。**下一步**：① **發佈**——草稿 → Ghost／thepass.cc 出刊頁；② 真實運作幾期、讓 memory 準則自然累積、迭代三位聲音。
+見「已完成」。**✅ 編輯 Memory 已接**（2026-06-20）：開寫載入各編輯 `*-memory.md`、定稿後 step 9 回寫（事實型自動／準則型 Terrel 確認）；種子＝Mise 標題鐵則。**下一步**：① **發佈 skill `/publish-issue` 已建**（2026-06-20）：定稿 md → issue 網頁＋長文配圖（nanobanana 直接生／gpt-image-2 暫交接提示詞）＋部署；真實跑一期驗收（首次跑抽 `issue.css` 避免每期重複 inline CSS）；② Ghost Pro 電子報；③ 真實運作幾期、迭代三位聲音與 memory 準則。
 
 ## 部署
 
