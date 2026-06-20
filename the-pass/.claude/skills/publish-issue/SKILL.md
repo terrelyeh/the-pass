@@ -44,9 +44,9 @@ description: 把「人已定稿」的出刊草稿發佈成 thepass.cc 的 issue 
 產出 `public/issue-<date>.html`：**沿用 issue 模板的 CSS/結構**（首期 `public/issue-2026-06-19.html` 為基準格式；長文上方放選定的封面圖）。內容＝今日觀察（2 長文＋圖＋署名＋來源）、本期快訊、留一個問題、落款。
 - ⚠️ **別每期各自 inline 一份 CSS**（demo issue 的舊雷）：issue 頁共用同一套樣式——若還沒抽成 `public/issue.css`，第一次發佈時抽出來、之後 `<link>` 共用。
 
-### 4 · 更新索引 + hub
-- 把這期加進 issue 索引（`public/issues.html` 列表頁，或先在 hub 加卡片）。
-- 索引每期一列：日期＋兩篇長文標題＋連結。
+### 4 · 更新索引（配圖總覽 + hub）
+- **把這期兩張封面加進 `public/covers.html`**（配圖總覽，左側日期目錄）：新增一個 `<section class="period" id="c-<date>">`（含兩篇封面 img＋標題＋概念）＋ 左側一條 `<a data-target="c-<date>">`。把舊的 `active` 移到新期（最新期預設開）。
+- hub 已有「配圖總覽 / 首期內容」卡片；新期視需要更新 hub 的最新 issue 卡片。
 
 ### 5 · 🚦GATE B（發佈前）
 把 issue 頁（本機或截圖）給 Terrel 看一眼 → 確認 → 才上站。
