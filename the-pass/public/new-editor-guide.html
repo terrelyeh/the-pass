@@ -15,6 +15,13 @@
 .box b{font-family:var(--serif)}
 .flow{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;font-size:.82rem;color:var(--ink-light)}
 .flow span{background:var(--white);border:1px solid var(--border);border-radius:100px;padding:.15rem .7rem}
+.quickstart{background:#FBF7EC;border:1.5px solid var(--accent-light);border-radius:12px;padding:1.2rem 1.4rem;margin:0 0 2rem}
+.quickstart .qlabel{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:.5rem}
+.quickstart p{font-size:.92rem;color:var(--ink-light);margin:.35rem 0}
+.quickstart .eg{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;margin:.55rem 0;font-size:.9rem;line-height:1.95}
+.quickstart .eg b{color:var(--ink)}
+.quickstart .eg .lbl{color:var(--ink-muted);font-size:.82rem}
+.quickstart .hl{font-family:var(--serif);color:var(--wine)}
 .step{border:1px solid var(--border);border-radius:12px;background:var(--white);padding:1.4rem 1.5rem;margin:0 0 1.1rem;position:relative;overflow:hidden}
 .step::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent-light)}
 .step-h{font-family:var(--serif);font-size:1.2rem;font-weight:600;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
@@ -58,6 +65,21 @@ pre .c{color:#8B90A0}
 <b>先懂一件事：一位編輯 = 三層可重用模組。</b><br>
 <b>Soul</b>（人格·我是誰）＋ <b>Voices</b>（聲音·怎麼寫）＋ <b>Memory</b>（記憶·學到／寫過），再共用一條 <b>anti-slop</b> 底線。優化一位編輯，就是改這幾個源頭檔——改一次，所有用到他的地方一起生效。所以「新增一位」就是這四步：
 <div class="flow"><span>① 定位</span><span>② 填人格</span><span>③ 接線</span><span>④ 試跑校準</span></div>
+</div>
+
+<div class="quickstart">
+<div class="qlabel">⚡ 最小輸入 · 門檻很低，先丟再調</div>
+<p>不用一次填滿下面五格。你其實只要給 <b>兩樣</b>，Claude 就能開工——剩下的（代號、完整人格、聲音、模式、接線）由它<b>提案</b>，你再改：</p>
+<div class="eg">
+<div><span class="lbl">① 感覺／人設</span>　一句 vibe，或一個風格參照</div>
+<div><span class="lbl">② 角色／出場</span>　做什麼 ＋ 多常出現</div>
+</div>
+<p><b>範例</b>——最新的編輯 Amuse，當初就只給了這兩句：</p>
+<div class="eg">
+<div><span class="lbl">① 感覺／人設</span>　<span class="hl">伍迪艾倫式的自嘲諷刺、聰明的幽默，但帶一點情感</span></div>
+<div><span class="lbl">② 角色／出場</span>　<span class="hl">不定期的特別企劃</span></div>
+</div>
+<div class="tip">💡 <b>最高效的一招：給「一個參照」</b>（一個名字／節目／作家，像上面的「伍迪艾倫」）——一次打包人格＋聲音＋語氣，比描述十句還準；再配一個食物本行的參照（如 Anthony Bourdain）體溫就到位。<b>給得越準，試稿後一兩回就對味；給得越少，校準回合越多——兩種都行。</b></div>
 </div>
 
 <div class="step">
