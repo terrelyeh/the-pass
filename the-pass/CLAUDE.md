@@ -1,6 +1,6 @@
 # CLAUDE.md — The Pass 出菜口 Project Context
 
-> Last updated: 2026-06-19
+> Last updated: 2026-06-20
 
 ## Project Overview
 
@@ -107,7 +107,8 @@ the-pass/
 │   ├── audit-sources.html        ← 🆕 /audit-sources skill 說明頁
 │   ├── selection-mechanism.html  ← 篩選機制設計
 │   ├── research-stage.html       ← 研究階段提案（內容源 vs 主題源；待團隊討論）
-│   ├── selection-report-demo.html← 🆕 選題報告（每期會議文件；gen 自 scripts/demo-report.ts；gitignore）
+│   ├── selection-report.html      ← 最新一期入口（讀 selection-reports.json 跳轉）；selection-report-<date>.html 每期 commit 上線
+│   ├── write-issue-architecture.html ← AI 編輯室架構頁（給團隊，含 SVG 圖）
 │   ├── project-brief / editorial-guidelines / about / methodology / illustration-guide / implementation-plan / editors / editor-*.html
 │   └── demo-index / demo-issue-001~003 / demo-ig-post.html、img/
 ├── src/
@@ -116,9 +117,9 @@ the-pass/
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
 ├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / demo-report / run-pipeline
-├── .claude/skills/                ← selection-report（每期核心）· audit-sources
-├── docs/                         ← MD 內部文件（selection-mechanism、source-verification-checklist、persona…）
-├── data/                         ← runtime（seen.json、backlog.json、feed-*.json；gitignore）
+├── .claude/skills/                ← selection-report（選題）· write-issue（寫作，含 refs/）· audit-sources
+├── docs/                         ← MD（selection-mechanism、write-issue-architecture、editors/*-soul、source-verification-checklist…）
+├── data/                         ← runtime（seen.json、backlog.json、sr/<date>/{pool,candidates,scores,selected}.json；gitignore）
 └── CLAUDE.md                     ← 本檔案
 ```
 
@@ -143,7 +144,8 @@ the-pass/
 ## 已完成（功能全貌見 [README.md](README.md) 與 git log）
 
 - **選題系統（已上線）**：抓取 → 去重 → 評估 → **庫存跨期競爭** → 選題報告 → hub / 來源狀態 / `/audit-sources`。來源收斂成 30（active 29），`sources.ts` 單一真實來源、頁面自動生成。
-- **`/selection-report` skill（已建 2026-06-19）**：每期核心，**零 API key 在本機 Claude Code 跑**。`sr-prep`（抓取→去重→去噪候選池）→ **Haiku 子代理粗篩** → **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角）→ 庫存競爭 → `sr-build` 產 HTML（thepass.cc）+ Obsidian Markdown 雙輸出。報告含可點選切角（A 預設）。
+- **`/selection-report` skill（選題，已建 2026-06-19）**：**零 API key 在本機 Claude Code 跑**。`sr-prep`（抓取→去重→去噪候選池）→ **Haiku 子代理粗篩** → **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角）→ 庫存競爭 → `sr-build` 雙輸出（HTML 上 thepass.cc + Obsidian）。報告含切角、左側日期面板、⬇匯出決定鈕；出刊（`--save`）持久化 `seen.json`（跨期去重，不重複撈/發）。
+- **`/write-issue` skill（寫作，已建 2026-06-19，harness 版）**：選題拍板後把選的稿寫成整期草稿。**orchestrator + 4 編輯 subagent（Mise／Passe／Fumet／總編，聲音隔離）+ 3 互動 gate（人拍板）**；抓全文查證、守事實不可扭曲、付費牆只報現象。架構全文見 [`docs/write-issue-architecture.md`](docs/write-issue-architecture.md)（也上 thepass.cc/write-issue-architecture.html）。
 - **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
 - **品牌 / 編輯 / 網站基礎**：品牌定位 + Project Brief、4 位 AI 編輯人設 + Soul（`docs/editors/*-soul.md`）、3 期 Demo Issues、插畫指南、域名 thepass.cc + Vercel。
 
@@ -153,7 +155,7 @@ the-pass/
 **飲食／餐飲／食物優先，AI／科技為輔與加分。** 硬閘門已改 food-first（`scorer.ts` EVAL_SYSTEM：食物為門檻、AI 非必要；AI／科技角度計入 surprise 加分，不再要求硬性 AI×食物交集）。下游（/selection-report、三位編輯寫作）皆依此方向。
 
 ### 2. ✅ `/selection-report` skill（已建 2026-06-19）
-本機 Claude Code 執行、**零 API key**：`sr-prep`（抓取→去重→去噪出候選池 `pool.json`）→ **Haiku 子代理粗篩**（skill 內 spawn，走既有登入、不需金鑰）→ **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角，寫 `scores.json`）→ `sr-build --save`（庫存競爭→選一期→HTML 上 thepass.cc + Obsidian Markdown）。雙輸出落 `工作/顧問/AI編輯室 - The Pass/選題報告/<date> 選題報告.md` + `庫存.md`。**待精修**：Haiku 粗篩偏寬鬆（已加量化目標 12–15/批）；跨期 seen 持久化未接（v1 靠 RSS 自然汰換 + 庫存 remove）；尚未用「純 Haiku 流程」完整跑一期（線上 6/19 報告候選集仍為早期關鍵字版 + 切角）。
+本機 Claude Code 執行、**零 API key**；流程見「已完成」。**已上線運作**——報告 UX（日期面板、⬇匯出決定、最新一期入口 `selection-report.html`）+ seen 跨期去重都已接。**待精修**：Haiku 粗篩偏寬鬆（已加量化目標 12–15/批，仍可再調）。
 
 > **下游提案（待團隊討論）**：**研究階段**——來源分「內容源（RSS，可直接寫）vs 主題源（IG/YT/手動雷達，只給題目）」；主題源選上後多一個「研究/查證」步驟（web 搜尋+抓取+LLM brief）才寫作。提案頁 `public/research-stage.html`，未來獨立 `/research`（用 Firecrawl + deep-research）。**創作者/影片進料線**：YouTube 頻道用官方 RSS（`youtube.com/feeds/videos.xml?channel_id=...`，乾淨、直接進 sources.ts）；IG 無官方 API、爬蟲脆弱 → 走手動雷達（Obsidian `創作者雷達.md`）。
 
@@ -161,13 +163,13 @@ the-pass/
 **`/selection-report` 不需要金鑰**——評分由本機 Claude Code（+ Haiku 子代理）做。金鑰只在「腳本內全自動評分」（未來排程無人跑 `scorer.ts` 的 Opus 全程，或腳本直接呼叫 Haiku）才需要：在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
 
 ### 4. 儲存策略（2026-06-11 定）+ 基礎建設
-三層、各用對的工具：**機器狀態**＝本機 JSON（`data/*.json`，backlog/seen 已實作）；**人看存檔**＝Terrel 本機 Obsidian vault（Markdown，vault 路徑待提供）；**團隊溝通**＝網頁 HTML 上 thepass.cc。**雙輸出原則**：同資料 → HTML（團隊、互動）+ Markdown（Obsidian）——`delivery-report` 已如此，`/selection-report` 比照（再寫一份含庫存表的 `.md` 進 vault）。**Supabase 暫不導入**，只有「排程自動化 / 團隊線上即時查」才需要。仍待：**編輯 Memory 回寫**（Soul 已有 `docs/editors/*-soul.md`，動態 Memory 未接）；報告「決定」後端；Ghost Pro。
+三層、各用對的工具：**機器狀態**＝本機 JSON（`data/*.json`，backlog/seen 已實作）；**人看存檔**＝Terrel 本機 Obsidian vault（`工作/顧問/AI編輯室 - The Pass/`，選題報告/庫存/文章草稿 已落檔）；**團隊溝通**＝網頁 HTML 上 thepass.cc。**雙輸出原則**：同資料 → HTML（團隊、互動）+ Markdown（Obsidian）——`delivery-report` 已如此，`/selection-report` 比照（再寫一份含庫存表的 `.md` 進 vault）。**Supabase 暫不導入**，只有「排程自動化 / 團隊線上即時查」才需要。仍待：**編輯 Memory 回寫**（Soul 已有 `docs/editors/*-soul.md`，動態 Memory 未接）；報告「決定」後端；Ghost Pro。
 
 ### 5. 待修 / 待 audit
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
 
-### 6. AI 編輯人設 skills（roadmap）
-`/mise`、`/passe`、`/fumet`、`/chief-editor` + memory 更新流程（soul.md 已備）。
+### 6. ✅ 寫作 skill `/write-issue`（已建 2026-06-19，harness）
+見「已完成」。**編輯系統下一步**：① **編輯 Memory 回寫**——每期寫完把產出記進 `docs/editors/*-memory.md`、下期載入（架構已預留、未接）；② **發佈**——草稿 → Ghost／thepass.cc 出刊頁；③ 用 skill-creator 跑幾期迭代三位編輯的聲音。
 
 ## 部署
 
@@ -198,6 +200,10 @@ npx vercel --prod --yes
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
 - **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。
 - **Fumet 不選稿**: 結尾提問從選出的長文「提煉」，不從候選池打分選一篇（editorial-guidelines 規定）。
+- **/write-issue 用 subagent 隔離聲音**: 三編輯 + 總編各 spawn 一個 subagent（per-編輯），別在同一 context 全寫（聲音會糊）；總編獨立審、不自審。改聲音→`refs/voices.md`、底線→`refs/anti-slop.md`、審核→`refs/chief-editor-checklist.md`、人格→`docs/editors/*-soul.md`（人格是團隊原作、refs 已對原文核對過，勿亂改）。
+- **付費牆政策**: write-issue 抓全文偵測付費牆——硬新聞牆找公開源否則退；觀點牆但預覽自成一體→報現象+透明標註+佐證；絕不憑預覽假裝讀過全文。
+- **/write-issue 輸入 = selected.json**: `sr-build` 每跑都寫 `data/sr/<date>/selected.json`（選的稿+切角+Fumet 種子）給寫作 skill 讀。
+- **報告入口 selection-report.html**: 固定網址、讀 `selection-reports.json` 跳最新一期；每期 dated 報告要 commit 才上線（gitignore 現只忽略 `-demo`）。
 - **selection-report-demo.html / data/*.json 已 gitignore**: 是 gen 出的 artifact，不 commit。⚠️ **自動部署改 git 來源後（2026-06-14），gitignored 檔不會上線**（如 `selection-report-*.html`）；要上線的檔需 commit（`sources.html` 已 commit、不受影響）。手動 `vercel --prod` 才會連本機 gitignored 檔一起上傳。
 - **Vercel 自動部署（2026-06-14 已修復）**: 現在 push 到 `main` 即自動部署。當初失效主因是 **Root Directory 未設成 `the-pass`**（repo 根在 `Foodie-news/`、app 在子目錄），已修正；連線也用 `vercel git connect` 接回。手動 `npx vercel --prod --yes` 仍可作備援。
 - **Vercel subdomain**: auto-generated 是 `the-pass-nine`，但已有自訂域名 `thepass.cc`
@@ -205,10 +211,7 @@ npx vercel --prod --yes
 - **快訊不配圖**: 測試過 spot illustration，閱讀斷裂感太強，決定不採用
 - **插畫拱門問題**: nanobanana 容易重複生成廚房拱門構圖，prompt 需明確排除
 - **nav 有兩套**: 內部 6 連結 / 外部 3 連結（關於 The Pass、方法論、AI 編輯室），Logo 連結也不同（見上方表格）
-- **「信源清單」已改名「選題來源」**: 全站已更新
-- **about.html + methodology.html**: 原 methodology.html 已拆分為品牌故事頁（about.html）與方法論頁（methodology.html）
 - **Demo Issue #002 #003**: 連結都是 `href="#"`，banner 已改為「展示用範例」
 - **CSS 重複**: 三期 demo issue 各自 inline CSS，修改樣式需三份都改
 - **nanobanana 生圖**: 每次生成都不同，喜歡的圖要立刻保存
 - **避免「品味」用詞**: 全站已替換，用「觀點」「偏好」「分享」
-- **站內連結不開新視窗**: 已移除所有 target=_blank
