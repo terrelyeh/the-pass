@@ -10,7 +10,8 @@
 .hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
 .hero h1{font-family:var(--display);font-size:2.6rem;font-weight:400;margin:.4rem 0 .35rem}
 .hero .sub{color:var(--ink-muted);font-size:.92rem;max-width:520px;margin:0 auto}
-.sec-label{font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:2.2rem 0 .8rem}
+.sec-label{font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:2.4rem 0 .3rem}
+.sec-sub{font-size:.84rem;color:var(--ink-light);margin:0 0 1rem;max-width:560px;line-height:1.5}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.8rem}
 .card{display:block;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.3rem;text-decoration:none;transition:border-color .15s,transform .15s;position:relative;overflow:hidden}
 .card:hover{border-color:var(--accent-light);transform:translateY(-2px)}
@@ -28,17 +29,33 @@
     <p class="sub">選題機制、來源、每期報告的統一入口。給編輯室與團隊隨時查看。</p>
   </div>
 
-  <div class="sec-label">🍳 選題系統（運作中）</div>
+  <div class="sec-label">🔎 來源與機制設計</div>
+  <div class="sec-sub">內容從哪裡來、用什麼方法篩選。</div>
   <div class="grid">
     <a class="card" href="audit-sources.html"><div class="t">來源審核 <span class="tag" style="background:rgba(184,134,11,.14);color:var(--accent)">SKILL</span></div><div class="d">/audit-sources — 評估候選來源（連通／內容走向／新鮮獨家／IG 潛力）並自動收進 pipeline。</div></a>
     <a class="card" href="selection-mechanism.html"><div class="t">篩選機制設計</div><div class="d">從原料到一期的完整流程：兩條進料線、去重、評分、初選、拍板。</div></a>
     <a class="card" href="research-stage.html"><div class="t">研究階段 <span class="tag" style="background:rgba(184,134,11,.14);color:var(--accent)">提案</span></div><div class="d">主題源（IG／YT）選上後再研究／查證的設計提案，待團隊討論。</div></a>
+  </div>
+
+  <div class="sec-label">🍳 選題系統（運作中）</div>
+  <div class="sec-sub">每期實際跑出來的選題產出（LIVE）。</div>
+  <div class="grid">
     <a class="card live" href="sources.html"><div class="t">選題來源｜狀態 <span class="tag">LIVE</span></div><div class="d">所有來源（tier 分組）+ Active／Pending 狀態，一份文件。由 sources.ts 自動生成、部署同步。</div></a>
     <a class="card live" href="selection-report.html"><div class="t">選題報告（最新一期） <span class="tag">LIVE</span></div><div class="d">每期 pipeline 產出的選題會文件：建議出刊、切角、庫存、已篩除。左側可切換歷期。</div></a>
     <a class="card live" href="backlog.html"><div class="t">選題庫存 <span class="tag">LIVE</span></div><div class="d">合格但沒選上的稿，保留 30 天、下期跟新文章重新競爭。依分數排序。</div></a>
+  </div>
+
+  <div class="sec-label">✍️ AI 編輯室（寫作）</div>
+  <div class="sec-sub">把選好的題，寫成一期的人與機制。</div>
+  <div class="grid">
     <a class="card" href="write-issue-architecture.html"><div class="t">AI 編輯室架構</div><div class="d">/write-issue 怎麼把選的稿寫成一期：orchestrator + 三編輯 + 總編四個分身、三個人拍板的 gate。含架構圖。</div></a>
     <a class="card" href="skills.html"><div class="t">編輯室 Skills 總覽</div><div class="d">三個 skill（選題／寫稿／發佈）一頁說明，按鈕切換看每個在做什麼。</div></a>
     <a class="card" href="editor-source.html"><div class="t">編輯源頭 · 寫作風格</div><div class="d">真正餵給三位 AI 編輯的內容：人格（Soul）、記憶（Memory）、寫作守則（Voices）。團隊想優化 AI 寫的東西，從這裡看、從這裡提。</div></a>
+  </div>
+
+  <div class="sec-label">🍽️ 出刊成果</div>
+  <div class="sec-sub">跑完整條流程後的成品。</div>
+  <div class="grid">
     <a class="card" href="covers.html"><div class="t">配圖總覽</div><div class="d">每期長文配圖（封面）的目錄，左側可切換歷期，快速瀏覽各期視覺。</div></a>
     <a class="card live" href="issue-2026-06-19.html"><div class="t">首期內容 2026-06-19 <span class="tag">LIVE</span></div><div class="d">三位編輯寫的稿＋紐約客式概念配圖。</div></a>
   </div>
