@@ -16,9 +16,10 @@ const EDITORS = [
   { key: "mise", name: "Mise", role: "今日觀察（長文）", soul: "docs/editors/mise-soul.md", memory: "docs/editors/mise-memory.md" },
   { key: "passe", name: "Passe", role: "本期快訊", soul: "docs/editors/passe-soul.md", memory: "docs/editors/passe-memory.md" },
   { key: "fumet", name: "Fumet", role: "留一個問題", soul: "docs/editors/fumet-soul.md", memory: "docs/editors/fumet-memory.md" },
+  { key: "amuse", name: "Amuse", role: "菜單之外（特別企劃）", soul: "docs/editors/amuse-soul.md", memory: "docs/editors/amuse-memory.md" },
 ];
 const SHARED = [
-  { key: "voices", title: "寫作風格守則（Voices）", file: ".claude/skills/write-issue/refs/voices.md", note: "三位編輯「怎麼寫」的可執行規則、招式、標題鐵則。想調寫作風格，主要改這裡。" },
+  { key: "voices", title: "寫作風格守則（Voices）", file: ".claude/skills/write-issue/refs/voices.md", note: "四位編輯「怎麼寫」的可執行規則、招式、標題鐵則。想調寫作風格，主要改這裡。" },
   { key: "antislop", title: "反 AI 味底線（共用）", file: ".claude/skills/write-issue/refs/anti-slop.md", note: "全編輯共用的底線：事實不可扭曲、禁用開頭／詞彙／結構。" },
   { key: "chief", title: "總編審核清單（7 項）", file: ".claude/skills/write-issue/refs/chief-editor-checklist.md", note: "每期寫完，總編逐項對照查核的標準。" },
 ];

@@ -1,6 +1,6 @@
 ---
 name: commission
-description: 用 The Pass（出菜口）指定的某一位 AI 編輯（Mise／Passe／Fumet），把一個特定來源（網址／一段貼文／題目）寫成單獨一篇。Make sure to use this skill whenever Terrel wants to 指定編輯寫一篇／用 Mise（或 Passe／Fumet）寫這個連結／單篇委稿／幫我用某編輯的口吻寫這則新聞／給一個來源請特定編輯撰寫——即使沒講 skill 名字（例如「用 Fumet 寫這篇 <url>」「這則給 Passe 寫成快訊」「拿這段請 Mise 寫」）也要觸發。共用 /write-issue 的同一套編輯人格檔（soul＋voices＋memory），聲音與記憶一致：orchestrator 抓全文 → spawn 那位編輯 subagent 寫一篇 → 一道輕量 gate → 可選回寫記憶。不要用於：出整期（/write-issue）、跑選題（/selection-report）、改來源（/audit-sources）。
+description: 用 The Pass（出菜口）指定的某一位 AI 編輯（Mise／Passe／Fumet／Amuse），把一個特定來源（網址／一段貼文／題目）寫成單獨一篇。Make sure to use this skill whenever Terrel wants to 指定編輯寫一篇／用 Mise（或 Passe／Fumet／Amuse）寫這個連結／用 Amuse 吐槽這篇炒作／單篇委稿／幫我用某編輯的口吻寫這則新聞／給一個來源請特定編輯撰寫——即使沒講 skill 名字（例如「用 Fumet 寫這篇 <url>」「這則給 Passe 寫成快訊」「拿這段請 Mise 寫」「用 Amuse 吐槽這篇 <url>」）也要觸發。共用 /write-issue 的同一套編輯人格檔（soul＋voices＋memory），聲音與記憶一致：orchestrator 抓全文 → spawn 那位編輯 subagent 寫一篇 → 一道輕量 gate → 可選回寫記憶。不要用於：出整期（/write-issue）、跑選題（/selection-report）、改來源（/audit-sources）。
 ---
 
 # /commission — 指定單一編輯，單篇委稿
@@ -27,6 +27,7 @@ description: 用 The Pass（出菜口）指定的某一位 AI 編輯（Mise／Pa
 | **Mise** | `docs/editors/mise-soul.md` | `voices.md`（Mise 段） | `docs/editors/mise-memory.md` | 長文（觀點編譯 D）約 500–900 字、場景式、從具體的人切入 |
 | **Passe** | `docs/editors/passe-soul.md` | `voices.md`（Passe 段） | `docs/editors/passe-memory.md` | 快訊、一句話講清、事實夠硬 |
 | **Fumet** | `docs/editors/fumet-soul.md` | `voices.md`（Fumet 段） | `docs/editors/fumet-memory.md` | 長文（觀點編譯 D）沉靜、從現象叩問文化假設／或留一個提問 |
+| **Amuse** | `docs/editors/amuse-soul.md` | `voices.md`（Amuse 段） | `docs/editors/amuse-memory.md` | 特別企劃·吐槽／開箱／點評（**預設走 A、不走 D**）約 300–600 字、先自嘲後諷刺 |
 
 共用底線：`anti-slop.md`（**最高原則：不捏造**，引號與數字都要對得回來源）。
 
@@ -37,7 +38,7 @@ description: 用 The Pass（出菜口）指定的某一位 AI 編輯（Mise／Pa
 ### 1 · 確定編輯 + 來源
 從 Terrel 的話判定編輯與來源；缺就問。**長文預設走「觀點編譯（D）」**——完整交代來源 ＋ 一條角度貫穿（定義見 `write-issue/refs/voices.md`〈長文標準：觀點編譯〉）。記下體裁（預設依編輯，可覆寫）與切角（他給就照給，沒給編輯自己挑最有力的當 through-line——但 D 是「角度貫穿、不是只挑一條丟其餘」，先找到人）。
 
-> 想要 A（只挑一條深寫、其餘捨棄的原創稿）時，Terrel 會明講「用 A／只寫某一條」；沒講就是 D。
+> 想要 A（只挑一條深寫、其餘捨棄的原創稿）時，Terrel 會明講「用 A／只寫某一條」；沒講就是 D。**例外：Amuse（特別企劃·吐槽）預設就走 A**——他挑一個靶開火、不必完整交代。
 
 ### 2 · 取得來源全文（不可跳過）+ 付費牆政策
 - **URL** → Firecrawl 抓全文。寫作只能依抓回的內容；抓不到 → 告知、不硬寫（可請 Terrel 改貼內文）。
