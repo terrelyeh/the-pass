@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>插圖風格實驗 — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--wine:#9B5A6A;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:2.4rem 1.5rem 5rem}
+.back{font-size:.8rem;color:var(--ink-muted);text-decoration:none}.back:hover{color:var(--accent)}
+.hero{border-bottom:1px solid var(--border);padding:1rem 0 1.5rem;margin-bottom:.4rem}
+.hero .label{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-family:var(--display);font-size:2.4rem;font-weight:400;margin:.3rem 0 .4rem}
+.hero .sub{color:var(--ink-light);font-size:.95rem;max-width:680px}
+.intro{background:var(--bg-warm);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.2rem;margin:1.4rem 0 2rem;font-size:.9rem;line-height:1.75}
+.exp{margin:0 0 2.6rem}
+.exp h2{font-family:var(--serif);font-size:1.12rem;font-weight:600;margin-bottom:.2rem}
+.exp .desc{font-size:.88rem;color:var(--ink-light);margin-bottom:.9rem}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pair.one{grid-template-columns:1fr;max-width:640px}
+figure{margin:0}
+figure img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--border);border-radius:8px;background:var(--bg-warm)}
+.lbl{font-size:.74rem;font-weight:700;letter-spacing:.04em;margin-bottom:.4rem;display:inline-block;padding:.12rem .55rem;border-radius:100px}
+.lbl.old{background:var(--bg-warm);color:var(--ink-light);border:1px solid var(--border)}
+.lbl.new{background:rgba(184,134,11,.12);color:var(--accent)}
+.note{font-family:var(--serif);font-size:.9rem;color:var(--ink-light);border-left:3px solid var(--accent-light);background:var(--bg-warm);border-radius:0 6px 6px 0;padding:.7rem 1rem;margin:1.5rem 0 0;line-height:1.75}
+.foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3rem;border-top:1px solid var(--border);padding-top:1.4rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
+@media(max-width:680px){.pair{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="hub.html">← 回入口</a>
+<div class="hero">
+<div class="label">插圖風格實驗</div>
+<h1>抽風格 · 同概念重畫</h1>
+<p class="sub">抽取一組參考影格（Bandy Garnet「Jazz Boom Bap」）的<b>影像風格</b>，把我們既有的插圖概念用這套風格重畫一次。<b>概念與視角不變，只換畫法。</b></p>
+</div>
+<div class="intro"><b>怎麼看：</b>概念一、二是首期已有的長文配圖——左邊是<b>現有 Risograph 版</b>、右邊是<b>新的 bold 風</b>，同一個點子、兩種畫法直接對照。概念三沒有舊版，是測這套風格當 <b>Amuse（諷刺自嘲）專屬視覺</b>的感覺。</div>
+
+<div class="exp">
+<h2>概念一 · 〈四十年的咖哩味，他們正在教機器怎麼嚐〉</h2>
+<div class="desc">一個用了一輩子舌頭的廚師，把味覺交給一台機器。</div>
+<div class="pair">
+<figure><div class="lbl old">現有 · Risograph</div><img src="img/issue-2026-06-19-1.png" alt="Risograph 版"></figure>
+<figure><div class="lbl new">新 · Bold 風</div><img src="exp-style-1-curry.png" alt="Bold 風"></figure>
+</div>
+</div>
+
+<div class="exp">
+<h2>概念二 · 〈最懂酒的人就站在桌邊，他們卻問了 ChatGPT〉</h2>
+<div class="desc">客人低頭問手機，身邊真正懂酒的人被晾在一旁。</div>
+<div class="pair">
+<figure><div class="lbl old">現有 · Risograph</div><img src="img/issue-2026-06-19-2.png" alt="Risograph 版"></figure>
+<figure><div class="lbl new">新 · Bold 風</div><img src="exp-style-2-sommelier.png" alt="Bold 風"></figure>
+</div>
+</div>
+
+<div class="exp">
+<h2>概念三 · Amuse 方向（諷刺 · 無舊版對照）</h2>
+<div class="desc">一位真主廚，隆重介紹一位不存在的主廚——測這套大膽風當 Amuse 專屬視覺。</div>
+<div class="pair one">
+<figure><div class="lbl new">新 · Bold 風</div><img src="exp-style-3-amuse-ghostchef.png" alt="Bold 風 · Amuse"></figure>
+</div>
+</div>
+
+<div class="note">這是<b>風格實驗</b>：參考影格僅作為「風格錨點」，產出的是我們自己的概念，不照搬對方的角色或構圖。若決定採用，會再調成 The Pass 自己的混搭、拉開與原作者的距離（避免變成「在地版 Bandy Garnet」）。</div>
+<div class="foot"><div class="b">The Pass 出菜口</div>插圖風格實驗 · 內部評估用</div>
+</div></body></html>
