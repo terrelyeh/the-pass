@@ -35,7 +35,7 @@
 
 - **Mise**（主筆）— 長文 400-600 字，場景式開頭 → [profile](public/editor-mise.html)
 - **Passe**（快訊編輯）— 快訊 3-6 則，第一句就是事實 → [profile](public/editor-passe.html)
-- **Fumet**（提問者）— 每期結尾提問 100-250 字 → [profile](public/editor-fumet.html)
+- **Fumet**（提問者）— 每期結尾提問 100-250 字；**也寫文化面長文**（/write-issue 依題材自動路由：文化面→Fumet、技術/產業面→Mise）→ [profile](public/editor-fumet.html)
 - **總編輯** — 幕後品管，7 項審核清單（事實核查、AI 味檢測、節奏檢查、輕量 SEO）
 
 ### AI 編輯人格架構（Soul + Memory）
@@ -95,7 +95,7 @@ Logo 點擊 → demo-index.html
 - **Dev 工具:** `tsx`（跑/測 src/lib + scripts；`node` strip-types 無法處理 extensionless import）
 - **Database:** Supabase（尚未接入；seen store 暫用 `data/seen.json`）
 - **Newsletter:** Ghost Pro ($9/月，尚未接)
-- **Image:** AI 圖片生成（nanobanana）
+- **Image:** 長文配圖兩模型——nanobanana（`mcp__nanobanana__generate_image`）＋ gpt-image（透過本機 **Codex CLI**）；快訊不配圖
 
 ## 目錄結構
 
@@ -110,6 +110,10 @@ the-pass/
 │   ├── selection-report.html      ← 最新一期入口（讀 selection-reports.json 跳轉）；selection-report-<date>.html 每期 commit 上線
 │   ├── write-issue-architecture.html ← AI 編輯室架構頁（給團隊，含 SVG 圖）
 │   ├── editor-source.html        ← 編輯源頭頁（gen 自 9 個 md：3 soul+3 memory+voices/anti-slop/checklist；團隊看寫作源頭，勿手改）
+│   ├── skills.html               ← 三個 skill 一頁說明（按鈕切換 選題/寫稿/發佈；team）
+│   ├── covers.html               ← 配圖總覽（每期長文配圖：採用＋候選對照，左側日期切換；publish 時更新）
+│   ├── issue-<date>.html         ← 每期出刊內容頁（封面圖＋長文＋快訊＋提問），共用 issue.css
+│   ├── feedback.js               ← 區塊回饋（複製範本到剪貼簿、零後端；架構頁/編輯源頭頁載入）
 │   ├── project-brief / editorial-guidelines / about / methodology / illustration-guide / implementation-plan / editors / editor-*.html
 │   └── demo-index / demo-issue-001~003 / demo-ig-post.html、img/
 ├── src/
@@ -146,7 +150,8 @@ the-pass/
 
 - **選題系統（已上線）**：抓取 → 去重 → 評估 → **庫存跨期競爭** → 選題報告 → hub / 來源狀態 / `/audit-sources`。來源收斂成 30（active 29），`sources.ts` 單一真實來源、頁面自動生成。
 - **`/selection-report` skill（選題，已建 2026-06-19）**：**零 API key 在本機 Claude Code 跑**。`sr-prep`（抓取→去重→去噪候選池）→ **Haiku 子代理粗篩** → **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角）→ 庫存競爭 → `sr-build` 雙輸出（HTML 上 thepass.cc + Obsidian）。報告含切角、左側日期面板、⬇匯出決定鈕；出刊（`--save`）持久化 `seen.json`（跨期去重，不重複撈/發）。
-- **`/write-issue` skill（寫作，已建 2026-06-19，harness 版）**：選題拍板後把選的稿寫成整期草稿。**orchestrator + 4 編輯 subagent（Mise／Passe／Fumet／總編，聲音隔離）+ 3 互動 gate（人拍板）**；抓全文查證、守事實不可扭曲、付費牆只報現象。架構全文見 [`docs/write-issue-architecture.md`](docs/write-issue-architecture.md)（也上 thepass.cc/write-issue-architecture.html）。
+- **`/write-issue` skill（寫作，已建 2026-06-19，harness 版）**：選題拍板後把選的稿寫成整期草稿。**orchestrator + 4 編輯 subagent（Mise／Passe／Fumet／總編，聲音隔離）+ 3 互動 gate（人拍板）**；抓全文查證、守事實不可扭曲、付費牆只報現象。**長文編輯自動路由**（文化面→Fumet、技術/產業面→Mise，§1.5）。架構全文見 [`docs/write-issue-architecture.md`](docs/write-issue-architecture.md)（也上 thepass.cc/write-issue-architecture.html）。
+- **`/publish-issue` skill（發佈，已建並實跑 2026-06-20）**：定稿 → issue 網頁＋長文配圖 → 部署。配圖＝**概念優先**（紐約客式諷刺 idea）→ **以 demo 圖為風格錨點** → nanobanana＋Codex 雙模型生候選 → 人挑圖。首期 2026-06-19 已上線含概念配圖；`covers.html` 留採用＋候選對照。本週另加：編輯源頭頁（`editor-source.html`，gen）、Skills 說明頁、區塊回饋（`feedback.js`）。
 - **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
 - **品牌 / 編輯 / 網站基礎**：品牌定位 + Project Brief、4 位 AI 編輯人設 + Soul（`docs/editors/*-soul.md`）、3 期 Demo Issues、插畫指南、域名 thepass.cc + Vercel。
 
@@ -169,8 +174,8 @@ the-pass/
 ### 5. 待修 / 待 audit
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
 
-### 6. ✅ 寫作 skill `/write-issue`（已建 2026-06-19，harness）
-見「已完成」。**✅ 編輯 Memory 已接**（2026-06-20）：開寫載入各編輯 `*-memory.md`、定稿後 step 9 回寫（事實型自動／準則型 Terrel 確認）；種子＝Mise 標題鐵則。**下一步**：① **發佈 skill `/publish-issue` 已建**（2026-06-20）：定稿 md → issue 網頁＋長文配圖（nanobanana 走 MCP／gpt-image-2 走 **Codex CLI**，兩者都直接生）＋部署；真實跑一期驗收（首次跑抽 `issue.css` 避免每期重複 inline CSS）；② Ghost Pro 電子報；③ 真實運作幾期、迭代三位聲音與 memory 準則。
+### 6. ✅ 三個 skill 都已建並實跑（選題／寫作／發佈）
+選題→寫稿→發佈三個 skill 接力，首期 2026-06-19 已完整跑完上線（含 Memory 回寫、紐約客式概念配圖）。Memory 已接：開寫載入各編輯 `*-memory.md`、定稿後回寫（事實型自動／準則型人確認）；種子＝Mise 標題鐵則。**真正待辦（最優先）**：① **跑下一期完整流程**（選題→寫稿→你定稿→發佈），第一次端到端驗收；② **真實運作幾週、好好迭代**（編輯聲音、memory 準則、配圖概念）；③ Ghost Pro 出刊管道（之後）。
 
 ## 部署
 
@@ -199,7 +204,8 @@ npx vercel --prod --yes
 - **sources.ts 是單一真實來源**: 改來源只動 `src/lib/sources.ts` → `npx tsx scripts/gen-sources-page.ts` 重生 sources.html → 部署。**勿手改 `public/sources.html`**（會被覆蓋）。
 - **editor-source.html 是生成頁（團隊看寫作源頭）**: 由 `scripts/gen-editor-source-page.ts` 從 9 個 md（`docs/editors/*-soul.md`+`*-memory.md`、`refs/voices.md`+`anti-slop.md`+`chief-editor-checklist.md`）渲染、內建零依賴 md→html。改那些 md 後跑 `npx tsx scripts/gen-editor-source-page.ts` 重生、commit 部署。**勿手改 `public/editor-source.html`**（會被覆蓋）。團隊優化寫作風格的入口（hub 有卡片）。
 - **gpt-image-2 生圖走 Codex CLI**（/publish-issue 用）: `codex exec --full-auto --skip-git-repo-check -C <寫入目錄> -o <msgfile> "...生圖存成 <檔名>...印出絕對路徑"`。codex 已登入 ChatGPT、內建 gpt-image，生到 `~/.codex/generated_images/<uuid>/ig_*.png` 再依指示 cp 到目標。**Bash 工具 timeout 設 ≥300000ms**（每張 1–2 分、~30–40k codex token；macOS 無 shell `timeout` 指令）。nanobanana 仍走 `mcp__nanobanana__generate_image`。
-- **回饋功能 = `public/feedback.js`**: 架構頁/編輯源頭頁靠 `<body data-fb-blocks="選擇器">` 自動注入每區塊「💬 回饋」鈕（導出式 mailto，零後端）。換收件信箱/改 Google Form 改 `feedback.js` 的 `EMAIL` 常數/`openFb`。
+- **回饋功能 = `public/feedback.js`**: 架構頁/編輯源頭頁靠 `<body data-fb-blocks="選擇器">` 自動注入每區塊「💬 回饋」鈕；點了**複製回饋範本到剪貼簿＋跳提示**（零後端、跨環境可靠；mailto 依賴本機郵件程式、web 用戶常沒反應，已棄用）。
+- **/publish-issue 配圖三鐵則**: ① **概念優先**——先想一個紐約客式諷刺 visual idea（替讀者問問題），不是場景重現；② **以 demo 圖為風格錨點**——餵 `public/img/style-*.png` 當 nanobanana `input_image`／codex `-i`（純文字 prompt 釘不住 The Pass 風格）；③ 嚴守 `illustration-guide.html`（risograph、出菜框＋桌鈴、人主角）。落選圖留作 `covers.html` 候選對照（別刪）；issue 頁共用 `public/issue.css`（別每期 inline）。
 - **scorer 需 API key**: 無 `ANTHROPIC_API_KEY` 時 scorer 走 dry-run（關鍵字代理，非真評分）。AI 不能代填金鑰，需使用者自己加到 `.env.local`。
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
 - **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。
