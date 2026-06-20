@@ -38,14 +38,14 @@ description: 把「人已定稿」的出刊草稿發佈成 thepass.cc 的 issue 
    - **gpt-image-2** → 透過本機 **Codex CLI**（已登入 ChatGPT、內建 gpt-image；2026-06-20 實測可行）：
      `codex exec --full-auto --skip-git-repo-check -C the-pass/public/img -o /tmp/codex-img.txt "用你的 image 生成工具（OpenAI gpt-image）生一張圖：<gpt-image-2 提示詞>。存成 issue-<date>-N-gpt.png 到目前工作目錄（工具若存別處就 cp 過來），最後印出絕對路徑。"`
      codex 先生到 `~/.codex/generated_images/<uuid>/ig_*.png` 再依指示複製到目標；讀 `/tmp/codex-img.txt` 取回路徑。約 30–40k codex token、1–2 分鐘/張 → **用 Bash 工具的 `timeout` 參數（≥300000ms）**，別用 shell `timeout`（macOS 無）。
-3. **🚦GATE A（人挑圖，用挑選頁）**：生完候選 → 產一頁 **`public/pick-<date>.html`**（兩篇長文 × 各模型候選**並排**、標好 nanobanana／gpt-image）→ **commit＋push 上站** → 把網址給 Terrel 開網頁挑（比聊天傳檔可靠——實測 SendUserFile 使用者看不到）。他回「長文1 用 X、長文2 用 Y」。挑定後：選的存成最終檔名（`issue-<date>-1.png`／`-2.png`）、**移除挑選頁與落選圖**；不滿意就重寫提示詞重生。
+3. **🚦GATE A（人挑圖，用挑選頁）**：生完候選 → 產一頁 **`public/pick-<date>.html`**（兩篇長文 × 各模型候選**並排**、標好 nanobanana／gpt-image）→ **commit＋push 上站** → 把網址給 Terrel 開網頁挑（比聊天傳檔可靠——實測 SendUserFile 使用者看不到）。他回「長文1 用 X、長文2 用 Y」。挑定後：選的存成最終檔名（`issue-<date>-1.png`／`-2.png`）、**移除挑選頁**；落選圖**留作配圖總覽的「候選對照」**（`issue-<date>-N-gpt.png` 等，別刪）；不滿意就重寫提示詞重生。
 
 ### 3 · 渲染 issue 頁
 產出 `public/issue-<date>.html`：**沿用 issue 模板的 CSS/結構**（首期 `public/issue-2026-06-19.html` 為基準格式；長文上方放選定的封面圖）。內容＝今日觀察（2 長文＋圖＋署名＋來源）、本期快訊、留一個問題、落款。
 - ⚠️ **別每期各自 inline 一份 CSS**（demo issue 的舊雷）：issue 頁共用同一套樣式——若還沒抽成 `public/issue.css`，第一次發佈時抽出來、之後 `<link>` 共用。
 
 ### 4 · 更新索引（配圖總覽 + hub）
-- **把這期兩張封面加進 `public/covers.html`**（配圖總覽，左側日期目錄）：新增一個 `<section class="period" id="c-<date>">`（含兩篇封面 img＋標題＋概念）＋ 左側一條 `<a data-target="c-<date>">`。把舊的 `active` 移到新期（最新期預設開）。
+- **把這期加進 `public/covers.html`**（配圖總覽，左側日期目錄）：新增一個 `<section class="period" id="c-<date>">`，每篇長文顯示**採用版＋候選版對照**（採用 nanobanana／候選 gpt-image）＋標題＋概念；＋ 左側一條 `<a data-target="c-<date>">`。把舊的 `active` 移到新期。
 - hub 已有「配圖總覽 / 首期內容」卡片；新期視需要更新 hub 的最新 issue 卡片。
 
 ### 5 · 🚦GATE B（發佈前）

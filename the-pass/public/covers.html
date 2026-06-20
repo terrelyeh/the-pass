@@ -4,7 +4,7 @@
 <title>配圖總覽 — The Pass</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
-:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif','Noto Serif TC',serif;}
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif','Noto Serif TC',serif;}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 .top{position:sticky;top:0;z-index:70;border-bottom:1px solid var(--border);background:var(--white)}
 .top-in{max-width:1080px;margin:0 auto;padding:.55rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:.6rem}
@@ -20,15 +20,21 @@
 .side a{display:block;text-decoration:none;padding:.45rem .6rem;border-radius:6px;margin-bottom:.2rem;cursor:pointer}.side a:hover{background:var(--bg-warm)}
 .side a.cur{background:var(--bg-warm);box-shadow:inset 2px 0 0 var(--accent)}.side a.cur .d{color:var(--accent)}
 .side a .d{font-size:.82rem;font-weight:700;color:var(--ink);display:block}.side a .t{font-size:.72rem;color:var(--ink-light);display:block;line-height:1.25}
-.main{padding:1.8rem 2rem 4rem;max-width:820px}
+.main{padding:1.8rem 2rem 4rem;max-width:880px}
 .period{display:none}.period.active{display:block;animation:fade .2s ease}@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .p-head{border-bottom:2px solid var(--accent-light);padding-bottom:.4rem;margin-bottom:1.4rem}
 .p-head h2{font-family:var(--display);font-size:1.7rem;font-weight:400}.p-head .meta{font-size:.78rem;color:var(--ink-muted)}
-.cover{margin-bottom:2.2rem}
-.cover img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--border);border-radius:10px;background:var(--bg-warm)}
-.cover .t{font-family:var(--display);font-size:1.25rem;font-weight:400;margin:.7rem 0 .2rem;line-height:1.4}
-.cover .idea{font-size:.86rem;color:var(--accent);font-weight:500}
-.cover .lnk{font-size:.78rem;color:var(--ink-muted);margin-top:.3rem}.cover .lnk a{color:var(--accent);text-decoration:none}
+.cover{margin-bottom:2.4rem}
+.cover .ct{font-family:var(--display);font-size:1.3rem;font-weight:400;line-height:1.4}
+.cover .idea{font-size:.86rem;color:var(--accent);font-weight:500;margin:.15rem 0 .2rem}
+.variants{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:.7rem}
+.v{margin:0}
+.v img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--border);border-radius:8px;background:var(--bg-warm)}
+.v.adopted img{border:2px solid var(--accent)}
+.v figcaption{font-size:.76rem;color:var(--ink-muted);margin-top:.35rem;display:flex;align-items:center;gap:.3rem}
+.v.adopted figcaption{color:var(--accent);font-weight:600}
+.v .chk{display:inline-flex;width:1rem;height:1rem;border-radius:50%;background:var(--accent);color:#fff;font-size:.6rem;align-items:center;justify-content:center}
+.lnk{font-size:.78rem;color:var(--ink-muted);margin-top:.55rem}.lnk a{color:var(--accent);text-decoration:none}
 @media(max-width:820px){.layout{grid-template-columns:1fr}.menu-btn{display:inline-flex}.side{position:fixed;top:0;left:0;width:240px;max-width:82vw;height:100vh;padding:3.4rem 1rem 2rem 1.25rem;transform:translateX(-100%);transition:transform .22s ease;z-index:60}body.nav-open .side{transform:none;box-shadow:2px 0 24px rgba(0,0,0,.14)}.main{padding:1.4rem 1.4rem 3rem}}
 </style></head><body>
 <div class="top"><div class="top-in">
@@ -46,18 +52,24 @@
   </aside>
   <main class="main">
     <section id="c-2026-06-19" class="period active">
-      <div class="p-head"><h2>2026-06-19</h2><span class="meta">首期 · 長文配圖 2 張（紐約客式概念 · nanobanana）</span></div>
+      <div class="p-head"><h2>2026-06-19</h2><span class="meta">首期 · 每篇長文：採用版 ＋ 候選版對照（紐約客式概念 · 兩模型）</span></div>
       <div class="cover">
-        <img src="img/issue-2026-06-19-1.png" alt="老師傅餵 teal 機器人嚐咖哩">
-        <div class="t">四十年的咖哩味，他們正在教機器怎麼嚐</div>
+        <div class="ct">四十年的咖哩味，他們正在教機器怎麼嚐</div>
         <div class="idea">概念：老師傅溫柔地餵 teal 小機器人嚐咖哩——教機器品味的溫柔荒謬。</div>
-        <div class="lnk">→ <a href="issue-2026-06-19.html#">看這篇所在的 issue 頁 ↗</a></div>
+        <div class="variants">
+          <figure class="v adopted"><img src="img/issue-2026-06-19-1.png" alt="採用版 nanobanana"><figcaption><span class="chk">✓</span>採用 · nanobanana</figcaption></figure>
+          <figure class="v"><img src="img/issue-2026-06-19-1-gpt.png" alt="候選版 gpt-image"><figcaption>候選 · gpt-image（Codex）</figcaption></figure>
+        </div>
+        <div class="lnk">→ <a href="issue-2026-06-19.html">看這篇所在的 issue 頁 ↗</a></div>
       </div>
       <div class="cover">
-        <img src="img/issue-2026-06-19-2.png" alt="客人捧手機如神諭、懂酒的侍酒師淡出">
-        <div class="t">最懂酒的人就站在桌邊，他們卻問了 ChatGPT</div>
+        <div class="ct">最懂酒的人就站在桌邊，他們卻問了 ChatGPT</div>
         <div class="idea">概念：客人捧發光手機如神諭，身後懂酒的侍酒師漸漸淡出消散——活人專業被當空氣。</div>
-        <div class="lnk">→ <a href="issue-2026-06-19.html#">看這篇所在的 issue 頁 ↗</a></div>
+        <div class="variants">
+          <figure class="v adopted"><img src="img/issue-2026-06-19-2.png" alt="採用版 nanobanana"><figcaption><span class="chk">✓</span>採用 · nanobanana</figcaption></figure>
+          <figure class="v"><img src="img/issue-2026-06-19-2-gpt.png" alt="候選版 gpt-image"><figcaption>候選 · gpt-image（Codex）</figcaption></figure>
+        </div>
+        <div class="lnk">→ <a href="issue-2026-06-19.html">看這篇所在的 issue 頁 ↗</a></div>
       </div>
     </section>
   </main>
