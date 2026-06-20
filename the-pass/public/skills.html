@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>編輯室 Skills — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif','Noto Serif TC',serif;--mono:ui-monospace,Menlo,monospace;}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:2.4rem 1.5rem 5rem}
+.hero{text-align:center;border-bottom:1px solid var(--border);padding-bottom:1.4rem;margin-bottom:1.4rem}
+.hero .lab{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-family:var(--display);font-size:2.2rem;font-weight:400;margin:.3rem 0}
+.hero p{color:var(--ink-muted);font-size:.92rem;max-width:620px;margin:.3rem auto 0}
+.chain{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.4rem;font-size:.8rem;color:var(--ink-muted);margin:1.1rem 0 .2rem}
+.chain b{color:var(--ink)}.chain .ar{color:var(--accent-light)}
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:1.6rem 0 1.4rem}
+.tab{font-family:inherit;font-size:.86rem;font-weight:500;color:var(--ink-light);background:var(--white);border:1px solid var(--border);border-radius:100px;padding:.45rem 1rem;cursor:pointer;transition:.15s}
+.tab:hover{border-color:var(--accent-light)}
+.tab.cur{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.tab .c{font-family:var(--mono);font-size:.78rem;opacity:.85}
+.panel{display:none}.panel.active{display:block;animation:fade .2s ease}@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.pcard{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.6rem}
+.pcard h2{font-family:var(--display);font-size:1.6rem;font-weight:400}
+.pcard .cmd{font-family:var(--mono);font-size:.82rem;color:var(--accent);margin-bottom:1rem}
+.pcard .lead{font-size:1rem;color:var(--ink);margin-bottom:1.1rem}
+.row{display:flex;gap:.8rem;padding:.7rem 0;border-top:1px solid var(--border)}
+.row .k{flex:none;width:78px;font-size:.72rem;font-weight:700;letter-spacing:.04em;color:var(--ink-muted);text-transform:uppercase;padding-top:.1rem}
+.row .v{font-size:.92rem;color:var(--ink-light)}
+.row .v b{color:var(--ink)}
+.io{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;font-size:.86rem}
+.io .pill{background:var(--bg-warm);border:1px solid var(--border);border-radius:6px;padding:.12rem .5rem;font-family:var(--mono);font-size:.78rem}
+.io .ar{color:var(--accent-light);font-weight:700}
+.links{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.5rem}
+.links a{font-size:.82rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);border-radius:7px;padding:.3rem .7rem}.links a:hover{background:var(--bg-warm)}
+.foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:2.5rem;border-top:1px solid var(--border);padding-top:1.4rem}
+.foot a{color:var(--accent);text-decoration:none}
+</style></head><body>
+<div class="wrap">
+<div class="hero">
+<div class="lab">AI Editorial Room · Skills</div>
+<h1>編輯室的三個 Skill</h1>
+<p>整條出刊流程由三個 skill 接力完成，中間夾「人定稿」。點按鈕看每個 skill 在做什麼。</p>
+<div class="chain"><b>選題</b><span class="ar">→</span><b>寫稿</b><span class="ar">→</span><span>你定稿</span><span class="ar">→</span><b>發佈</b></div>
+</div>
+
+<div class="tabs">
+<button class="tab cur" data-target="sk-sel">選題 <span class="c">/selection-report</span></button>
+<button class="tab" data-target="sk-wri">寫稿 <span class="c">/write-issue</span></button>
+<button class="tab" data-target="sk-pub">發佈 <span class="c">/publish-issue</span></button>
+</div>
+
+<section id="sk-sel" class="panel active"><div class="pcard">
+<h2>選題</h2>
+<div class="cmd">/selection-report</div>
+<div class="lead">每期把全球來源抓回來、篩選評分，產出一份「選題報告」讓你拍板要寫哪幾篇。把「憑感覺挑題」變成有方法、可重複。</div>
+<div class="row"><div class="k">何時用</div><div class="v">每期出刊的<b>第一步</b>。跟我說「跑選題 / 這期選什麼」。</div></div>
+<div class="row"><div class="k">流程</div><div class="v">抓取 → 去重 → <b>Haiku 子代理粗篩</b> → <b>Claude 當總編五面向評分</b> → 庫存跨期競爭 → 選題報告（含三編輯切角）。</div></div>
+<div class="row"><div class="k">輸入輸出</div><div class="v io"><span class="pill">來源庫 sources.ts</span><span class="ar">→</span><span class="pill">選題報告（網頁＋Obsidian）</span><span class="pill">selected.json</span></div></div>
+<div class="row"><div class="k">特點</div><div class="v"><b>零 API key</b>、在你本機 Claude Code 跑；跨期去重不重複撈／發。</div></div>
+<div class="links"><a href="selection-report.html" target="_blank">看最新選題報告 ↗</a><a href="selection-mechanism.html" target="_blank">篩選機制設計 ↗</a></div>
+</div></section>
+
+<section id="sk-wri" class="panel"><div class="pcard">
+<h2>寫稿</h2>
+<div class="cmd">/write-issue</div>
+<div class="lead">把選題拍板的稿，寫成整期草稿（2 長文＋快訊＋1 提問）。四個編輯分身各用自己的聲音寫，AI 起草、人定稿。</div>
+<div class="row"><div class="k">何時用</div><div class="v">選題拍板<b>之後</b>。跟我說「寫這期 / 把選的寫出來」。</div></div>
+<div class="row"><div class="k">流程</div><div class="v">orchestrator 調度 <b>4 個編輯分身</b>（Mise／Passe／Fumet／總編）→ 各自<b>載入 Soul＋Memory＋Voices</b> → 抓原文查證 → <b>3 個人拍板 gate</b> → 總編 7 項審核。</div></div>
+<div class="row"><div class="k">輸入輸出</div><div class="v io"><span class="pill">selected.json</span><span class="ar">→</span><span class="pill">Obsidian 出刊草稿（待人定稿）</span></div></div>
+<div class="row"><div class="k">原則</div><div class="v"><b>事實不可扭曲</b>（引號＝原文、數字＝原文）；聲音隔離、總編獨立審。</div></div>
+<div class="links"><a href="write-issue-architecture.html" target="_blank">AI 編輯室架構 ↗</a><a href="editor-source.html" target="_blank">編輯源頭（風格） ↗</a></div>
+</div></section>
+
+<section id="sk-pub" class="panel"><div class="pcard">
+<h2>發佈</h2>
+<div class="cmd">/publish-issue</div>
+<div class="lead">把你定稿的內容，做成 thepass.cc 的 issue 網頁，含長文配圖（紐約客式概念插畫）。</div>
+<div class="row"><div class="k">何時用</div><div class="v">你<b>離線潤定稿之後</b>。跟我說「發佈這期」。</div></div>
+<div class="row"><div class="k">流程</div><div class="v">讀定稿 → <b>長文配圖</b>（概念優先＋以 demo 圖為風格錨點，<b>nanobanana＋Codex 雙模型</b>生圖 → 你挑圖）→ 渲染 issue 頁 → 更新配圖總覽 → 部署。</div></div>
+<div class="row"><div class="k">輸入輸出</div><div class="v io"><span class="pill">定稿 md</span><span class="ar">→</span><span class="pill">issue-&lt;date&gt;.html</span><span class="pill">img/issue-&lt;date&gt;-N.png</span></div></div>
+<div class="row"><div class="k">原則</div><div class="v">只發定稿；配圖嚴守<b>插畫指南</b>、快訊不配圖。</div></div>
+<div class="links"><a href="issue-2026-06-19.html" target="_blank">看首期內容 ↗</a><a href="covers.html" target="_blank">配圖總覽 ↗</a><a href="illustration-guide.html" target="_blank">插畫指南 ↗</a></div>
+</div></section>
+
+<div class="foot">The Pass 出菜口 · <a href="hub.html">系統入口</a></div>
+</div>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var panels=[].slice.call(document.querySelectorAll('.panel'));
+  function show(id){
+    if(!panels.some(function(p){return p.id===id;}))return false;
+    panels.forEach(function(p){p.classList.toggle('active',p.id===id);});
+    tabs.forEach(function(t){t.classList.toggle('cur',t.getAttribute('data-target')===id);});
+    try{history.replaceState(null,'','#'+id);}catch(e){}
+    return true;
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('data-target'));});});
+  var h=(location.hash||'').replace('#','');
+  if(h)show(h);
+  window.addEventListener('hashchange',function(){var x=(location.hash||'').replace('#','');if(x)show(x);});
+})();
+</script>
+</body></html>
