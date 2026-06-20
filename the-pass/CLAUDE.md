@@ -109,6 +109,7 @@ the-pass/
 │   ├── research-stage.html       ← 研究階段提案（內容源 vs 主題源；待團隊討論）
 │   ├── selection-report.html      ← 最新一期入口（讀 selection-reports.json 跳轉）；selection-report-<date>.html 每期 commit 上線
 │   ├── write-issue-architecture.html ← AI 編輯室架構頁（給團隊，含 SVG 圖）
+│   ├── editor-source.html        ← 編輯源頭頁（gen 自 9 個 md：3 soul+3 memory+voices/anti-slop/checklist；團隊看寫作源頭，勿手改）
 │   ├── project-brief / editorial-guidelines / about / methodology / illustration-guide / implementation-plan / editors / editor-*.html
 │   └── demo-index / demo-issue-001~003 / demo-ig-post.html、img/
 ├── src/
@@ -116,7 +117,7 @@ the-pass/
 │   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
-├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / demo-report / run-pipeline
+├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / gen-editor-source-page / demo-report / run-pipeline
 ├── .claude/skills/                ← selection-report（選題）· write-issue（寫作，含 refs/）· audit-sources
 ├── docs/                         ← MD（selection-mechanism、write-issue-architecture、editors/*-soul、source-verification-checklist…）
 ├── data/                         ← runtime（seen.json、backlog.json、sr/<date>/{pool,candidates,scores,selected}.json；gitignore）
@@ -196,6 +197,7 @@ npx vercel --prod --yes
 ## Common Pitfalls
 
 - **sources.ts 是單一真實來源**: 改來源只動 `src/lib/sources.ts` → `npx tsx scripts/gen-sources-page.ts` 重生 sources.html → 部署。**勿手改 `public/sources.html`**（會被覆蓋）。
+- **editor-source.html 是生成頁（團隊看寫作源頭）**: 由 `scripts/gen-editor-source-page.ts` 從 9 個 md（`docs/editors/*-soul.md`+`*-memory.md`、`refs/voices.md`+`anti-slop.md`+`chief-editor-checklist.md`）渲染、內建零依賴 md→html。改那些 md 後跑 `npx tsx scripts/gen-editor-source-page.ts` 重生、commit 部署。**勿手改 `public/editor-source.html`**（會被覆蓋）。團隊優化寫作風格的入口（hub 有卡片）。
 - **scorer 需 API key**: 無 `ANTHROPIC_API_KEY` 時 scorer 走 dry-run（關鍵字代理，非真評分）。AI 不能代填金鑰，需使用者自己加到 `.env.local`。
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
 - **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。
