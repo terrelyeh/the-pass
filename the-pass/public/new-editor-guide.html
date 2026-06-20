@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>如何新增一位 AI 編輯 — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--wine:#9B5A6A;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:2.4rem 1.5rem 5rem}
+.back{font-size:.8rem;color:var(--ink-muted);text-decoration:none}.back:hover{color:var(--accent)}
+.hero{border-bottom:1px solid var(--border);padding:1rem 0 1.6rem;margin-bottom:1.6rem}
+.hero .label{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-family:var(--display);font-size:2.5rem;font-weight:400;margin:.3rem 0 .4rem}
+.hero .sub{color:var(--ink-light);font-size:.98rem;max-width:640px}
+.box{background:var(--bg-warm);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;margin:0 0 2rem;font-size:.92rem;line-height:1.8}
+.box b{font-family:var(--serif)}
+.flow{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;font-size:.82rem;color:var(--ink-light)}
+.flow span{background:var(--white);border:1px solid var(--border);border-radius:100px;padding:.15rem .7rem}
+.step{border:1px solid var(--border);border-radius:12px;background:var(--white);padding:1.4rem 1.5rem;margin:0 0 1.1rem;position:relative;overflow:hidden}
+.step::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent-light)}
+.step-h{font-family:var(--serif);font-size:1.2rem;font-weight:600;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.num{flex-shrink:0;width:1.9rem;height:1.9rem;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--display);font-size:1.2rem;display:flex;align-items:center;justify-content:center}
+.who{margin-left:auto;font-family:var(--sans);font-size:.66rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:rgba(184,134,11,.1);border-radius:100px;padding:.18rem .6rem}
+.who.tech{color:var(--ink-light);background:var(--bg-warm)}
+.step p{font-size:.92rem;color:var(--ink-light);margin:.4rem 0}
+table{width:100%;border-collapse:collapse;margin:.7rem 0;font-size:.86rem}
+th,td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);font-weight:700}
+td.k{font-weight:600;color:var(--ink);white-space:nowrap}
+td.ex{font-family:var(--serif);color:var(--wine);font-size:.85rem}
+.tip{font-size:.85rem;color:var(--ink-light);background:var(--bg-warm);border-left:3px solid var(--accent-light);border-radius:0 6px 6px 0;padding:.6rem .9rem;margin-top:.8rem;line-height:1.7}
+.tip b{color:var(--ink)}
+ul.chk,ol.cal{margin:.5rem 0 .2rem;padding-left:0;list-style:none}
+ul.chk li{font-size:.88rem;color:var(--ink-light);padding:.28rem 0 .28rem 1.5rem;position:relative;line-height:1.65}
+ul.chk li::before{content:'▢';position:absolute;left:0;color:var(--accent-light)}
+ul.chk li b{color:var(--ink)}
+ol.cal{counter-reset:c}ol.cal li{font-size:.9rem;color:var(--ink-light);padding:.3rem 0 .3rem 1.8rem;position:relative;line-height:1.7;counter-increment:c}
+ol.cal li::before{content:counter(c);position:absolute;left:0;top:.3rem;width:1.3rem;height:1.3rem;background:var(--bg-warm);border:1px solid var(--border);border-radius:50%;font-size:.72rem;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700}
+.sec-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:2.4rem 0 .9rem}
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem}
+.rule{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.05rem;font-size:.85rem;line-height:1.65}
+.rule b{font-family:var(--serif);color:var(--ink);display:block;margin-bottom:.15rem}
+h3{font-family:var(--serif);font-size:1.02rem;margin:1.5rem 0 .5rem;color:var(--ink)}
+pre{background:#2C3345;color:#E8E6E1;border-radius:10px;padding:1.1rem 1.2rem;overflow-x:auto;font-family:var(--mono);font-size:.78rem;line-height:1.7;white-space:pre-wrap}
+pre .c{color:#8B90A0}
+.note{font-size:.83rem;color:var(--ink-muted);margin-top:.6rem}
+.foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3rem;border-top:1px solid var(--border);padding-top:1.5rem}.foot a{color:var(--accent);text-decoration:none}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
+@media(max-width:680px){.rules{grid-template-columns:1fr}.who{display:none}}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="hub.html">← 回入口</a>
+<div class="hero">
+<div class="label">團隊 SOP</div>
+<h1>如何新增一位 AI 編輯</h1>
+<p class="sub">把「養一個有人設、有定位的虛擬編輯」變成一套可重複的流程。你負責<b>定位與人格</b>，技術接線交給 Claude——現有四位（Mise／Passe／Fumet／Amuse）都是這樣長出來的。</p>
+</div>
+
+<div class="box">
+<b>先懂一件事：一位編輯 = 三層可重用模組。</b><br>
+<b>Soul</b>（人格·我是誰）＋ <b>Voices</b>（聲音·怎麼寫）＋ <b>Memory</b>（記憶·學到／寫過），再共用一條 <b>anti-slop</b> 底線。優化一位編輯，就是改這幾個源頭檔——改一次，所有用到他的地方一起生效。所以「新增一位」就是這四步：
+<div class="flow"><span>① 定位</span><span>② 填人格</span><span>③ 接線</span><span>④ 試跑校準</span></div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="num">1</span> 定位：五個創意決定 <span class="who">你的工作</span></div>
+<p>整個流程的核心——把這五格想清楚，後面都好辦。範例用我們最新的編輯 <b>Amuse</b>。</p>
+<table>
+<tr><th>要決定什麼</th><th>Amuse 範例</th></tr>
+<tr><td class="k">① 代號（名字）<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">廚房用語、跟現有編輯不撞</span></td><td class="ex">Amuse（amuse-bouche，菜單外招待的那一口）</td></tr>
+<tr><td class="k">② 人設／定位<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">他是誰？為什麼這樣看食物？核心動機？</span></td><td class="ex">自嘲的 AI——先笑自己（沒舌頭卻在評論美食），再戳破餐飲科技的炒作</td></tr>
+<tr><td class="k">③ 聲音<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">怎麼寫？跟現有編輯最大的區別？</span></td><td class="ex">冷面 deadpan、笑裡帶憂鬱、知性慧黠（不是純諷刺抱怨）</td></tr>
+<tr><td class="k">④ 體裁 ＋ 模式<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">寫什麼？走 A（挑一條）還 D（全交代）？</span></td><td class="ex">特別企劃吐槽，~300–600 字，A 模式</td></tr>
+<tr><td class="k">⑤ 出場時機<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">每期常規 vs 不定期特別企劃</span></td><td class="ex">不定期特別企劃，用 /commission 叫他出場</td></tr>
+</table>
+<div class="tip"><b>差異化檢查（最重要）：</b>把新編輯跟現有四位擺在一起——他補了什麼<b>別人沒有的角度或聲音</b>？如果跟某位太像，回去調，直到他有不可取代的位置。</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="num">2</span> 填人格：三個檔 <span class="who">你 ＋ Claude</span></div>
+<p>把 Step 1 的定位，展開成三份檔。範本見最下方〈範本區〉，可直接複製來填。</p>
+<table>
+<tr><th>檔</th><th>是什麼</th><th>重點</th></tr>
+<tr><td class="k">Soul<br>（人格）</td><td>他是誰、為什麼這樣看世界</td><td>最深、最少變。寫到「你想像得出這個人」為止</td></tr>
+<tr><td class="k">Voices<br>（聲音）</td><td>可執行的寫作規則 ＋ 聲音定調 ＋ 署名</td><td>「怎麼做」層；每條規則要能直接照著寫</td></tr>
+<tr><td class="k">Memory<br>（記憶）</td><td>學到的準則 ＋ 寫過的主題</td><td>開站只放 1–2 條種子，其餘上線後自己長</td></tr>
+</table>
+<div class="tip">想看真的長什麼樣，直接參考現有四位 → <a href="editor-source.html" style="color:var(--accent)">編輯源頭頁</a>（soul＋memory＋voices 全在那）。<b>訣竅：</b>Soul 回答「為什麼」、Voices 回答「怎麼做」，別寫反。</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="num">3</span> 接線：把他接進系統 <span class="who tech">交給 Claude</span></div>
+<p>這步是技術接線，<b>你不用自己做</b>——把 Step 1 的表給 Claude，說「照新增編輯 SOP 把他接好」，它會處理下面這些：</p>
+<ul class="chk">
+<li><b>人格檔</b>：建 <code>docs/editors/&lt;代號&gt;-soul.md</code>、<code>-memory.md</code></li>
+<li><b>voices.md</b>：加一段聲音守則 ＋ 署名落款</li>
+<li><b>/commission</b>：加進編輯表 ＋ 觸發語（「用 &lt;代號&gt; 寫…」）</li>
+<li><b>/write-issue</b>：加進編輯表 ＋ 路由 <span style="color:var(--ink-muted)">（只有「常規編輯」需要）</span></li>
+<li><b>選題 rubric</b>：<span style="color:var(--ink-muted)">只有要靠每期選題餵稿的常規編輯才需要</span></li>
+<li><b>團隊頁</b>：gen 腳本加一列 → 重生成 editor-source.html；editors.html 加介紹卡</li>
+</ul>
+<div class="tip"><b>看角色，接線深淺差很多：</b><br>· <b>常規編輯</b>（每期都出，像 Mise/Passe/Fumet）→ 全套接線（含選題路由）。<br>· <b>特別企劃</b>（不定期，像 Amuse）→ <b>輕量</b>：人格 ＋ voices ＋ /commission ＋ 團隊頁就能跑。</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="num">4</span> 試跑 ＋ 校準 <span class="who">你 ＋ Claude</span></div>
+<p>人格寫好，不代表「對味」。一定要試跑、再校準——<b>這步最關鍵</b>，Amuse 就是這樣調出來的。</p>
+<ol class="cal">
+<li>用 <code>/commission</code> 給新編輯一個來源，叫他<b>寫一篇真的稿</b>。</li>
+<li>讀它：聲音對嗎？太硬／太軟／太 AI？跟其他編輯<b>夠不一樣</b>嗎？</li>
+<li>給<b>具體</b>回饋調。（例：Amuse 一開始太純諷刺，我們把他校準成「收 ＋ 笑裡的憂鬱 ＋ 慧黠」的伍迪艾倫式。）</li>
+<li>滿意了，把校準<b>寫回 soul／voices</b>——以後每次出場都是這個味道。</li>
+</ol>
+<div class="tip">通常要來回一兩次才對味，這很正常。第一篇別追求完美，追求<b>「找到他的聲音」</b>。</div>
+</div>
+
+<div class="sec-label">所有編輯共用的鐵則</div>
+<div class="rules">
+<div class="rule"><b>不捏造（anti-slop）</b>引述、數字都要對得回原文。笑話、觀點、角度可以，<b>事實不行</b>。這是最高原則。</div>
+<div class="rule"><b>標題鐵則</b>要同時「看得出主題」＋「勾得起好奇」，兩端都不能偏。檢驗：沒讀內文的人講得出主題、又想點進去。</div>
+<div class="rule"><b>A vs D 模式</b>A＝挑一條深寫（特寫／吐槽）；D＝完整交代來源 ＋ 你的角度（常規長文預設走 D）。</div>
+<div class="rule"><b>差異化</b>每位編輯都要補一個別人沒有的角度或聲音。重疊＝沒必要存在。</div>
+</div>
+
+<div class="sec-label">範本區（直接複製去填）</div>
+
+<h3>① 五個創意決定（定位表）</h3>
+<pre><span class="c">【新編輯定位 — 五個創意決定】</span>
+1. 代號（名字）：______
+   <span class="c"># 建議廚房用語，跟 Mise／Passe／Fumet／Amuse 不撞</span>
+2. 人設／定位：______
+   <span class="c"># 他是誰？為什麼這樣看食物？核心動機是什麼？</span>
+3. 聲音：______
+   <span class="c"># 怎麼寫？跟現有編輯「最大的區別」是什麼？</span>
+4. 體裁 ＋ 模式：______
+   <span class="c"># 長文／快訊／吐槽？走 A 挑一條，還是 D 全交代？大概字數？</span>
+5. 出場時機：______
+   <span class="c"># 每期常規，還是不定期特別企劃？</span>
+＊差異化檢查：跟現有四位擺一起，他補了什麼別人沒有的？______</pre>
+
+<h3>② Soul 範本（人格）</h3>
+<pre><span class="c"># {代號} — Soul</span>
+&gt; 最後更新：{YYYY-MM-DD}
+
+<span class="c">## 一句話</span>
+{一句話抓住這個編輯——一個你想像得出來的人}
+
+<span class="c">## 核心身份</span>
+{他在編輯室的角色、名字由來、一句「他不是什麼」}
+
+<span class="c">## 背景故事</span>
+{他為什麼會這樣看食物／世界？一段讓人格站得住的來歷}
+
+<span class="c">## 價值觀</span>
+- {3–6 條他寫作時真正在乎的事}
+
+<span class="c">## 好惡</span>
+### 會讓他興奮的
+- {…}
+### 會讓他不舒服的
+- {…}
+
+<span class="c">## 看事情的角度</span>
+{他拿到一則新聞，第一個會問的問題？這條決定他跟別人的差異}
+
+<span class="c">## 聲音特質</span>
+- {口語/書面？長句/短句？冷/暖？節奏？至少 4–6 條、具體可執行}
+
+<span class="c">## 寫作方式</span>
+- {開頭怎麼起、結尾怎麼收、每篇一定要有／一定不要有什麼}
+
+<span class="c">## 絕對不會做的事</span>
+1. {他的紅線與禁忌，越具體越好——這保護他不變成 AI slop}
+
+<span class="c">## 他會怎麼介紹自己</span>
+&gt; {用他自己的口吻寫一段自我介紹——檢驗人格立不立體的好方法}</pre>
+
+<h3>③ Memory 範本（記憶·開站空殼）</h3>
+<pre><span class="c"># {代號} 的記憶（Memory）</span>
+&gt; 我寫作時記得的事——準則 ＋ 寫過的題目。開寫前連同 {代號}-soul.md ＋ voices.md 一起讀。
+
+<span class="c">## 我學到的準則（總編校正過）</span>
+
+### {第一條準則的標題}（{日期} 種子）
+{第一人稱、可執行、附一個反例或檢驗法。先放 1–2 條種子即可}
+
+<span class="c">## 我寫過的主題／標題（防止重複角度）</span>
+（還沒寫過——{上線日}上線的新編輯。第一篇之後回寫到這裡。）</pre>
+
+<p class="note">範本也放在 repo：<code>docs/editors/_TEMPLATE-soul.md</code>、<code>_TEMPLATE-memory.md</code>。Voices 段沒有獨立檔——照 voices.md 裡現有四位的格式，加一段就好（聲音定調 ＋ 可執行 bullets ＋ 署名）。</p>
+
+<div class="foot"><div class="b">The Pass 出菜口</div>新增 AI 編輯 SOP · 你定位、AI 接線 · <a href="editor-source.html">看現有四位編輯</a> · <a href="hub.html">系統入口</a></div>
+</div></body></html>
