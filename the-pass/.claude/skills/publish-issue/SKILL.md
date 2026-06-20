@@ -18,19 +18,21 @@ description: 把「人已定稿」的出刊草稿發佈成 thepass.cc 的 issue 
 ### 1 · 讀定稿
 讀 md，取出：2 篇長文（標題＋內文＋署名＋來源）、快訊、Fumet。**內文一字不改**（已定稿）；只做發佈。「總編審核摘要／待補」是內部段落，**不上公開頁**。
 
-### 2 · 長文配圖（每篇一張，快訊不配）
-The Pass 的視覺：**長文配插畫、快訊不配**（CLAUDE.md 既定）。每篇長文：
+### 2 · 長文配圖（每篇一張、16:9，快訊不配）
+**⚠️ 配圖前一定先讀 `public/illustration-guide.html` 並嚴格照它生**——品牌視覺鐵則，別自己發明風格（前車之鑑 2026-06-20：自作主張用寫實／電影風生了一輪、幾乎違反指南每一條、全廢重生）。鐵則：
+- **風格＝Risograph 編輯插畫**：利落自信的黑色墨線、**平面色塊（不要漸層）**、halftone 網點、**cream/beige 背景＋大量留白**。**絕不寫實／攝影／3D／水彩／油畫／可愛／企業 stock／中國風水墨**。
+- **每張必含品牌簽名**（寫進 prompt 一起生，不是 CSS 後加）：① **出菜框 The Pass Frame**（抽象手繪矩形外框、同 risograph 質感）；② 角落一個小 **桌鈴 dome service bell**。
+- **人是主角、AI 是暗示**：人物佔畫面重心，AI（螢幕／機器）小、在背景角落；**極簡五官**（窄瞇眼、一條線嘴、省略鼻）、**看不出國籍／種族**、當代穿著；表情常帶「…你確定嗎？」的懷疑（The Pass 人物簽名）。
+- **色調跟編輯走**：長文＝Mise → 偏暖（burnt orange／amber／ochre），AI 元素點一點 teal 冷色。
+- **直接套指南 §07 的 Prompt 模板＋Negative Prompt 模板**，把 `[場景描述]／[情緒]／[主色]` 換成本篇（場景＝Mise 的開場）。
 
-1. **配圖點子＝長文的開場場景**（Mise 場景式開頭 → 那個畫面就是封面）。例：大塚那篇＝琵琶湖邊研究所、成堆紙檔案、年輕研究員。
-2. **各寫一條提示詞，給兩個模型**（風格不同，分開寫）：
-   - **nanobanana（Gemini／nb2）**：詳細自然語言、場景＋感官＋光線＋構圖＋風格（暖色系編輯插畫、扣 The Pass 調性，見 `illustration-guide.html`）；用 `negative_prompt` 排除**廚房拱門構圖**（nanobanana 慣性問題）、文字、浮水印、emoji。`aspect_ratio` 建議 `3:2` 或 `16:9`（封面橫式）。
-   - **gpt-image-2**：簡潔描述式（主體＋氛圍＋風格一段話）。
-3. **生圖（兩模型我都直接生）**：
+1. **各寫一條提示詞給兩個模型**：nanobanana 用完整模板＋`negative_prompt`＋`aspect_ratio:"16:9"`；gpt-image-2 用濃縮版、但所有鐵則（risograph／墨線／平塗／halftone／cream 留白／出菜框＋桌鈴／人主角／極簡臉／非寫實）都要保留。
+2. **生圖（兩模型我都直接生）**：
    - **nanobanana** → `mcp__nanobanana__generate_image`，存 `public/img/`。
    - **gpt-image-2** → 透過本機 **Codex CLI**（已登入 ChatGPT、內建 gpt-image；2026-06-20 實測可行）：
      `codex exec --full-auto --skip-git-repo-check -C the-pass/public/img -o /tmp/codex-img.txt "用你的 image 生成工具（OpenAI gpt-image）生一張圖：<gpt-image-2 提示詞>。存成 issue-<date>-N-gpt.png 到目前工作目錄（工具若存別處就 cp 過來），最後印出絕對路徑。"`
      codex 先生到 `~/.codex/generated_images/<uuid>/ig_*.png` 再依指示複製到目標；讀 `/tmp/codex-img.txt` 取回路徑。約 30–40k codex token、1–2 分鐘/張 → **用 Bash 工具的 `timeout` 參數（≥300000ms）**，別用 shell `timeout`（macOS 無）。
-4. **🚦GATE A（人挑圖）**：把 nanobanana（＋gpt-image-2）候選列給 Terrel，**他挑一張/每篇**。存成 `public/img/issue-<date>-1.<ext>`、`-2.<ext>`。沒喜歡的就重生（nanobanana 每次不同，喜歡要立刻定）。
+3. **🚦GATE A（人挑圖，用挑選頁）**：生完候選 → 產一頁 **`public/pick-<date>.html`**（兩篇長文 × 各模型候選**並排**、標好 nanobanana／gpt-image）→ **commit＋push 上站** → 把網址給 Terrel 開網頁挑（比聊天傳檔可靠——實測 SendUserFile 使用者看不到）。他回「長文1 用 X、長文2 用 Y」。挑定後：選的存成最終檔名（`issue-<date>-1.png`／`-2.png`）、**移除挑選頁與落選圖**；不滿意就重寫提示詞重生。
 
 ### 3 · 渲染 issue 頁
 產出 `public/issue-<date>.html`：**沿用 issue 模板的 CSS/結構**（首期 `public/issue-2026-06-19.html` 為基準格式；長文上方放選定的封面圖）。內容＝今日觀察（2 長文＋圖＋署名＋來源）、本期快訊、留一個問題、落款。
