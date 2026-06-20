@@ -108,6 +108,7 @@ the-pass/
 │   ├── selection-mechanism.html  ← 篩選機制設計
 │   ├── research-stage.html       ← 研究階段提案（內容源 vs 主題源；待團隊討論）
 │   ├── selection-report.html      ← 最新一期入口（讀 selection-reports.json 跳轉）；selection-report-<date>.html 每期 commit 上線
+│   ├── backlog.html              ← 選題庫存頁（gen 自 data/backlog.json；團隊看，--save 後重生）
 │   ├── write-issue-architecture.html ← AI 編輯室架構頁（給團隊，含 SVG 圖）
 │   ├── editor-source.html        ← 編輯源頭頁（gen 自 9 個 md：3 soul+3 memory+voices/anti-slop/checklist；團隊看寫作源頭，勿手改）
 │   ├── skills.html               ← 三個 skill 一頁說明（按鈕切換 選題/寫稿/發佈；team）
@@ -121,7 +122,7 @@ the-pass/
 │   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
-├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / gen-editor-source-page / demo-report / run-pipeline
+├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / gen-editor-source-page / gen-backlog-page / demo-report / run-pipeline
 ├── .claude/skills/                ← selection-report（選題）· write-issue（寫作，含 refs/）· publish-issue（發佈，含長文配圖）· audit-sources
 ├── docs/                         ← MD（selection-mechanism、write-issue-architecture、editors/*-soul、source-verification-checklist…）
 ├── data/                         ← runtime（seen.json、backlog.json、sr/<date>/{pool,candidates,scores,selected}.json；gitignore）

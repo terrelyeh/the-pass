@@ -38,9 +38,10 @@ npx tsx scripts/sr-prep.ts
 
 ```bash
 npx tsx scripts/sr-build.ts --save
+npx tsx scripts/gen-backlog-page.ts   # 重生團隊看的庫存頁 public/backlog.html
 ```
 
-庫存跨期競爭 → 選一期（top 2 mise 長文 + top 4 passe 快訊）→ 產出 **HTML**（`public/selection-report-<date>.html`）+ **Obsidian**（`工作/顧問/AI編輯室 - The Pass/選題報告/<date> 選題報告.md` + 更新同夾 `庫存.md`）+ 持久化 `data/backlog.json`。開發測試想空跑就拿掉 `--save`。
+庫存跨期競爭 → 選一期（top 2 mise 長文 + top 4 passe 快訊）→ 產出 **HTML**（`public/selection-report-<date>.html`）+ **Obsidian**（`工作/顧問/AI編輯室 - The Pass/選題報告/<date> 選題報告.md` + 更新同夾 `庫存.md`）+ 持久化 `data/backlog.json`。`--save` 後跑 `gen-backlog-page.ts` 把庫存重生成團隊頁 `public/backlog.html`（hub 有「選題庫存」卡片）。開發測試想空跑就拿掉 `--save`。
 
 ### 步驟 5 · 驗證 + 發佈
 
