@@ -1,6 +1,6 @@
 # /write-issue — AI 編輯室的核心架構
 
-> The Pass 出菜口｜建立 2026-06-19。
+> The Pass 出菜口｜建立 2026-06-19、更新 2026-06-20（接編輯 Memory）。
 > 這份文件說明 `/write-issue` 怎麼把「選題會拍板的稿」變成「一期文章草稿」。這是 AI 編輯室最核心的一塊。
 
 ## 一句話
@@ -66,21 +66,63 @@
 | **總編 7 項審核** | `.claude/skills/write-issue/refs/chief-editor-checklist.md` |
 | **整個流程／gate** | `.claude/skills/write-issue/SKILL.md` |
 
-## 三層架構（沿用編輯指南的設計）
+## 檔案架構（skill 由什麼組成）
 
 ```
-Soul.md（為什麼）        ── 動機、價值觀、好惡。很少改。
-   ↓ 決定了
-Style Guide（怎麼做）    ── 可執行的寫作規則（refs/voices.md）。微調。
-   ↓ 組合成
-subagent 的 prompt       ── Soul + Style + 原文 + （未來）Memory，組起來叫它寫。
+.claude/skills/write-issue/          ← skill 本體
+├── SKILL.md                         工作流：orchestrator 調度、3 個 gate、step 9 回寫記憶
+└── refs/                            跑稿時注入編輯分身的「規則」
+    ├── voices.md                    三位的寫作守則（怎麼寫）＋ 標題鐵則
+    ├── anti-slop.md                 反 AI 味的底線
+    └── chief-editor-checklist.md    總編 7 項審核清單
+
+# skill 會「讀進來」、但不放在 skill 內的外部檔：
+docs/editors/
+├── {mise,passe,fumet}-soul.md       人格核心（為什麼這樣寫，團隊原作、很少改）
+└── {mise,passe,fumet}-memory.md     記憶（學到的準則＋寫過的主題，每期長）
+
+data/sr/<date>/selected.json         輸入：選題拍板的稿＋切角（/selection-report 產）
+→ Obsidian 文章草稿/<date>.md         輸出：草稿（待人定稿）
+→ public/issue-<date>.html           輸出：內容頁（上 thepass.cc）
 ```
+
+跑稿時每個分身**只**注入「自己的」那幾份（聲音才不互相污染）：
+
+| 分身 | 注入什麼 |
+|---|---|
+| **Mise** | mise-soul ＋ mise-memory ＋ voices(Mise) ＋ anti-slop ＋ 兩篇原文＋切角 |
+| **Passe** | passe-soul ＋ passe-memory ＋ voices(Passe) ＋ anti-slop ＋ 各篇原文 |
+| **Fumet** | fumet-soul ＋ fumet-memory ＋ voices(Fumet) ＋ anti-slop ＋ 寫好的兩篇長文 |
+| **總編** | checklist ＋ 全部草稿 ＋ factsUsed ＋ 原文（**不**注入記憶，純挑錯不偏心） |
+
+## 三層：Soul → Memory → Voices（編輯的「大腦」）
+
+每位編輯有三層設定，跑稿時組起來才成為他實際的指令：
+
+```
+Soul（我是誰）       ── 價值觀、背景、好惡＝為什麼這樣寫。很少變。 docs/editors/*-soul.md
+Memory（學到/寫過）  ── 校正過的準則＋寫過的主題。每期長。       docs/editors/*-memory.md
+Voices（怎麼寫）     ── 可執行的寫作規則與招式。偶爾調。        refs/voices.md
+   ↓ 三層＋原文，組成 →
+subagent 的 prompt   ── 叫那位編輯動筆。
+```
+
+### 編輯 Memory：怎麼讓三位越寫越像「自己」（2026-06 接上）
+
+養「虛擬 KOL」的核心——校正過的東西不會說完就忘，會永久變成編輯的能力。記憶放兩種：
+
+- **① 我學到的準則**：總編／Terrel 校正過、會改變以後每期怎麼寫的規則，用第一人稱記成學習筆記。例：首期標題被改後，Mise 記下「標題要看得出主題＋勾得起好奇，兩端都不能偏」。
+- **② 我寫過的主題**：每期寫了哪些題目／標題各一行，下期載入 → 不重複角度。滾動保留近 ~12 期。
+
+**飛輪（每期一圈）**：開寫前各編輯載入自己的 Soul＋Memory＋Voices → 寫 → 定稿後回寫（主題自動記、準則 Terrel 確認才記）→ 下期帶著上期的學習寫。
+
+**治理**：事實型（寫過的主題）每期自動記；準則級（像標題鐵則）AI 提議、Terrel 點頭才寫進記憶——同樣「AI 起草、人定稿」。
 
 ## 怎麼讓編輯越寫越好（優化的旋鈕）
 
 1. **調 Style Guide（最常用、最快）**:`refs/voices.md` 改寫作規則（例如「Mise 要更口語」「Passe 標題再短」）。
 2. **調人格**:`docs/editors/*-soul.md` 改動機與好惡——影響的是「選什麼角度、在乎什麼」，比規則更深層。
 3. **加範例**:在 refs 放「好/壞對照」範例，比抽象規則更有效（AI 很會學樣）。
-4. **接編輯 Memory（下一步）**:每期寫完把「寫了什麼、讀者反應」記進 `docs/editors/*-memory.md`，下期載入 → 編輯會記得自己寫過什麼、不重複、越來越貼品味。架構已預留。
+4. **編輯 Memory（已接 2026-06）**:每期寫完把「寫了什麼、讀者反應」記進 `docs/editors/*-memory.md`，下期載入 → 編輯記得自己學過／寫過什麼、不重複、越來越貼品味。見上方〈編輯 Memory〉。
 5. **用 skill-creator 迭代**:跑幾期、人回饋、改 refs、再跑——把聲音系統性磨準，而不是憑單次手感。
 6. **gate 的回饋就是訓練訊號**:你在 GATE 1/3 改的東西（像把切角 A 改 B），就是該回寫進 refs/soul 的線索。

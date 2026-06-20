@@ -33,7 +33,15 @@ td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top
 .gate .g{font-weight:700;color:var(--accent);white-space:nowrap}
 .foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3.5rem;border-top:1px solid var(--border);padding-top:1.5rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
 ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position:relative;margin:.45rem 0;font-size:.95rem}ul.clean li::before{content:'▸';position:absolute;left:0;color:var(--accent-light)}
-@media(max-width:680px){.nav-links{display:none}.hero h1{font-size:2rem}}
+.cyc{display:flex;flex-wrap:wrap;gap:.5rem;align-items:stretch;margin:1.1rem 0 .3rem}
+.cyc .step{flex:1;min-width:138px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.7rem .85rem}
+.cyc .step .n{font-size:.68rem;color:var(--accent);font-weight:700;letter-spacing:.05em}
+.cyc .step .d{font-size:.88rem;margin-top:.25rem;line-height:1.6}
+.cyc .arr{display:flex;align-items:center;color:var(--accent-light);font-weight:700;font-size:1.15rem}
+.cyc-loop{font-size:.8rem;color:var(--ink-muted);text-align:center;margin:.2rem 0 1.2rem}
+.tree{background:var(--bg-warm);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.78rem;line-height:1.85;overflow-x:auto;margin:1rem 0;color:var(--ink);white-space:pre}
+.tree b{color:var(--ink);font-weight:700}.tree .c{color:var(--accent)}.tree .m{color:var(--ink-muted)}
+@media(max-width:680px){.nav-links{display:none}.hero h1{font-size:2rem}.cyc{flex-direction:column}.cyc .arr{transform:rotate(90deg);justify-content:center}}
 </style></head><body>
 <nav><div class="nav-inner"><a href="hub.html" class="nav-brand">The Pass</a><ul class="nav-links">
 <li><a href="selection-mechanism.html">選題機制</a></li>
@@ -136,6 +144,7 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <text class="s" x="350" y="724" text-anchor="middle" font-size="12.5">四個 subagent 各開獨立 context = 聲音不互相滲透、總編不偏心</text>
 <text class="s" x="350" y="744" text-anchor="middle" font-size="12.5">每位寫完都附「factsUsed」：用了哪個數字/引述 ← 對應原文哪句</text>
 <text class="s" x="350" y="764" text-anchor="middle" font-size="12.5">三個金色 gate ＝ 人在這裡拍板（AI 起草、人定稿）</text>
+<text class="s" x="350" y="786" text-anchor="middle" font-size="12.5">開寫前每位載入「自己的記憶」、定稿後回寫 → 三位跨期演化（養虛擬 KOL）</text>
 </svg>
 </div>
 
@@ -168,13 +177,73 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <h2>怎麼讓編輯越寫越好</h2>
 <ul class="clean">
 <li><b>調聲音規則</b>（最快）：改寫作守則，下一期就生效。</li>
-<li><b>接編輯記憶</b>（最深）：每期寫完把「寫了什麼、讀者反應」記起來，下期載入 → 三位編輯會記得自己寫過什麼、越來越貼品味。</li>
+<li><b>接編輯記憶</b>（最深，<b>已接 2026-06</b>）：每期寫完把「學到的準則、寫過的主題」記起來，下期載入 → 三位編輯記得自己學過／寫過什麼、越來越貼品味。詳見下方〈編輯記憶〉。</li>
 <li><b>放好／壞對照範例</b>：AI 學樣，比學抽象規則有效。</li>
 <li><b>gate 的回饋就是訓練訊號</b>：你在關卡改的東西（像把切角換掉），就是該回寫進守則的線索。</li>
 </ul>
 
-<h2>三層：為什麼 → 怎麼做 → 實際指令</h2>
-<p>每位編輯的「人格（Soul）」寫的是<b>為什麼</b>這樣寫（動機、價值觀、好惡，很少改）；「寫作守則（Style Guide）」是<b>怎麼做</b>（可執行的規則）；跑的時候把兩者＋原文＋（未來的）記憶組起來，才成為那位編輯實際的指令。改人格影響的是「她在乎什麼、選什麼角度」，比改規則更深層。</p>
+<h2>編輯記憶：怎麼讓三位編輯越寫越像「自己」</h2>
+<div class="h-sub">這是 The Pass 養「虛擬 KOL」的核心——校正過的東西不會說完就忘，會永久變成編輯的能力。（2026-06 接上）</div>
+
+<p>每位編輯有<b>三層</b>設定，跑稿時組在一起，才成為他實際的「大腦」：</p>
+<table>
+<thead><tr><th>層</th><th>是什麼（一句話）</th><th>多久變</th></tr></thead>
+<tbody>
+<tr><td class="r">Soul · 人格</td><td><b>我是誰</b>——價值觀、背景、好惡（＝為什麼這樣寫）</td><td>很少變</td></tr>
+<tr><td class="r">Memory · 記憶</td><td><b>我學到什麼、寫過什麼</b>（隨時間長）</td><td>每期長</td></tr>
+<tr><td class="r">Voices · 守則</td><td><b>怎麼寫</b>——可執行的規則與招式</td><td>偶爾調</td></tr>
+</tbody>
+</table>
+
+<p>其中「記憶」放<b>兩種</b>東西：</p>
+<div class="principle"><b>① 我學到的準則。</b>總編／Terrel 校正過、會「改變以後每期怎麼寫」的規則，用<b>第一人稱</b>記成編輯自己的學習筆記。例：首期標題被改過後，Mise 記下「標題要<b>看得出主題</b>＋<b>勾得起好奇</b>，兩端都不能偏」——下期它一動筆就記得。</div>
+<div class="principle"><b>② 我寫過的主題。</b>每期寫了哪些題目／標題各記一行，下期載入 → 編輯記得自己寫過什麼、不重複角度。滾動保留近 ~12 期，不讓檔變肥。</div>
+
+<p><b>飛輪怎麼轉</b>（每期一圈）：</p>
+<div class="cyc">
+<div class="step"><div class="n">① 開寫前</div><div class="d">每位編輯載入<b>自己的</b> Soul＋Memory＋Voices</div></div>
+<div class="arr">→</div>
+<div class="step"><div class="n">② 寫稿</div><div class="d">Mise 動筆前已讀到「上次標題被改、要看得出主題」</div></div>
+<div class="arr">→</div>
+<div class="step"><div class="n">③ 定稿後</div><div class="d">回寫記憶：主題<b>自動</b>記、準則<b>你確認</b>才記</div></div>
+<div class="arr">→</div>
+<div class="step"><div class="n">④ 下一期</div><div class="d">帶著上期的學習寫 → 越來越像那個人</div></div>
+</div>
+<div class="cyc-loop">↻ 每期跑一圈，三位編輯跨期累積、自然演化，不用每次重講</div>
+
+<div class="principle"><b>誰決定記什麼（品質的關，人把）。</b>「寫過的主題」這種事實，每期<b>自動</b>記；像標題鐵則這種<b>準則級</b>的，AI 先提議、<b>Terrel 點頭才寫進記憶</b>——跟選題、寫稿同一個「AI 起草、人定稿」哲學。</div>
+
+<h2>這個 skill 由什麼組成（檔案架構）</h2>
+<div class="h-sub">/write-issue 自己有哪些檔、又會「讀進」哪些外部檔。</div>
+
+<div class="tree"><b>.claude/skills/write-issue/</b>          <span class="c">← skill 本體</span>
+├── <b>SKILL.md</b>                     <span class="c">工作流：orchestrator 怎麼調度、3 個 gate、step 9 回寫</span>
+└── <b>refs/</b>                         <span class="c">跑稿時注入編輯分身的「規則」</span>
+    ├── <b>voices.md</b>                 <span class="c">三位的寫作守則（怎麼寫）＋ 標題鐵則</span>
+    ├── <b>anti-slop.md</b>              <span class="c">反 AI 味的底線（禁條列轟炸、禁 AI 腔…）</span>
+    └── <b>chief-editor-checklist.md</b> <span class="c">總編 7 項審核清單</span>
+
+<span class="m">skill 會「讀進來」、但不放在 skill 內的外部檔：</span>
+<b>docs/editors/</b>                      <span class="c">← 編輯人格與記憶（進 git、團隊可看）</span>
+├── <b>{mise,passe,fumet}-soul.md</b>    <span class="c">人格核心（為什麼這樣寫，團隊原作、很少改）</span>
+└── <b>{mise,passe,fumet}-memory.md</b>  <span class="c">記憶（學到的準則＋寫過的主題，每期長）</span>
+
+<b>data/sr/&lt;date&gt;/selected.json</b>      <span class="c">← 輸入：選題會拍板的稿＋切角（/selection-report 產）</span>
+
+<span class="m">輸出：</span>
+<b>…/Obsidian/文章草稿/&lt;date&gt;.md</b>     <span class="c">草稿（待人定稿）</span>
+<b>public/issue-&lt;date&gt;.html</b>          <span class="c">內容頁（上 thepass.cc）</span></div>
+
+<p>跑稿時，每個分身腦袋裡<b>只</b>注入「自己的」那幾份（聲音才不互相污染）：</p>
+<table>
+<thead><tr><th>這個分身</th><th>注入什麼</th></tr></thead>
+<tbody>
+<tr><td class="r">Mise</td><td>mise-soul ＋ mise-memory ＋ voices(Mise) ＋ anti-slop ＋ 兩篇原文＋切角</td></tr>
+<tr><td class="r">Passe</td><td>passe-soul ＋ passe-memory ＋ voices(Passe) ＋ anti-slop ＋ 各篇原文</td></tr>
+<tr><td class="r">Fumet</td><td>fumet-soul ＋ fumet-memory ＋ voices(Fumet) ＋ anti-slop ＋ 寫好的兩篇長文</td></tr>
+<tr><td class="r">總編</td><td>chief-editor-checklist ＋ 全部草稿 ＋ factsUsed ＋ 原文（<b>不</b>注入記憶，純挑錯不偏心）</td></tr>
+</tbody>
+</table>
 
 <div class="foot"><div class="b">The Pass 出菜口</div>AI 編輯室核心架構 · AI 起草、人定稿</div>
 </div></body></html>
