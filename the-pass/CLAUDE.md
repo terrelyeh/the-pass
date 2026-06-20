@@ -42,7 +42,7 @@
 
 每位編輯有兩層設定，詳見 [`docs/ai-editor-persona-architecture.md`](docs/ai-editor-persona-architecture.md)：
 - **Soul**（核心人格）— 價值觀、背景故事、好惡，很少改變
-- **Memory**（記憶）— 寫過什麼、讀者互動、累積觀察，每期更新
+- **Memory**（記憶）— 寫過什麼、讀者互動、累積觀察，每期更新。**已建**（2026-06-20）：`docs/editors/*-memory.md`，/write-issue 開寫載入、定稿回寫
 
 這讓編輯的選題和風格會隨時間自然演化，不需手動調整規則。
 
@@ -163,13 +163,13 @@ the-pass/
 **`/selection-report` 不需要金鑰**——評分由本機 Claude Code（+ Haiku 子代理）做。金鑰只在「腳本內全自動評分」（未來排程無人跑 `scorer.ts` 的 Opus 全程，或腳本直接呼叫 Haiku）才需要：在 `the-pass/.env.local` 加 `ANTHROPIC_API_KEY`（AI 不能代填）→ scorer 自動走 live。
 
 ### 4. 儲存策略（2026-06-11 定）+ 基礎建設
-三層、各用對的工具：**機器狀態**＝本機 JSON（`data/*.json`，backlog/seen 已實作）；**人看存檔**＝Terrel 本機 Obsidian vault（`工作/顧問/AI編輯室 - The Pass/`，選題報告/庫存/文章草稿 已落檔）；**團隊溝通**＝網頁 HTML 上 thepass.cc。**雙輸出原則**：同資料 → HTML（團隊、互動）+ Markdown（Obsidian）——`delivery-report` 已如此，`/selection-report` 比照（再寫一份含庫存表的 `.md` 進 vault）。**Supabase 暫不導入**，只有「排程自動化 / 團隊線上即時查」才需要。仍待：**編輯 Memory 回寫**（Soul 已有 `docs/editors/*-soul.md`，動態 Memory 未接）；報告「決定」後端；Ghost Pro。
+三層、各用對的工具：**機器狀態**＝本機 JSON（`data/*.json`，backlog/seen 已實作）；**人看存檔**＝Terrel 本機 Obsidian vault（`工作/顧問/AI編輯室 - The Pass/`，選題報告/庫存/文章草稿 已落檔）；**團隊溝通**＝網頁 HTML 上 thepass.cc。**雙輸出原則**：同資料 → HTML（團隊、互動）+ Markdown（Obsidian）——`delivery-report` 已如此，`/selection-report` 比照（再寫一份含庫存表的 `.md` 進 vault）。**Supabase 暫不導入**，只有「排程自動化 / 團隊線上即時查」才需要。**編輯 Memory 已接**（2026-06-20）：`docs/editors/*-soul.md`（人格）+ `*-memory.md`（記憶）並行，/write-issue 載入＋step 9 回寫。仍待：報告「決定」後端；Ghost Pro。
 
 ### 5. 待修 / 待 audit
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
 
 ### 6. ✅ 寫作 skill `/write-issue`（已建 2026-06-19，harness）
-見「已完成」。**編輯系統下一步**：① **編輯 Memory 回寫**——每期寫完把產出記進 `docs/editors/*-memory.md`、下期載入（架構已預留、未接）；② **發佈**——草稿 → Ghost／thepass.cc 出刊頁；③ 用 skill-creator 跑幾期迭代三位編輯的聲音。
+見「已完成」。**✅ 編輯 Memory 已接**（2026-06-20）：開寫載入各編輯 `*-memory.md`、定稿後 step 9 回寫（事實型自動／準則型 Terrel 確認）；種子＝Mise 標題鐵則。**下一步**：① **發佈**——草稿 → Ghost／thepass.cc 出刊頁；② 真實運作幾期、讓 memory 準則自然累積、迭代三位聲音。
 
 ## 部署
 
