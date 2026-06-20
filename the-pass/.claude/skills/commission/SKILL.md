@@ -24,9 +24,9 @@ description: 用 The Pass（出菜口）指定的某一位 AI 編輯（Mise／Pa
 
 | 編輯 | 人格（我是誰） | 聲音（怎麼寫） | 記憶（寫過/學到） | 預設體裁 |
 |---|---|---|---|---|
-| **Mise** | `docs/editors/mise-soul.md` | `voices.md`（Mise 段） | `docs/editors/mise-memory.md` | 長文 400–600 字、場景式、從具體的人切入 |
+| **Mise** | `docs/editors/mise-soul.md` | `voices.md`（Mise 段） | `docs/editors/mise-memory.md` | 長文（觀點編譯 D）約 500–900 字、場景式、從具體的人切入 |
 | **Passe** | `docs/editors/passe-soul.md` | `voices.md`（Passe 段） | `docs/editors/passe-memory.md` | 快訊、一句話講清、事實夠硬 |
-| **Fumet** | `docs/editors/fumet-soul.md` | `voices.md`（Fumet 段） | `docs/editors/fumet-memory.md` | 沉靜長文／提問，從現象叩問文化假設 |
+| **Fumet** | `docs/editors/fumet-soul.md` | `voices.md`（Fumet 段） | `docs/editors/fumet-memory.md` | 長文（觀點編譯 D）沉靜、從現象叩問文化假設／或留一個提問 |
 
 共用底線：`anti-slop.md`（**最高原則：不捏造**，引號與數字都要對得回來源）。
 
@@ -35,7 +35,9 @@ description: 用 The Pass（出菜口）指定的某一位 AI 編輯（Mise／Pa
 ## 工作流
 
 ### 1 · 確定編輯 + 來源
-從 Terrel 的話判定編輯與來源；缺就問。記下體裁（預設依編輯，可覆寫）與切角（他給就照給，沒給編輯自己挑最有力的——先找到人）。
+從 Terrel 的話判定編輯與來源；缺就問。**長文預設走「觀點編譯（D）」**——完整交代來源 ＋ 一條角度貫穿（定義見 `write-issue/refs/voices.md`〈長文標準：觀點編譯〉）。記下體裁（預設依編輯，可覆寫）與切角（他給就照給，沒給編輯自己挑最有力的當 through-line——但 D 是「角度貫穿、不是只挑一條丟其餘」，先找到人）。
+
+> 想要 A（只挑一條深寫、其餘捨棄的原創稿）時，Terrel 會明講「用 A／只寫某一條」；沒講就是 D。
 
 ### 2 · 取得來源全文（不可跳過）+ 付費牆政策
 - **URL** → Firecrawl 抓全文。寫作只能依抓回的內容；抓不到 → 告知、不硬寫（可請 Terrel 改貼內文）。
@@ -44,7 +46,7 @@ description: 用 The Pass（出菜口）指定的某一位 AI 編輯（Mise／Pa
 - **付費牆**（內容被截斷、出現 subscribe／continue reading）→ 照 /write-issue 政策：硬新聞牆（關鍵事實在牆後）找公開來源佐證，找不到就不寫；觀點／隨筆牆但免費預覽已含完整立場 → 可寫但**只報那個現象、透明標註「付費牆預覽、僅用免費段」**。絕不憑預覽假裝讀過全文。
 
 ### 3 · spawn 指定編輯 subagent 寫一篇
-spawn **一個** subagent（用主模型，品質優先），context **只注入那位編輯**的：soul ＋ memory ＋ `voices.md` 該編輯那段 ＋ `anti-slop.md` ＋ 來源全文 ＋（切角／指定角度）＋ 體裁要求。請它回傳結構化：
+spawn **一個** subagent（用主模型，品質優先），context **只注入那位編輯**的：soul ＋ memory ＋ `voices.md`（該編輯那段 ＋〈長文標準：觀點編譯〉）＋ `anti-slop.md` ＋ 來源全文 ＋（切角／指定角度當 through-line）＋ 模式與體裁要求（**長文＝觀點編譯 D：完整交代來源、別為角度丟重要事實，但用切角貫穿、用編輯聲音；字數依訊息量約 500–900**）。請它回傳結構化：
 ```
 { title: "...", draft: "...", factsUsed: [{ claim: "用了什麼數字/引述", source: "對應原文哪一句" }] }
 ```
