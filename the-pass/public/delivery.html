@@ -17,11 +17,11 @@ body.nav-open .backdrop{display:block}
 .layout{display:grid;grid-template-columns:210px 1fr;max-width:1080px;margin:0 auto;min-height:calc(100vh - 4rem)}
 .side{position:sticky;top:2.9rem;align-self:start;height:calc(100vh - 2.9rem);overflow-y:auto;border-right:1px solid var(--border);background:var(--white);padding:1.6rem 1rem 2rem 1.25rem}
 .side .lbl{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;margin-bottom:.7rem}
-.side a{display:block;text-decoration:none;padding:.45rem .6rem;border-radius:6px;margin-bottom:.2rem}.side a:hover{background:var(--bg-warm)}
+.side a{display:block;text-decoration:none;padding:.45rem .6rem;border-radius:6px;margin-bottom:.2rem;cursor:pointer}.side a:hover{background:var(--bg-warm)}.side a.cur{background:var(--bg-warm);box-shadow:inset 2px 0 0 var(--accent)}.side a.cur .d{color:var(--accent)}
 .side a .d{font-size:.78rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;display:block}.side a .t{font-size:.74rem;color:var(--ink-light);line-height:1.25;display:block;margin-top:.05rem}
 .side .more{font-size:.7rem;color:var(--ink-muted);margin-top:.4rem;padding:.3rem .6rem}
 .main{padding:1.8rem 2rem 4rem;max-width:760px}
-.period{margin-bottom:2.5rem;scroll-margin-top:3.2rem}
+.period{display:none;margin-bottom:2.5rem}.period.active{display:block;animation:fade .2s ease}@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .p-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem;border-bottom:2px solid var(--accent-light);padding-bottom:.4rem;margin-bottom:.7rem}
 .p-head h2{font-family:var(--display);font-size:1.5rem;font-weight:400}.p-when{font-size:.78rem;color:var(--ink-muted)}
 .tldr{font-family:var(--serif);font-size:1rem;line-height:1.75;color:var(--ink);margin:.4rem 0 .6rem}
@@ -59,29 +59,29 @@ body.nav-open .side{transform:none;box-shadow:2px 0 24px rgba(0,0,0,.14)}
     <button class="menu-btn" id="menuBtn" aria-label="開啟進度目錄" aria-expanded="false"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     <h1>AI 編輯專案 ｜ 顧問交付紀錄</h1>
   </div>
-  <div class="stat">累計 <b>11</b> 項交付 · AI 協作 <b>7.5</b> hr</div>
+  <div class="stat">累計 <b>12</b> 項交付 · AI 協作 <b>8.5</b> hr</div>
 </div></div>
 <div class="backdrop" id="backdrop"></div>
 <div class="layout">
   <aside class="side">
     <div class="lbl">進度紀錄</div>
-    <a href="#p-2026-06-20"><span class="d">2026-06-20</span><span class="t">AI 編輯室核心：選題系統定版 + 寫作系統上線</span></a><a href="#p-2026-06-10"><span class="d">2026-06-10</span><span class="t">選題自動化系統 + 來源庫收斂</span></a>
+    <a href="#p-2026-06-20" data-target="p-2026-06-20"><span class="d">2026-06-20</span><span class="t">AI 編輯室核心：選題系統定版 + 寫作系統上線</span></a><a href="#p-2026-06-10" data-target="p-2026-06-10"><span class="d">2026-06-10</span><span class="t">選題自動化系統 + 來源庫收斂</span></a><a href="#p-baseline" data-target="p-baseline"><span class="d">既有基礎</span><span class="t">專案啟動前的累積</span></a>
   </aside>
   <main class="main">
     
-  <section id="p-2026-06-20" class="period">
-    <div class="p-head"><h2>本週實作</h2><span class="p-when">2026-06-20 · AI 協作 3.5 hr</span></div>
-    <p class="tldr">完成 AI 編輯室兩大核心：選題（/selection-report）與寫作（/write-issue）系統，兩者都零 API key 在本機跑、AI 起草人拍板。系統實跑產出首期 2026-06-19（選題 → 三編輯寫成稿 → 總編審核）。並修好線上自動部署、精修三位編輯聲音。</p>
-    <div class="hours-bd"><span class="hb-lbl">AI 協作工時</span><span class="hb">6/19<b>1.5 hr</b></span><span class="hb">6/20<b>2 hr</b></span><span class="hb tot">合計 3.5 hr</span></div>
+  <section id="p-2026-06-20" class="period active">
+    <div class="p-head"><h2>2026-06-20</h2><span class="p-when">2026/06/11–06/20 · AI 協作 4.5 hr</span></div>
+    <p class="tldr">完成 AI 編輯室兩大核心：選題（/selection-report）與寫作（/write-issue）系統，兩者都零 API key 在本機跑、AI 起草人拍板。系統實跑產出首期 2026-06-19（含可線上看的內容頁），並接上編輯 Memory 機制——三位編輯跨期記憶、越寫越像自己（養虛擬 KOL 的核心）。另修好自動部署、精修編輯聲音與標題鐵則。</p>
+    <div class="hours-bd"><span class="hb-lbl">AI 協作工時</span><span class="hb">6/19<b>1.5 hr</b></span><span class="hb">6/20<b>3 hr</b></span><span class="hb tot">合計 4.5 hr</span></div>
     <p class="result"><a href="https://thepass.cc/issue-2026-06-19.html" target="_blank" rel="noopener">→ 看首期內容（三位編輯寫成的稿）</a></p>
     <div class="tbl"><table><thead><tr><th>交付項目</th><th>內容 / 價值</th><th>連結</th><th>狀態</th></tr></thead><tbody>
-      <tr><td class="it">修好線上自動部署</td><td class="v">GitHub→Vercel 自動部署修復（Root Directory 設定）；團隊 push 即上線，不用每次手動部署</td><td>—</td><td class="st">完成</td></tr><tr><td class="it">選題系統 /selection-report</td><td class="v">每期一鍵：抓取→去重→Haiku 子代理粗篩→Claude 當總編評分→庫存競爭→報告。零 API key、雙輸出（網頁+Obsidian）；報告含切角、左側日期切換、匯出決定鈕；跨期去重不重複撈/發</td><td><a href="https://thepass.cc/selection-report.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">寫作系統 /write-issue（編輯室核心）</td><td class="v">把選的稿寫成整期草稿：4 個編輯分身（Mise/Passe/Fumet/總編）各用自己聲音、3 個人拍板關卡、抓原文查證不捏造、付費牆只報現象。AI 起草、人定稿</td><td><a href="https://thepass.cc/write-issue-architecture.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">產出首期 2026-06-19（內容可線上看）</td><td class="v">系統實跑：選出 6 篇 → 三位編輯寫成稿（2 篇長文＋4 則快訊＋1 則提問）→ 總編 7 項審核（逐條對原文）。內容已成網頁、團隊可直接讀</td><td><a href="https://thepass.cc/issue-2026-06-19.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">編輯聲音精修 + 指南核對</td><td class="v">核對寫作守則對原編輯指南的忠實度、把三位編輯的人格定調帶進寫作守則，聲音更鮮明</td><td>—</td><td class="st">完成</td></tr><tr><td class="it">核心架構文件 + 團隊網頁</td><td class="v">AI 編輯室架構頁（含架構圖）給團隊理解編輯室怎麼運作</td><td><a href="https://thepass.cc/write-issue-architecture.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr>
+      <tr><td class="it">修好線上自動部署</td><td class="v">GitHub→Vercel 自動部署修復（Root Directory 設定）；團隊 push 即上線，不用每次手動部署</td><td>—</td><td class="st">完成</td></tr><tr><td class="it">選題系統 /selection-report</td><td class="v">每期一鍵：抓取→去重→Haiku 子代理粗篩→Claude 當總編評分→庫存競爭→報告。零 API key、雙輸出（網頁+Obsidian）；報告含切角、左側日期切換、匯出決定鈕；跨期去重不重複撈/發</td><td><a href="https://thepass.cc/selection-report.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">寫作系統 /write-issue（編輯室核心）</td><td class="v">把選的稿寫成整期草稿：4 個編輯分身（Mise/Passe/Fumet/總編）各用自己聲音、3 個人拍板關卡、抓原文查證不捏造、付費牆只報現象。AI 起草、人定稿</td><td><a href="https://thepass.cc/write-issue-architecture.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">產出首期 2026-06-19（內容可線上看）</td><td class="v">系統實跑：選出 6 篇 → 三位編輯寫成稿（2 篇長文＋4 則快訊＋1 則提問）→ 總編 7 項審核（逐條對原文）。內容已成網頁、團隊可直接讀</td><td><a href="https://thepass.cc/issue-2026-06-19.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">編輯聲音精修 + 標題鐵則</td><td class="v">把三位編輯的人格定調帶進寫作守則、核對對原編輯指南的忠實度；並確立標題鐵則（看得出主題＋勾得起好奇，兩端都不能偏），校正首期兩篇長文標題</td><td>—</td><td class="st">完成</td></tr><tr><td class="it">核心架構文件 + 團隊網頁</td><td class="v">AI 編輯室架構頁（含架構圖）給團隊理解編輯室怎麼運作</td><td><a href="https://thepass.cc/write-issue-architecture.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr><tr><td class="it">編輯 Memory 機制 v1（養虛擬 KOL 核心）</td><td class="v">三位編輯接上跨期記憶：Soul（人格）/ Memory（學到的準則＋寫過的主題）/ Voices（守則）三層，/write-issue 開寫載入、定稿回寫（事實型自動、準則型人確認）。校正過的東西永久變成編輯能力、越寫越像自己；架構頁加機制圖與檔案架構說明</td><td><a href="https://thepass.cc/write-issue-architecture.html" target="_blank" rel="noopener">↗</a></td><td class="st">完成</td></tr>
     </tbody></table></div>
     <div class="blk decide"><h3>需團隊決策</h3><ul><li>付費牆觀點源的處理政策：已草擬（報現象 + 透明標註 + 找公開來源佐證；硬新聞牆則退），請團隊確認採用</li><li>Fumet 能否寫文化面長文？原編輯指南：長文偏文化面署 Fumet、偏技術/產業面署 Mise；目前系統固定 Mise 寫長文、Fumet 寫結尾提問</li></ul></div>
-    <div class="blk"><h3>接下來任務</h3><ul><li>接編輯 Memory 回寫：每期寫完記進編輯記憶、下期載入 → 三位編輯跨期演化（養虛擬 KOL 的核心）</li><li>真實運作幾期、依手感迭代三位編輯的聲音</li><li>規劃發佈管道（Ghost / 出刊頁）</li></ul></div>
+    <div class="blk"><h3>接下來任務</h3><ul><li>下期 /write-issue 實跑驗收 Memory 飛輪（載入記憶 → 寫 → 回寫）、依手感調滾動期數與準則粒度</li><li>真實運作幾期、依手感迭代三位編輯的聲音</li><li>規劃發佈管道（Ghost / 出刊頁）</li></ul></div>
   </section>
   <section id="p-2026-06-10" class="period">
-    <div class="p-head"><h2>2026/06/10</h2><span class="p-when">2026-06-10 · AI 協作 4 hr</span></div>
+    <div class="p-head"><h2>2026-06-10</h2><span class="p-when">2026/06/10 · AI 協作 4 hr</span></div>
     <p class="tldr">完成「選題自動化系統」與「編輯會議用的選題報告」，並把來源庫收斂成 30 個聚焦食物的來源。本期請團隊拍板一個編輯方向。</p>
     <div class="hours-bd"><span class="hb-lbl">AI 協作工時</span><span class="hb">6/09<b>2.5 hr</b></span><span class="hb">6/10<b>1.5 hr</b></span><span class="hb tot">合計 4 hr</span></div>
     <p class="result"><a href="https://thepass.cc/hub.html" target="_blank" rel="noopener">→ 看本週成果（選題系統入口）</a></p>
@@ -91,12 +91,31 @@ body.nav-open .side{transform:none;box-shadow:2px 0 24px rgba(0,0,0,.14)}
     <div class="blk decide"><h3>需團隊決策</h3><ul><li>編輯方向：維持嚴格「AI×食物」交集 vs 轉「食物優先、AI 為其中一個角度」（實測候選池已偏後者）</li></ul></div>
     <div class="blk"><h3>接下來任務</h3><ul><li>方向定版後做 /selection-report 定版工具（每期一鍵產報告）</li><li>規劃寫作階段（Mise/Passe/Fumet 把選出的題目寫成一期，對照既有 3 期 demo）</li></ul></div>
   </section>
-    <h2 class="sec-h">既有基礎</h2>
-    <ul class="lst"><li><a href="https://thepass.cc/project-brief.html" target="_blank" rel="noopener">品牌定位 + Project Brief + 編輯指南</a></li><li><a href="https://thepass.cc/editors.html" target="_blank" rel="noopener">三位 AI 編輯人設 + AI 編輯室</a></li><li><a href="https://thepass.cc/demo-index.html" target="_blank" rel="noopener">3 期 Demo Issues（成品格式範本）</a></li><li><a href="https://thepass.cc" target="_blank" rel="noopener">域名 thepass.cc + Vercel 部署</a></li></ul>
+    <section id="p-baseline" class="period"><div class="p-head"><h2>既有基礎</h2><span class="p-when">專案啟動前的累積基礎</span></div>
+    <ul class="lst"><li><a href="https://thepass.cc/project-brief.html" target="_blank" rel="noopener">品牌定位 + Project Brief + 編輯指南</a></li><li><a href="https://thepass.cc/editors.html" target="_blank" rel="noopener">三位 AI 編輯人設 + AI 編輯室</a></li><li><a href="https://thepass.cc/demo-index.html" target="_blank" rel="noopener">3 期 Demo Issues（成品格式範本）</a></li><li><a href="https://thepass.cc" target="_blank" rel="noopener">域名 thepass.cc + Vercel 部署</a></li></ul></section>
     <div class="foot"><div class="b">The Pass 出菜口</div>顧問交付 · Terrel Yeh · AI 輔助實作</div>
   </main>
 </div>
 <script>
-(function(){var b=document.getElementById('menuBtn'),d=document.getElementById('backdrop');if(!b)return;function close(){document.body.classList.remove('nav-open');b.setAttribute('aria-expanded','false');}b.addEventListener('click',function(){var o=document.body.classList.toggle('nav-open');b.setAttribute('aria-expanded',o);});d.addEventListener('click',close);document.querySelectorAll('.side a').forEach(function(a){a.addEventListener('click',close);});document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();
+(function(){
+  var periods=[].slice.call(document.querySelectorAll('.period'));
+  var links=[].slice.call(document.querySelectorAll('.side a[data-target]'));
+  var b=document.getElementById('menuBtn'),d=document.getElementById('backdrop');
+  function closeNav(){document.body.classList.remove('nav-open');if(b)b.setAttribute('aria-expanded','false');}
+  function show(id){
+    if(!periods.some(function(s){return s.id===id;}))return false;
+    periods.forEach(function(s){s.classList.toggle('active',s.id===id);});
+    links.forEach(function(a){a.classList.toggle('cur',a.getAttribute('data-target')===id);});
+    try{history.replaceState(null,'','#'+id);}catch(e){}
+    window.scrollTo(0,0);return true;
+  }
+  links.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();show(a.getAttribute('data-target'));closeNav();});});
+  var h=decodeURIComponent((location.hash||'').replace('#',''));
+  if(!h||!show(h)){if(periods[0])show(periods[0].id);}
+  window.addEventListener('hashchange',function(){var x=decodeURIComponent((location.hash||'').replace('#',''));if(x)show(x);});
+  if(b)b.addEventListener('click',function(){var o=document.body.classList.toggle('nav-open');b.setAttribute('aria-expanded',o);});
+  if(d)d.addEventListener('click',closeNav);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+})();
 </script>
 </body></html>
