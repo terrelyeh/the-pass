@@ -21,6 +21,7 @@ td.k{font-weight:600;color:var(--ink);white-space:nowrap}
 .parts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin:.5rem 0}
 .part{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;font-size:.85rem;line-height:1.6}
 .part b{font-family:var(--serif);color:var(--ink);display:block;margin-bottom:.2rem}
+.part .tag{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:rgba(184,134,11,.1);border-radius:100px;padding:.05rem .45rem;margin-top:.5rem}
 .step{border:1px solid var(--border);border-radius:12px;background:var(--white);padding:1rem 1.2rem;margin:0 0 .7rem;display:flex;gap:.9rem;align-items:flex-start}
 .num{flex-shrink:0;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--display);font-size:1.1rem;display:flex;align-items:center;justify-content:center}
 .step .t{font-family:var(--serif);font-weight:600;font-size:1rem}
@@ -50,25 +51,46 @@ pre .c{color:#8B90A0}
 <table style="margin-top:.7rem">
 <tr><th>可替換的資料模組</th><th>穩定的流程</th></tr>
 <tr><td>編輯 ＝ soul／voices／memory</td><td><code>/write-issue</code></td></tr>
-<tr><td><b>風格 ＝ style.md ＋ 錨點圖</b></td><td><code>/publish-issue</code></td></tr>
+<tr><td><b>風格 ＝ style.md ／ anchors ／ validation</b></td><td><code>/publish-issue</code></td></tr>
 </table>
 </div>
 
-<div class="sec-label">一個 Profile ＝ 三部分</div>
+<div class="sec-label">一個 Profile ＝ 三部分（show ／ tell ／ prove）</div>
 <div class="parts">
-<div class="part"><b>① 錨點圖</b>2–4 張代表性參考圖，餵給生圖模型定錨（純文字釘不住風格）。</div>
-<div class="part"><b>② 風格規格 style.md</b>從圖抽出的文字：配色／線條／質感／構圖／情緒／禁忌。</div>
-<div class="part"><b>③ 提示詞片段</b>每次生圖都貼的那段，把風格叫出來（含 negative）。</div>
+<div class="part"><b>① 錨點圖 anchors/</b>你給的 2–4 張代表性<b>原圖</b>。生圖時當 <code>input_image</code> 餵進去「定錨」——純文字釘不住風格，這幾張才鎖得住。<span class="tag">the show</span></div>
+<div class="part"><b>② 規格 style.md</b>從圖抽出的文字規格：配色／線條／質感／構圖／造形／情緒／禁忌，<b>外加每次生圖要貼的提示詞片段＋negative</b>。一個檔講完「這風格是什麼、怎麼叫出來」。<span class="tag">the tell</span></div>
+<div class="part"><b>③ 驗證 validation/</b>用這 profile <b>實際生成</b>的測試圖＋一份逐面向打分報告。證明它<b>真的能重現</b>，不只是「規格看起來對」。<span class="tag">the prove</span></div>
 </div>
-<div class="tip">三者放在一個資料夾 <code>docs/illustration/styles/&lt;風格名&gt;/</code>，就是一個自帶一切的可替換單元。來源不限——插畫、照片、截圖、mood board 都能抽。</div>
+<div class="tip"><b>提示詞片段和 negative 不是獨立檔，就寫在 style.md 裡。</b>真正落在磁碟上的是三樣：一個 <code>style.md</code> ＋ 兩個資料夾 <code>anchors/</code>、<code>validation/</code>。來源不限——插畫、照片、截圖、mood board 都能抽。</div>
+
+<div class="sec-label">跑完 /style-extract，你會拿到一個資料夾</div>
+<p style="font-size:.9rem;color:var(--ink-light);margin-bottom:.5rem">三部分不是抽象概念，是磁碟上一個真的資料夾。skill 跑完，profile 存進共用風格庫 <code>~/style-lab/</code>（跨專案重用），長這樣：</p>
+<pre><span class="c"># ~/style-lab/profiles/&lt;風格名&gt;/    一個自帶一切的可替換單元</span>
+style.md                  <span class="c"># 規格 ＋ 提示詞片段 ＋ negative ＋ 來源/日期/驗證摘要</span>
+anchors/                  <span class="c"># 你給的原始參考圖（複製進來，2–4 張）</span>
+  anchor-1.jpg
+  anchor-2.jpg
+validation/               <span class="c"># 用這 profile 生的測試圖 ＋ 打分報告</span>
+  test-chef.png
+  test-farmer.png
+  test-ramen.png
+  report.md               <span class="c"># 逐面向 0–5 分、哪裡飄掉、能不能重現</span></pre>
+<table>
+<tr><th>項目</th><th>是什麼</th><th>為什麼要它</th></tr>
+<tr><td class="k">style.md</td><td>文字規格＋提示詞片段＋negative＋一行驗證摘要</td><td><b>tell</b>。把風格寫成可讀、可貼的設定。提示詞和 negative 都收在這一檔，不另外散。</td></tr>
+<tr><td class="k">anchors/</td><td>你給的 2–4 張<b>原始</b>參考圖（複製進來）</td><td><b>show</b>。純文字釘不住具體風格，生圖把這幾張當 <code>input_image</code> 餵進去才鎖得住。profile 一定要帶錨點。</td></tr>
+<tr><td class="k">validation/</td><td>AI 用這 profile <b>生成</b>的測試圖 ＋ <code>report.md</code></td><td><b>prove</b>。skill 的價值所在。每張測試圖由獨立的驗證 subagent 對著原圖<b>逐面向打 0–5 分</b>（palette／line／texture／composition…）、標出哪裡飄掉；沒過就改提示詞重生重驗。留下的＝「驗證過、能重現」的證據。</td></tr>
+</table>
+<div class="tip"><b>別把 anchors 跟 validation 搞混：</b><code>anchors/</code> 是<b>你給的原圖</b>（輸入、風格的源頭、題目）；<code>validation/</code> 是<b>AI 生出來的測試圖</b>（輸出、拿去對照原圖驗收、答卷）。一個是題目、一個是答卷——對照打分，才知道這 profile 穩不穩。</div>
+<div class="tip"><b>為什麼非驗證不可？</b>眼睛會被騙、分數不會。實測 mono-ink 那組：肉眼看「一次就很像」，驗證 subagent 逐面向一打，line 面向三張全是 2／5（少了毛筆粗細變化＋實心黑塊）——改完提示詞重生，line 才跳到 4–5、兩張升上 reproduced。交付「驗證過」的，比交付「看起來對」的可靠太多。</div>
 
 <div class="sec-label">換風格 = 兩步</div>
 <div class="step"><div class="num">1</div><div><div class="t">跑 <code>/style-extract</code>，得到 profile <span class="who tech">skill</span></div><div class="d">丟一組參考圖 → skill 自己跑完整迴圈：多面向分析 → 規格 gate（你確認）→ 生測試圖 → 驗證 subagent 逐面向打分 →（飄掉就改提示詞、重生、重驗）。產出一個<b>驗證過</b>的 profile（style.md ＋ 錨點圖 ＋ validation 證據），存進共用庫 <code>~/style-lab/</code>。</div></div></div>
 <div class="step"><div class="num">2</div><div><div class="t">導入專案，換現役 <span class="who tech">Claude</span></div><div class="d">把選好的 profile 設為某專案的現役風格：該專案出圖 skill（如 The Pass <code>/publish-issue</code>）指過去、更新人看的 illustration-guide。以後那個專案生圖自動走新風格。</div></div></div>
 <div class="tip"><b>所以是兩步：</b>① <code>/style-extract</code> 產一個驗證過的 profile（跨專案、可重用）→ ② 哪個專案要用，就把它導入、換現役。換風格 = 重跑這兩步。</div>
 
-<div class="sec-label">範例：把一組圖抽成 profile（節錄）</div>
-<p style="font-size:.9rem;color:var(--ink-light);margin-bottom:.5rem">這是把一組大膽 pop 插畫抽成的 profile 規格——示範「一系列圖 → 可重用風格」長什麼樣：</p>
+<div class="sec-label">範例：profile 裡的 style.md（節錄）</div>
+<p style="font-size:.9rem;color:var(--ink-light);margin-bottom:.5rem">這是上面那個資料夾裡 <code>style.md</code> 的長相——把一組大膽 pop 插畫抽成的文字規格（同個資料夾裡還躺著 <code>anchors/</code> 原圖和 <code>validation/</code> 測試圖）：</p>
 <pre><span class="c"># Style Profile · Bold Pop / Riso（範例）</span>
 配色：單一高彩度平塗底（熱粉／電光藍／鎘紅／檸檬黃／teal）＋黑，一圖一主色
 線條：粗黑、手繪、帶拙味的墨線
