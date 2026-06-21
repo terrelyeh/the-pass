@@ -1,6 +1,6 @@
 # CLAUDE.md — The Pass 出菜口 Project Context
 
-> Last updated: 2026-06-20
+> Last updated: 2026-06-21
 
 ## Project Overview
 
@@ -31,12 +31,15 @@
 
 ## AI 編輯團隊
 
-三位 AI 編輯不只是寫作工具，是**有完整人設的虛擬角色**，長期目標是養成虛擬 KOL。
+**四位** AI 編輯（＋總編）不只是寫作工具，是**有完整人設的虛擬角色**，長期目標養虛擬 KOL。署名：**編輯／Mise · 彙整 · Passe · 問／Fumet · 招待／Amuse**。
 
-- **Mise**（主筆）— 長文 400-600 字，場景式開頭 → [profile](public/editor-mise.html)
+- **Mise**（主筆）— 長文 **約 500–900 字（觀點編譯 D）**，場景式開頭 → [profile](public/editor-mise.html)
 - **Passe**（快訊編輯）— 快訊 3-6 則，第一句就是事實 → [profile](public/editor-passe.html)
 - **Fumet**（提問者）— 每期結尾提問 100-250 字；**也寫文化面長文**（/write-issue 依題材自動路由：文化面→Fumet、技術/產業面→Mise）→ [profile](public/editor-fumet.html)
+- **Amuse**（特別企劃 · 🆕 2026-06-21）— 諷刺自嘲吐槽編輯（伍迪艾倫式：收＋笑裡的憂鬱＋知性慧黠）；**不定期、不進每期常規路由**，由 `/commission` 叫出場；**預設走 A 模式不走 D**
 - **總編輯** — 幕後品管，7 項審核清單（事實核查、AI 味檢測、節奏檢查、輕量 SEO）
+
+**長文標準 ＝ 觀點編譯（D）**（2026-06-21 定）：完整交代來源 ＋ 編輯觀點貫穿（≠挑一條 A、≠翻譯/摘要 B/C）；字數依訊息量伸縮 ~500–900。定義在 `.claude/skills/write-issue/refs/voices.md`〈長文標準〉。
 
 ### AI 編輯人格架構（Soul + Memory）
 
@@ -95,7 +98,7 @@ Logo 點擊 → demo-index.html
 - **Dev 工具:** `tsx`（跑/測 src/lib + scripts；`node` strip-types 無法處理 extensionless import）
 - **Database:** Supabase（尚未接入；seen store 暫用 `data/seen.json`）
 - **Newsletter:** Ghost Pro ($9/月，尚未接)
-- **Image:** 長文配圖兩模型——nanobanana（`mcp__nanobanana__generate_image`）＋ gpt-image（透過本機 **Codex CLI**）；快訊不配圖
+- **Image:** 長文配圖 nanobanana（`mcp__nanobanana__generate_image`）＋ gpt-image（本機 **Codex CLI**）；快訊不配圖。**插圖風格＝可替換 profile**（`docs/illustration/styles/<name>/`，現役 `risograph`）；跨專案 **`/style-extract`**（user-level skill）抽風格＋生圖驗證、存共用庫 `~/style-lab/`
 
 ## 目錄結構
 
@@ -111,7 +114,9 @@ the-pass/
 │   ├── backlog.html              ← 選題庫存頁（gen 自 data/backlog.json；團隊看，--save 後重生）
 │   ├── write-issue-architecture.html ← AI 編輯室架構頁（給團隊，含 SVG 圖）
 │   ├── editor-source.html        ← 編輯源頭頁（gen 自 9 個 md：3 soul+3 memory+voices/anti-slop/checklist；團隊看寫作源頭，勿手改）
-│   ├── skills.html               ← 三個 skill 一頁說明（按鈕切換 選題/寫稿/發佈；team）
+│   ├── skills.html               ← 三技能一頁說明（選題/寫稿/發佈；team）
+│   ├── new-editor-guide.html     ← 🆕 團隊 SOP：如何新增一位 AI 編輯（四步＋範本）
+│   ├── illustration-style-sop.html ← 🆕 團隊 SOP：換插圖風格（兩步：/style-extract 產 profile → 導入）
 │   ├── covers.html               ← 配圖總覽（每期長文配圖：採用＋候選對照，左側日期切換；publish 時更新）
 │   ├── issue-<date>.html         ← 每期出刊內容頁（封面圖＋長文＋快訊＋提問），共用 issue.css
 │   ├── feedback.js               ← 區塊回饋（複製範本到剪貼簿、零後端；架構頁/編輯源頭頁載入）
@@ -123,8 +128,8 @@ the-pass/
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
 ├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / gen-editor-source-page / gen-backlog-page / demo-report / run-pipeline
-├── .claude/skills/                ← selection-report（選題）· write-issue（寫作，含 refs/）· publish-issue（發佈，含長文配圖）· audit-sources
-├── docs/                         ← MD（selection-mechanism、write-issue-architecture、editors/*-soul、source-verification-checklist…）
+├── .claude/skills/                ← selection-report · write-issue（含 refs/voices·anti-slop·chief-checklist）· publish-issue · audit-sources · **commission**（指定單一編輯單篇委稿，共用 write-issue 編輯檔）
+├── docs/                         ← MD（selection-mechanism、write-issue-architecture、editors/{*-soul,*-memory,_TEMPLATE-*}、illustration/styles/risograph/style.md、source-verification-checklist…）
 ├── data/                         ← runtime（seen.json、backlog.json、sr/<date>/{pool,candidates,scores,selected}.json；gitignore）
 └── CLAUDE.md                     ← 本檔案
 ```
@@ -153,6 +158,9 @@ the-pass/
 - **`/selection-report` skill（選題，已建 2026-06-19）**：**零 API key 在本機 Claude Code 跑**。`sr-prep`（抓取→去重→去噪候選池）→ **Haiku 子代理粗篩** → **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角）→ 庫存競爭 → `sr-build` 雙輸出（HTML 上 thepass.cc + Obsidian）。報告含切角、左側日期面板、⬇匯出決定鈕；出刊（`--save`）持久化 `seen.json`（跨期去重，不重複撈/發）。
 - **`/write-issue` skill（寫作，已建 2026-06-19，harness 版）**：選題拍板後把選的稿寫成整期草稿。**orchestrator + 4 編輯 subagent（Mise／Passe／Fumet／總編，聲音隔離）+ 3 互動 gate（人拍板）**；抓全文查證、守事實不可扭曲、付費牆只報現象。**長文編輯自動路由**（文化面→Fumet、技術/產業面→Mise，§1.5）。架構全文見 [`docs/write-issue-architecture.md`](docs/write-issue-architecture.md)（也上 thepass.cc/write-issue-architecture.html）。
 - **`/publish-issue` skill（發佈，已建並實跑 2026-06-20）**：定稿 → issue 網頁＋長文配圖 → 部署。配圖＝**概念優先**（紐約客式諷刺 idea）→ **以 demo 圖為風格錨點** → nanobanana＋Codex 雙模型生候選 → 人挑圖。首期 2026-06-19 已上線含概念配圖；`covers.html` 留採用＋候選對照。本週另加：編輯源頭頁（`editor-source.html`，gen）、Skills 說明頁、區塊回饋（`feedback.js`）。
+- **`/commission` skill（單篇委稿，🆕 2026-06-21）**：指定某位編輯把一個來源（URL/貼文）寫成單篇、不出整期；**共用 /write-issue 的編輯人格檔**（改一次到處生效）。orchestrator 抓全文 → spawn 該編輯 subagent → gate → 記憶 opt-in。長文預設 D、Amuse 例外走 A。
+- **第四位編輯 Amuse ＋ 新增編輯 SOP（🆕 2026-06-21）**：Amuse 上線（`docs/editors/amuse-soul/memory.md`、editors.html 特別企劃卡、伍迪艾倫式語氣校準）；團隊 SOP `new-editor-guide.html`（四步＋`docs/editors/_TEMPLATE-*.md` 範本）——「你定位、AI 接線」。
+- **插圖風格 profile 機制 ＋ `/style-extract`（🆕 2026-06-21）**：插圖風格＝可替換資料（`style.md`＋錨點圖＋validation），出圖 skill 不變；現役 `docs/illustration/styles/risograph/style.md`；換風格 SOP `illustration-style-sop.html`。跨專案 user-level skill **`/style-extract`** 抽風格＋驗證 subagent 打分、存 `~/style-lab/profiles/`（已有 bold-pop、mono-ink 兩範例）。
 - **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
 - **品牌 / 編輯 / 網站基礎**：品牌定位 + Project Brief、4 位 AI 編輯人設 + Soul（`docs/editors/*-soul.md`）、3 期 Demo Issues、插畫指南、域名 thepass.cc + Vercel。
 
@@ -175,8 +183,8 @@ the-pass/
 ### 5. 待修 / 待 audit
 `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；同事再給的來源用 `/audit-sources` 跑；`foodbank-kr` feed 偶發 DNS 失敗待查。
 
-### 6. ✅ 三個 skill 都已建並實跑（選題／寫作／發佈）
-選題→寫稿→發佈三個 skill 接力，首期 2026-06-19 已完整跑完上線（含 Memory 回寫、紐約客式概念配圖）。Memory 已接：開寫載入各編輯 `*-memory.md`、定稿後回寫（事實型自動／準則型人確認）；種子＝Mise 標題鐵則。**真正待辦（最優先）**：① **跑下一期完整流程**（選題→寫稿→你定稿→發佈），第一次端到端驗收；② **真實運作幾週、好好迭代**（編輯聲音、memory 準則、配圖概念）；③ Ghost Pro 出刊管道（之後）。
+### 6. ✅ 出刊三技能 ＋ 委稿/新編輯/風格機制都已建
+選題→寫稿→發佈三 skill 接力 ＋ `/commission`（單篇委稿）＋ Amuse（第四編輯）＋ 新增編輯 SOP ＋ 插圖 profile 機制 ＋ `/style-extract`，本 session（6/20–21）全建好；首期 2026-06-19 已完整跑完上線。Memory 已接（開寫載入＋定稿回寫，種子＝Mise 標題鐵則）。**真正待辦（最優先）**：① **跑下一期完整流程**（選題→寫稿→你定稿→發佈），端到端驗收；② **真實運作幾週、迭代**（編輯聲音、memory 準則、配圖概念）；③ Ghost Pro 出刊管道（之後）。
 
 ## 部署
 
@@ -206,12 +214,17 @@ npx vercel --prod --yes
 - **editor-source.html 是生成頁（團隊看寫作源頭）**: 由 `scripts/gen-editor-source-page.ts` 從 9 個 md（`docs/editors/*-soul.md`+`*-memory.md`、`refs/voices.md`+`anti-slop.md`+`chief-editor-checklist.md`）渲染、內建零依賴 md→html。改那些 md 後跑 `npx tsx scripts/gen-editor-source-page.ts` 重生、commit 部署。**勿手改 `public/editor-source.html`**（會被覆蓋）。團隊優化寫作風格的入口（hub 有卡片）。
 - **gpt-image-2 生圖走 Codex CLI**（/publish-issue 用）: `codex exec --full-auto --skip-git-repo-check -C <寫入目錄> -o <msgfile> "...生圖存成 <檔名>...印出絕對路徑"`。codex 已登入 ChatGPT、內建 gpt-image，生到 `~/.codex/generated_images/<uuid>/ig_*.png` 再依指示 cp 到目標。**Bash 工具 timeout 設 ≥300000ms**（每張 1–2 分、~30–40k codex token；macOS 無 shell `timeout` 指令）。nanobanana 仍走 `mcp__nanobanana__generate_image`。
 - **回饋功能 = `public/feedback.js`**: 架構頁/編輯源頭頁靠 `<body data-fb-blocks="選擇器">` 自動注入每區塊「💬 回饋」鈕；點了**複製回饋範本到剪貼簿＋跳提示**（零後端、跨環境可靠；mailto 依賴本機郵件程式、web 用戶常沒反應，已棄用）。
-- **/publish-issue 配圖三鐵則**: ① **概念優先**——先想一個紐約客式諷刺 visual idea（替讀者問問題），不是場景重現；② **以 demo 圖為風格錨點**——餵 `public/img/style-*.png` 當 nanobanana `input_image`／codex `-i`（純文字 prompt 釘不住 The Pass 風格）；③ 嚴守 `illustration-guide.html`（risograph、出菜框＋桌鈴、人主角）。落選圖留作 `covers.html` 候選對照（別刪）；issue 頁共用 `public/issue.css`（別每期 inline）。
+- **/publish-issue 配圖三鐵則**: ① **概念優先**——先想一個紐約客式諷刺 visual idea（替讀者問問題），不是場景重現；② **以 demo 圖為風格錨點**——餵 `public/img/style-*.png` 當 nanobanana `input_image`／codex `-i`（純文字 prompt 釘不住 The Pass 風格）；③ 嚴守 `illustration-guide.html`（risograph、出菜框＋桌鈴、人主角）。落選圖留作 `covers.html` 候選對照（別刪）；issue 頁共用 `public/issue.css`（別每期 inline）。**現役風格機器版規格＝ `docs/illustration/styles/risograph/style.md`（單一真實來源，含錨點＋提示詞片段）；換風格＝換現役 profile（見 `illustration-style-sop.html`／`/style-extract`）。**
 - **scorer 需 API key**: 無 `ANTHROPIC_API_KEY` 時 scorer 走 dry-run（關鍵字代理，非真評分）。AI 不能代填金鑰，需使用者自己加到 `.env.local`。
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
 - **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。
 - **Fumet 不選稿**: 結尾提問從選出的長文「提煉」，不從候選池打分選一篇（editorial-guidelines 規定）。
 - **/write-issue 用 subagent 隔離聲音**: 三編輯 + 總編各 spawn 一個 subagent（per-編輯），別在同一 context 全寫（聲音會糊）；總編獨立審、不自審。改聲音→`refs/voices.md`、底線→`refs/anti-slop.md`、審核→`refs/chief-editor-checklist.md`、人格→`docs/editors/*-soul.md`（人格是團隊原作、refs 已對原文核對過，勿亂改）。
+- **編輯署名（2026-06-21 改）**: 長文「編輯／<編輯>」、快訊「彙整 · Passe」、提問「問／Fumet」、特別企劃「招待／Amuse」。舊「選題 · Mise/Fumet」是正典誤植、已修（在 `voices.md`）。
+- **長文＝觀點編譯 D**: 完整交代來源＋角度貫穿（≠A 挑一條、≠B/C 翻譯摘要）；/write-issue 長文與 /commission 都注入 `voices.md`〈長文標準〉。**Amuse 是唯一預設走 A 的編輯**。
+- **anti-slop 別自己算年數**: 原文寫「2007 年」就別寫「十八年前」（推算、可能算錯）；要嘛給年份、要嘛「多年前」。
+- **/commission ＝ 共用編輯檔**: 與 /write-issue 讀同一套 soul/voices/memory/anti-slop（改一次兩邊生效）；單篇委稿、記憶預設不寫（opt-in）。
+- **/style-extract 驗證圖不落專案**: 測試圖一律生進 `~/style-lab/profiles/<name>/validation/`、檢視走 SendUserFile；**絕不寫進任何專案 public/ 或部署網站**（本 session 為部署給用戶看曾暫放 The Pass public，捷徑非常態）。
 - **付費牆政策**: write-issue 抓全文偵測付費牆——硬新聞牆找公開源否則退；觀點牆但預覽自成一體→報現象+透明標註+佐證；絕不憑預覽假裝讀過全文。
 - **/write-issue 輸入 = selected.json**: `sr-build` 每跑都寫 `data/sr/<date>/selected.json`（選的稿+切角+Fumet 種子）給寫作 skill 讀。
 - **報告入口 selection-report.html**: 固定網址、讀 `selection-reports.json` 跳最新一期；每期 dated 報告要 commit 才上線（gitignore 現只忽略 `-demo`）。
@@ -222,7 +235,5 @@ npx vercel --prod --yes
 - **快訊不配圖**: 測試過 spot illustration，閱讀斷裂感太強，決定不採用
 - **插畫拱門問題**: nanobanana 容易重複生成廚房拱門構圖，prompt 需明確排除
 - **nav 有兩套**: 內部 6 連結 / 外部 3 連結（關於 The Pass、方法論、AI 編輯室），Logo 連結也不同（見上方表格）
-- **Demo Issue #002 #003**: 連結都是 `href="#"`，banner 已改為「展示用範例」
-- **CSS 重複**: 三期 demo issue 各自 inline CSS，修改樣式需三份都改
 - **nanobanana 生圖**: 每次生成都不同，喜歡的圖要立刻保存
 - **避免「品味」用詞**: 全站已替換，用「觀點」「偏好」「分享」
