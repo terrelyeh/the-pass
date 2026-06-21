@@ -33,6 +33,7 @@ pre .c{color:#8B90A0}
 .tip{font-size:.85rem;color:var(--ink-light);background:var(--bg-warm);border-left:3px solid var(--accent-light);border-radius:0 6px 6px 0;padding:.6rem .9rem;margin-top:.8rem;line-height:1.7}.tip b{color:var(--ink)}
 .active{background:#F0F9F4;border:1px solid #D4EDDA;border-radius:10px;padding:1rem 1.2rem;font-size:.9rem;line-height:1.7}
 .active a{color:var(--accent);text-decoration:none}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.8rem 0 .2rem}.shots img{width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--border);border-radius:8px}
 .foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3rem;border-top:1px solid var(--border);padding-top:1.4rem}.foot a{color:var(--accent);text-decoration:none}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
 @media(max-width:680px){.parts{grid-template-columns:1fr}}
 </style></head><body>
@@ -61,11 +62,10 @@ pre .c{color:#8B90A0}
 </div>
 <div class="tip">三者放在一個資料夾 <code>docs/illustration/styles/&lt;風格名&gt;/</code>，就是一個自帶一切的可替換單元。來源不限——插畫、照片、截圖、mood board 都能抽。</div>
 
-<div class="sec-label">換風格的四步</div>
-<div class="step"><div class="num">1</div><div><div class="t">收參考 <span class="who">你</span></div><div class="d">丟一組同調的圖（5–15 張）給 Claude——任何你想要的風格。</div></div></div>
-<div class="step"><div class="num">2</div><div><div class="t">抽 profile <span class="who tech">Claude</span></div><div class="d">分析成 style.md（配色／線條／質感／構圖／情緒／禁忌）＋ 選錨點圖 ＋ 寫提示詞片段。</div></div></div>
-<div class="step"><div class="num">3</div><div><div class="t">試跑 <span class="who tech">Claude</span></div><div class="d">用 1–2 個「為這風格而生」的概念生圖試。（教訓：概念要配風格，別硬套舊概念。）對味再往下。</div></div></div>
-<div class="step"><div class="num">4</div><div><div class="t">鎖進管線 <span class="who tech">Claude</span></div><div class="d">採用就把這個 profile 設為「現役」：<code>/publish-issue</code> 指過去、更新人看的 illustration-guide。以後生圖自動走新風格。</div></div></div>
+<div class="sec-label">換風格 = 兩步</div>
+<div class="step"><div class="num">1</div><div><div class="t">跑 <code>/style-extract</code>，得到 profile <span class="who tech">skill</span></div><div class="d">丟一組參考圖 → skill 自己跑完整迴圈：多面向分析 → 規格 gate（你確認）→ 生測試圖 → 驗證 subagent 逐面向打分 →（飄掉就改提示詞、重生、重驗）。產出一個<b>驗證過</b>的 profile（style.md ＋ 錨點圖 ＋ validation 證據），存進共用庫 <code>~/style-lab/</code>。</div></div></div>
+<div class="step"><div class="num">2</div><div><div class="t">導入專案，換現役 <span class="who tech">Claude</span></div><div class="d">把選好的 profile 設為某專案的現役風格：該專案出圖 skill（如 The Pass <code>/publish-issue</code>）指過去、更新人看的 illustration-guide。以後那個專案生圖自動走新風格。</div></div></div>
+<div class="tip"><b>所以是兩步：</b>① <code>/style-extract</code> 產一個驗證過的 profile（跨專案、可重用）→ ② 哪個專案要用，就把它導入、換現役。換風格 = 重跑這兩步。</div>
 
 <div class="sec-label">範例：把一組圖抽成 profile（節錄）</div>
 <p style="font-size:.9rem;color:var(--ink-light);margin-bottom:.5rem">這是把一組大膽 pop 插畫抽成的 profile 規格——示範「一系列圖 → 可重用風格」長什麼樣：</p>
@@ -81,6 +81,12 @@ pre .c{color:#8B90A0}
 提示詞片段：bold naive folk-pop, riso/screenprint, thick black ink,
   crayon grain + halftone, flat single saturated background,
   stylized pop-colour faces (no realistic skin), 16:9</pre>
+<div class="shots">
+<img src="styletest-1-chef-v2.png" alt="bold-pop 實跑範例 1">
+<img src="styletest-2-farmer-v2.png" alt="bold-pop 實跑範例 2">
+<img src="styletest-3-ramen-v2.png" alt="bold-pop 實跑範例 3">
+</div>
+<p style="font-size:.84rem;color:var(--ink-muted);margin-top:0">↑ 用這個 profile 實跑出來的 3 張（不同主題：廚房／田裡／拉麵）——<b>同一套風格、跨內容都重現</b>。經 <code>/style-extract</code> 的驗證迴圈打分確認（這套大膽風 The Pass 不採用，純示範「換風格」流程跑得通）。</p>
 
 <div class="sec-label">style.md 範本（直接複製去填）</div>
 <pre><span class="c"># Style Profile · {風格名}</span>
