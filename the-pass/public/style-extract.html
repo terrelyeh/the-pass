@@ -56,6 +56,8 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 
 <div class="lede">抽一個風格不難，難的是<b>證明真的抽到了</b>。<code>/style-extract</code> 的特別之處在這：一個總指揮（orchestrator）親眼把風格讀成規格，接著生圖測試，再交給<b>獨立的驗證 subagent 對著原圖逐面向打分</b>——不是「看起來像」就算數，是<b>分數證明能重現</b>才算數。一句話：<b>抽取靠整體的眼，驗證靠獨立的眼。</b></div>
 
+<div class="callout"><b>先解釋一個詞：harness（工法）。</b>指這個 skill 不是「一個 AI 從頭做到尾」，而是<b>一個總指揮（orchestrator）調度幾個各自獨立的分身（subagent）、中間設「停下來給人拍板」的關卡（gate）</b>。像出菜口的廚房：主廚分派、各站位廚師各做各的（味道不互串）、出餐前主廚把關。下面整條流程就是這套工法。</div>
+
 <h2 class="nobord">整條流程</h2>
 <div class="h-sub">金色＝「停下來給人決定」的關卡；左邊那條迴路＝沒過就改了重來。</div>
 
