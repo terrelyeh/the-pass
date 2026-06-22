@@ -11,6 +11,7 @@ import { fetchAllSources } from "../src/lib/fetcher";
 import { SeenStore, selectNewArticles, canonicalUrl } from "../src/lib/dedup";
 import { relevanceDetail } from "../src/lib/relevance";
 import { sources } from "../src/lib/sources";
+import { fetchScout, isScoutArticle } from "../src/lib/scout";
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
 
@@ -19,16 +20,37 @@ async function main() {
   const outDir = path.join(process.cwd(), "data", "sr", date);
   mkdirSync(outDir, { recursive: true });
 
+  const useScout = process.argv.includes("--scout");
+
   console.log("① 抓取 active 來源（RSS）…");
   const { articles, results } = await fetchAllSources();
 
+  // ①.5 scout 查詢式進料（opt-in：--scout）。產出與 RSS 同形狀的 RawArticle[]，併進候選、
+  // 走同一套去重（含與 RSS 的近重複折疊）。沒帶 --scout 時行為與舊版完全相同（零金鑰、可離線）。
+  let scoutArticles: typeof articles = [];
+  let scoutPerQuery: { key: string; label: string; raw: number; kept: number }[] = [];
+  if (useScout) {
+    console.log("①.5 scout 查詢式進料（firecrawl，在地語言＋跨區主題）…");
+    const sc = fetchScout();
+    scoutArticles = sc.articles;
+    scoutPerQuery = sc.perQuery;
+    console.log(`   scout：${scoutArticles.length} 篇　${sc.perQuery.map((p) => `${p.label} ${p.kept}`).join("、")}`);
+  }
+  const allArticles = [...articles, ...scoutArticles];
+
   const seen = await new SeenStore().load();
-  const { fresh, stats } = await selectNewArticles(articles, seen);
+  const { fresh, stats } = await selectNewArticles(allArticles, seen);
 
   // 去噪 + 食物優先排序：丟零訊號（food=tech=0），有食物訊號者排前面（食物是門檻）。
   // 不砍上限——整池交給 Haiku 子代理粗篩。
   const pool = fresh
-    .map((a) => ({ a, d: relevanceDetail({ title: a.title, summary: a.summary }) }))
+    .map((a) => {
+      let d = relevanceDetail({ title: a.title, summary: a.summary });
+      // scout 來自食物導向 query → 食物相關 by construction；關鍵字偵測對泰/越/西/北歐標題會
+      // 0 分，不能用零訊號門檻砍掉它們。給食物訊號保底，讓它們排進 food-first 群、不被丟。
+      if (isScoutArticle(a)) d = { score: Math.max(d.score, 1), food: Math.max(d.food, 1), tech: d.tech };
+      return { a, d };
+    })
     .filter((x) => x.d.score > 0)
     .sort((x, y) => {
       const fx = x.d.food > 0 ? 1 : 0;
@@ -41,6 +63,7 @@ async function main() {
       title: a.title,
       source: a.sourceName,
       sourceId: a.sourceId,
+      origin: isScoutArticle(a) ? "scout" : "rss", // RSS vs 查詢式進料；報告/Haiku 看得到來路
       lang: a.sourceLanguage,
       date: a.pubDate ? a.pubDate.slice(0, 10) : "",
       link: a.link,
@@ -53,11 +76,15 @@ async function main() {
   const streamById = new Map(sources.map((s) => [s.id, s.stream]));
   const meta = {
     date,
-    fetched: articles.length,
+    fetched: allArticles.length,
+    rssFetched: articles.length,
+    scoutFetched: scoutArticles.length,
     deduped: fresh.length,
     poolSize: pool.length,
+    scoutInPool: pool.filter((p) => p.origin === "scout").length,
     droppedZeroSignal: fresh.length - pool.length,
     dedup: { alreadySeen: stats.alreadySeen, nearDuplicate: stats.nearDuplicate },
+    scout: useScout ? scoutPerQuery : null,
     scannedSources: results.map((r) => ({
       name: r.sourceName,
       count: r.count,
@@ -68,8 +95,8 @@ async function main() {
   writeFileSync(path.join(outDir, "pool.json"), JSON.stringify(pool, null, 2));
   writeFileSync(path.join(outDir, "meta.json"), JSON.stringify(meta, null, 2));
 
-  console.log(`② 去重：抓 ${articles.length} → 新 ${fresh.length}（已 seen ${stats.alreadySeen}、近重複折疊 ${stats.nearDuplicate}）`);
-  console.log(`③ 去噪：${fresh.length} → 候選池 ${pool.length}（丟零訊號 ${meta.droppedZeroSignal}）`);
+  console.log(`② 去重：抓 ${allArticles.length}（RSS ${articles.length}＋scout ${scoutArticles.length}）→ 新 ${fresh.length}（已 seen ${stats.alreadySeen}、近重複折疊 ${stats.nearDuplicate}）`);
+  console.log(`③ 去噪：${fresh.length} → 候選池 ${pool.length}（丟零訊號 ${meta.droppedZeroSignal}；其中 scout ${meta.scoutInPool} 篇）`);
   console.log(`\n✓ data/sr/${date}/pool.json（${pool.length} 篇）`);
   console.log(`✓ data/sr/${date}/meta.json`);
   console.log(`\n下一步：spawn Haiku 子代理分批粗篩 pool.json → 寫 candidates.json（~50–70 篇）→ 你再細評`);
