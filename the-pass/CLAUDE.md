@@ -149,7 +149,7 @@ the-pass/
 
 - **單一真實來源 = `src/lib/sources.ts`**（現 31 來源：active 29 / pending 2）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`——**它＝「選題來源＋狀態」的單一文件**（tier 分組 + Active/Pending 徽章；`/sources-status` route 已退役併入，2026-06-11 團隊要求）。
 - **兩條進料線**：Stream A 飲食媒體 / Stream B 食品科技·觀點（輔助）。**刻意不收台灣源**（TA 是台灣讀者，價值＝台灣沒有的新鮮事）。食物優先、AI/科技為輔。
-- **查詢式進料 scout（Phase 1，opt-in `sr-prep --scout`）**：第三個進料口。`scout.ts` 用 firecrawl 跑常駐 query（`scout-queries.ts` SSOT：在地語言＋跨區主題）撈「RSS 看不到」的在地/驚奇題 → 與 RSS 同形狀 RawArticle → 併進 pool 走**同一套去重/評分**（標 `origin:"scout"`、sourceTier 5）。**只找題不抓全文**（全文留 /write-issue）；**繞過零訊號門檻**（在地語言標題英文關鍵字判 0、不能砍）。預設關＝舊行為不變、零金鑰可離線。配方/邊界見兩檔註解。
+- **查詢式進料 scout（Phase 1，2026-06-23 起設為 `/selection-report` 每期預設）**：第三個進料口。`scout.ts` 用 firecrawl 跑常駐 query（`scout-queries.ts` SSOT：在地語言＋跨區主題）撈「RSS 看不到」的在地/驚奇題 → 與 RSS 同形狀 RawArticle → 併進 pool 走**同一套去重/評分**（標 `origin:"scout"`、sourceTier 5）。**只找題不抓全文**（全文留 /write-issue）；**繞過零訊號門檻**（在地語言標題英文關鍵字判 0、不能砍）。**預設帶 `--scout`**；省 credits／離線時拿掉回純 RSS（舊行為、零金鑰）。配方/邊界見兩檔註解。
 - **評分（兩種模式）**：① **`/selection-report` skill（主要、零 API key）**：Haiku 子代理粗篩 + 本機 Claude Code 當總編評分（走 Claude Code 既有登入，不需金鑰）。② **`scorer.ts`（腳本／未來自動化）**：有金鑰走 Opus 全程、無金鑰 dry-run（關鍵字代理）。兩者共用五面向加權（`weightedOf`，已匯出）。**Fumet 提問不選稿**，從選出的長文「提煉」。
 - **庫存 backlog**：`backlog.ts`（`BacklogStore` + `buildCompetitorPool`）持久化「合格沒選上」的，JSON `data/backlog.json`，保鮮期預設 30 天（`DEFAULT_FRESHNESS_DAYS`）。每期 `prune(過期淘汰)` → 合併庫存+新評分排序 → 選一期 → `remove(出刊)` / `upsert(沒選上)` → `save`。重進不續命（保留原 enteredAt）。`scripts/test-backlog.ts` 驗證跨期迴圈（11 checks，測試用固定 14 天窗、不依賴預設值）。**注意：v1 是單一 flat window**，頁面 §9 講的「分型保鮮期」（融資稿短、常青長）是未來精修。
 - **報告**：`report.ts` 渲染品牌化 HTML（漏斗統計、建議出刊、完整候選池、庫存、已篩除、本週掃描來源）；切角可點選（A 預設）+ 退庫存即時互動（純前端、不存檔）。
@@ -215,7 +215,7 @@ npx vercel --prod --yes
 - **回饋功能 = `public/feedback.js`**: 架構頁/編輯源頭頁靠 `<body data-fb-blocks="選擇器">` 自動注入每區塊「💬 回饋」鈕；點了**複製回饋範本到剪貼簿＋跳提示**（零後端、跨環境可靠；mailto 依賴本機郵件程式、web 用戶常沒反應，已棄用）。
 - **/publish-issue 配圖三鐵則**: ① **概念優先**——先想一個紐約客式諷刺 visual idea（替讀者問問題），不是場景重現；② **以 demo 圖為風格錨點**——餵 `public/img/style-*.png` 當 nanobanana `input_image`／codex `-i`（純文字 prompt 釘不住 The Pass 風格）；③ 嚴守 `illustration-guide.html`（risograph、出菜框＋桌鈴、人主角）。落選圖留作 `covers.html` 候選對照（別刪）；issue 頁共用 `public/issue.css`（別每期 inline）。**現役風格機器版規格＝ `docs/illustration/styles/risograph/style.md`（單一真實來源，含錨點＋提示詞片段）；換風格＝換現役 profile（見 `illustration-style-sop.html`／`/style-extract`）。**
 - **scorer 需 API key**: 無 `ANTHROPIC_API_KEY` 時 scorer 走 dry-run（關鍵字代理，非真評分）。AI 不能代填金鑰，需使用者自己加到 `.env.local`。
-- **scout = 非零金鑰、吃 firecrawl credits**: `sr-prep --scout` 走 firecrawl CLI（已登入；不帶 `--scout` 才維持純零金鑰、可離線）。firecrawl 失敗時 scout 回 `[]` → 退化純 RSS、不會壞。
+- **scout = 非零金鑰、吃 firecrawl credits**: `--scout` 是 `/selection-report` 每期預設（走 firecrawl CLI、已登入）；**省 credits／離線時拿掉 `--scout` 回純零金鑰 RSS**。firecrawl 失敗時 scout 回 `[]` → 自動退化純 RSS、不會壞。
 - **scout 繞過零訊號門檻**: `relevance.ts` 食物關鍵字只懂英/韓/日，泰/越/西/北歐標題會判 0；sr-prep 對 `isScoutArticle` 強制保留並給食物訊號保底——**別把 scout 也套零訊號門檻砍掉**（會殺光在地語言 gem）。
 - **scout 跨期重撈靠 seen 擋**: firecrawl 每跑回同月窗口（`--tbs qdr:m`）同樣 URL，跟 RSS 一樣靠 `seen.json` 去重；**seen 只在 `sr-build --save` 定版**（eval 不存→可重現重撈、也不污染）。過閘門未選的 scout 進 backlog 競爭（同 RSS），不會重複進。
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
