@@ -1,6 +1,6 @@
 # CLAUDE.md — The Pass 出菜口 Project Context
 
-> Last updated: 2026-06-22
+> Last updated: 2026-06-23
 
 ## Project Overview
 
@@ -93,7 +93,7 @@ Logo 點擊 → demo-index.html
 - **Framework:** Next.js 16 (Turbopack) + TypeScript
 - **Hosting:** Vercel（Production: `thepass.cc` + `the-pass-nine.vercel.app`）
 - **Repo:** github.com/terrelyeh/the-pass
-- **選題 pipeline:** `src/lib/*`（fetcher / dedup / relevance / scorer / report / sources），純 TS
+- **選題 pipeline:** `src/lib/*`（fetcher / dedup / relevance / scorer / report / sources / **scout** + scout-queries），純 TS
 - **LLM:** `@anthropic-ai/sdk`（scorer：**Opus 全程評估** `claude-opus-4-8`，硬閘門 + 五面向同一次呼叫）。**需 `ANTHROPIC_API_KEY` 才走 live，否則 dry-run（關鍵字代理）**
 - **Dev 工具:** `tsx`（跑/測 src/lib + scripts；`node` strip-types 無法處理 extensionless import）
 - **Database:** Supabase（尚未接入；seen store 暫用 `data/seen.json`）
@@ -126,9 +126,10 @@ the-pass/
 ├── src/
 │   ├── lib/                      ← 選題 pipeline（見下方架構）
 │   │   ├── sources.ts            ← ⭐ 來源「單一真實來源」（+ activeSources / sourcesByStream helper）
+│   │   ├── scout.ts + scout-queries.ts ← 🆕 查詢式進料（firecrawl 開放搜尋；scout-queries=query 模板 SSOT）
 │   │   └── fetcher · dedup · relevance · scorer · backlog · report .ts
 │   └── app/                      ← Next App Router；api/fetch-feeds（/sources-status route 已退役，併入 sources.html）
-├── scripts/                      ← tsx：sr-prep / sr-build（/selection-report 機械層）· audit-feed / gen-sources-page / gen-editor-source-page / gen-backlog-page / demo-report / run-pipeline
+├── scripts/                      ← tsx：sr-prep（加 --scout 開查詢式進料）/ sr-build（/selection-report 機械層）· test-scout · audit-feed / gen-sources-page / gen-editor-source-page / gen-backlog-page / demo-report / run-pipeline
 ├── .claude/skills/                ← selection-report · write-issue（含 refs/voices·anti-slop·chief-checklist）· publish-issue · audit-sources · **commission**（指定單一編輯單篇委稿，共用 write-issue 編輯檔）
 ├── docs/                         ← MD（selection-mechanism、write-issue-architecture、editors/{*-soul,*-memory,_TEMPLATE-*}、illustration/styles/risograph/style.md、source-verification-checklist…）
 ├── data/                         ← runtime（seen.json、backlog.json、sr/<date>/{pool,candidates,scores,selected}.json；gitignore）
@@ -148,6 +149,7 @@ the-pass/
 
 - **單一真實來源 = `src/lib/sources.ts`**（現 31 來源：active 29 / pending 2）。改它後跑 `npx tsx scripts/gen-sources-page.ts` 重生 `public/sources.html`——**它＝「選題來源＋狀態」的單一文件**（tier 分組 + Active/Pending 徽章；`/sources-status` route 已退役併入，2026-06-11 團隊要求）。
 - **兩條進料線**：Stream A 飲食媒體 / Stream B 食品科技·觀點（輔助）。**刻意不收台灣源**（TA 是台灣讀者，價值＝台灣沒有的新鮮事）。食物優先、AI/科技為輔。
+- **查詢式進料 scout（Phase 1，opt-in `sr-prep --scout`）**：第三個進料口。`scout.ts` 用 firecrawl 跑常駐 query（`scout-queries.ts` SSOT：在地語言＋跨區主題）撈「RSS 看不到」的在地/驚奇題 → 與 RSS 同形狀 RawArticle → 併進 pool 走**同一套去重/評分**（標 `origin:"scout"`、sourceTier 5）。**只找題不抓全文**（全文留 /write-issue）；**繞過零訊號門檻**（在地語言標題英文關鍵字判 0、不能砍）。預設關＝舊行為不變、零金鑰可離線。配方/邊界見兩檔註解。
 - **評分（兩種模式）**：① **`/selection-report` skill（主要、零 API key）**：Haiku 子代理粗篩 + 本機 Claude Code 當總編評分（走 Claude Code 既有登入，不需金鑰）。② **`scorer.ts`（腳本／未來自動化）**：有金鑰走 Opus 全程、無金鑰 dry-run（關鍵字代理）。兩者共用五面向加權（`weightedOf`，已匯出）。**Fumet 提問不選稿**，從選出的長文「提煉」。
 - **庫存 backlog**：`backlog.ts`（`BacklogStore` + `buildCompetitorPool`）持久化「合格沒選上」的，JSON `data/backlog.json`，保鮮期預設 30 天（`DEFAULT_FRESHNESS_DAYS`）。每期 `prune(過期淘汰)` → 合併庫存+新評分排序 → 選一期 → `remove(出刊)` / `upsert(沒選上)` → `save`。重進不續命（保留原 enteredAt）。`scripts/test-backlog.ts` 驗證跨期迴圈（11 checks，測試用固定 14 天窗、不依賴預設值）。**注意：v1 是單一 flat window**，頁面 §9 講的「分型保鮮期」（融資稿短、常青長）是未來精修。
 - **報告**：`report.ts` 渲染品牌化 HTML（漏斗統計、建議出刊、完整候選池、庫存、已篩除、本週掃描來源）；切角可點選（A 預設）+ 退庫存即時互動（純前端、不存檔）。
@@ -157,6 +159,7 @@ the-pass/
 
 - **選題系統（已上線）**：抓取 → 去重 → 評估 → **庫存跨期競爭** → 選題報告 → hub / 來源狀態 / `/audit-sources`。來源收斂成 30（active 29），`sources.ts` 單一真實來源、頁面自動生成。
 - **`/selection-report` skill（選題，已建 2026-06-19）**：**零 API key 在本機 Claude Code 跑**。`sr-prep`（抓取→去重→去噪候選池）→ **Haiku 子代理粗篩** → **Claude Code 當總編依食物優先 rubric 評分**（五面向+路由+hook+2–3 切角）→ 庫存競爭 → `sr-build` 雙輸出（HTML 上 thepass.cc + Obsidian）。報告含切角、左側日期面板、⬇匯出決定鈕；出刊（`--save`）持久化 `seen.json`（跨期去重，不重複撈/發）。
+- **scout 查詢式進料（Phase 1，🆕 2026-06-23）**：開放網路發現層接進選題 pipeline（`sr-prep --scout`，見「選題 Pipeline」段）。eval 實跑：候選 22（scout 14＋rss 8）→過閘門 17→建議出刊 6 **全是 scout 撈到的在地/驚奇題**（尚比亞/印度紅螞蟻/泰韓墨在地）。配方＝firecrawl `--sources news`＋在地語言＋跨區主題、不掛 AI/tech。誠實但書：當輪 RSS 被 seen 壓到吃虧，別過度解讀「scout 永遠贏」。
 - **`/write-issue` skill（寫作，已建 2026-06-19，harness 版）**：選題拍板後把選的稿寫成整期草稿。**orchestrator + 4 編輯 subagent（Mise／Passe／Fumet／總編，聲音隔離）+ 3 互動 gate（人拍板）**；抓全文查證、守事實不可扭曲、付費牆只報現象。**長文編輯自動路由**（文化面→Fumet、技術/產業面→Mise，§1.5）。架構全文見 [`docs/write-issue-architecture.md`](docs/write-issue-architecture.md)（也上 thepass.cc/write-issue-architecture.html）。
 - **`/publish-issue` skill（發佈，已建並實跑 2026-06-20）**：定稿 → issue 網頁＋長文配圖 → 部署。配圖＝**概念優先**（紐約客式諷刺 idea）→ **以 demo 圖為風格錨點** → nanobanana＋Codex 雙模型生候選 → 人挑圖。首期 2026-06-19 已上線含概念配圖；`covers.html` 留採用＋候選對照。本週另加：編輯源頭頁（`editor-source.html`，gen）、Skills 說明頁、區塊回饋（`feedback.js`）。
 - **`/commission` skill（單篇委稿，🆕 2026-06-21）**：指定某位編輯把一個來源（URL/貼文）寫成單篇、不出整期；**共用 /write-issue 的編輯人格檔**（改一次到處生效）。orchestrator 抓全文 → spawn 該編輯 subagent → gate → 記憶 opt-in。長文預設 D、Amuse 例外走 A。
@@ -178,7 +181,7 @@ the-pass/
 - `nissyoku`（日本食糧新聞）feed 失效（只回 2020 舊聞，pending）；`foodbank-kr` 偶發 DNS 失敗待查；同事新來源用 `/audit-sources` 跑。
 - 報告「決定」的後端（目前退庫存／切角互動純前端、不存檔）。
 
-**提案（待團隊討論）— 研究階段**：來源分「內容源（RSS，可直接寫）vs 主題源（IG/YT/手動雷達，只給題目）」，主題源選上後多一個「研究/查證」步驟才寫作（提案頁 `research-stage.html`，未來 `/research` 用 Firecrawl + deep-research）。創作者進料：YouTube 用官方 RSS（`…/feeds/videos.xml?channel_id=`）直接進 `sources.ts`；IG 無官方 API → 手動雷達（Obsidian `創作者雷達.md`）。
+**scout 後續 / 研究階段**：scout（Phase 1，已上線）＝`research-stage` 提案「主題源（只給題目）」的引擎雛形。**Phase 2（未做）**：① 主題語意分群（把「越南 4× 同稿」收成一題多源；標題 Jaccard 解不了，要 LLM/embedding pass）② 綜述／觀點綜編寫作模式（題目＋來源束→一篇、錨一個人，接 /write-issue，輸入合約要改）。scout 待調：firecrawl 每跑重抓同月窗口、付 credits 再被 seen dedup（可 `qdr:w` 收窄／query 輪播攤平）；日文 query 偏 PR/百貨（已加 `-site:prtimes.jp`、靠下游閘門濾）。原提案其他：YouTube 官方 RSS（`…/feeds/videos.xml?channel_id=`）進 `sources.ts`；IG 無官方 API → 手動雷達（Obsidian `創作者雷達.md`）。
 
 **金鑰（選用）**：`/selection-report` 不需金鑰（本機 Claude Code＋Haiku 評分）；只有腳本全自動跑 `scorer.ts` Opus 才需 `.env.local` 的 `ANTHROPIC_API_KEY`（AI 不能代填）。**儲存三層**（機器 JSON／人看 Obsidian vault／團隊 Web），雙輸出 HTML+Markdown；Supabase 暫不導入。
 
@@ -212,6 +215,9 @@ npx vercel --prod --yes
 - **回饋功能 = `public/feedback.js`**: 架構頁/編輯源頭頁靠 `<body data-fb-blocks="選擇器">` 自動注入每區塊「💬 回饋」鈕；點了**複製回饋範本到剪貼簿＋跳提示**（零後端、跨環境可靠；mailto 依賴本機郵件程式、web 用戶常沒反應，已棄用）。
 - **/publish-issue 配圖三鐵則**: ① **概念優先**——先想一個紐約客式諷刺 visual idea（替讀者問問題），不是場景重現；② **以 demo 圖為風格錨點**——餵 `public/img/style-*.png` 當 nanobanana `input_image`／codex `-i`（純文字 prompt 釘不住 The Pass 風格）；③ 嚴守 `illustration-guide.html`（risograph、出菜框＋桌鈴、人主角）。落選圖留作 `covers.html` 候選對照（別刪）；issue 頁共用 `public/issue.css`（別每期 inline）。**現役風格機器版規格＝ `docs/illustration/styles/risograph/style.md`（單一真實來源，含錨點＋提示詞片段）；換風格＝換現役 profile（見 `illustration-style-sop.html`／`/style-extract`）。**
 - **scorer 需 API key**: 無 `ANTHROPIC_API_KEY` 時 scorer 走 dry-run（關鍵字代理，非真評分）。AI 不能代填金鑰，需使用者自己加到 `.env.local`。
+- **scout = 非零金鑰、吃 firecrawl credits**: `sr-prep --scout` 走 firecrawl CLI（已登入；不帶 `--scout` 才維持純零金鑰、可離線）。firecrawl 失敗時 scout 回 `[]` → 退化純 RSS、不會壞。
+- **scout 繞過零訊號門檻**: `relevance.ts` 食物關鍵字只懂英/韓/日，泰/越/西/北歐標題會判 0；sr-prep 對 `isScoutArticle` 強制保留並給食物訊號保底——**別把 scout 也套零訊號門檻砍掉**（會殺光在地語言 gem）。
+- **scout 跨期重撈靠 seen 擋**: firecrawl 每跑回同月窗口（`--tbs qdr:m`）同樣 URL，跟 RSS 一樣靠 `seen.json` 去重；**seen 只在 `sr-build --save` 定版**（eval 不存→可重現重撈、也不污染）。過閘門未選的 scout 進 backlog 競爭（同 RSS），不會重複進。
 - **測 src/lib 用 `npx tsx`**: `node` strip-types 無法解 extensionless import（`./relevance`）也不支援 parameter property；務必用 tsx。
 - **dedup threshold 0.6**: 標題 Jaccard 太低會誤折疊清單模板（「各城市最佳餐廳」）；語意去重待 LLM 階段補強。
 - **Fumet 不選稿**: 結尾提問從選出的長文「提煉」，不從候選池打分選一篇（editorial-guidelines 規定）。
@@ -224,9 +230,7 @@ npx vercel --prod --yes
 - **付費牆政策**: write-issue 抓全文偵測付費牆——硬新聞牆找公開源否則退；觀點牆但預覽自成一體→報現象+透明標註+佐證；絕不憑預覽假裝讀過全文。
 - **/write-issue 輸入 = selected.json**: `sr-build` 每跑都寫 `data/sr/<date>/selected.json`（選的稿+切角+Fumet 種子）給寫作 skill 讀。
 - **報告入口 selection-report.html**: 固定網址、讀 `selection-reports.json` 跳最新一期；每期 dated 報告要 commit 才上線（gitignore 現只忽略 `-demo`）。
-- **selection-report-demo.html / data/*.json 已 gitignore**: 是 gen 出的 artifact，不 commit。⚠️ **自動部署改 git 來源後（2026-06-14），gitignored 檔不會上線**（如 `selection-report-*.html`）；要上線的檔需 commit（`sources.html` 已 commit、不受影響）。手動 `vercel --prod` 才會連本機 gitignored 檔一起上傳。
-- **Vercel 自動部署（2026-06-14 已修復）**: 現在 push 到 `main` 即自動部署。當初失效主因是 **Root Directory 未設成 `the-pass`**（repo 根在 `Foodie-news/`、app 在子目錄），已修正；連線也用 `vercel git connect` 接回。手動 `npx vercel --prod --yes` 仍可作備援。
-- **Vercel subdomain**: auto-generated 是 `the-pass-nine`，但已有自訂域名 `thepass.cc`
+- **selection-report-demo.html / data/*.json 已 gitignore**: 是 gen 出的 artifact，不 commit。⚠️ **自動部署改 git 來源後（2026-06-14），gitignored 檔不會上線**（如 `selection-report-*.html`）；要上線的檔需 commit（`sources.html` 已 commit、不受影響）。手動 `vercel --prod` 才會連本機 gitignored 檔一起上傳。- **Vercel subdomain**: auto-generated 是 `the-pass-nine`，但已有自訂域名 `thepass.cc`
 - **動態插畫流程**: 靜態插圖 → 加標題 → Google Flow (Veo) 生成動態，音效OK但禁止配音
 - **快訊不配圖**: 測試過 spot illustration，閱讀斷裂感太強，決定不採用
 - **插畫拱門問題**: nanobanana 容易重複生成廚房拱門構圖，prompt 需明確排除
