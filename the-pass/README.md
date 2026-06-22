@@ -13,7 +13,7 @@
 
 - **選題** `/selection-report` — 抓全球來源、AI 評分，產出選題報告讓編輯室拍板。
 - **寫稿** `/write-issue` — 四個 AI 編輯分身（Mise／Passe／Fumet／總編）把選的稿寫成整期草稿，AI 起草、人定稿。
-- **發佈** `/publish-issue` — 把定稿做成 issue 網頁＋長文配圖（紐約客式概念插畫），上線。
+- **發佈** `/publish-issue` — 把定稿做成 issue 網頁＋長文配圖（紐約客式概念插畫），上線。配圖風格是**可抽取／可替換**的：用 `/style-extract` 抽一套驗證過的風格 profile，換風格 ＝ 換 profile（見 [換插圖風格 SOP](https://thepass.cc/illustration-style-sop.html)）。
 
 三個 skill 都零金鑰、在本機跑。一頁說明：[**thepass.cc/skills.html**](https://thepass.cc/skills.html)
 
