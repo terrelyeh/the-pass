@@ -90,13 +90,13 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <!-- orchestrator analysis -->
 <rect class="orch" x="92" y="78" width="516" height="60" rx="10"/>
 <text class="subt" x="350" y="103" text-anchor="middle" font-size="14.5">orchestrator（總指揮）親眼讀圖</text>
-<text class="subs" x="350" y="123" text-anchor="middle" font-size="12">一次把六個面向寫成草稿規格 — 不拆 subagent（風格是整體的，拆開反而看碎）</text>
+<text class="subs" x="350" y="123" text-anchor="middle" font-size="12">一次把各面向寫成草稿規格 — 不拆 subagent（造形再拆 construction＋register）</text>
 <path class="flow" d="M350,138 L350,158"/>
 
 <!-- assemble -->
 <rect class="box" x="158" y="158" width="384" height="46" rx="10"/>
 <text class="t" x="350" y="177" text-anchor="middle">組 profile</text>
-<text class="s" x="350" y="194" text-anchor="middle">規格 ＋ 挑 2–4 張錨點 ＋ 提示詞片段 ＋ negative</text>
+<text class="s" x="350" y="194" text-anchor="middle">規格 ＋ 挑 3 張錨點 ＋ 提示詞片段 ＋ negative</text>
 <path class="flow" d="M350,204 L350,224"/>
 
 <!-- GATE 1 -->
@@ -122,15 +122,15 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <!-- validation subagents row -->
 <rect class="sub" x="70" y="356" width="176" height="62" rx="9"/>
 <text class="subt" x="158" y="380" text-anchor="middle">驗證 subagent</text>
-<text class="subs" x="158" y="398" text-anchor="middle">逐面向打 0–5</text>
+<text class="subs" x="158" y="398" text-anchor="middle">5 軸打 0–5</text>
 <text class="subs" x="158" y="412" text-anchor="middle">獨立 · 不偏私</text>
 <rect class="sub" x="262" y="356" width="176" height="62" rx="9"/>
 <text class="subt" x="350" y="380" text-anchor="middle">驗證 subagent</text>
-<text class="subs" x="350" y="398" text-anchor="middle">逐面向打 0–5</text>
+<text class="subs" x="350" y="398" text-anchor="middle">5 軸打 0–5</text>
 <text class="subs" x="350" y="412" text-anchor="middle">獨立 · 不偏私</text>
 <rect class="sub" x="454" y="356" width="176" height="62" rx="9"/>
 <text class="subt" x="542" y="380" text-anchor="middle">驗證 subagent</text>
-<text class="subs" x="542" y="398" text-anchor="middle">逐面向打 0–5</text>
+<text class="subs" x="542" y="398" text-anchor="middle">5 軸打 0–5</text>
 <text class="subs" x="542" y="412" text-anchor="middle">獨立 · 不偏私</text>
 <text class="s" x="350" y="436" text-anchor="middle" font-style="italic">並行 · 各開獨立 context · 對著參考圖打分</text>
 <path class="flow" d="M158,418 L158,446 L350,446"/>
@@ -186,32 +186,33 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <tbody>
 <tr><td class="r">誰做</td><td>orchestrator 一次做</td><td>每張測試圖一個獨立 subagent</td></tr>
 <tr><td class="r">為什麼這樣切</td><td>風格是整體的，拆開反而看碎、又慢又貴</td><td>需要不偏私的眼——作者會給自己人情分</td></tr>
-<tr><td class="r">動作</td><td>六面向讀成規格</td><td>對著參考圖、逐面向打 0–5</td></tr>
+<tr><td class="r">動作</td><td>各面向讀成規格（造形拆 construction＋register）</td><td>對著參考圖打 <b>5 軸</b> 0–5（register 並排錨點評）</td></tr>
 </tbody>
 </table>
 <div class="callout"><b>設計原則：別為了 harness 而 harness。</b>subagent 是用來「隔離」的工具——哪裡需要獨立、不互相污染的判斷，才用它。分析不需要隔離（同一雙眼看整體最準）；驗證需要隔離（要一個沒立場的裁判）。這跟 <a href="write-issue-architecture.html" style="color:var(--accent)">/write-issue</a> 把四個編輯、總編各開獨立分身是同一套思路。</div>
 
-<h2>③ 抽取：從六個面向把風格讀成規格</h2>
-<div class="h-sub">orchestrator 親眼看圖，把「風格」這個模糊的東西，拆成六條看得見、寫得下的軸。</div>
+<h2>③ 抽取：把風格讀成可寫下的軸</h2>
+<div class="h-sub">orchestrator 親眼看圖，把「風格」這個模糊的東西拆成看得見、寫得下的軸——其中「造形」再拆成 <b>construction</b>（怎麼長：笨拙↔寫實）＋ <b>register</b>（什麼立場：醜↔美），因為這兩件會分開飄、又最承載靈魂。</div>
 <table class="dim">
-<thead><tr><th>面向</th><th>抽什麼</th></tr></thead>
+<thead><tr><th>面向</th><th>抽什麼</th><th>驗證打分？</th></tr></thead>
 <tbody>
-<tr><td class="r">palette 配色</td><td>主色＋近似 hex、平塗還是漸層、背景怎麼處理</td></tr>
-<tr><td class="r">line 線條</td><td>粗細、手感、向量／手繪／無線</td></tr>
-<tr><td class="r">texture 質感</td><td>印刷感、顆粒、網點、筆觸</td></tr>
-<tr><td class="r">composition 構圖</td><td>主體／留白／比例／視角／構圖語言</td></tr>
-<tr><td class="r">figuration 造形</td><td>怎麼畫人與物、臉、比例、抽象程度</td></tr>
-<tr><td class="r">mood 情緒</td><td>調性、氣場、聯想</td></tr>
+<tr><td class="r">palette 配色</td><td>主色＋近似 hex、平塗還是漸層、背景怎麼處理</td><td>✔</td></tr>
+<tr><td class="r">line 線條</td><td>粗細、手感、向量／手繪／無線</td><td>✔</td></tr>
+<tr><td class="r">texture 質感</td><td>印刷感、顆粒、網點、筆觸、平塗 vs 影線</td><td>✔</td></tr>
+<tr><td class="r">construction 造形</td><td>怎麼「建」人與物：比例、臉、抽象程度、笨拙↔寫實</td><td>✔</td></tr>
+<tr><td class="r">register 立場</td><td>美學立場：醜↔美、grotesque↔理想化、不討好↔優雅</td><td>✔ 並排錨點評</td></tr>
+<tr><td class="r">composition 構圖</td><td>主體／留白／比例／視角／構圖語言</td><td>條件式＊</td></tr>
+<tr><td class="r">mood 情緒</td><td>調性、氣場、聯想</td><td>✘ 只當分析鏡</td></tr>
 </tbody>
 </table>
-<p>這六條被寫進 <code>style.md</code>，再加上一段「每次生圖貼的提示詞片段」和一份 negative——這就是規格部分（profile 的 tell）。</p>
+<p>這些被寫進 <code>style.md</code>，再加上一段「每次生圖貼的提示詞片段」和一份 negative——這就是規格部分（profile 的 tell）。<b>＊composition 只有當「構圖本身就是風格識別」（拼貼版面、極端留白）才打分；一般構圖是你下指令決定的、不歸風格。mood 只當分析鏡。</b>所以**評分是 5 軸**：palette·line·texture·construction·register。</p>
 
 <h2>④ 驗證：同樣的面向，交給獨立 subagent 打分</h2>
 <div class="h-sub">這是這個 skill 真正的價值。抽完不算數，要能生得出來、而且分數證明像，才算數。</div>
-<p>用 profile 生 3 張測試圖（<b>刻意鋪難度漸層</b>，見下）後，<b>每張圖各派一個獨立的驗證 subagent</b>，給它「該測試圖 ＋ 參考圖 ＋ 規格」，請它對著原圖<b>逐面向打 0–5 分</b>、標出哪裡飄掉、給一句總評。三份合起來＝<b>重現性報告</b>。</p>
-<p>注意這裡的對稱：<b>抽取用哪六個面向，驗證就用同一套面向打分。</b>你沿著這些軸把風格讀出來，就沿著同樣的軸檢查它有沒有被重現。</p>
+<p>用 profile 生 3 張測試圖（<b>刻意鋪難度漸層</b>，見下）後，<b>每張圖各派一個獨立的驗證 subagent</b>，給它「該測試圖 ＋ 參考圖 ＋ 規格」，請它對著原圖<b>打 5 軸 0–5 分</b>（palette·line·texture·construction·register）、標出哪裡飄掉、給一句總評。三份合起來＝<b>重現性報告</b>。</p>
+<p><b>register（美學立場）要「並排錨點」評，不單張評</b>——單張看時模型的基本畫工會把你蒙過去（實測同一張：solo＝2、並排錨點＝5）。composition 只有「構圖即風格識別」才加、mood 不打分。<b>收軸兩測試</b>：① 歸屬（風格擁有還是指令擁有？）② 鑑別力（分數真的會動，還是永遠 4–5？）——兩關都過才配當評分軸。</p>
 
-<div class="callout"><b>測試圖刻意鋪「難度漸層」，不是隨手挑主題。</b>主題配合 profile 的用途挑（The Pass→食物×AI），而且從易到難：① 一個<b>簡單物件</b>（先確認風格生得出來、訊號乾淨）→ ② 一個<b>多元素場景</b>→ ③ <b>一段文章的概念</b>（拿真實角度先抽成視覺概念再畫）。第 ③ 張才是<b>真實使用的壓力測試</b>——風格扛不扛得住一個抽象概念，不只是具體物件。<br>只是要記得：驗證時<b>只打風格分</b>（配色／線條／質感／構圖）、不評概念好壞，所以對「風格穩不穩」的訊號仍乾淨；第 ③ 張若崩，先分清是概念弱還是風格飄。</div>
+<div class="callout"><b>測試圖刻意鋪「難度漸層」，不是隨手挑主題。</b>主題配合 profile 的用途挑（The Pass→食物×AI），而且從易到難：① 一個<b>簡單物件</b>（先確認風格生得出來、訊號乾淨）→ ② 一個<b>多元素場景</b>→ ③ <b>一段文章的概念</b>（拿真實角度先抽成視覺概念再畫）。第 ③ 張才是<b>真實使用的壓力測試</b>——風格扛不扛得住一個抽象概念，不只是具體物件。<br>只是要記得：驗證時<b>只打風格 5 軸</b>（palette·line·texture·construction·register）、不評概念好壞，所以對「風格穩不穩」的訊號仍乾淨；第 ③ 張若崩，先分清是概念弱還是風格飄。</div>
 
 <div class="callout"><b>真實案例：眼睛會被騙，分數不會。</b>抽 <code>mono-ink</code>（毛筆墨線風）那次，肉眼看第一版「一次就很像」——但驗證 subagent 一打分，<b>line 面向三張全是 2／5</b>：漏了原作最關鍵的「毛筆粗細變化＋大實心黑塊」，畫成了均勻細線。把這點寫死進提示詞、重生重驗後，line 跳到 4–5，兩張升上 <span class="ok">reproduced</span>。<b>沒有驗證，這個漏洞就直接變成 profile 的內傷了。</b></div>
 
@@ -228,6 +229,17 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 </table>
 <p class="cap">↑ 同一份報告的節錄。改提示詞前後，line／texture 整排跳上去——這就是「飄移點 → 修正」的訊號從哪來。</p>
 
+<div class="callout"><b>2026-06-22 升級：補上 register／construction 兩軸 ＋ 學會「怎麼修」。</b>把舊「figuration」拆成兩軸重評，抓到舊 4 軸看不到的事：圖可以<b>表面全對、卻把「靈魂」畫漂亮了</b>——模型有強烈的「變漂亮／變乾淨吸子」，專磨掉醜、拙、awkward。而怎麼修，<b>要看飄的是哪種屬性</b>：</div>
+<table>
+<thead><tr><th>飄掉的屬性</th><th>怎麼修</th></tr></thead>
+<tbody>
+<tr><td class="r">結構性（姿勢／構圖／表情）</td><td>用嘴釘得動——直接寫進提示詞片段</td></tr>
+<tr><td class="r">執行氣質（醜／拙／平塗 vs 影線）</td><td><b>描述沒用、甚至打地鼠</b> → best-of-N（一批 4–6 張）＋ 把評分當「選圖器」挑最對的</td></tr>
+<tr><td class="r">頑固質感（無影線／粗顆粒／posterize）</td><td>後處理強制（ImageMagick posterize／threshold／疊顆粒）</td></tr>
+</tbody>
+</table>
+<div class="callout"><b>還有一把尺要分清：保真 ≠ 好看。</b>這裡的評分是<b>保真選圖器</b>（像不像錨點）；真正會被你拿去用的是<b>品味選圖器</b>（你的眼睛）。兩者衝突時喜好贏——若你長期偏好另一種樣子，那是訊號：該重訂 register／換錨點，而不是讓 validator 一直把你往「更像來源」推。</div>
+
 <h2>⑤ 三道 gate：人在哪裡拍板</h2>
 <div class="h-sub">全程互動，每道 gate 都用 AskUserQuestion——AI 跑、人決定，跟選題、寫稿同一個哲學。</div>
 <div class="gates">
@@ -239,8 +251,8 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <h2>⑥ 輸出：一個驗證過的 profile</h2>
 <div class="h-sub">三部分落在磁碟上 = 一個 style.md ＋ 兩個資料夾。完整拆解見 <a href="illustration-style-sop.html" style="color:var(--accent)">換插圖風格 SOP</a>。</div>
 <div class="tree"><b>~/style-lab/profiles/&lt;名字&gt;/</b>      <span class="c">← 跨專案共用，任何專案來消費</span>
-├── <b>style.md</b>      <span class="c">規格（六面向）＋ 提示詞片段 ＋ negative ＋ 驗證摘要</span>　<span class="m">the tell</span>
-├── <b>anchors/</b>      <span class="c">你給的原圖（複製進來，2–4 張）</span>　　　　　　　　<span class="m">the show</span>
+├── <b>style.md</b>      <span class="c">規格（5 軸＋register）＋ 提示詞片段 ＋ negative ＋ 驗證摘要</span>　<span class="m">the tell</span>
+├── <b>anchors/</b>      <span class="c">你給的原圖（複製進來，3 張甜蜜點）</span>　　　　　　　　<span class="m">the show</span>
 └── <b>validation/</b>   <span class="c">生的測試圖 ＋ report.md（逐面向打分）</span>　　　　<span class="m">the prove</span></div>
 <p>各專案的出圖 skill（如 The Pass <code>/publish-issue</code>）去<b>讀</b>選定的 profile 來生圖。<b>換風格＝換專案指向哪個 profile</b>，生圖流程本身永遠不動。</p>
 
@@ -261,6 +273,8 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <div class="principle"><b>看起來像 ≠ 真的重現。</b>驗證要對著參考圖誠實打分、不給人情分；飄掉就說飄掉。交付「驗證過」的，比交付「看起來對」的可靠太多。</div>
 <div class="principle"><b>錨點圖 &gt; 文字。</b>純文字提示詞釘不住具體風格，錨點圖（餵進生圖模型當 input）才鎖得住——profile 一定要帶錨點。影片截圖／有字幕的，先裁乾淨再當錨點，否則模型會把字幕一起學進去。</div>
 <div class="principle"><b>抽風格、不抄人。</b>抽的是配色／線條／質感／構圖語言；不照搬某位作者的角色或具體構圖。產出要是「自己的概念，那個風格」。</div>
+<div class="principle"><b>小心「能力／變漂亮吸子」。</b>頭號失敗模式——模型會把醜、拙、awkward 悄悄磨成討喜、對稱、competent。執行氣質「描述」不出來（愈用力描述愈乾淨）；靠錨點鎖、best-of-N 抽樣＋評分選圖、後處理補頑固質感。</div>
+<div class="principle"><b>保真 ≠ 好看。</b>評分量的是「像不像錨點」（保真選圖器）；會出街的是「你想不想用」（品味選圖器）。衝突時喜好贏；長期偏好不同，就重訂 register／換錨點。</div>
 
 <div class="foot"><div class="b">The Pass 出菜口</div>風格抽取的運作邏輯 · 抽取靠整體的眼，驗證靠獨立的眼</div>
 </div>
