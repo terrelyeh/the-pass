@@ -107,14 +107,14 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 
 <!-- test images row -->
 <rect class="box" x="70" y="290" width="176" height="44" rx="9"/>
-<text class="t" x="158" y="310" text-anchor="middle" font-size="13.5">測試圖 · 廚房</text>
-<text class="s" x="158" y="326" text-anchor="middle" font-size="11">不同主題①</text>
+<text class="t" x="158" y="310" text-anchor="middle" font-size="13.5">測試圖 · 物件</text>
+<text class="s" x="158" y="326" text-anchor="middle" font-size="11">簡單·先打底</text>
 <rect class="box" x="262" y="290" width="176" height="44" rx="9"/>
-<text class="t" x="350" y="310" text-anchor="middle" font-size="13.5">測試圖 · 咖啡</text>
-<text class="s" x="350" y="326" text-anchor="middle" font-size="11">不同主題②</text>
+<text class="t" x="350" y="310" text-anchor="middle" font-size="13.5">測試圖 · 場景</text>
+<text class="s" x="350" y="326" text-anchor="middle" font-size="11">多元素</text>
 <rect class="box" x="454" y="290" width="176" height="44" rx="9"/>
-<text class="t" x="542" y="310" text-anchor="middle" font-size="13.5">測試圖 · 田裡</text>
-<text class="s" x="542" y="326" text-anchor="middle" font-size="11">不同主題③</text>
+<text class="t" x="542" y="310" text-anchor="middle" font-size="13.5">測試圖 · 概念</text>
+<text class="s" x="542" y="326" text-anchor="middle" font-size="11">一段文章角度</text>
 <path class="flow" d="M158,334 L158,356"/>
 <path class="flow" d="M350,334 L350,356"/>
 <path class="flow" d="M542,334 L542,356"/>
@@ -208,8 +208,10 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 
 <h2>④ 驗證：同樣的面向，交給獨立 subagent 打分</h2>
 <div class="h-sub">這是這個 skill 真正的價值。抽完不算數，要能生得出來、而且分數證明像，才算數。</div>
-<p>用 profile 生 3 張<b>不同主題</b>的測試圖後，<b>每張圖各派一個獨立的驗證 subagent</b>，給它「該測試圖 ＋ 參考圖 ＋ 規格」，請它對著原圖<b>逐面向打 0–5 分</b>、標出哪裡飄掉、給一句總評。三份合起來＝<b>重現性報告</b>。</p>
+<p>用 profile 生 3 張測試圖（<b>刻意鋪難度漸層</b>，見下）後，<b>每張圖各派一個獨立的驗證 subagent</b>，給它「該測試圖 ＋ 參考圖 ＋ 規格」，請它對著原圖<b>逐面向打 0–5 分</b>、標出哪裡飄掉、給一句總評。三份合起來＝<b>重現性報告</b>。</p>
 <p>注意這裡的對稱：<b>抽取用哪六個面向，驗證就用同一套面向打分。</b>你沿著這些軸把風格讀出來，就沿著同樣的軸檢查它有沒有被重現。</p>
+
+<div class="callout"><b>測試圖刻意鋪「難度漸層」，不是隨手挑主題。</b>主題配合 profile 的用途挑（The Pass→食物×AI），而且從易到難：① 一個<b>簡單物件</b>（先確認風格生得出來、訊號乾淨）→ ② 一個<b>多元素場景</b>→ ③ <b>一段文章的概念</b>（拿真實角度先抽成視覺概念再畫）。第 ③ 張才是<b>真實使用的壓力測試</b>——風格扛不扛得住一個抽象概念，不只是具體物件。<br>只是要記得：驗證時<b>只打風格分</b>（配色／線條／質感／構圖）、不評概念好壞，所以對「風格穩不穩」的訊號仍乾淨；第 ③ 張若崩，先分清是概念弱還是風格飄。</div>
 
 <div class="callout"><b>真實案例：眼睛會被騙，分數不會。</b>抽 <code>mono-ink</code>（毛筆墨線風）那次，肉眼看第一版「一次就很像」——但驗證 subagent 一打分，<b>line 面向三張全是 2／5</b>：漏了原作最關鍵的「毛筆粗細變化＋大實心黑塊」，畫成了均勻細線。把這點寫死進提示詞、重生重驗後，line 跳到 4–5，兩張升上 <span class="ok">reproduced</span>。<b>沒有驗證，這個漏洞就直接變成 profile 的內傷了。</b></div>
 
