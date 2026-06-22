@@ -26,7 +26,7 @@ export const scoutQueries: ScoutQuery[] = [
   // ── 在地語言：最強槓桿（撈台灣看不到的在地題）──
   { key: "th-local", label: "泰國 · 在地語言", query: "เทรนด์อาหาร ร้านอาหารใหม่ เชฟ", lang: "th", country: "th", group: "local", enabled: true, note: "probe 撈到 มะยงชิด 熱、Chef's Table 新奢侈" },
   { key: "ko-local", label: "韓國 · 在地語言", query: "한국 외식 트렌드 새로운 맛집", lang: "ko", country: "kr", group: "local", enabled: true, note: "放寬後 recall 修好；撈到 C-franchise 熱點、wellness/sober dining" },
-  { key: "ja-local", label: "日本 · 在地語言", query: "日本 グルメ 新店 話題 シェフ", lang: "ja", country: "jp", group: "local", enabled: true, note: "在地語言消滅美國洗版；偏 PR/百貨，之後可再加反零售字" },
+  { key: "ja-local", label: "日本 · 在地語言", query: "日本 グルメ 新店 話題 シェフ -site:prtimes.jp", lang: "ja", country: "jp", group: "local", enabled: true, note: "排掉 PR 站 prtimes（最小改、保 recall）後撈到較多主廚題；日文整體仍偏 PR/百貨/彙整，靠下游閘門濾。注意：往『料理人/伝統』重寫反而引來 explainer/清單噪音，別這樣調" },
   { key: "vi-local", label: "越南 · 在地語言", query: "ẩm thực Việt Nam xu hướng mới nhà hàng đầu bếp", lang: "vi", country: "vn", group: "local", enabled: true, note: "小市場、同事件高度同稿 → 去重要強" },
   { key: "es-latam", label: "拉美 · 西語", query: "gastronomía restaurante chef nueva tendencia ingredientes nativos", lang: "es", country: "mx", group: "local", enabled: true, note: "祕魯 pe 單獨 recall 偏低，放寬到拉美/mx" },
 
