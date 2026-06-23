@@ -46,3 +46,4 @@ next-env.d.ts
 # 選題報告 demo（artifact，勿 commit）。每期 dated 報告（selection-report-YYYY-MM-DD.html）
 # 由 /selection-report 產出、會 commit 上 thepass.cc 給團隊看，故不在此忽略。
 public/selection-report-demo.html
+.claude/skills/*-workspace/
