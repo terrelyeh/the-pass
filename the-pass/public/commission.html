@@ -23,10 +23,12 @@ p{margin:.7rem 0}
 table{width:100%;border-collapse:collapse;font-size:.9rem;margin:1rem 0}
 th{text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border);font-size:.7rem;letter-spacing:.04em;color:var(--ink-muted);text-transform:uppercase}
 td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.r{font-weight:600;white-space:nowrap;color:var(--ink)}
-.modes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin:1rem 0}
-.mode{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:.88rem;line-height:1.6}
-.mode .tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;color:var(--accent);background:rgba(184,134,11,.1);border-radius:100px;padding:.1rem .5rem;margin-bottom:.45rem}
-.mode b{font-family:var(--serif)}
+.modes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin:1.2rem 0}
+.mode{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem}
+.mode .tag{align-self:flex-start;font-size:.66rem;font-weight:700;letter-spacing:.05em;color:var(--accent);background:rgba(184,134,11,.1);border-radius:100px;padding:.15rem .6rem}
+.mode .gv{font-family:var(--serif);font-weight:600;font-size:.96rem;color:var(--ink);line-height:1.5}
+.mode .rs{font-size:.86rem;color:var(--ink-light);line-height:1.6}
+.mode .eg{font-size:.78rem;color:var(--ink-muted);background:var(--bg-warm);border-radius:6px;padding:.45rem .65rem;line-height:1.55;margin-top:auto}
 .flow{display:flex;flex-direction:column;gap:.4rem;margin:1.1rem 0}
 .fl{display:flex;gap:.7rem;align-items:baseline;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.55rem .9rem;font-size:.92rem}
 .fl.gate{background:#fffaf0;border-color:var(--accent-light)}
@@ -48,7 +50,7 @@ td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top
 .principle b{color:var(--accent)}
 .foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3.5rem;border-top:1px solid var(--border);padding-top:1.5rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
 @media(max-width:680px){.nav-links{display:none}.hero h1{font-size:2rem}.modes{grid-template-columns:1fr}}
-</style></head><body data-fb-blocks="h2">
+</style></head><body>
 <nav><div class="nav-inner"><a href="hub.html" class="nav-brand">The Pass</a><ul class="nav-links">
 <li><a href="commission.html" class="active">委稿 /commission</a></li>
 <li><a href="write-issue-architecture.html">AI 編輯室架構</a></li>
@@ -67,9 +69,24 @@ td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top
 <h2 class="nobord">什麼時候用</h2>
 <div class="h-sub">依「材料從哪來」，自動走三種；事實核查與定稿關卡永遠都在。</div>
 <div class="modes">
-<div class="mode"><span class="tag">A · 單源</span><b>一個來源 → 一篇</b><br>給一個連結、一段貼文、或一個題目，指定編輯寫成一篇。最輕、最快。</div>
-<div class="mode"><span class="tag">B · 多源綜述</span><b>題目＋多素材 → 一篇</b><br>給一個主題 ＋ 2 篇以上素材，編輯綜整成一篇有觀點的稿（觀點綜編 D）。</div>
-<div class="mode"><span class="tag">C · 研究後寫</span><b>只給方向 → 一篇</b><br>只給一個粗方向，編輯自己用 AI 搜尋研究、訂角度，再寫。</div>
+<div class="mode">
+<span class="tag">A · 單源</span>
+<div class="gv">你給：一個連結／一段貼文／一個題目</div>
+<div class="rs">→ 指定一位編輯寫成一篇。最輕、最快。</div>
+<div class="eg">例：「用 Mise 寫這篇連結」</div>
+</div>
+<div class="mode">
+<span class="tag">B · 多源綜述</span>
+<div class="gv">你給：一個主題 ＋ 2 篇以上素材</div>
+<div class="rs">→ 編輯把多篇綜整成一篇有觀點的稿（觀點綜編 D）。</div>
+<div class="eg">例：「給 Mise 這 3 篇，綜整成一篇談 X 的長文」</div>
+</div>
+<div class="mode">
+<span class="tag">C · 研究後寫</span>
+<div class="gv">你給：一個粗方向（不附素材）</div>
+<div class="rs">→ 編輯自己用 AI 搜尋研究、訂角度，再寫。</div>
+<div class="eg">例：「給 Fumet 一個方向：韓國 sober dining，查完再寫」</div>
+</div>
 </div>
 
 <table>
@@ -148,5 +165,4 @@ td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top
 
 <div class="foot"><div class="b">The Pass 出菜口</div>委稿一位編輯 /commission · 你 brief、他寫、你定稿</div>
 </div>
-<script src="feedback.js" defer></script>
 </body></html>
