@@ -52,6 +52,8 @@
 
 每位編輯都有 **Soul（人格）+ Memory（記憶）** 兩層，每期把學到的、寫過的記起來、下期載入——越寫越像自己。團隊可在 [編輯源頭頁](https://thepass.cc/editor-source.html) 看人設與寫作風格、從那提優化；想新增一位不同人設的編輯，見 [新增 AI 編輯 SOP](https://thepass.cc/new-editor-guide.html)。長文一律「觀點編譯」：完整交代來源 ＋ 編輯觀點貫穿。
 
+**想單獨請一位編輯寫一篇**（給一個來源、給多篇素材綜整、或只給一個方向讓他自己研究）→ `/commission`，介紹、用法與兩個成果範例見 [委稿一位編輯](https://thepass.cc/commission.html)。
+
 ## 開發
 
 ```bash

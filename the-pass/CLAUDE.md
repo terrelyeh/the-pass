@@ -113,6 +113,7 @@ the-pass/
 │   ├── selection-report.html      ← 最新一期入口（讀 selection-reports.json 跳轉）；selection-report-<date>.html 每期 commit 上線
 │   ├── backlog.html              ← 選題庫存頁（gen 自 data/backlog.json；團隊看，--save 後重生）
 │   ├── write-issue-architecture.html ← AI 編輯室架構頁（給團隊，含 SVG 圖）
+│   ├── commission.html           ← 🆕 /commission 介紹頁（情境／用法／兩個成果範例）
 │   ├── editor-source.html        ← 編輯源頭頁（gen 自 9 個 md：3 soul+3 memory+voices/anti-slop/checklist；團隊看寫作源頭，勿手改）
 │   ├── skills.html               ← 三技能一頁說明（選題/寫稿/發佈；team）
 │   ├── new-editor-guide.html     ← 🆕 團隊 SOP：如何新增一位 AI 編輯（四步＋範本）
@@ -162,7 +163,7 @@ the-pass/
 - **scout 查詢式進料（Phase 1，🆕 2026-06-23）**：開放網路發現層接進選題 pipeline（`sr-prep --scout`，見「選題 Pipeline」段）。eval 實跑：候選 22（scout 14＋rss 8）→過閘門 17→建議出刊 6 **全是 scout 撈到的在地/驚奇題**（尚比亞/印度紅螞蟻/泰韓墨在地）。配方＝firecrawl `--sources news`＋在地語言＋跨區主題、不掛 AI/tech。誠實但書：當輪 RSS 被 seen 壓到吃虧，別過度解讀「scout 永遠贏」。
 - **`/write-issue` skill（寫作，已建 2026-06-19，harness 版）**：選題拍板後把選的稿寫成整期草稿。**orchestrator + 4 編輯 subagent（Mise／Passe／Fumet／總編，聲音隔離）+ 3 互動 gate（人拍板）**；抓全文查證、守事實不可扭曲、付費牆只報現象。**長文編輯自動路由**（文化面→Fumet、技術/產業面→Mise，§1.5）。架構全文見 [`docs/write-issue-architecture.md`](docs/write-issue-architecture.md)（也上 thepass.cc/write-issue-architecture.html）。
 - **`/publish-issue` skill（發佈，已建並實跑 2026-06-20）**：定稿 → issue 網頁＋長文配圖 → 部署。配圖＝**概念優先**（紐約客式諷刺 idea）→ **以 demo 圖為風格錨點** → nanobanana＋Codex 雙模型生候選 → 人挑圖。首期 2026-06-19 已上線含概念配圖；`covers.html` 留採用＋候選對照。本週另加：編輯源頭頁（`editor-source.html`，gen）、Skills 說明頁、區塊回饋（`feedback.js`）。
-- **`/commission` skill（單篇委稿，🆕 2026-06-21）**：指定某位編輯把一個來源（URL/貼文）寫成單篇、不出整期；**共用 /write-issue 的編輯人格檔**（改一次到處生效）。orchestrator 抓全文 → spawn 該編輯 subagent → gate → 記憶 opt-in。長文預設 D、Amuse 例外走 A。
+- **`/commission` skill（單篇委稿，🆕 2026-06-21；擴成自適應 2026-06-23）**：指定一位編輯寫**單獨一篇**、不出整期；**共用 /write-issue 編輯人格檔**（改一次到處生效）。**三輸入自適應**：A 單源 / B 題目＋多素材→觀點綜編 D / **C 粗方向→編輯自己 firecrawl 研究後寫**；gate 密度可調（選題/大綱/定稿）、**總編事實核查永遠跑**、文末附參考連結、記憶 opt-in。長文預設 D、Amuse 例外走 A。介紹頁 `commission.html`（情境/用法/兩範例）；eval（B＋C 新 vs 舊）驗過。
 - **第四位編輯 Amuse ＋ 新增編輯 SOP（🆕 2026-06-21）**：Amuse 上線（`docs/editors/amuse-soul/memory.md`、editors.html 特別企劃卡、伍迪艾倫式語氣校準）；團隊 SOP `new-editor-guide.html`（四步＋`docs/editors/_TEMPLATE-*.md` 範本）——「你定位、AI 接線」。
 - **插圖風格 profile 機制 ＋ `/style-extract`（🆕 2026-06-21）**：插圖風格＝可替換資料（`style.md`＋錨點圖＋validation），出圖 skill 不變；現役 `docs/illustration/styles/risograph/style.md`；換風格 SOP `illustration-style-sop.html`。跨專案 user-level skill **`/style-extract`** 抽風格＋驗證 subagent 打分、存 `~/style-lab/profiles/`（範例 bold-pop、mono-ink；另有 sepia-sketch 暫停未定版）。測試圖走「難度漸層」：簡單物件→場景→一段文章概念（真實使用壓力測試）。**驗證＝5 軸**（palette·line·texture·**construction**·**register**；register 對著錨點並排評，舊版漏掉這條最會飄的「美學立場」軸；composition 條件式、mood 不評分）。**優化分屬性下藥**：結構性（姿勢/表情）用提示詞釘得動；執行氣質（醜/拙/平塗 vs 影線）描述沒用、要 **best-of-N＋把評分當選圖器**；頑固質感靠後處理。錨點甜蜜點 3 張（庫存 3–5、單次餵 ≤3）。注意「保真≠好看」：評分量保真、出街用品味挑（2026-06-22 升級）。
 - **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
@@ -225,7 +226,8 @@ npx vercel --prod --yes
 - **編輯署名（2026-06-21 改）**: 長文「編輯／<編輯>」、快訊「彙整 · Passe」、提問「問／Fumet」、特別企劃「招待／Amuse」。舊「選題 · Mise/Fumet」是正典誤植、已修（在 `voices.md`）。
 - **長文＝觀點編譯 D**: 完整交代來源＋角度貫穿（≠A 挑一條、≠B/C 翻譯摘要）；/write-issue 長文與 /commission 都注入 `voices.md`〈長文標準〉。**Amuse 是唯一預設走 A 的編輯**。四模式英文：A=original/write-around、B=full translation/transediting、C=summary、D=analysis/commentary（`new-editor-guide.html` 有對照表＋說明）。
 - **anti-slop 別自己算年數**: 原文寫「2007 年」就別寫「十八年前」（推算、可能算錯）；要嘛給年份、要嘛「多年前」。
-- **/commission ＝ 共用編輯檔**: 與 /write-issue 讀同一套 soul/voices/memory/anti-slop（改一次兩邊生效）；單篇委稿、記憶預設不寫（opt-in）。
+- **/commission ＝ 共用編輯檔**: 與 /write-issue 讀同一套 soul/voices/memory/anti-slop/chief-editor-checklist（改一次兩邊生效）；單篇委稿、記憶預設不寫（opt-in）。
+- **run_loop 觸發優化器對「專案級 skill」無效**: skill-creator 的 `run_loop`（description 觸發優化）在 headless `claude -p` 觸發不到 the-pass 的專案 skill（它把候選裝成 `~/.claude/commands/*.md` slash 指令、不靠 description 自動觸發）→ recall 全 0、分數無效；跑完還會留 `commission-skill-*.md` 暫存指令要手動清。**專案 skill 的 description 用人工判斷調，別跑 run_loop。**
 - **/style-extract 驗證圖不落專案**: 測試圖一律生進 `~/style-lab/profiles/<name>/validation/`、檢視走 SendUserFile；**絕不寫進任何專案 public/ 或部署網站**（本 session 為部署給用戶看曾暫放 The Pass public，捷徑非常態）。
 - **付費牆政策**: write-issue 抓全文偵測付費牆——硬新聞牆找公開源否則退；觀點牆但預覽自成一體→報現象+透明標註+佐證；絕不憑預覽假裝讀過全文。
 - **/write-issue 輸入 = selected.json**: `sr-build` 每跑都寫 `data/sr/<date>/selected.json`（選的稿+切角+Fumet 種子）給寫作 skill 讀。
