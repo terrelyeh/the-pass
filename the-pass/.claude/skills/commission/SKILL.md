@@ -1,6 +1,6 @@
 ---
 name: commission
-description: 用 The Pass（出菜口）指定的一位 AI 編輯（Mise／Passe／Fumet／Amuse）寫單獨一篇——可以是「一個來源」、也可以給「題目＋多篇素材」讓他綜整成一篇觀點綜編、或給一個「粗方向」讓他自己研究後再寫。Make sure to use this skill whenever Terrel wants to 指定編輯寫一篇／用 Mise（或 Passe／Fumet／Amuse）寫這個連結／把這幾篇素材綜整成一篇／給某編輯幾個連結寫一篇綜述／給一個方向讓編輯研究後寫／單篇委稿／用 Amuse 吐槽這篇——即使沒講 skill 名字（例如「用 Fumet 寫這篇 <url>」「給 Mise 這 4 篇綜整成一篇談 X 的長文」「拿這幾個連結請 Passe 寫成一則」「給 Fumet 一個方向讓他查完再寫」「用 Amuse 吐槽這篇 <url>」）也要觸發。共用 /write-issue 的同一套編輯人格檔（soul＋voices＋memory），聲音與記憶一致；harness：orchestrator 取得/研究素材 → 互動 gate（選題／大綱／定稿）→ 指定編輯 subagent 寫（觀點綜編 D）→ 總編事實核查 → 附參考連結。不要用於：出整期（/write-issue）、跑選題（/selection-report）、改來源（/audit-sources）。
+description: 指定 The Pass 四位 AI 編輯之一（Mise／Passe／Fumet／Amuse）寫單獨一篇時用這個 skill。觸發訊號很簡單：某位編輯的名字 ＋ 想產出一篇（寫／綜整／編譯／吐槽／寫成一篇／寫成一則／觀點長文）。Make sure to use this skill 即使沒講 skill 名字也要觸發——素材是什麼都算：一個連結、一段貼文、貼上的全文、好幾篇要綜整成一篇的報導、或只給一個方向讓編輯自己研究後再寫；連素材還沒貼（「等下貼給你，請 Fumet 綜整成一篇」）、或沒講 skill 名（「用 Mise 寫這篇 <url>」「用 Amuse 吐槽這篇 <url>」「給 Passe 這幾個連結寫成一則」）都要觸發。共用 /write-issue 的編輯人格檔（soul＋voices＋memory），聲音與記憶一致；harness：取得/研究素材 → 互動 gate（選題／大綱／定稿）→ 指定編輯 subagent 寫（觀點綜編 D）→ 總編事實核查 → 附參考連結。不要用於：出整期（/write-issue）、跑選題（/selection-report）、改來源（/audit-sources）、只是介紹某位編輯是誰、或只比對幾篇而不寫稿。
 ---
 
 # /commission — 指定一位編輯，寫一篇
