@@ -459,8 +459,10 @@
   /* 簡報穩定保底：data-anim 最終必可見（淡入動畫播放中仍由 WAAPI 接管，播完回到「可見」而非隱藏；萬一 motion 沒跑也直接顯示）*/
   body.motion-ready [data-anim]{opacity:1!important}
   /* 簡報內可點擊連結（連到系統入口對應說明頁，target=_blank 不離開簡報）*/
-  .slide a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity .2s}
+  .slide a{color:var(--accent);font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity .2s}
   .slide a:hover{opacity:.65}
+  /* 小字容器（meta／cite）裡的連結明確放大，並改用 vw 讓投影到大螢幕時也會跟著放大（cite 原本固定 11px 不縮放）；大字容器（lead／pillar）的連結只靠上面的 weight 500 強調、不再加大 */
+  .slide .meta a,.slide .callout .cite a{font-size:max(13px,1vw)}
   .slide.dark a{color:var(--accent-light)}
 </style>
 </head>
