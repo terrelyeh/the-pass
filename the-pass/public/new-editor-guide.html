@@ -63,13 +63,13 @@ pre .c{color:#8B90A0}
 
 <div class="box">
 <b>先懂一件事：一位編輯 = 三層可重用模組。</b><br>
-<b>Soul</b>（人格·我是誰）＋ <b>Voices</b>（聲音·怎麼寫）＋ <b>Memory</b>（記憶·學到／寫過），再共用一條 <b>anti-slop</b> 底線。優化一位編輯，就是改這幾個源頭檔——改一次，所有用到他的地方一起生效。所以「新增一位」就是這四步：
+<b>Soul</b>（人格·我是誰）＋ <b>Voices</b>（筆調·怎麼寫）＋ <b>Memory</b>（記憶·學到／寫過），再共用一條 <b>anti-slop</b> 底線。優化一位編輯，就是改這幾個源頭檔——改一次，所有用到他的地方一起生效。所以「新增一位」就是這四步：
 <div class="flow"><span>① 定位</span><span>② 填人格</span><span>③ 接線</span><span>④ 試跑校準</span></div>
 </div>
 
 <div class="quickstart">
 <div class="qlabel">⚡ 最小輸入 · 門檻很低，先丟再調</div>
-<p>不用一次填滿下面五格。你其實只要給 <b>兩樣</b>，Claude 就能開工——剩下的（代號、完整人格、聲音、模式、接線）由它<b>提案</b>，你再改：</p>
+<p>不用一次填滿下面五格。你其實只要給 <b>兩樣</b>，Claude 就能開工——剩下的（代號、完整人格、筆調、模式、接線）由它<b>提案</b>，你再改：</p>
 <div class="eg">
 <div><span class="lbl">① 感覺／人設</span>　一句 vibe，或一個風格參照</div>
 <div><span class="lbl">② 角色／出場</span>　做什麼 ＋ 多常出現</div>
@@ -79,7 +79,7 @@ pre .c{color:#8B90A0}
 <div><span class="lbl">① 感覺／人設</span>　<span class="hl">伍迪艾倫式的自嘲諷刺、聰明的幽默，但帶一點情感</span></div>
 <div><span class="lbl">② 角色／出場</span>　<span class="hl">不定期的特別企劃</span></div>
 </div>
-<div class="tip">💡 <b>最高效的一招：給「一個參照」</b>（一個名字／節目／作家，像上面的「伍迪艾倫」）——一次打包人格＋聲音＋語氣，比描述十句還準；再配一個食物本行的參照（如 Anthony Bourdain）體溫就到位。<b>給得越準，試稿後一兩回就對味；給得越少，校準回合越多——兩種都行。</b></div>
+<div class="tip">💡 <b>最高效的一招：給「一個參照」</b>（一個名字／節目／作家，像上面的「伍迪艾倫」）——一次打包人格＋筆調＋語氣，比描述十句還準；再配一個食物本行的參照（如 Anthony Bourdain）體溫就到位。<b>給得越準，試稿後一兩回就對味；給得越少，校準回合越多——兩種都行。</b></div>
 </div>
 
 <div class="step">
@@ -89,7 +89,7 @@ pre .c{color:#8B90A0}
 <tr><th>要決定什麼</th><th>Amuse 範例</th></tr>
 <tr><td class="k">① 代號（名字）<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">廚房用語、跟現有編輯不撞</span></td><td class="ex">Amuse（amuse-bouche，菜單外招待的那一口）</td></tr>
 <tr><td class="k">② 人設／定位<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">他是誰？為什麼這樣看食物？核心動機？</span></td><td class="ex">自嘲的 AI——先笑自己（沒舌頭卻在評論美食），再戳破餐飲科技的炒作</td></tr>
-<tr><td class="k">③ 聲音<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">怎麼寫？跟現有編輯最大的區別？</span></td><td class="ex">冷面 deadpan、笑裡帶憂鬱、知性慧黠（不是純諷刺抱怨）</td></tr>
+<tr><td class="k">③ 筆調<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">怎麼寫？跟現有編輯最大的區別？</span></td><td class="ex">冷面 deadpan、笑裡帶憂鬱、知性慧黠（不是純諷刺抱怨）</td></tr>
 <tr><td class="k">④ 體裁 ＋ 模式<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">寫什麼體裁？來源用哪種模式處理？（A／D… 見下方說明）</span></td><td class="ex">特別企劃吐槽，~300–600 字，A 模式</td></tr>
 <tr><td class="k">⑤ 出場時機<br><span style="font-weight:400;color:var(--ink-muted);font-size:.8rem">每期常規 vs 不定期特別企劃</span></td><td class="ex">不定期特別企劃，用 /commission 叫他出場</td></tr>
 </table>
@@ -97,14 +97,14 @@ pre .c{color:#8B90A0}
 <p style="font-size:.92rem;color:var(--ink-light);margin:.3rem 0 .6rem"><b>體裁</b>＝這位編輯固定產出什麼格式（長文／快訊／結尾提問／吐槽特寫…）。<b>模式</b>＝他拿到一篇來源時<b>怎麼處理它</b>——用「覆蓋多少來源 × 加多少自己的觀點」分成四種：</p>
 <table>
 <tr><th>模式</th><th>怎麼處理來源</th><th>誰在用</th></tr>
-<tr><td class="k">A 原創委稿<br><span style="font-weight:400;color:var(--ink-muted);font-size:.78rem">Original · write-around</span></td><td>挑<b>一條線索</b>當引子，寫自己的東西。聲音最強，不交代來源全貌。</td><td class="ex">Amuse 吐槽、人物特寫</td></tr>
+<tr><td class="k">A 原創委稿<br><span style="font-weight:400;color:var(--ink-muted);font-size:.78rem">Original · write-around</span></td><td>挑<b>一條線索</b>當引子，寫自己的東西。筆調最強，不交代來源全貌。</td><td class="ex">Amuse 吐槽、人物特寫</td></tr>
 <tr><td class="k">B 全文編譯<br><span style="font-weight:400;color:var(--ink-muted);font-size:.78rem">Full translation · transediting</span></td><td>完整翻譯／轉述整篇，<b>不</b>加觀點。像高品質翻譯。</td><td>—（偏機械）</td></tr>
 <tr><td class="k">C 重點摘要<br><span style="font-weight:400;color:var(--ink-muted);font-size:.78rem">Summary · digest</span></td><td>濃縮重點、不表態。讀者只知道「原文講什麼」。</td><td>—（偏機械）</td></tr>
 <tr><td class="k">D 觀點編譯<br><span style="font-weight:400;color:var(--ink-muted);font-size:.78rem">Analysis · commentary</span></td><td><b>完整交代來源 ＋ 一條編輯角度貫穿</b>，讀者既看懂、又看出門道。</td><td class="ex">Mise／Fumet 常規長文</td></tr>
 </table>
-<div class="tip"><b>給編輯選，幾乎都落在 A 或 D：</b>A 適合「借題發揮、聲音強」的特寫或吐槽（像 Amuse）；D 是 The Pass <b>常規長文的預設標準</b>。B／C 偏機械處理，不太適合當一位有人設的編輯。<br>所以 Amuse 那格讀作：<b>體裁</b>＝特別企劃吐槽（~300–600 字）、<b>模式</b>＝A（挑一個現象開刀，不必逐篇交代某篇來源）。</div>
+<div class="tip"><b>給編輯選，幾乎都落在 A 或 D：</b>A 適合「借題發揮、筆調強」的特寫或吐槽（像 Amuse）；D 是 The Pass <b>常規長文的預設標準</b>。B／C 偏機械處理，不太適合當一位有人設的編輯。<br>所以 Amuse 那格讀作：<b>體裁</b>＝特別企劃吐槽（~300–600 字）、<b>模式</b>＝A（挑一個現象開刀，不必逐篇交代某篇來源）。</div>
 
-<div class="tip"><b>差異化檢查（最重要）：</b>把新編輯跟現有四位擺在一起——他補了什麼<b>別人沒有的角度或聲音</b>？如果跟某位太像，回去調，直到他有不可取代的位置。</div>
+<div class="tip"><b>差異化檢查（最重要）：</b>把新編輯跟現有四位擺在一起——他補了什麼<b>別人沒有的角度或筆調</b>？如果跟某位太像，回去調，直到他有不可取代的位置。</div>
 </div>
 
 <div class="step">
@@ -113,7 +113,7 @@ pre .c{color:#8B90A0}
 <table>
 <tr><th>檔</th><th>是什麼</th><th>重點</th></tr>
 <tr><td class="k">Soul<br>（人格）</td><td>他是誰、為什麼這樣看世界</td><td>最深、最少變。寫到「你想像得出這個人」為止</td></tr>
-<tr><td class="k">Voices<br>（聲音）</td><td>可執行的寫作規則 ＋ 聲音定調 ＋ 署名</td><td>「怎麼做」層；每條規則要能直接照著寫</td></tr>
+<tr><td class="k">Voices<br>（筆調）</td><td>可執行的寫作規則 ＋ 筆調定調 ＋ 署名</td><td>「怎麼做」層；每條規則要能直接照著寫</td></tr>
 <tr><td class="k">Memory<br>（記憶）</td><td>學到的準則 ＋ 寫過的主題</td><td>開站只放 1–2 條種子，其餘上線後自己長</td></tr>
 </table>
 <div class="tip">想看真的長什麼樣，直接參考現有四位 → <a href="editor-source.html" style="color:var(--accent)">編輯源頭頁</a>（soul＋memory＋voices 全在那）。<b>訣竅：</b>Soul 回答「為什麼」、Voices 回答「怎麼做」，別寫反。</div>
@@ -124,7 +124,7 @@ pre .c{color:#8B90A0}
 <p>這步是技術接線，<b>你不用自己做</b>——把 Step 1 的表給 Claude，說「照新增編輯 SOP 把他接好」，它會處理下面這些：</p>
 <ul class="chk">
 <li><b>人格檔</b>：建 <code>docs/editors/&lt;代號&gt;-soul.md</code>、<code>-memory.md</code></li>
-<li><b>voices.md</b>：加一段聲音守則 ＋ 署名落款</li>
+<li><b>voices.md</b>：加一段筆調守則 ＋ 署名落款</li>
 <li><b>/commission</b>：加進編輯表 ＋ 觸發語（「用 &lt;代號&gt; 寫…」）</li>
 <li><b>/write-issue</b>：加進編輯表 ＋ 路由 <span style="color:var(--ink-muted)">（只有「常規編輯」需要）</span></li>
 <li><b>選題 rubric</b>：<span style="color:var(--ink-muted)">只有要靠每期選題餵稿的常規編輯才需要</span></li>
@@ -138,11 +138,11 @@ pre .c{color:#8B90A0}
 <p>人格寫好，不代表「對味」。一定要試跑、再校準——<b>這步最關鍵</b>，Amuse 就是這樣調出來的。</p>
 <ol class="cal">
 <li>用 <code>/commission</code> 給新編輯一個來源，叫他<b>寫一篇真的稿</b>。</li>
-<li>讀它：聲音對嗎？太硬／太軟／太 AI？跟其他編輯<b>夠不一樣</b>嗎？</li>
+<li>讀它：筆調對嗎？太硬／太軟／太 AI？跟其他編輯<b>夠不一樣</b>嗎？</li>
 <li>給<b>具體</b>回饋調。（例：Amuse 一開始太純諷刺，我們把他校準成「收 ＋ 笑裡的憂鬱 ＋ 慧黠」的伍迪艾倫式。）</li>
 <li>滿意了，把校準<b>寫回 soul／voices</b>——以後每次出場都是這個味道。</li>
 </ol>
-<div class="tip">通常要來回一兩次才對味，這很正常。第一篇別追求完美，追求<b>「找到他的聲音」</b>。</div>
+<div class="tip">通常要來回一兩次才對味，這很正常。第一篇別追求完美，追求<b>「找到他的筆調」</b>。</div>
 </div>
 
 <div class="sec-label">所有編輯共用的鐵則</div>
@@ -150,7 +150,7 @@ pre .c{color:#8B90A0}
 <div class="rule"><b>不捏造（anti-slop）</b>引述、數字都要對得回原文。笑話、觀點、角度可以，<b>事實不行</b>。這是最高原則。</div>
 <div class="rule"><b>標題鐵則</b>要同時「看得出主題」＋「勾得起好奇」，兩端都不能偏。檢驗：沒讀內文的人講得出主題、又想點進去。</div>
 <div class="rule"><b>A vs D 模式</b>A＝挑一條深寫（特寫／吐槽）；D＝完整交代來源 ＋ 你的角度（常規長文預設走 D）。</div>
-<div class="rule"><b>差異化</b>每位編輯都要補一個別人沒有的角度或聲音。重疊＝沒必要存在。</div>
+<div class="rule"><b>差異化</b>每位編輯都要補一個別人沒有的角度或筆調。重疊＝沒必要存在。</div>
 </div>
 
 <div class="sec-label">範本區（直接複製去填）</div>
@@ -161,7 +161,7 @@ pre .c{color:#8B90A0}
    <span class="c"># 建議廚房用語，跟 Mise／Passe／Fumet／Amuse 不撞</span>
 2. 人設／定位：______
    <span class="c"># 他是誰？為什麼這樣看食物？核心動機是什麼？</span>
-3. 聲音：______
+3. 筆調：______
    <span class="c"># 怎麼寫？跟現有編輯「最大的區別」是什麼？</span>
 4. 體裁 ＋ 模式：______
    <span class="c"># 長文／快訊／吐槽？走 A 挑一條，還是 D 全交代？大概字數？</span>
@@ -194,7 +194,7 @@ pre .c{color:#8B90A0}
 <span class="c">## 看事情的角度</span>
 {他拿到一則新聞，第一個會問的問題？這條決定他跟別人的差異}
 
-<span class="c">## 聲音特質</span>
+<span class="c">## 筆調特質</span>
 - {口語/書面？長句/短句？冷/暖？節奏？至少 4–6 條、具體可執行}
 
 <span class="c">## 寫作方式</span>
@@ -218,7 +218,7 @@ pre .c{color:#8B90A0}
 <span class="c">## 我寫過的主題／標題（防止重複角度）</span>
 （還沒寫過——{上線日}上線的新編輯。第一篇之後回寫到這裡。）</pre>
 
-<p class="note">範本也放在 repo：<code>docs/editors/_TEMPLATE-soul.md</code>、<code>_TEMPLATE-memory.md</code>。Voices 段沒有獨立檔——照 voices.md 裡現有四位的格式，加一段就好（聲音定調 ＋ 可執行 bullets ＋ 署名）。</p>
+<p class="note">範本也放在 repo：<code>docs/editors/_TEMPLATE-soul.md</code>、<code>_TEMPLATE-memory.md</code>。Voices 段沒有獨立檔——照 voices.md 裡現有四位的格式，加一段就好（筆調定調 ＋ 可執行 bullets ＋ 署名）。</p>
 
 <div class="foot"><div class="b">The Pass 出菜口</div>新增 AI 編輯 SOP · 你定位、AI 接線 · <a href="editor-source.html">看現有四位編輯</a> · <a href="hub.html">系統入口</a></div>
 </div></body></html>

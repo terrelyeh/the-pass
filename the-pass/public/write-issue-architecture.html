@@ -57,7 +57,7 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <div class="sub">選題會拍板之後，<code>/write-issue</code> 怎麼把選出的稿，變成一期文章草稿。這是 The Pass 最核心的一塊。</div>
 </div>
 
-<div class="lede">選題決定<b>寫什麼</b>；<code>/write-issue</code> 負責<b>怎麼寫</b>。一個總指揮（orchestrator）調度四位 AI 編輯——各是獨立的工作分身——抓原文查證、各用自己的聲音寫、總編查核，中間設三個停點讓人拍板，最後產出草稿。核心精神：<b>AI 起草、人定稿。</b></div>
+<div class="lede">選題決定<b>寫什麼</b>；<code>/write-issue</code> 負責<b>怎麼寫</b>。一個總指揮（orchestrator）調度四位 AI 編輯——各是獨立的工作分身——抓原文查證、各用自己的筆調寫、總編查核，中間設三個停點讓人拍板，最後產出草稿。核心精神：<b>AI 起草、人定稿。</b></div>
 
 <h2 class="nobord">整條產線</h2>
 <div class="h-sub">能並行的並行、有依賴的排序；金色是「停下來給人決定」的關卡。</div>
@@ -104,7 +104,7 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 
 <!-- GATE 1 -->
 <g class="gate"><rect x="80" y="232" width="294" height="38" rx="8"/></g>
-<text class="gatet" x="227" y="256" text-anchor="middle">🚦 GATE 1 · 聲音校準（人）</text>
+<text class="gatet" x="227" y="256" text-anchor="middle">🚦 GATE 1 · 筆調校準（人）</text>
 <path class="flow" d="M227,270 L227,294 L350,294 L350,310"/>
 <path class="flow" d="M473,208 L473,294 L350,294"/>
 
@@ -141,7 +141,7 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <text class="t" x="350" y="673" text-anchor="middle">你／編輯潤 → 發佈</text>
 
 <!-- principle footnote -->
-<text class="s" x="350" y="724" text-anchor="middle" font-size="12.5">四個 subagent 各開獨立 context = 聲音不互相滲透、總編不偏心</text>
+<text class="s" x="350" y="724" text-anchor="middle" font-size="12.5">四個 subagent 各開獨立 context = 筆調不互相滲透、總編不偏心</text>
 <text class="s" x="350" y="744" text-anchor="middle" font-size="12.5">每位寫完都附「factsUsed」：用了哪個數字/引述 ← 對應原文哪句</text>
 <text class="s" x="350" y="764" text-anchor="middle" font-size="12.5">三個金色 gate ＝ 人在這裡拍板（AI 起草、人定稿）</text>
 <text class="s" x="350" y="786" text-anchor="middle" font-size="12.5">開寫前每位載入「自己的記憶」、定稿後回寫 → 三位跨期演化（養虛擬 KOL）</text>
@@ -149,7 +149,7 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 </div>
 
 <h2>為什麼是「四個獨立分身」，不是一個 AI 全寫</h2>
-<p>如果讓同一個 AI 在同一個腦袋裡寫完三種編輯的稿，聲音會互相滲透——寫完 Mise 那種場景式的溫度，馬上接 Passe 的俐落，語氣會糊掉。所以每位編輯各開一個獨立分身（subagent），腦袋裡<b>只裝自己的人格＋自己要寫的原文</b>，其他什麼都不知道。聲音因此乾淨。總編也是獨立分身，沒參與寫作、純挑錯，不會自己審自己偏心。</p>
+<p>如果讓同一個 AI 在同一個腦袋裡寫完三種編輯的稿，筆調會互相滲透——寫完 Mise 那種場景式的溫度，馬上接 Passe 的俐落，語氣會糊掉。所以每位編輯各開一個獨立分身（subagent），腦袋裡<b>只裝自己的人格＋自己要寫的原文</b>，其他什麼都不知道。筆調因此乾淨。總編也是獨立分身，沒參與寫作、純挑錯，不會自己審自己偏心。</p>
 
 <table>
 <thead><tr><th>角色</th><th>寫什麼</th><th>為什麼這樣切</th></tr></thead>
@@ -164,7 +164,7 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 
 <h2>三個停下來給人決定的關卡</h2>
 <div class="gates">
-<div class="gate"><span class="g">GATE 1</span><span>頭條長文寫完 → 停，確認聲音對不對、切角 OK 嗎，再寫其餘。</span></div>
+<div class="gate"><span class="g">GATE 1</span><span>頭條長文寫完 → 停，確認筆調對不對、切角 OK 嗎，再寫其餘。</span></div>
 <div class="gate"><span class="g">GATE 2</span><span>總編查到數字／引述對不回原文 → 立刻停，問你：拿掉 / 去查證 / 你確認。不自己亂改。</span></div>
 <div class="gate"><span class="g">GATE 3</span><span>整期寫完、發佈前 → 停，你逐篇定奪：採用 / 要改哪 / 退。</span></div>
 </div>
@@ -172,11 +172,11 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <h2>三個守門原則</h2>
 <div class="principle"><b>事實不可扭曲。</b>引號＝原文真有人說過、數字＝原文。寫之前一定先抓全文。付費牆只有預覽 → 只報「現象」、透明標註、找公開來源佐證，不憑預覽編造。</div>
 <div class="principle"><b>AI 起草、人定稿。</b>三個 gate 都停下來問人，AI 不替你做最終決定——跟選題的「AI 初選、人拍板」同一個哲學。</div>
-<div class="principle"><b>聲音隔離。</b>四個分身各自獨立，聲音不互相污染、總編不自審。</div>
+<div class="principle"><b>筆調隔離。</b>四個分身各自獨立，筆調不互相污染、總編不自審。</div>
 
 <h2>怎麼讓編輯越寫越好</h2>
 <ul class="clean">
-<li><b>調聲音規則</b>（最快）：改寫作守則，下一期就生效。</li>
+<li><b>調筆調規則</b>（最快）：改寫作守則，下一期就生效。</li>
 <li><b>接編輯記憶</b>（最深，<b>已接 2026-06</b>）：每期寫完把「學到的準則、寫過的主題」記起來，下期載入 → 三位編輯記得自己學過／寫過什麼、越來越貼品味。詳見下方〈編輯記憶〉。</li>
 <li><b>放好／壞對照範例</b>：AI 學樣，比學抽象規則有效。</li>
 <li><b>gate 的回饋就是訓練訊號</b>：你在關卡改的東西（像把切角換掉），就是該回寫進守則的線索。</li>
@@ -234,7 +234,7 @@ ul.clean{list-style:none;margin:.5rem 0}ul.clean li{padding-left:1.3rem;position
 <b>…/Obsidian/文章草稿/&lt;date&gt;.md</b>     <span class="c">草稿（待人定稿）</span>
 <b>public/issue-&lt;date&gt;.html</b>          <span class="c">內容頁（上 thepass.cc）</span></div>
 
-<p>跑稿時，每個分身腦袋裡<b>只</b>注入「自己的」那幾份（聲音才不互相污染）：</p>
+<p>跑稿時，每個分身腦袋裡<b>只</b>注入「自己的」那幾份（筆調才不互相污染）：</p>
 <table>
 <thead><tr><th>這個分身</th><th>注入什麼</th></tr></thead>
 <tbody>
