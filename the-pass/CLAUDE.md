@@ -237,7 +237,7 @@ npx vercel --prod --yes
 - **craft-anchors 按環節挑（2026-06-24 分類）**: 14 招分 5 類（開場／切角立意／結構推進／感官描寫／收尾），開頭有〈按環節找招〉表；招號是穩定 ID（分類後跳序正常、新招接著編）。中文稱呼＝「**共用技法庫**」（不再叫「招庫」）、去「偷」改「學／萃取」。
 - **commission 選配文章形式（2026-06-24）**: 指定文章形式時，總編在事實核查外多核一條「形式到位沒」——**併在總編 subagent、不另開**（總編已獨立於寫稿編輯、無偏心問題）；不指定就靠「選對編輯」帶形式。
 - **說明頁寬度統一 1040（2026-06-24）**: 手寫說明頁 `.wrap` max-width=1040；**gen 報告頁（sources/backlog/選題報告）寬度在腳本**（`gen-sources-page`／`gen-backlog-page`／`report.ts`），改要改腳本＋重生。文章頁（issue/demo）保持窄、不加寬。
-- **intro.html 簡報＝guizang 模板**: 網頁翻頁 PPT（風格 A＋The Pass 色彩/字體）。cp guizang 模板務必連 `public/assets/motion.min.js` 一起（否則 `data-anim` 卡 `opacity:0` 投影空白）；已加保底 `body.motion-ready [data-anim]{opacity:1!important}`。改簡報用 preview **resize 桌面 16:9**（手機寬看不出 100vw 翻頁）。
+- **intro.html 簡報＝guizang 模板**: 網頁翻頁 PPT（風格 A＋The Pass 色彩/字體）。cp guizang 模板務必連 `public/assets/motion.min.js` 一起（否則 `data-anim` 卡 `opacity:0` 投影空白）；已加保底 `body.motion-ready [data-anim]{opacity:1!important}`。改簡報用 preview **resize 桌面 16:9**（手機寬看不出 100vw 翻頁）。**裝飾（螢光筆／底線）別用 `z-index:-1` 偽元素**——父層 opacity 淡入動畫播完、stacking context 消失後它會掉回祖先背景之後被蓋掉（症狀＝「閃一下就消失」），改用元素自身 `background` 漸層畫（文字天生在背景之上、不需 z-index）。
 - **anti-slop 別自己算年數**: 原文寫「2007 年」就別寫「十八年前」（推算、可能算錯）；要嘛給年份、要嘛「多年前」。
 - **/commission ＝ 共用編輯檔**: 與 /write-issue 讀同一套 soul/voices/memory/anti-slop/chief-editor-checklist（改一次兩邊生效）；單篇委稿、記憶預設不寫（opt-in）。
 - **真人分身封閉、不讀 craft-anchors**: 分身（Musubi/Jang/Bao/Kaya/Nano/Lou，`docs/editors/<名>-{soul,anchors,moves,memory}.md`）只注入自己 4 檔＋anti-slop，**不注入 voices 段、不注入 craft-anchors**（commission 依編輯類型分流）；只有原創四位讀招庫。混進去＝四不像。每位分身守則都擋 mingchu 全站通病「格言式上升收尾」。

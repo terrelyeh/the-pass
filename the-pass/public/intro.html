@@ -144,9 +144,10 @@
 
   /* ============ Signature / Highlight ============ */
   .sign{font-family:var(--serif-en);font-style:italic;font-weight:500;font-size:2vw;opacity:.7}
-  .hi{position:relative;display:inline}
-  .slide.dark .hi::after{content:"";position:absolute;left:-.1em;right:-.1em;bottom:-.05em;height:.28em;background:rgba(var(--paper-rgb),.15);z-index:-1}
-  .slide.light .hi::after{content:"";position:absolute;left:-.1em;right:-.1em;bottom:-.05em;height:.28em;background:rgba(var(--ink-rgb),.08);z-index:-1}
+  /* 螢光筆用元素自身 background 漸層畫（不用 z-index:-1 偽元素）——文字天生在背景之上，
+     不建立額外 stacking context，父層 opacity 淡入動畫播完螢光帶仍在。底部 .32em 為實心螢光帶。*/
+  .hi{display:inline;background-image:linear-gradient(to top, rgba(var(--accent-rgb),.22) .32em, transparent .32em)}
+  .slide.dark .hi{background-image:linear-gradient(to top, rgba(var(--accent-rgb),.42) .32em, transparent .32em)}
 
   /* ============ Icons（Lucide via CDN） ============ */
   .ico{width:1em;height:1em;display:inline-block;vertical-align:-.12em;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
@@ -454,8 +455,7 @@
   .en,em{color:var(--accent);font-style:italic}
   .callout{border-left-color:var(--accent)}
   .tag{border-color:var(--accent);color:var(--accent);opacity:.95}
-  .slide.light .hi::after{background:rgba(var(--accent-rgb),.20)}
-  .slide.dark .hi::after{background:rgba(var(--accent-rgb),.34)}
+  /* .hi 螢光筆已改用 background 漸層（見上方 Highlight 區），不再用 ::after——避免 opacity 動畫播完後 z-index:-1 螢光帶被祖先背景蓋住而「閃一下就消失」 */
   /* 簡報穩定保底：data-anim 最終必可見（淡入動畫播放中仍由 WAAPI 接管，播完回到「可見」而非隱藏；萬一 motion 沒跑也直接顯示）*/
   body.motion-ready [data-anim]{opacity:1!important}
   /* 簡報內可點擊連結（連到系統入口對應說明頁，target=_blank 不離開簡報）*/
