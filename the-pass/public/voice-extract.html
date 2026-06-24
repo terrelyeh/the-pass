@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>聲音抽取的運作邏輯 · /voice-extract — The Pass</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Instrument+Serif&display=swap');
+:root{--ink:#2C3345;--ink-light:#5A6178;--ink-muted:#8B90A0;--bg:#FAFAF8;--bg-warm:#F5F3EF;--accent:#B8860B;--accent-light:#D4A843;--border:#E8E6E1;--white:#fff;--green:#27AE60;--serif:'Noto Serif TC',Georgia,serif;--sans:'Noto Sans TC',sans-serif;--display:'Instrument Serif',var(--serif);}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:18px}body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1000px;margin:0 auto;padding:.8rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.nav-brand{font-family:var(--display);font-size:1.15rem;font-weight:700;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:1.2rem;list-style:none}.nav-links a{font-size:.8rem;color:var(--ink-light);text-decoration:none}.nav-links a:hover{color:var(--accent)}.nav-links a.active{color:var(--ink);font-weight:500}
+.wrap{max-width:820px;margin:0 auto;padding:6rem 1.5rem 5rem}
+.hero{text-align:center;border-bottom:1px solid var(--border);padding-bottom:1.8rem;margin-bottom:2rem}
+.hero .label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h1{font-family:var(--display);font-size:2.6rem;font-weight:400;margin:.4rem 0 .4rem}
+.hero .sub{color:var(--ink-muted);font-size:.92rem;max-width:620px;margin:0 auto}
+.pill{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.04em;padding:.12rem .5rem;border-radius:100px;background:rgba(184,134,11,.14);color:var(--accent);vertical-align:middle;margin-left:.4rem}
+.lede{font-family:var(--serif);font-size:1.12rem;line-height:1.85;background:var(--bg-warm);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:1.1rem 1.3rem;margin:1.5rem 0 2.5rem}
+h2{font-family:var(--display);font-size:1.7rem;font-weight:400;margin:2.6rem 0 .3rem;border-top:1px solid var(--border);padding-top:1.8rem}
+h2.nobord{border-top:none;padding-top:0}
+.h-sub{color:var(--ink-muted);font-size:.84rem;margin-bottom:1rem}
+p{margin:.7rem 0}
+.diagram{margin:1.5rem 0 1rem;text-align:center}
+.diagram svg{max-width:100%;height:auto}
+.cap{font-size:.78rem;color:var(--ink-muted);text-align:center;margin-top:.4rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:1rem 0}
+th{text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--border);font-size:.7rem;letter-spacing:.04em;color:var(--ink-muted);text-transform:uppercase}
+td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top}td.r{font-weight:600;white-space:nowrap;color:var(--ink)}
+.dim td.r{color:var(--accent);font-family:var(--serif)}
+.principle{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;margin:.7rem 0}
+.principle b{color:var(--accent)}
+.gates{display:flex;flex-direction:column;gap:.5rem;margin:1rem 0}
+.gate{display:flex;gap:.7rem;align-items:baseline;background:#fffaf0;border:1px solid var(--accent-light);border-radius:8px;padding:.6rem .9rem}
+.gate .g{font-weight:700;color:var(--accent);white-space:nowrap}
+.callout{background:#fbf7ec;border:1px solid var(--accent-light);border-radius:10px;padding:1rem 1.2rem;margin:1.1rem 0;font-size:.95rem;line-height:1.8}.callout b{color:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0}
+.out{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem}
+.out .ot{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:1rem;margin-bottom:.3rem;display:flex;align-items:center;gap:.4rem}
+.out .on{font-size:.6rem;font-weight:700;padding:.1rem .4rem;border-radius:100px}
+.out.a .on{background:rgba(39,174,96,.14);color:var(--green)}.out.b .on{background:rgba(184,134,11,.14);color:var(--accent)}
+.out .od{font-size:.85rem;color:var(--ink-light);line-height:1.6}
+.foot{text-align:center;color:var(--ink-muted);font-size:.78rem;margin-top:3.5rem;border-top:1px solid var(--border);padding-top:1.5rem}.foot .b{font-family:var(--display);color:var(--ink);font-size:1rem}
+.tree{background:var(--bg-warm);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.78rem;line-height:1.85;overflow-x:auto;margin:1rem 0;color:var(--ink);white-space:pre}
+.tree b{color:var(--ink);font-weight:700}.tree .c{color:var(--accent)}.tree .m{color:var(--ink-muted)}
+@media(max-width:680px){.nav-links{display:none}.hero h1{font-size:2rem}.two{grid-template-columns:1fr}}
+</style></head><body>
+<nav><div class="nav-inner"><a href="hub.html" class="nav-brand">The Pass</a><ul class="nav-links">
+<li><a href="voice-extract.html" class="active">聲音抽取</a></li>
+<li><a href="style-extract.html">風格抽取</a></li>
+<li><a href="editor-source.html">編輯源頭</a></li>
+<li><a href="hub.html">系統入口</a></li></ul></div></nav>
+
+<div class="wrap">
+<div class="hero">
+<div class="label">Voice Extraction · 運作邏輯</div>
+<h1>一位作者，怎麼變成一個能寫的分身</h1>
+<div class="sub">丟一位作者的文章給 <code>/voice-extract</code>，它怎麼把「聲音」抽成可重用的 profile——還生一個分身、<b>證明它寫得出來</b>。這是 <a href="style-extract.html" style="color:var(--accent)">/style-extract</a> 的文字雙胞胎。<span class="pill">設計提案</span></div>
+</div>
+
+<div class="lede">抽一個聲音不難，難的是<b>證明真的抽到了</b>。<code>/voice-extract</code> 讓 orchestrator 讀完一位作者的語料、抽成 voice-DNA，<b>實例化一個分身去寫沒在語料裡的新題目</b>，再交給<b>獨立的 scorer 對著她的聲音錨逐面向打分</b>——不是「讀起來像」就算數，是<b>分數證明寫得出來</b>才算數。一句話：<b>抽取靠讀的眼，驗證靠獨立的眼。</b></div>
+
+<div class="callout"><b>先解釋一個詞：harness（工法）。</b>指這個 skill 不是「一個 AI 從頭做到尾」，而是<b>一個總指揮（orchestrator）調度幾個各自獨立的分身（subagent）、中間設「停下來給人拍板」的關卡（gate）</b>。寫稿的分身跟打分的 scorer<b>分開</b>，評審不會替自己的稿說話——跟 <a href="write-issue-architecture.html" style="color:var(--accent)">/write-issue</a> 的總編獨立核查、<a href="style-extract.html" style="color:var(--accent)">/style-extract</a> 的獨立評分，是同一套思路。</div>
+
+<h2 class="nobord">整條流程</h2>
+<div class="h-sub">金色＝「停下來給人決定」的關卡；左邊那條迴路＝沒過就改了重來。</div>
+
+<div class="diagram">
+<svg viewBox="0 0 700 770" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans TC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8B90A0"/></marker>
+<marker id="arA" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#B8860B"/></marker>
+</defs>
+<style>
+.box{fill:#fff;stroke:#E8E6E1;stroke-width:1.5}
+.t{fill:#2C3345;font-size:15px;font-weight:600}
+.s{fill:#8B90A0;font-size:12px}
+.flow{stroke:#8B90A0;stroke-width:1.5;fill:none;marker-end:url(#ar)}
+.loop{stroke:#B8860B;stroke-width:1.5;fill:none;marker-end:url(#arA);stroke-dasharray:5 3}
+.gatet{fill:#B8860B;font-size:13.5px;font-weight:700}
+.orch{fill:#fbf7ec;stroke:#B8860B;stroke-width:2}
+.sub{fill:#fff;stroke:#5A6178;stroke-width:1.5}
+.subt{fill:#2C3345;font-size:13.5px;font-weight:700}
+.subs{fill:#5A6178;font-size:11px}
+</style>
+
+<rect class="box" x="214" y="12" width="272" height="46" rx="10"/>
+<text class="t" x="350" y="31" text-anchor="middle">你餵給它什麼</text>
+<text class="s" x="350" y="48" text-anchor="middle">一位作者的語料 ＋ 用途 ＋ 硬限制（GATE 0）</text>
+<path class="flow" d="M350,58 L350,78"/>
+
+<rect class="orch" x="92" y="78" width="516" height="60" rx="10"/>
+<text class="subt" x="350" y="103" text-anchor="middle" font-size="14.5">orchestrator 讀語料、抽 voice-DNA</text>
+<text class="subs" x="350" y="123" text-anchor="middle" font-size="12">並行讀者讀完每篇 → 逐面向抽：身份／聲音機制／招／聲音錨／不要學的</text>
+<path class="flow" d="M350,138 L350,158"/>
+
+<rect class="box" x="150" y="158" width="400" height="46" rx="10"/>
+<text class="t" x="350" y="177" text-anchor="middle">組 voice profile</text>
+<text class="s" x="350" y="194" text-anchor="middle">soul ＋ 聲音錨（她的原文）＋ memory ＋ 蒸餾出的招</text>
+<path class="flow" d="M350,204 L350,224"/>
+
+<rect x="170" y="224" width="360" height="36" rx="8" fill="#fffaf0" stroke="#D4A843" stroke-width="1.5"/>
+<text class="gatet" x="350" y="247" text-anchor="middle">🚦 GATE 1 · 確認 DNA ＋ 幫分身取小名（人）</text>
+<path class="flow" d="M350,260 L350,284"/>
+<text class="s" x="350" y="278" text-anchor="middle" font-style="italic">↓ 實例化分身、寫「沒在語料裡」的測試稿</text>
+
+<rect class="box" x="70" y="290" width="176" height="44" rx="9"/>
+<text class="t" x="158" y="310" text-anchor="middle" font-size="13.5">測試稿 · 主場題</text>
+<text class="s" x="158" y="326" text-anchor="middle" font-size="11">她本行·先確認</text>
+<rect class="box" x="262" y="290" width="176" height="44" rx="9"/>
+<text class="t" x="350" y="310" text-anchor="middle" font-size="13.5">測試稿 · 離場題</text>
+<text class="s" x="350" y="326" text-anchor="middle" font-size="11">跨領域·測範圍</text>
+<rect class="box" x="454" y="290" width="176" height="44" rx="9"/>
+<text class="t" x="542" y="310" text-anchor="middle" font-size="13.5">測試稿 · fresh 題</text>
+<text class="s" x="542" y="326" text-anchor="middle" font-size="11">壓力測試</text>
+<path class="flow" d="M158,334 L158,356"/>
+<path class="flow" d="M350,334 L350,356"/>
+<path class="flow" d="M542,334 L542,356"/>
+
+<rect class="sub" x="70" y="356" width="176" height="62" rx="9"/>
+<text class="subt" x="158" y="380" text-anchor="middle">scorer subagent</text>
+<text class="subs" x="158" y="398" text-anchor="middle">對聲音錨打分</text>
+<text class="subs" x="158" y="412" text-anchor="middle">獨立 · 不偏私</text>
+<rect class="sub" x="262" y="356" width="176" height="62" rx="9"/>
+<text class="subt" x="350" y="380" text-anchor="middle">scorer subagent</text>
+<text class="subs" x="350" y="398" text-anchor="middle">對聲音錨打分</text>
+<text class="subs" x="350" y="412" text-anchor="middle">獨立 · 不偏私</text>
+<rect class="sub" x="454" y="356" width="176" height="62" rx="9"/>
+<text class="subt" x="542" y="380" text-anchor="middle">scorer subagent</text>
+<text class="subs" x="542" y="398" text-anchor="middle">對聲音錨打分</text>
+<text class="subs" x="542" y="412" text-anchor="middle">獨立 · 不偏私</text>
+<text class="s" x="350" y="436" text-anchor="middle" font-style="italic">並行 · 各開獨立 context · 對著她的聲音錨打分（＋有沒有犯她的弱點）</text>
+<path class="flow" d="M158,418 L158,446 L350,446"/>
+<path class="flow" d="M542,418 L542,446 L350,446"/>
+<path class="flow" d="M350,418 L350,460"/>
+
+<rect class="box" x="175" y="460" width="350" height="46" rx="10"/>
+<text class="t" x="350" y="479" text-anchor="middle">聲音保真報告</text>
+<text class="s" x="350" y="496" text-anchor="middle">每面向幾分 · 哪裡不像 · 有沒有滑成她的毛病</text>
+<path class="flow" d="M350,506 L350,526"/>
+
+<rect x="150" y="526" width="400" height="36" rx="8" fill="#fffaf0" stroke="#D4A843" stroke-width="1.5"/>
+<text class="gatet" x="350" y="549" text-anchor="middle">🚦 GATE 2 · 夠像那位作者了嗎？（人）</text>
+<path class="flow" d="M350,562 L350,590"/>
+<text class="s" x="384" y="580" text-anchor="start" fill="#27AE60">夠像 ↓</text>
+
+<path class="loop" d="M150,544 L42,544 L42,312 L66,312"/>
+<text fill="#B8860B" font-size="11.5" transform="rotate(-90 30 430)" x="30" y="430" text-anchor="middle">不夠像：補 soul／換聲音錨 → 重寫重驗</text>
+
+<rect class="box" x="150" y="590" width="400" height="48" rx="10" stroke="#27AE60"/>
+<text class="t" x="350" y="611" text-anchor="middle">產出 · 兩樣</text>
+<text class="s" x="350" y="628" text-anchor="middle">① Voice Profile（分身：soul＋聲音錨＋memory）　② 招 → 共用 craft-anchors</text>
+
+<text class="s" x="350" y="676" text-anchor="middle" font-size="12.5">抽取靠讀的眼（orchestrator 讀完語料）· 驗證靠獨立的眼（scorer 不偏私）</text>
+<text class="s" x="350" y="698" text-anchor="middle" font-size="12.5">讀起來像 ≠ 真的重現 — 要分數證明寫得出來，才算過</text>
+<text class="s" x="350" y="720" text-anchor="middle" font-size="12.5">聲音錨（她的原文）&gt; 規則描述 — 純規則釘不住聲音，原文範本才鎖得住</text>
+</svg>
+</div>
+
+<h2>① 輸入：你要餵它的三樣</h2>
+<div class="h-sub">skill 開工前用 AskUserQuestion 一次問齊（這就是 GATE 0）。</div>
+<table>
+<thead><tr><th>要給的</th><th>說明</th></tr></thead>
+<tbody>
+<tr><td class="r">一位作者的語料</td><td>8–12 篇同一位作者的文章最好，橫跨他寫的不同類別（人物／產業／現場…）。連結或全文皆可。</td></tr>
+<tr><td class="r">給什麼用</td><td>是要<b>克隆一位分身</b>，還是只<b>偷招</b>給現有編輯——影響抽取的重點與驗證方式。</td></tr>
+<tr><td class="r">硬限制</td><td>有沒有「一定要保留」的招牌、或「絕對不學」的習慣（例：他的弱點不要複製）。</td></tr>
+</tbody>
+</table>
+
+<h2>② 為什麼特別：抽取靠讀的眼，驗證靠獨立的眼</h2>
+<div class="h-sub">subagent 只用在「需要獨立」的地方，不是每件事。</div>
+<p>抽聲音得<b>讀完整批、整體地看</b>——一個人的聲音是節奏、用詞、世界觀一起作用的，拆成六個分身各看一塊反而看碎。所以<b>抽取</b>由 orchestrator（配並行讀者讀料）一次讀完、整體抽。</p>
+<p>但<b>驗證</b>需要一雙<b>不偏私的眼</b>。寫稿的分身會覺得「我寫得很像他」，容易給自己人情分。換一個<b>沒參與寫的 scorer</b>，純粹對著作者的聲音錨打分，才抓得到飄移。所以驗證才拆獨立 subagent。</p>
+
+<h2>③ 抽取：把聲音讀成可寫下的 voice-DNA</h2>
+<div class="h-sub">orchestrator 讀完語料，把「聲音」這個模糊的東西，拆成六個寫得下的面向。</div>
+<table class="dim">
+<thead><tr><th>面向</th><th>抽什麼</th><th>進 profile 哪裡</th></tr></thead>
+<tbody>
+<tr><td class="r">寫作身份</td><td>他在乎什麼、對食物／主廚／傳統的立場、跟讀者的關係</td><td>soul</td></tr>
+<tr><td class="r">聲音機制</td><td>句子節奏、怎麼開場、怎麼收尾、用詞溫度、用不用「你」、招牌轉場</td><td>soul〈怎麼寫〉</td></tr>
+<tr><td class="r">招牌動作</td><td>3–5 個命名、<b>可轉移</b>的技術（如「冷知識鉤」「數字落差」「跨文化映照」）</td><td>聲音錨 ＋ <b>招</b></td></tr>
+<tr><td class="r">聲音錨</td><td>4–6 段<b>逐字照抄</b>的短範文，最能代表他的聲音</td><td>anchors（the show）</td></tr>
+<tr><td class="r">不要學的</td><td>他的結構弱點（清單化、逐道菜、把洞見外包給引述）</td><td>soul〈分身守則〉</td></tr>
+<tr><td class="r">題材範圍</td><td>寫哪些主題／從什麼角度切／幾乎不碰什麼</td><td>memory 種子</td></tr>
+</tbody>
+</table>
+
+<h2>④ 驗證：寫一篇沒寫過的題目，交給獨立 scorer 打分</h2>
+<div class="h-sub">這是這個 skill 真正的價值。抽完不算數，要能寫得出來、而且分數證明像，才算數。</div>
+<p>把分身實例化後，給它<b>沒在語料裡的新題目</b>寫測試稿（<b>刻意鋪難度</b>：① 主場題＝他本行，先確認生得出來 → ② 離場題＝跨領域，測聲音撐不撐得住 → ③ fresh 壓力測試）。然後<b>每篇各派一個獨立 scorer</b>，給它「測試稿 ＋ 作者的聲音錨 ＋ voice-DNA」，請它<b>逐面向打分</b>：開場型態對不對？招牌動作在不在？句子節奏、口吻？<b>並且</b>——有沒有<b>滑成作者的弱點</b>（這是 voice-extract 特有的一關：分身要有他的聲音、卻不犯他的毛病）。三份合起來＝<b>聲音保真報告</b>。</p>
+<div class="callout"><b>為什麼一定要用「沒在語料裡」的題目？</b>就像 style-extract 是生<b>新圖</b>、不是把錨點圖再貼一次——要證明 profile 會 <b>generalise</b>（在新題目上重現聲音），不是背他寫過的東西。Mokki 分身的首驗就是寫<b>阿根廷 huertas</b>（不在她語料裡的題），看她的「冷知識鉤＋跨文化映照＋暖收尾」在陌生材料上還在不在。</div>
+
+<h2>⑤ 兩道 gate：人在哪裡拍板</h2>
+<div class="h-sub">全程互動，每道 gate 都用 AskUserQuestion——AI 跑、人決定。</div>
+<div class="gates">
+<div class="gate"><span class="g">GATE 0</span><span>開工前 → 問齊三樣輸入（語料／用途／硬限制）。</span></div>
+<div class="gate"><span class="g">GATE 1</span><span>voice-DNA 抽好 → 停，給你看：抓到他的聲音了嗎？哪個面向要補？聲音錨選這幾段 OK 嗎？<b>並且：幫這個分身取一個小名</b>（之後就用這名字呼叫他）。</span></div>
+<div class="gate"><span class="g">GATE 2</span><span>測試稿＋保真報告出來 → 停：夠像／某篇飄了／犯了他的弱點。<b>不夠像就補 soul、換聲音錨，重寫重驗</b>，直到穩定或你喊停。</span></div>
+</div>
+
+<h2>⑥ 輸出：兩樣（這是它比 style-extract 多的）</h2>
+<div class="h-sub">一次 voice-extract，同時吐一個分身、和一批可共用的招。</div>
+<div class="two">
+<div class="out a"><div class="ot">① Voice Profile <span class="on">分身本體</span></div><div class="od">soul ＋ 聲音錨 ＋ memory——用來實例化一位<b>克隆該作者聲音</b>的 AI 編輯。就是要像他。</div></div>
+<div class="out b"><div class="ot">② 技藝參考（招） <span class="on">共用</span></div><div class="od">蒸餾出的<b>可轉移招式</b> → 進共用 <code>craft-anchors.md</code>，<b>養所有編輯</b>。偷招、不偷聲音。</div></div>
+</div>
+<div class="callout"><b>為什麼 voice-extract 多這一類、style-extract 沒有？</b>因為<b>寫作的「招」比視覺風格更可拆解</b>。一個視覺風格基本上是整包重現的；但「冷知識鉤、數字落差、跨文化映照」這種<b>寫作招式，可以從作者身上拆下來、給完全不同聲音的編輯用</b>。所以同一次抽取，既產一個克隆分身（①），又落下一批人人可用的招（②）。</div>
+<div class="tree"><b>docs/editors/&lt;小名&gt;-*.md</b>          <span class="c">← 分身 profile（自成一包）</span>
+├── <b>&lt;小名&gt;-soul.md</b>      <span class="c">我是誰 ＋ 怎麼寫 ＋ 分身守則（避開他的弱點）</span>　<span class="m">the why</span>
+├── <b>&lt;小名&gt;-anchors.md</b>   <span class="c">聲音錨：他的原文範本（逐字）</span>　　　　　　<span class="m">the show</span>
+└── <b>&lt;小名&gt;-memory.md</b>    <span class="c">學到的準則 ＋ 寫過的主題（滾動）</span>　　　<span class="m">the grow</span>
+
+<b>refs/craft-anchors.md</b>            <span class="c">← 招落這裡（全編輯共用，跟聲音分開）</span></div>
+
+<h2>⑦ 跟 /style-extract 的對照</h2>
+<div class="h-sub">同一套工法、兩種介質——一個抽視覺風格，一個抽寫作聲音。</div>
+<table>
+<thead><tr><th>階段</th><th>/style-extract</th><th>/voice-extract</th></tr></thead>
+<tbody>
+<tr><td class="r">進料</td><td>一組參考圖</td><td>一位作者的語料</td></tr>
+<tr><td class="r">抽取（多面向）</td><td>逐面向分析視覺風格</td><td>逐面向抽 voice-DNA（6 面向）</td></tr>
+<tr><td class="r">🚦 Gate 1</td><td>確認 style spec</td><td>確認 DNA ＋ <b>取小名</b></td></tr>
+<tr><td class="r"><b>驗證（獨立 subagent）</b></td><td>生新圖 → 對錨點圖打分</td><td>寫 fresh 稿 → 對聲音錨打分（＋有沒有犯弱點）</td></tr>
+<tr><td class="r">迭代</td><td>不夠像 → 調 profile 重生</td><td>不夠像 → 補 soul／換錨 重寫</td></tr>
+<tr><td class="r">產出</td><td>Style Profile（spec＋anchors＋validation）</td><td>Voice Profile（分身）<b>＋ 招（共用）</b></td></tr>
+</tbody>
+</table>
+
+<div class="callout"><b>首個分身：Mokki（mingchu 資深編輯）已用這套流程手動跑通。</b>讀 5 篇語料抽 voice-DNA → 建 profile（soul＋聲音錨＋memory）→ 讓分身寫「阿根廷 huertas」驗證她的冷知識鉤、跨文化映照、暖收尾在陌生題目上還在不在 → 通過。<code>/voice-extract</code> 就是把這套手動流程，變成 orchestrator＋獨立 subagent＋兩道 gate 的自動 harness——跟當初 style-extract「先手做、再包成 skill」一模一樣。</div>
+
+<h2>守門原則</h2>
+<div class="principle"><b>抽取靠讀的眼，驗證靠獨立的眼。</b>抽取由 orchestrator 讀完整批（聲音是整體的）；驗證交給沒寫過稿的 scorer（要不偏私的裁判）。</div>
+<div class="principle"><b>讀起來像 ≠ 真的重現。</b>要在<b>沒寫過的題目</b>上重現聲音，才證明 profile 會 generalise，不是背他的舊文。</div>
+<div class="principle"><b>聲音錨 &gt; 規則描述。</b>純規則（「他句子很暖」）釘不住聲音；逐字的原文範本，才是分身能對齊的校準樣本。</div>
+<div class="principle"><b>有他的聲音，但避開他的弱點。</b>分身＝作者的聲音 ＋ The Pass 的結構紀律。複製鉤子、數字、映照、暖收尾；但不複製他清單化、逐道菜、把洞見外包給引述的毛病。</div>
+<div class="principle"><b>偷招 ≠ 克隆。</b>「招」是可轉移、給所有編輯的技術；「聲音」是某一位的、只給他的分身。兩條路分開——克隆一個分身（聲音），或養四個原創（招）。</div>
+
+<div class="foot"><div class="b">The Pass 出菜口</div>聲音抽取的運作邏輯 · 抽取靠讀的眼，驗證靠獨立的眼</div>
+</div></body></html>
