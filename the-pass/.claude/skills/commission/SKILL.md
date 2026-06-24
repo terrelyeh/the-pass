@@ -34,7 +34,7 @@ description: 指定 The Pass 四位 AI 編輯之一（Mise／Passe／Fumet／Amu
 | **Fumet** | `docs/editors/fumet-soul.md` | `voices.md`（Fumet 段） | `docs/editors/fumet-memory.md` | 長文（觀點綜編 D）沉靜、從現象叩問文化假設／留一個提問 |
 | **Amuse** | `docs/editors/amuse-soul.md` | `voices.md`（Amuse 段） | `docs/editors/amuse-memory.md` | 特別企劃·吐槽（**預設走 A、不走 D**）約 300–600 字、先自嘲後諷刺 |
 
-> **檔案位置**：`*-soul.md`／`*-memory.md` 在 `docs/editors/`；`voices.md`／`anti-slop.md`／`chief-editor-checklist.md` 是與 /write-issue **共用的同一份**，在 `.claude/skills/write-issue/refs/`。改一份、兩個 skill 一起生效。
+> **檔案位置**：`*-soul.md`／`*-memory.md` 在 `docs/editors/`；`voices.md`／`anti-slop.md`／`craft-anchors.md`／`chief-editor-checklist.md` 是與 /write-issue **共用的同一份**，在 `.claude/skills/write-issue/refs/`。改一份、兩個 skill 一起生效。
 
 ## 共用鐵則（三種模式都遵守）
 
@@ -66,7 +66,7 @@ spawn 那位**編輯 subagent**（注入其 soul＋memory＋voices 段＋anti-sl
 編輯 subagent 依選定角度出**大綱**：開頭從誰切入、段落骨架、**每段用哪幾篇來源**、標題候選，**明寫「脊椎錨在哪個人」**。用 **AskUserQuestion** 給 Terrel：approve／調角度／換錨的人／搬段落。（在大綱就鎖「先找到人」，別等寫完才發現是無臉綜述。）
 
 ### 4 · 寫稿（編輯 subagent）
-spawn **一個**編輯 subagent（主模型、品質優先），乾淨 context 只注入那位編輯的：soul ＋ memory ＋ `voices.md`（該編輯段 ＋〈長文標準〉）＋ `anti-slop.md` ＋ **素材全文/摘要** ＋ 選定角度與大綱 ＋ 體裁要求。**長文＝觀點綜編 D：完整交代來源、別為角度丟重要事實，用切角貫穿、用編輯聲音、字數依訊息量約 500–900（密的觀點題可略超，別為湊字硬砍）。** 回傳結構化：
+spawn **一個**編輯 subagent（主模型、品質優先），乾淨 context 只注入那位編輯的：soul ＋ memory ＋ `voices.md`（該編輯段 ＋〈長文標準〉）＋ `anti-slop.md` ＋ `craft-anchors.md`（偷招、不偷聲音；長文／特寫稿注入，純快訊可略） ＋ **素材全文/摘要** ＋ 選定角度與大綱 ＋ 體裁要求。**長文＝觀點綜編 D：完整交代來源、別為角度丟重要事實，用切角貫穿、用編輯聲音、字數依訊息量約 500–900（密的觀點題可略超，別為湊字硬砍）。** 回傳結構化：
 ```
 { title, draft, factsUsed: [{ claim, source }], sources: ["用到的連結", ...] }
 ```
