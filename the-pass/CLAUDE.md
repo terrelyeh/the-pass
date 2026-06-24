@@ -119,7 +119,7 @@ the-pass/
 │   ├── research-stage.html       ← 研究階段提案（內容源 vs 主題源；待團隊討論）
 │   ├── selection-report.html      ← 最新一期入口（讀 selection-reports.json 跳轉）；selection-report-<date>.html 每期 commit 上線
 │   ├── backlog.html              ← 選題庫存頁（gen 自 data/backlog.json；團隊看，--save 後重生）
-│   ├── write-issue-architecture.html ← AI 編輯室架構頁（給團隊，含 SVG 圖）
+│   ├── write-issue-architecture.html ← 電子報編輯室架構頁（給團隊，含 SVG 圖）
 │   ├── commission.html           ← 🆕 /commission 介紹頁（情境／用法／兩個成果範例）
 │   ├── editor-source.html        ← 編輯源頭頁（gen 自 9 個 md：3 soul+3 memory+voices/anti-slop/checklist；團隊看寫作源頭，勿手改）
 │   ├── skills.html               ← 三技能一頁說明（選題/寫稿/發佈；team）
