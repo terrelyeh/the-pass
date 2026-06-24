@@ -66,7 +66,7 @@ spawn 那位**編輯 subagent**（注入其 soul＋memory＋voices 段＋anti-sl
 編輯 subagent 依選定角度出**大綱**：開頭從誰切入、段落骨架、**每段用哪幾篇來源**、標題候選，**明寫「脊椎錨在哪個人」**。用 **AskUserQuestion** 給 Terrel：approve／調角度／換錨的人／搬段落。（在大綱就鎖「先找到人」，別等寫完才發現是無臉綜述。）
 
 ### 4 · 寫稿（編輯 subagent）
-spawn **一個**編輯 subagent（主模型、品質優先），乾淨 context 只注入那位編輯的：soul ＋ memory ＋ `voices.md`（該編輯段 ＋〈長文標準〉）＋ `anti-slop.md` ＋ `craft-anchors.md`（偷招、不偷聲音；長文／特寫稿注入，純快訊可略） ＋ **素材全文/摘要** ＋ 選定角度與大綱 ＋ 體裁要求。**長文＝觀點綜編 D：完整交代來源、別為角度丟重要事實，用切角貫穿、用編輯聲音、字數依訊息量約 500–900（密的觀點題可略超，別為湊字硬砍）。** 回傳結構化：
+spawn **一個**編輯 subagent（主模型、品質優先），乾淨 context **依編輯類型注入**——**原創四位**：soul ＋ memory ＋ `voices.md`（該編輯段 ＋〈長文標準〉）＋ `anti-slop.md` ＋ `craft-anchors.md`（偷招、不偷聲音；長文／特寫稿注入，純快訊可略）；**真人分身（Musubi／Jang…）**：自己的 `<名>-soul／-anchors／-moves／-memory` ＋ `anti-slop.md`，**不注入 voices 段、不注入 craft-anchors**（分身封在自己的聲音裡、借別人的招會四不像）。再加上 **素材全文/摘要** ＋ 選定角度與大綱 ＋ 體裁要求。**長文＝觀點綜編 D：完整交代來源、別為角度丟重要事實，用切角貫穿、用編輯聲音、字數依訊息量約 500–900（密的觀點題可略超，別為湊字硬砍）。** 回傳結構化：
 ```
 { title, draft, factsUsed: [{ claim, source }], sources: ["用到的連結", ...] }
 ```
