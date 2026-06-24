@@ -31,7 +31,7 @@
 
 ## AI 編輯團隊
 
-**九位 AI 編輯**：**四位原創**（虛構人設）＋ **五位真人分身**（克隆自真實名廚資深編輯）＋ 幕後總編。**總覽頁＝ [`editor-team.html`](public/editor-team.html)**（定位／特色／名廚類型配對／怎麼用／profile 概念）；寫作源頭頁＝ `editor-source.html`（gen，勿手改）。
+**十位 AI 編輯**：**四位原創**（虛構人設）＋ **六位真人分身**（克隆自真實名廚資深編輯）＋ 幕後總編。**總覽頁＝ [`editor-team.html`](public/editor-team.html)**（定位／特色／名廚類型配對／怎麼用／profile 概念）；寫作源頭頁＝ `editor-source.html`（gen，勿手改）。
 
 **原創四位（虛構·開放——讀共用招庫、博採眾長）**
 - **Mise** 長文（技術／產業面，場景式、找人，~500–900 字觀點編譯 D）
@@ -40,7 +40,7 @@
 - **Amuse** 特別企劃（諷刺自嘲、伍迪艾倫式；不定期、由 `/commission` 叫出場；預設走 A）
 - **總編輯** 幕後品管（7 項審核清單）
 
-**真人分身五位（克隆·封閉——只讀自己人格檔、不借招庫，越像原作者越好）**
+**真人分身六位（克隆·封閉——只讀自己人格檔、不借招庫，越像原作者越好）**
 
 | 分身 | 原型作者 | 聲音（需餵的素材） |
 |---|---|---|
@@ -49,6 +49,7 @@
 | **Bao** | 倫敦男子日常 | 倫敦離散餐廳現場特寫·電影運鏡（需場景素材） |
 | **Kaya** | 陳彬雁 | 東南亞深訪口述史·環形收束（需訪談引語） |
 | **Nano** | 章凱閎 | fine-dining 概念解剖·揭露式懸念（需菜單工序） |
+| **Lou** | 謝嫣薇 | 老火源流考據與鑑賞·橫向比較·通感寫味（判斷留白·不開槍） |
 
 署名：長文「編輯／X」、快訊「彙整·Passe」、提問「問／Fumet」、特企「招待／Amuse」、分身「編輯／<小名>」。
 **長文標準 ＝ 觀點編譯（D）**：完整交代來源＋編輯觀點貫穿；~500–900 字依訊息量。定義在 `refs/voices.md`〈長文標準〉。
@@ -172,7 +173,7 @@ the-pass/
 - **`/commission` skill（單篇委稿，🆕 2026-06-21；擴成自適應 2026-06-23）**：指定一位編輯寫**單獨一篇**、不出整期；**共用 /write-issue 編輯人格檔**（改一次到處生效）。**三輸入自適應**：A 單源 / B 題目＋多素材→觀點綜編 D / **C 粗方向→編輯自己 firecrawl 研究後寫**；gate 密度可調（選題/大綱/定稿）、**總編事實核查永遠跑**、文末附參考連結、記憶 opt-in。長文預設 D、Amuse 例外走 A。介紹頁 `commission.html`（情境/用法/兩範例）；eval（B＋C 新 vs 舊）驗過。
 - **第四位編輯 Amuse ＋ 新增編輯 SOP（🆕 2026-06-21）**：Amuse 上線（`docs/editors/amuse-soul/memory.md`、editors.html 特別企劃卡、伍迪艾倫式語氣校準）；團隊 SOP `new-editor-guide.html`（四步＋`docs/editors/_TEMPLATE-*.md` 範本）——「你定位、AI 接線」。
 - **插圖風格 profile 機制 ＋ `/style-extract`（🆕 2026-06-21）**：插圖風格＝可替換資料（`style.md`＋錨點圖＋validation），出圖 skill 不變；現役 `docs/illustration/styles/risograph/style.md`；換風格 SOP `illustration-style-sop.html`。跨專案 user-level skill **`/style-extract`** 抽風格＋驗證 subagent 打分、存 `~/style-lab/profiles/`（範例 bold-pop、mono-ink；另有 sepia-sketch 暫停未定版）。測試圖走「難度漸層」：簡單物件→場景→一段文章概念（真實使用壓力測試）。**驗證＝5 軸**（palette·line·texture·**construction**·**register**；register 對著錨點並排評，舊版漏掉這條最會飄的「美學立場」軸；composition 條件式、mood 不評分）。**優化分屬性下藥**：結構性（姿勢/表情）用提示詞釘得動；執行氣質（醜/拙/平塗 vs 影線）描述沒用、要 **best-of-N＋把評分當選圖器**；頑固質感靠後處理。錨點甜蜜點 3 張（庫存 3–5、單次餵 ≤3）。注意「保真≠好看」：評分量保真、出街用品味挑（2026-06-22 升級）。
-- **真人分身 ＋ `/voice-extract`（🆕 2026-06-24）**：把真實名廚編輯克隆成 AI 編輯分身的 skill（style-extract 的文字版）。已建 **5 位**：Musubi←Mokki／Jang←Atomy／Bao←倫敦男子日常／Kaya←陳彬雁／Nano←章凱閎。流程＝讀語料→抽 voice-DNA(6 面向)→🚦gate(確認＋取小名)→分身寫 fresh 稿→**獨立 scorer 對聲音錨打分**→🚦定稿→產分身 4 檔＋捐招進共用 `craft-anchors.md`（現 12 招/6 作者）。**封閉/開放模型**（分身只讀自己、原創讀招庫）。**克隆個人、不克隆機構**（MINGCHU 官方稿無單一人格→不做分身、可當反面語料）。頁：`editor-team.html`（團隊總覽）、`voice-extract.html`（運作）。**待辦**：craft-anchors 漸大→改 by-category 分類挑用；(選用)原創四位補 anchors；下批分身候選＝謝嫣薇。
+- **真人分身 ＋ `/voice-extract`（🆕 2026-06-24）**：把真實名廚編輯克隆成 AI 編輯分身的 skill（style-extract 的文字版）。已建 **6 位**：Musubi←Mokki／Jang←Atomy／Bao←倫敦男子日常／Kaya←陳彬雁／Nano←章凱閎／Lou←謝嫣薇。流程＝讀語料→抽 voice-DNA(6 面向)→🚦gate(確認＋取小名)→分身寫 fresh 稿→**獨立 scorer 對聲音錨打分**→🚦定稿→產分身 4 檔＋捐招進共用 `craft-anchors.md`（現 14 招/7 作者）。**封閉/開放模型**（分身只讀自己、原創讀招庫）。**克隆個人、不克隆機構**（MINGCHU 官方稿無單一人格→不做分身、可當反面語料）。頁：`editor-team.html`（團隊總覽）、`voice-extract.html`（運作）。**待辦**：craft-anchors 漸大（已 14 招/7 作者）→改 by-category 分類挑用；(選用)原創四位補 anchors。〔下批分身候選「謝嫣薇」已完成 2026-06-24＝第六位分身 **Lou（老火）**；定位＝考據鑑賞·判斷留白·不開槍，捐招 13 源流考據／14 通感比喻。下一位候選待定。〕
 - **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
 - **品牌 / 編輯 / 網站基礎**：品牌定位 + Project Brief、4 位 AI 編輯人設 + Soul（`docs/editors/*-soul.md`）、3 期 Demo Issues、插畫指南、域名 thepass.cc + Vercel。
 
