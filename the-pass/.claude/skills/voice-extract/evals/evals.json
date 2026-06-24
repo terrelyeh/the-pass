@@ -1,0 +1,27 @@
+{
+  "skill_name": "voice-extract",
+  "note": "聲音克隆是主觀技能——最有意義的驗證是『實跑一位新作者、看分身像不像』，不是合成 benchmark。pilot Musubi 已手動跑通。下面是真實使用者會說的觸發句。",
+  "evals": [
+    {
+      "id": 0,
+      "name": "clone-atomy-named",
+      "prompt": "幫我把 Atomy 做成一個 AI 編輯分身——他是 mingchu 的資深編輯，文章在 https://www.mingchu.io/author/index/2 。我想要一個寫起來像他的 AI 編輯，之後可以用 /commission 派題給他。",
+      "expected_output": "讀 Atomy 8–12 篇語料 → 抽 6 面向 voice-DNA → Gate1 確認＋取小名 → 分身寫 fresh 稿 → 獨立 scorer 打分 → 產出 docs/editors/<小名>-{soul,anchors,memory}.md ＋ 把他的招 append 進 craft-anchors.md（標出處）。",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "clone-author-noskillname",
+      "prompt": "我超欣賞謝嫣薇寫美食的筆觸。能不能把她的文章抽成一套可重用的聲音、做一個寫起來像她的編輯？（沒講 skill 名字也要觸發）",
+      "expected_output": "觸發 voice-extract；跑完整 harness；產出分身三檔＋招進共用庫。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "moves-only-path",
+      "prompt": "我不需要一個新編輯，但我想把某位日本料理記者的『冷知識開場』那種招學起來、給現有編輯用。",
+      "expected_output": "走『只偷招』路徑（用途 gate 選偷招）：抽招 → append 進 craft-anchors.md（attributed），不實例化分身。",
+      "files": []
+    }
+  ]
+}
