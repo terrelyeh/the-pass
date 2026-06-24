@@ -458,6 +458,10 @@
   .slide.dark .hi::after{background:rgba(var(--accent-rgb),.34)}
   /* 簡報穩定保底：data-anim 最終必可見（淡入動畫播放中仍由 WAAPI 接管，播完回到「可見」而非隱藏；萬一 motion 沒跑也直接顯示）*/
   body.motion-ready [data-anim]{opacity:1!important}
+  /* 簡報內可點擊連結（連到系統入口對應說明頁，target=_blank 不離開簡報）*/
+  .slide a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity .2s}
+  .slide a:hover{opacity:.65}
+  .slide.dark a{color:var(--accent-light)}
 </style>
 </head>
 <body>
@@ -521,7 +525,7 @@
     <p class="lead" style="margin:3vh 0 1vh;max-width:74vw" data-anim>名字來自廚房的「出菜口」——從全球大量 AI×餐飲資訊裡，篩選、檢查，再送到讀者面前。三件事讓它不一樣：</p>
     <div class="grid-3" style="margin-top:4vh">
       <div class="pillar" data-anim><div class="t">飲食優先</div><div class="d">食物是門檻，AI／科技是加分——這不是科技報導，是飲食媒體。</div></div>
-      <div class="pillar" data-anim><div class="t">編輯是 AI，<br>而且大方承認</div><div class="d">我們不假裝是人。AI 編輯有名字、有人格、有人味。</div></div>
+      <div class="pillar" data-anim><div class="t">編輯是 AI，<br>而且大方承認</div><div class="d">我們不假裝是人。AI 編輯有名字、有人格、有人味。<br><a href="editor-team.html" target="_blank">認識這群編輯 →</a></div></div>
       <div class="pillar" data-anim><div class="t">從不騙你</div><div class="d">事實不扭曲、引號是真有人說過、不確定就說不知道。</div></div>
     </div>
   </div>
@@ -546,8 +550,8 @@
     <div class="kicker" data-anim>上半場 · 內容從哪來</div>
     <h2 class="h-xl" data-anim>定義來源，並且審核它</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5vw;margin-top:6vh">
-      <div class="pillar" data-anim><div class="ic">01</div><div class="t">定義來源</div><div class="d">全球飲食媒體 ＋ 韓／日／泰在地語言，<span class="hi">刻意不收台灣源</span>——我們的價值，是台灣讀者看不到的新鮮事。<br><span class="meta" style="display:block;margin-top:1.5vh">機制 · sources.ts 單一真實來源</span></div></div>
-      <div class="pillar" data-anim><div class="ic">02</div><div class="t">來源審核</div><div class="d">新來源用 AI 評估：連不連得上、內容走向對不對、有沒有獨家潛力，再決定收不收。<br><span class="meta" style="display:block;margin-top:1.5vh">skill · /audit-sources</span></div></div>
+      <div class="pillar" data-anim><div class="ic">01</div><div class="t">定義來源</div><div class="d">全球飲食媒體 ＋ 韓／日／泰在地語言，<span class="hi">刻意不收台灣源</span>——我們的價值，是台灣讀者看不到的新鮮事。<br><span class="meta" style="display:block;margin-top:1.5vh">機制 · <a href="sources.html" target="_blank">sources.ts 來源清單</a></span></div></div>
+      <div class="pillar" data-anim><div class="ic">02</div><div class="t">來源審核</div><div class="d">新來源用 AI 評估：連不連得上、內容走向對不對、有沒有獨家潛力，再決定收不收。<br><span class="meta" style="display:block;margin-top:1.5vh">skill · <a href="audit-sources.html" target="_blank">/audit-sources</a></span></div></div>
     </div>
   </div>
   <div class="foot"><div>來源 · Sources</div><div>Act I</div></div>
@@ -560,7 +564,7 @@
     <div class="kicker" data-anim>上半場 · 選題</div>
     <h2 class="h-xl" data-anim>從一堆料，選出這期要寫的</h2>
     <p class="lead" style="margin:4vh 0;max-width:72vw" data-anim>抓取 → 去重 → <span class="hi">AI 依「食物優先」評分</span> → 跨期庫存競爭 → 產出一份選題報告。</p>
-    <div class="callout" data-anim>AI 負責初篩、排序、給切角；但要寫哪幾篇，<em>你拍板</em>。<div class="cite">skill · /selection-report（零金鑰、本機就能跑）</div></div>
+    <div class="callout" data-anim>AI 負責初篩、排序、給切角；但要寫哪幾篇，<em>你拍板</em>。<div class="cite">skill · <a href="selection-report.html" target="_blank">/selection-report</a>（零金鑰、本機就能跑）</div></div>
   </div>
   <div class="foot"><div>選題報告 · Selection</div><div>Act I</div></div>
 </section>
@@ -573,12 +577,12 @@
       <div>
         <div class="kicker" data-anim>下半場 · 寫稿</div>
         <h2 class="h-xl" data-anim>一間 AI 編輯室，把題寫成稿</h2>
-        <p class="lead" style="margin:3vh 0" data-anim>不是「一個 AI 寫全部」——是<span class="hi">一群有人格的編輯</span>，各寫各的、聲音不互相干擾。一位總指揮調度，中間設三個關卡讓你拍板。</p>
-        <div class="callout" data-anim>AI 起草、人定稿。<div class="cite">skill · /write-issue</div></div>
+        <p class="lead" style="margin:3vh 0" data-anim>不是「一個 AI 寫全部」——是<span class="hi">一群有人格的編輯</span>（<a href="editor-team.html" target="_blank">認識他們</a>），各寫各的、聲音不互相干擾。一位總指揮調度，中間設三個關卡讓你拍板。</p>
+        <div class="callout" data-anim>AI 起草、人定稿。<div class="cite">skill · <a href="write-issue-architecture.html" target="_blank">/write-issue</a></div></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:2.5vh">
-        <div class="stat-card" data-anim><div class="stat-label">原創虛擬</div><div class="stat-nb">4</div><div class="stat-note">憑空設計的編輯</div></div>
-        <div class="stat-card" data-anim><div class="stat-label">真人分身</div><div class="stat-nb">6</div><div class="stat-note">學自真實資深編輯</div></div>
+        <div class="stat-card" data-anim><div class="stat-label">把關關卡</div><div class="stat-nb">3</div><div class="stat-note">每個 gate 都你拍板</div></div>
+        <div class="stat-card" data-anim><div class="stat-label">每週出刊</div><div class="stat-nb">2</div><div class="stat-note">週二 · 週五</div></div>
       </div>
     </div>
   </div>
@@ -592,7 +596,7 @@
     <div class="kicker" data-anim>出菜 · 配圖與發布</div>
     <h2 class="h-xl" data-anim>配上插圖，送上線</h2>
     <p class="lead" style="margin:4vh 0;max-width:66vw" data-anim>長文配一張<span class="hi">概念優先的紐約客式插圖</span>（risograph 風格）——先想一個替讀者提問的點子，雙模型生候選，<em>人挑圖</em>，再部署上線。</p>
-    <div class="callout" data-anim>快訊不配圖——測過，閱讀的斷裂感太強。<div class="cite">skill · /publish-issue</div></div>
+    <div class="callout" data-anim>快訊不配圖——測過，閱讀的斷裂感太強。<div class="cite">skill · <a href="covers.html" target="_blank">/publish-issue · 配圖總覽</a></div></div>
   </div>
   <div class="foot"><div>發布 · Publish</div><div>Act II</div></div>
 </section>
@@ -611,32 +615,44 @@
   <div class="foot"><div>AI 起草 · 人定稿</div><div>— · —</div></div>
 </section>
 
-<!-- 9 · 衍生能力（幕封） -->
+<!-- 9 · 首期已上線（成果，移到衍生之前） -->
+<section class="slide light">
+  <div class="chrome"><div>成果 · Shipped</div><div>08</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker" data-anim>標準流程 · 成果</div>
+    <h2 class="h-xl" data-anim>我們已經出了第一期</h2>
+    <p class="lead" style="margin:4vh 0;max-width:70vw" data-anim>從選題到發布，整條流程<span class="hi">已經跑得通了</span>——首期 <a href="issue-2026-06-19.html" target="_blank">2026-06-19</a> 已上線，含編輯寫的稿 ＋ 紐約客式概念<a href="covers.html" target="_blank">配圖</a>。</p>
+    <div class="callout" data-anim>標準流程＝「穩定出一份電子報」。這件事，我們做到了。<div class="cite">線上看 · <a href="issue-2026-06-19.html" target="_blank">thepass.cc/issue-2026-06-19</a></div></div>
+  </div>
+  <div class="foot"><div>首期上線 · Issue 001</div><div>— · —</div></div>
+</section>
+
+<!-- 10 · 衍生能力（幕封） -->
 <section class="slide hero light">
-  <div class="chrome"><div>標準流程之外 · Beyond</div><div>08</div></div>
+  <div class="chrome"><div>標準流程之外 · Beyond</div><div>09</div></div>
   <div class="frame" style="display:grid;gap:5vh;align-content:center;min-height:80vh">
-    <div class="kicker" data-anim>標準流程之外</div>
-    <h1 class="h-hero" style="font-size:7.6vw" data-anim>它不只能<br>出電子報</h1>
-    <p class="lead" style="max-width:62vw" data-anim>一旦把「風格」和「編輯」都變成<span class="hi">可以抽取、重複使用的模組</span>，這個系統就能不斷長出新能力。</p>
+    <div class="kicker" data-anim>出了第一期之後</div>
+    <h1 class="h-hero" style="font-size:7.6vw" data-anim>但不該<br>只有電子報</h1>
+    <p class="lead" style="max-width:62vw" data-anim>我們發現——一旦把「風格」和「編輯」都變成<span class="hi">可以抽取、重複使用的模組</span>，這個系統就能不斷長出新能力。</p>
   </div>
   <div class="foot"><div>衍生能力 · Extensions</div><div>— · —</div></div>
 </section>
 
-<!-- 10 · 衍生①風格擷取 -->
+<!-- 11 · 衍生①風格擷取 -->
 <section class="slide light">
-  <div class="chrome"><div>衍生 01 · 視覺</div><div>09</div></div>
+  <div class="chrome"><div>衍生 01 · 視覺</div><div>10</div></div>
   <div class="frame" style="padding-top:5vh">
     <div class="kicker" data-anim>衍生能力 01 · 換視覺</div>
     <h2 class="h-xl" data-anim>風格擷取</h2>
     <p class="lead" style="margin:4vh 0;max-width:68vw" data-anim>丟一組參考圖，AI 把它抽成<span class="hi">可重用的插圖風格 profile</span>，還會生圖驗證真的重現得了。想換插圖風格？換一個 profile 就好，出圖流程完全不動。</p>
-    <div class="meta-row" data-anim><span>skill · /style-extract</span><span>·</span><span>跨專案通用</span></div>
+    <div class="meta-row" data-anim><span>skill · <a href="style-extract.html" target="_blank">/style-extract</a></span><span>·</span><span>跨專案通用</span></div>
   </div>
   <div class="foot"><div>風格擷取 · Style</div><div>Extensions</div></div>
 </section>
 
-<!-- 11 · 衍生②③委稿·新增編輯 -->
+<!-- 12 · 衍生②③委稿·新增編輯 -->
 <section class="slide dark">
-  <div class="chrome"><div>衍生 02–03 · 用法與陣容</div><div>10</div></div>
+  <div class="chrome"><div>衍生 02–03 · 用法與陣容</div><div>11</div></div>
   <div class="frame" style="padding-top:5vh">
     <div class="kicker" data-anim>衍生能力 02–03</div>
     <h2 class="h-xl" style="margin-bottom:5vh" data-anim>單篇委稿 · 新增編輯</h2>
@@ -644,28 +660,28 @@
       <div data-anim style="padding:3vh 2vw;border-left:3px solid var(--accent)">
         <div class="kicker" style="opacity:.95">02 · 委稿</div>
         <h3 class="h-md" style="margin-top:1.5vh">不必出整期</h3>
-        <p class="body-zh" style="margin-top:2vh">指定一位編輯、給個方向或素材，就交回一篇——像 brief 一位專業編輯。<br><span class="meta" style="display:block;margin-top:1.5vh">/commission</span></p>
+        <p class="body-zh" style="margin-top:2vh">指定一位編輯、給個方向或素材，就交回一篇——像 brief 一位專業編輯。<br><span class="meta" style="display:block;margin-top:1.5vh"><a href="commission.html" target="_blank">/commission</a></span></p>
       </div>
       <div data-anim style="padding:3vh 2vw;border-left:3px solid var(--accent)">
         <div class="kicker" style="opacity:.95">03 · 新增編輯</div>
         <h3 class="h-md" style="margin-top:1.5vh">憑空造一位</h3>
-        <p class="body-zh" style="margin-top:2vh">定義一位新人設的 AI 編輯，四步上線、附可複製範本。<br><span class="meta" style="display:block;margin-top:1.5vh">/new-editor-guide</span></p>
+        <p class="body-zh" style="margin-top:2vh">定義一位新人設的 AI 編輯，四步上線、附可複製範本。<br><span class="meta" style="display:block;margin-top:1.5vh"><a href="new-editor-guide.html" target="_blank">/new-editor-guide</a></span></p>
       </div>
     </div>
   </div>
   <div class="foot"><div>委稿 · 擴編</div><div>Extensions</div></div>
 </section>
 
-<!-- 12 · 衍生④筆調擷取·真人分身（壓軸） -->
+<!-- 13 · 衍生④筆調擷取·真人分身（壓軸） -->
 <section class="slide light">
-  <div class="chrome"><div>衍生 04 · 放大編輯</div><div>11</div></div>
+  <div class="chrome"><div>衍生 04 · 放大編輯</div><div>12</div></div>
   <div class="frame" style="padding-top:5vh">
     <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:5vw;flex:1;align-items:center">
       <div>
         <div class="kicker" data-anim>衍生能力 04 · 壓軸</div>
         <h2 class="h-xl" data-anim>筆調擷取 → 真人分身</h2>
         <p class="lead" style="margin:3vh 0" data-anim>把一位資深編輯的<span class="hi">筆調</span>抽出來，變成一個會寫的分身——像收一個<em>師出同門的徒弟</em>。</p>
-        <div class="callout" data-anim>這個能力，未來能放大各位、或各位敬重的前輩——讓一種好筆調，寫到更多題上。<div class="cite">skill · /voice-extract</div></div>
+        <div class="callout" data-anim>這個能力，未來能放大各位、或各位敬重的前輩——讓一種好筆調，寫到更多題上。<div class="cite">skill · <a href="voice-extract.html" target="_blank">/voice-extract</a></div></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:2.6vh">
         <div class="pillar" data-anim><div class="t">學「怎麼寫」</div><div class="d">抽的是筆調，不是抄內容。</div></div>
@@ -677,14 +693,14 @@
   <div class="foot"><div>筆調擷取 · 真人分身</div><div>Extensions</div></div>
 </section>
 
-<!-- 13 · 現在＋邀請 -->
+<!-- 14 · 邀請共創 -->
 <section class="slide hero dark">
-  <div class="chrome"><div>現在到哪了 · Now</div><div>12</div></div>
+  <div class="chrome"><div>接下來 · Together</div><div>13</div></div>
   <div class="frame" style="display:grid;gap:5vh;align-content:center;min-height:80vh">
-    <div class="kicker" data-anim>現在到哪了</div>
-    <h1 class="h-hero" style="font-size:8vw" data-anim>首期已經上線</h1>
-    <p class="lead" style="max-width:62vw" data-anim>整條流程——選題、寫稿、配圖、發布——都跑得通了。接下來，我們想邀請各位一起：<span class="hi">給回饋、出題目、一起共創</span>。</p>
-    <div class="meta-row" data-anim><span>thepass.cc</span><span>·</span><span>Intelligence, served.</span></div>
+    <div class="kicker" data-anim>接下來</div>
+    <h1 class="h-hero" style="font-size:8vw" data-anim>一起，<br>把它做得更好</h1>
+    <p class="lead" style="max-width:60vw" data-anim>想邀請各位一起：<span class="hi">給回饋、出題目、一起共創</span>——這間編輯室，需要你們的眼睛。</p>
+    <div class="meta-row" data-anim><span><a href="hub.html" target="_blank">thepass.cc</a></span><span>·</span><span>Intelligence, served.</span></div>
   </div>
   <div class="foot"><div>The Pass 出菜口</div><div>— 2026 —</div></div>
 </section>
