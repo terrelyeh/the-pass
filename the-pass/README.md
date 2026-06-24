@@ -6,6 +6,7 @@
 - **Slogan:** Intelligence, served.
 - **TA:** 台灣讀者（但刻意只收國外來源——價值在「台灣沒有的新鮮事」）
 - **線上:** [thepass.cc](https://thepass.cc)　完整定位見 [project-brief](https://thepass.cc/project-brief.html)
+- **一頁看懂整個專案:** [團隊說明簡報 intro.html](https://thepass.cc/intro.html)（網頁翻頁簡報：標準流程 → 衍生能力）
 
 ## 怎麼出一期：三個 skill 接力
 
@@ -56,7 +57,7 @@
 
 每位編輯都有分層人格檔（Soul 人格／Voices 守則／Anchors 筆調範本／Moves 招／Memory 記憶），每期把學到的、寫過的記起來——越寫越像自己。團隊可在 [編輯源頭頁](https://thepass.cc/editor-source.html) 看寫作風格、從那提優化；想新增一位**真人分身**見 [筆調抽取](https://thepass.cc/voice-extract.html)、新增一位**原創編輯**見 [新增 AI 編輯 SOP](https://thepass.cc/new-editor-guide.html)。長文一律「觀點編譯」：完整交代來源 ＋ 編輯觀點貫穿。
 
-**想單獨請一位編輯寫一篇**（給一個來源、給多篇素材綜整、或只給一個方向讓他自己研究）→ `/commission`，介紹、用法與兩個成果範例見 [委稿一位編輯](https://thepass.cc/commission.html)。
+**想單獨請一位編輯寫一篇**（給一個來源、給多篇素材綜整、或只給一個方向讓他自己研究；也可選指定文章形式）→ `/commission`，介紹、用法與兩個成果範例見 [委稿一位編輯](https://thepass.cc/commission.html)。
 
 ## 開發
 

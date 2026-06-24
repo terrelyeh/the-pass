@@ -112,7 +112,7 @@ Logo 點擊 → demo-index.html
 ```
 the-pass/
 ├── public/                       ← 靜態頁（部署即上線）
-│   ├── hub.html                  ← 系統入口（全系統總入口；4 區：來源機制／選題／編輯室／出刊）
+│   ├── hub.html                  ← 系統入口（全系統總入口；5 區：來源機制／選題／電子報編輯室／出刊／個別編輯）
 │   ├── sources.html              ← 選題來源＋狀態 單一文件（sources.ts 自動生成，勿手改）
 │   ├── audit-sources.html        ← 🆕 /audit-sources skill 說明頁
 │   ├── selection-mechanism.html  ← 篩選機制設計
@@ -127,7 +127,8 @@ the-pass/
 │   ├── illustration-style-sop.html ← 團隊 SOP：換插圖風格（兩步：/style-extract 產 profile → 導入）
 │   ├── style-extract.html         ← /style-extract 運作邏輯說明（harness：input→分析→驗證→output，含 SVG 流程圖）
 │   ├── voice-extract.html         ← 🆕 /voice-extract 運作（筆調抽取＝style-extract 文字版；含流程圖）
-│   ├── editor-team.html          ← 🆕 AI 編輯團隊總覽（9 位定位/特色/名廚類型配對/怎麼用/profile 概念）
+│   ├── editor-team.html          ← AI 編輯團隊總覽（10 位·小名典故/特色兩點/彩色本命 pill/可點連結；2026-06-24 改版）
+│   ├── intro.html                ← 🆕 團隊專案說明簡報（網頁翻頁 PPT·14 頁；guizang 風格 A＋The Pass 色；依賴 public/assets/motion.min.js）
 │   ├── covers.html               ← 配圖總覽（每期長文配圖：採用＋候選對照，左側日期切換；publish 時更新）
 │   ├── issue-<date>.html         ← 每期出刊內容頁（封面圖＋長文＋快訊＋提問），共用 issue.css│   ├── project-brief / editorial-guidelines / about / methodology / illustration-guide / implementation-plan / editors / editor-*.html
 │   └── demo-index / demo-issue-001~003 / demo-ig-post.html、img/
@@ -173,7 +174,7 @@ the-pass/
 - **`/commission` skill（單篇委稿，🆕 2026-06-21；擴成自適應 2026-06-23）**：指定一位編輯寫**單獨一篇**、不出整期；**共用 /write-issue 編輯人格檔**（改一次到處生效）。**三輸入自適應**：A 單源 / B 題目＋多素材→觀點綜編 D / **C 粗方向→編輯自己 firecrawl 研究後寫**；gate 密度可調（選題/大綱/定稿）、**總編事實核查永遠跑**、文末附參考連結、記憶 opt-in。長文預設 D、Amuse 例外走 A。介紹頁 `commission.html`（情境/用法/兩範例）；eval（B＋C 新 vs 舊）驗過。
 - **第四位編輯 Amuse ＋ 新增編輯 SOP（🆕 2026-06-21）**：Amuse 上線（`docs/editors/amuse-soul/memory.md`、editors.html 特別企劃卡、伍迪艾倫式語氣校準）；團隊 SOP `new-editor-guide.html`（四步＋`docs/editors/_TEMPLATE-*.md` 範本）——「你定位、AI 接線」。
 - **插圖風格 profile 機制 ＋ `/style-extract`（🆕 2026-06-21）**：插圖風格＝可替換資料（`style.md`＋錨點圖＋validation），出圖 skill 不變；現役 `docs/illustration/styles/risograph/style.md`；換風格 SOP `illustration-style-sop.html`。跨專案 user-level skill **`/style-extract`** 抽風格＋驗證 subagent 打分、存 `~/style-lab/profiles/`（範例 bold-pop、mono-ink；另有 sepia-sketch 暫停未定版）。測試圖走「難度漸層」：簡單物件→場景→一段文章概念（真實使用壓力測試）。**驗證＝5 軸**（palette·line·texture·**construction**·**register**；register 對著錨點並排評，舊版漏掉這條最會飄的「美學立場」軸；composition 條件式、mood 不評分）。**優化分屬性下藥**：結構性（姿勢/表情）用提示詞釘得動；執行氣質（醜/拙/平塗 vs 影線）描述沒用、要 **best-of-N＋把評分當選圖器**；頑固質感靠後處理。錨點甜蜜點 3 張（庫存 3–5、單次餵 ≤3）。注意「保真≠好看」：評分量保真、出街用品味挑（2026-06-22 升級）。
-- **真人分身 ＋ `/voice-extract`（🆕 2026-06-24）**：把真實名廚編輯克隆成 AI 編輯分身的 skill（style-extract 的文字版）。已建 **6 位**：Musubi←Mokki／Jang←Atomy／Bao←倫敦男子日常／Kaya←陳彬雁／Nano←章凱閎／Lou←謝嫣薇。流程＝讀語料→抽 voice-DNA(6 面向)→🚦gate(確認＋取小名)→分身寫 fresh 稿→**獨立 scorer 對筆調錨打分**→🚦定稿→產分身 4 檔＋捐招進共用 `craft-anchors.md`（現 14 招/7 作者）。**封閉/開放模型**（分身只讀自己、原創讀招庫）。**克隆個人、不克隆機構**（MINGCHU 官方稿無單一人格→不做分身、可當反面語料）。頁：`editor-team.html`（團隊總覽）、`voice-extract.html`（運作）。**待辦**：craft-anchors 漸大（已 14 招/7 作者）→改 by-category 分類挑用；(選用)原創四位補 anchors。〔下批分身候選「謝嫣薇」已完成 2026-06-24＝第六位分身 **Lou（老火）**；定位＝考據鑑賞·判斷留白·不開槍，捐招 13 源流考據／14 通感比喻。下一位候選待定。〕
+- **真人分身 ＋ `/voice-extract`（🆕 2026-06-24）**：把真實名廚編輯克隆成 AI 編輯分身的 skill（style-extract 的文字版）。已建 **6 位**：Musubi←Mokki／Jang←Atomy／Bao←倫敦男子日常／Kaya←陳彬雁／Nano←章凱閎／Lou←謝嫣薇。流程＝讀語料→抽 voice-DNA(6 面向)→🚦gate(確認＋取小名)→分身寫 fresh 稿→**獨立 scorer 對筆調錨打分**→🚦定稿→產分身 4 檔＋捐招進共用 `craft-anchors.md`（現 14 招/7 作者）。**封閉/開放模型**（分身只讀自己、原創讀招庫）。**克隆個人、不克隆機構**（MINGCHU 官方稿無單一人格→不做分身、可當反面語料）。頁：`editor-team.html`（團隊總覽）、`voice-extract.html`（運作）。**待辦**：craft-anchors 已改 **by-category 分類**（5 類：開場／切角立意／結構推進／感官描寫／收尾＋〈按環節找招〉導引，14 招/7 作者，2026-06-24）；(選用)原創四位補 anchors（待累積代表作）。〔下批分身候選「謝嫣薇」已完成＝第六位分身 **Lou（老火）**；定位＝考據鑑賞·判斷留白·不開槍。下一位候選待定。〕
 - **顧問交付**：`/delivery-report` skill（config-driven，引擎在 `~/.claude/skills/delivery-report/render.mjs`，資料在 `~/consulting/clients/<client>/config.json`）→ 輸出 `public/delivery.html` + Markdown 週報。
 - **品牌 / 編輯 / 網站基礎**：品牌定位 + Project Brief、4 位 AI 編輯人設 + Soul（`docs/editors/*-soul.md`）、3 期 Demo Issues、插畫指南、域名 thepass.cc + Vercel。
 
@@ -231,9 +232,15 @@ npx vercel --prod --yes
 - **/write-issue 用 subagent 隔離筆調**: 三編輯 + 總編各 spawn 一個 subagent（per-編輯），別在同一 context 全寫（筆調會糊）；總編獨立審、不自審。改筆調→`refs/voices.md`、底線→`refs/anti-slop.md`、審核→`refs/chief-editor-checklist.md`、人格→`docs/editors/*-soul.md`（人格是團隊原作、refs 已對原文核對過，勿亂改）。
 - **編輯署名（2026-06-21 改）**: 長文「編輯／<編輯>」、快訊「彙整 · Passe」、提問「問／Fumet」、特別企劃「招待／Amuse」。舊「選題 · Mise/Fumet」是正典誤植、已修（在 `voices.md`）。
 - **長文＝觀點編譯 D**: 完整交代來源＋角度貫穿（≠A 挑一條、≠B/C 翻譯摘要）；/write-issue 長文與 /commission 都注入 `voices.md`〈長文標準〉。**Amuse 是唯一預設走 A 的編輯**。四模式英文：A=original/write-around、B=full translation/transediting、C=summary、D=analysis/commentary（`new-editor-guide.html` 有對照表＋說明）。
+- **「電子報編輯室」＝write-issue 架構頁的正名（2026-06-24）**: `write-issue-architecture.html` 全站正名「電子報編輯室」（出整期那條線）；跟對外 `editors.html` 的「AI 編輯室」（編輯介紹頁）是**兩個概念**，正名時刻意沒動 editors.html。
+- **voice 中文＝「筆調」（2026-06-24 全站正名）**: 寫作 voice 一律用「筆調」（筆調抽取／筆調錨／筆調 DNA…）；「聲音」只保留**字面 audio**（異常聲音／壓低聲音／聲音偵測）與「**品牌聲音**」（brand voice）。`/voice-extract` 英文指令名與英文觸發詞不改。批量改用 `perl -Mutf8 -CSD`（zsh 不做變數 word-split、perl 中文需 `-Mutf8` 才 match）。
+- **craft-anchors 按環節挑（2026-06-24 分類）**: 14 招分 5 類（開場／切角立意／結構推進／感官描寫／收尾），開頭有〈按環節找招〉表；招號是穩定 ID（分類後跳序正常、新招接著編）。中文稱呼＝「**共用技法庫**」（不再叫「招庫」）、去「偷」改「學／萃取」。
+- **commission 選配文章形式（2026-06-24）**: 指定文章形式時，總編在事實核查外多核一條「形式到位沒」——**併在總編 subagent、不另開**（總編已獨立於寫稿編輯、無偏心問題）；不指定就靠「選對編輯」帶形式。
+- **說明頁寬度統一 1040（2026-06-24）**: 手寫說明頁 `.wrap` max-width=1040；**gen 報告頁（sources/backlog/選題報告）寬度在腳本**（`gen-sources-page`／`gen-backlog-page`／`report.ts`），改要改腳本＋重生。文章頁（issue/demo）保持窄、不加寬。
+- **intro.html 簡報＝guizang 模板**: 網頁翻頁 PPT（風格 A＋The Pass 色彩/字體）。cp guizang 模板務必連 `public/assets/motion.min.js` 一起（否則 `data-anim` 卡 `opacity:0` 投影空白）；已加保底 `body.motion-ready [data-anim]{opacity:1!important}`。改簡報用 preview **resize 桌面 16:9**（手機寬看不出 100vw 翻頁）。
 - **anti-slop 別自己算年數**: 原文寫「2007 年」就別寫「十八年前」（推算、可能算錯）；要嘛給年份、要嘛「多年前」。
 - **/commission ＝ 共用編輯檔**: 與 /write-issue 讀同一套 soul/voices/memory/anti-slop/chief-editor-checklist（改一次兩邊生效）；單篇委稿、記憶預設不寫（opt-in）。
-- **真人分身封閉、不讀 craft-anchors**: 分身（Musubi/Jang/Bao/Kaya/Nano，`docs/editors/<名>-{soul,anchors,moves,memory}.md`）只注入自己 4 檔＋anti-slop，**不注入 voices 段、不注入 craft-anchors**（commission 依編輯類型分流）；只有原創四位讀招庫。混進去＝四不像。每位分身守則都擋 mingchu 全站通病「格言式上升收尾」。
+- **真人分身封閉、不讀 craft-anchors**: 分身（Musubi/Jang/Bao/Kaya/Nano/Lou，`docs/editors/<名>-{soul,anchors,moves,memory}.md`）只注入自己 4 檔＋anti-slop，**不注入 voices 段、不注入 craft-anchors**（commission 依編輯類型分流）；只有原創四位讀招庫。混進去＝四不像。每位分身守則都擋 mingchu 全站通病「格言式上升收尾」。
 - **克隆個人、不克隆機構**: `/voice-extract` 只對「有一致可辨識筆調的個人作者」做分身；機構署名容器（MINGCHU 官方稿）無單一人格→不做分身（做了只是比 Passe 更無臉的通稿機），當反面語料即可。scout（讀 4–6 篇判題材/筆調/差異化）值得先跑、再決定做不做分身。
 - **run_loop 觸發優化器對「專案級 skill」無效**: skill-creator 的 `run_loop`（description 觸發優化）在 headless `claude -p` 觸發不到 the-pass 的專案 skill（它把候選裝成 `~/.claude/commands/*.md` slash 指令、不靠 description 自動觸發）→ recall 全 0、分數無效；跑完還會留 `commission-skill-*.md` 暫存指令要手動清。**專案 skill 的 description 用人工判斷調，別跑 run_loop。**
 - **/style-extract 驗證圖不落專案**: 測試圖一律生進 `~/style-lab/profiles/<name>/validation/`、檢視走 SendUserFile；**絕不寫進任何專案 public/ 或部署網站**（本 session 為部署給用戶看曾暫放 The Pass public，捷徑非常態）。
