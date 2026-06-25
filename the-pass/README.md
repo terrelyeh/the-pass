@@ -45,7 +45,7 @@
 
 ## 編輯團隊
 
-**十位**有完整人設的 AI 編輯——**四位原創**（虛構）＋**六位真人分身**（克隆自真實名廚資深編輯）＋幕後總編輯。完整介紹見 [AI 編輯團隊](https://thepass.cc/editor-team.html)。
+**十位**有完整人設的 AI 編輯——**四位原創**（虛構）＋**六位真人原型**（取法真實名廚資深編輯）＋幕後總編輯。完整介紹見 [AI 編輯團隊](https://thepass.cc/editor-team.html)。
 
 **原創四位**（開放·讀共用招庫、博採眾長）：
 - **Mise** — 長文（場景式、找人；技術／產業面）
@@ -53,9 +53,9 @@
 - **Fumet** — 結尾提問；也寫文化面長文（/write-issue 依題材自動分派誰寫長文）
 - **Amuse** — 諷刺自嘲的特別企劃編輯（不定期吐槽餐飲科技的炒作），用 `/commission` 單篇叫他寫
 
-**真人分身六位**（封閉·只讀自己人格檔、越像原作者越好）：**Musubi**（日韓飲食文化發現）、**Jang**（產業經營拆解）、**Bao**（倫敦離散餐廳現場特寫）、**Kaya**（東南亞深訪口述史）、**Nano**（fine-dining 概念解剖）、**Lou**（飲食文化考據·源流鑑賞·判斷留白）——各克隆自一位真實作者，用 `/voice-extract` 抽其筆調建成。
+**真人原型六位**（封閉·只讀自己人格檔、越像原作者越好）：**Musubi**（日韓飲食文化發現）、**Jang**（產業經營拆解）、**Bao**（倫敦離散餐廳現場特寫）、**Kaya**（東南亞深訪口述史）、**Nano**（fine-dining 概念解剖）、**Lou**（飲食文化考據·源流鑑賞·判斷留白）——各取法一位真實作者，用 `/voice-extract` 抽其筆調建成。
 
-每位編輯都有分層人格檔（Soul 人格／Voices 守則／Anchors 筆調範本／Moves 招／Memory 記憶），每期把學到的、寫過的記起來——越寫越像自己。團隊可在 [編輯源頭頁](https://thepass.cc/editor-source.html) 看寫作風格、從那提優化；想新增一位**真人分身**見 [筆調抽取](https://thepass.cc/voice-extract.html)、新增一位**原創編輯**見 [新增 AI 編輯 SOP](https://thepass.cc/new-editor-guide.html)。長文一律「觀點編譯」：完整交代來源 ＋ 編輯觀點貫穿。
+每位編輯都有分層人格檔（Soul 人格／Voices 守則／Anchors 筆調範本／Moves 招／Memory 記憶），每期把學到的、寫過的記起來——越寫越像自己。團隊可在 [編輯源頭頁](https://thepass.cc/editor-source.html) 看寫作風格、從那提優化；想新增一位**真人原型編輯**見 [筆調抽取](https://thepass.cc/voice-extract.html)、新增一位**原創編輯**見 [新增 AI 編輯 SOP](https://thepass.cc/new-editor-guide.html)。長文一律「觀點編譯」：完整交代來源 ＋ 編輯觀點貫穿。
 
 **想單獨請一位編輯寫一篇**（給一個來源、給多篇素材綜整、或只給一個方向讓他自己研究；也可選指定文章形式）→ `/commission`，介紹、用法與兩個成果範例見 [委稿一位編輯](https://thepass.cc/commission.html)。
 

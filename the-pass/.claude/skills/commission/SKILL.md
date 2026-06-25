@@ -1,6 +1,6 @@
 ---
 name: commission
-description: 指定 The Pass 任一位 AI 編輯——原創虛擬四位（Mise／Passe／Fumet／Amuse）或真人分身（Musubi／Jang／Bao／Kaya／Nano／Lou…）——寫單獨一篇時用這個 skill。觸發訊號很簡單：某位編輯的名字 ＋ 想產出一篇（寫／綜整／編譯／吐槽／寫成一篇／寫成一則／觀點長文）。Make sure to use this skill 即使沒講 skill 名字也要觸發——素材是什麼都算：一個連結、一段貼文、貼上的全文、好幾篇要綜整成一篇的報導、或只給一個方向讓編輯自己研究後再寫；連素材還沒貼（「等下貼給你，請 Fumet 綜整成一篇」）、或沒講 skill 名（「用 Mise 寫這篇 <url>」「用 Amuse 吐槽這篇 <url>」「給 Passe 這幾個連結寫成一則」「請 Lou 考據這道菜的源流」）都要觸發。共用 /write-issue 的編輯人格檔（soul＋voices＋memory），聲音與記憶一致；harness：取得/研究素材 → 互動 gate（選題／大綱／定稿）→ 指定編輯 subagent 寫（觀點綜編 D）→ 總編事實核查 → 附參考連結。不要用於：出整期（/write-issue）、跑選題（/selection-report）、改來源（/audit-sources）、只是介紹某位編輯是誰、或只比對幾篇而不寫稿。
+description: 指定 The Pass 任一位 AI 編輯——原創虛擬四位（Mise／Passe／Fumet／Amuse）或真人原型編輯（Musubi／Jang／Bao／Kaya／Nano／Lou…）——寫單獨一篇時用這個 skill。觸發訊號很簡單：某位編輯的名字 ＋ 想產出一篇（寫／綜整／編譯／吐槽／寫成一篇／寫成一則／觀點長文）。Make sure to use this skill 即使沒講 skill 名字也要觸發——素材是什麼都算：一個連結、一段貼文、貼上的全文、好幾篇要綜整成一篇的報導、或只給一個方向讓編輯自己研究後再寫；連素材還沒貼（「等下貼給你，請 Fumet 綜整成一篇」）、或沒講 skill 名（「用 Mise 寫這篇 <url>」「用 Amuse 吐槽這篇 <url>」「給 Passe 這幾個連結寫成一則」「請 Lou 考據這道菜的源流」）都要觸發。共用 /write-issue 的編輯人格檔（soul＋voices＋memory），聲音與記憶一致；harness：取得/研究素材 → 互動 gate（選題／大綱／定稿）→ 指定編輯 subagent 寫（觀點綜編 D）→ 總編事實核查 → 附參考連結。不要用於：出整期（/write-issue）、跑選題（/selection-report）、改來源（/audit-sources）、只是介紹某位編輯是誰、或只比對幾篇而不寫稿。
 ---
 
 # /commission — 指定一位編輯，寫一篇
@@ -67,7 +67,7 @@ spawn 那位**編輯 subagent**（注入其 soul＋memory＋voices 段＋anti-sl
 編輯 subagent 依選定角度出**大綱**：開頭從誰切入、段落骨架、**每段用哪幾篇來源**、標題候選，**明寫「脊椎錨在哪個人」**。用 **AskUserQuestion** 給 Terrel：approve／調角度／換錨的人／搬段落。（在大綱就鎖「先找到人」，別等寫完才發現是無臉綜述。）
 
 ### 4 · 寫稿（編輯 subagent）
-spawn **一個**編輯 subagent（主模型、品質優先），乾淨 context **依編輯類型注入**——**原創四位**：soul ＋ memory ＋ `voices.md`（該編輯段 ＋〈長文標準〉）＋ `anti-slop.md` ＋ `craft-anchors.md`（偷招、不偷聲音；長文／特寫稿注入，純快訊可略）；**真人分身（Musubi／Jang…）**：自己的 `<名>-soul／-anchors／-moves／-memory` ＋ `anti-slop.md`，**不注入 voices 段、不注入 craft-anchors**（分身封在自己的聲音裡、借別人的招會四不像）。再加上 **素材全文/摘要** ＋ 選定角度與大綱 ＋ 體裁要求（**若 step 0 指定了文章形式，一併注入「這篇走 <形式> 的結構」當骨架指引**）。**長文＝觀點綜編 D：完整交代來源、別為角度丟重要事實，用切角貫穿、用編輯聲音、字數依訊息量約 500–900（密的觀點題可略超，別為湊字硬砍）。** 回傳結構化：
+spawn **一個**編輯 subagent（主模型、品質優先），乾淨 context **依編輯類型注入**——**原創四位**：soul ＋ memory ＋ `voices.md`（該編輯段 ＋〈長文標準〉）＋ `anti-slop.md` ＋ `craft-anchors.md`（偷招、不偷聲音；長文／特寫稿注入，純快訊可略）；**真人原型編輯（Musubi／Jang…）**：自己的 `<名>-soul／-anchors／-moves／-memory` ＋ `anti-slop.md`，**不注入 voices 段、不注入 craft-anchors**（真人原型編輯封在自己的聲音裡、借別人的招會四不像）。再加上 **素材全文/摘要** ＋ 選定角度與大綱 ＋ 體裁要求（**若 step 0 指定了文章形式，一併注入「這篇走 <形式> 的結構」當骨架指引**）。**長文＝觀點綜編 D：完整交代來源、別為角度丟重要事實，用切角貫穿、用編輯聲音、字數依訊息量約 500–900（密的觀點題可略超，別為湊字硬砍）。** 回傳結構化：
 ```
 { title, draft, factsUsed: [{ claim, source }], sources: ["用到的連結", ...] }
 ```
